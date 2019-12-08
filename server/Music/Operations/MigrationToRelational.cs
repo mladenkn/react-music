@@ -8,12 +8,12 @@ namespace Music.Operations
 {
     public class MigrationToRelational
     {
-        private readonly YoutubeDataApiVideoService _youtubeTrackService;
+        private readonly IYoutubeVideoService _youtubeVideoService;
         private readonly IMongoCollection<BsonDocument> _tracksCollection;
 
-        public MigrationToRelational(IMongoDatabase db, YoutubeDataApiVideoService youtubeTrackService)
+        public MigrationToRelational(IMongoDatabase db, IYoutubeVideoService youtubeVideoService)
         {
-            _youtubeTrackService = youtubeTrackService;
+            _youtubeVideoService = youtubeVideoService;
             _tracksCollection = db.GetCollection<BsonDocument>("tracks");
         }
 
@@ -22,7 +22,7 @@ namespace Music.Operations
             var trackCursor = await _tracksCollection.FindAsync(t => true);
             var allTracks = await trackCursor.ToListAsync();
             var allTrackIds = allTracks.Select(t => (string)t.GetValue("ytID")).ToList();
-            var allTracksFromYt = await _youtubeTrackService.GetList(allTrackIds);
+            var allTracksFromYt = await _youtubeVideoService.GetList(allTrackIds);
         }
     }
 }

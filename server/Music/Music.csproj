@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="0.13.0" />
     <PackageReference Include="Google.Apis.YouTube.v3" Version="1.42.0.1758" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.9.3" />

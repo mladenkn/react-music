@@ -1,3 +1,4 @@
+using System.Net.Http;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.AspNetCore.Builder;
@@ -40,7 +41,9 @@ namespace Music
                 }
             ));
 
-            services.AddTransient<YoutubeDataApiVideoService>();
+            services.AddTransient<HttpClient>();
+
+            services.AddTransient<IYoutubeVideoService, YoutubeHtmlScrapperVideoService>();
             services.AddTransient<TrackService>();
 
             services.AddCors(options =>

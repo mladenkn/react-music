@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Google.Apis.YouTube.v3.Data;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Music.Models;
@@ -11,10 +10,10 @@ namespace Music.Services
 {
     public class TrackService
     {
-        private readonly YoutubeDataApiVideoService _youtubeTrackService;
+        private readonly IYoutubeVideoService _youtubeTrackService;
         private readonly IMongoCollection<BsonDocument> _tracksCollection;
 
-        public TrackService(IMongoDatabase db, YoutubeDataApiVideoService youtubeTrackService)
+        public TrackService(IMongoDatabase db, IYoutubeVideoService youtubeTrackService)
         {
             _youtubeTrackService = youtubeTrackService;
             _tracksCollection = db.GetCollection<BsonDocument>("tracks");
