@@ -6,13 +6,13 @@ using Google.Apis.YouTube.v3.Data;
 using Music.Models;
 using Utilities;
 
-namespace Music.Services
+namespace Music.Repositories
 {
-    public class YoutubeDataApiVideoService : IYoutubeVideoService
+    public class YoutubeDataApiVideoRepository
     {
         private readonly YouTubeService _youTubeService;
 
-        public YoutubeDataApiVideoService(YouTubeService youTubeService)
+        public YoutubeDataApiVideoRepository(YouTubeService youTubeService)
         {
             _youTubeService = youTubeService;
         }

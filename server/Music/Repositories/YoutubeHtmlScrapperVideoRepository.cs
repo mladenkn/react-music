@@ -5,17 +5,16 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp;
 using AngleSharp.Dom;
-using HtmlAgilityPack;
 using Music.Models;
 
-namespace Music.Services
+namespace Music.Repositories
 {
-    public class YoutubeHtmlScrapperVideoService : IYoutubeVideoService
+    public class YoutubeHtmlScrapperVideoRepository
     {
         private readonly HttpClient _httpClient;
         private readonly IBrowsingContext _htmlParser;
 
-        public YoutubeHtmlScrapperVideoService(HttpClient httpClient)
+        public YoutubeHtmlScrapperVideoRepository(HttpClient httpClient)
         {
             _httpClient = httpClient;
 

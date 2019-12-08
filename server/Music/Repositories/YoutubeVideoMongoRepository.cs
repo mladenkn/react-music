@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -6,16 +7,17 @@ using Music.Models;
 
 namespace Music.Repositories
 {
-    public class YoutubeVideoRepository
+    public class YoutubeVideoMongoRepository
     {
         private readonly IMongoCollection<BsonDocument> _col;
 
-        public YoutubeVideoRepository(IMongoDatabase db)
+        public YoutubeVideoMongoRepository(IMongoDatabase db)
         {
             _col = db.GetCollection<BsonDocument>("youtubeVideos");
         }
 
-        public async Task<YoutubeVideo> GetList(string[] ids)
+        public async Task<(IEnumerable<YoutubeVideo> videos, IEnumerable<string> notFoundIds)>
+            GetList(IEnumerable<string> ids)
         {
             throw new NotImplementedException();
         }
@@ -26,11 +28,6 @@ namespace Music.Repositories
         }
 
         public async Task Update(YoutubeVideo v)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Delete(string id)
         {
             throw new NotImplementedException();
         }

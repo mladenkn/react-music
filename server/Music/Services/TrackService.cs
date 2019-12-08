@@ -5,25 +5,26 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Music.Models;
+using Music.Repositories;
 
 namespace Music.Services
 {
     public class TrackService
     {
-        private readonly IYoutubeVideoService _youtubeTrackService;
         private readonly IMongoCollection<BsonDocument> _tracksCollection;
+        private readonly YoutubeVideoMasterRepository _youtubeTrackRepo;
 
-        public TrackService(IMongoDatabase db, IYoutubeVideoService youtubeTrackService)
+        public TrackService(IMongoDatabase db, YoutubeVideoMasterRepository youtubeTrackRepo)
         {
-            _youtubeTrackService = youtubeTrackService;
             _tracksCollection = db.GetCollection<BsonDocument>("tracks");
+            _youtubeTrackRepo = youtubeTrackRepo;
         }
 
         public async Task<GetTrackListResponse> GetList()
         {
             var allTracks = await GetListFromDb();
             var allTrackIds = allTracks.Select(t => (string) t.Id).ToList();
-            var allTracksFromYt = await _youtubeTrackService.GetList(allTrackIds);
+            var allTracksFromYt = await _youtubeTrackRepo.GetList(allTrackIds);
 
             var tracksMapped = allTracks.Select(trackFromDb =>
             {

@@ -42,8 +42,6 @@ namespace Music
             ));
 
             services.AddTransient<HttpClient>();
-
-            services.AddTransient<IYoutubeVideoService, YoutubeHtmlScrapperVideoService>();
             services.AddTransient<TrackService>();
 
             services.AddCors(options =>
