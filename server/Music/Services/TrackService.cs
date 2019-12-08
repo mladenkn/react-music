@@ -11,10 +11,10 @@ namespace Music.Services
 {
     public class TrackService
     {
-        private readonly YoutubeTrackService _youtubeTrackService;
+        private readonly YoutubeDataApiVideoService _youtubeTrackService;
         private readonly IMongoCollection<BsonDocument> _tracksCollection;
 
-        public TrackService(IMongoDatabase db, YoutubeTrackService youtubeTrackService)
+        public TrackService(IMongoDatabase db, YoutubeDataApiVideoService youtubeTrackService)
         {
             _youtubeTrackService = youtubeTrackService;
             _tracksCollection = db.GetCollection<BsonDocument>("tracks");
@@ -29,7 +29,7 @@ namespace Music.Services
             var tracksMapped = allTracks.Select(trackFromDb =>
             {
                 var trackFromYt = allTracksFromYt.Single(t => t.Id == trackFromDb.Id);
-                var trackMapped = (Track) Create(trackFromYt, trackFromDb);
+                Track trackMapped = Create(trackFromYt, trackFromDb);
                 return trackMapped;
             });
 
@@ -73,17 +73,17 @@ namespace Music.Services
             }
         }
 
-        private static Track Create(Video fromYt, dynamic fromDb) =>
+        private static Track Create(YoutubeVideo fromYt, dynamic fromDb) =>
             new Track
             {
                 YtId = fromYt.Id,
-                Title = fromYt.Snippet.Title,
-                Image = fromYt.Snippet.Thumbnails.Medium.Url,
-                Description = fromYt.Snippet.Description,
+                Title = fromYt.Title,
+                Image = fromYt.Image,
+                Description = fromYt.Description,
                 Channel = new TrackChannel
                 {
-                    Id = fromYt.Snippet.ChannelId,
-                    Title = fromYt.Snippet.ChannelTitle,
+                    Id = fromYt.ChannelId,
+                    Title = fromYt.ChannelTitle,
                 },
                 Year = fromDb.Year,
                 Genres = fromDb.Genres,

@@ -40,7 +40,7 @@ namespace Music
                 }
             ));
 
-            services.AddTransient<YoutubeTrackService>();
+            services.AddTransient<YoutubeDataApiVideoService>();
             services.AddTransient<TrackService>();
 
             services.AddCors(options =>

@@ -8,10 +8,10 @@ namespace Music.Operations
 {
     public class MigrationToRelational
     {
-        private readonly YoutubeTrackService _youtubeTrackService;
+        private readonly YoutubeDataApiVideoService _youtubeTrackService;
         private readonly IMongoCollection<BsonDocument> _tracksCollection;
 
-        public MigrationToRelational(IMongoDatabase db, YoutubeTrackService youtubeTrackService)
+        public MigrationToRelational(IMongoDatabase db, YoutubeDataApiVideoService youtubeTrackService)
         {
             _youtubeTrackService = youtubeTrackService;
             _tracksCollection = db.GetCollection<BsonDocument>("tracks");
