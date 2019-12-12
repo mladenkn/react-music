@@ -25,7 +25,7 @@ namespace Music.Repositories
 
             foreach (var idsChunk in ids.Batch(chunkCount))
             {
-                var allTracksFromYtRequest = _youTubeService.Videos.List("snippet,contentDetails");
+                var allTracksFromYtRequest = _youTubeService.Videos.List("snippet");
                 allTracksFromYtRequest.Id = string.Join(",", idsChunk);
                 var allTracksFromYt = await allTracksFromYtRequest.ExecuteAsync();
                 r.AddRange(allTracksFromYt.Items.Select(MapToYoutubeVideo));
