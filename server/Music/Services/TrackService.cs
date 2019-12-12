@@ -11,97 +11,83 @@ namespace Music.Services
 {
     public class TrackService
     {
-        private readonly IMongoCollection<BsonDocument> _tracksCollection;
-        private readonly YoutubeVideoMasterRepository _youtubeTrackRepo;
+        private readonly TrackRepository _repo;
 
-        public TrackService(IMongoDatabase db, YoutubeVideoMasterRepository youtubeTrackRepo)
+        public TrackService(TrackRepository repo)
         {
-            _tracksCollection = db.GetCollection<BsonDocument>("tracks");
-            _youtubeTrackRepo = youtubeTrackRepo;
+            _repo = repo;
         }
 
-        public async Task<GetTrackListResponse> GetList()
-        {
-            var allTracks = await GetListFromDb();
-            var allTrackIds = allTracks.Select(t => (string) t.Id).ToList();
-            var allTracksFromYt = await _youtubeTrackRepo.GetList(allTrackIds);
+        public Task<GetTrackListResponse> GetList() => _repo.GetList();
 
-            var tracksMapped = allTracks.Select(trackFromDb =>
-            {
-                var trackFromYt = allTracksFromYt.Single(t => t.Id == trackFromDb.Id);
-                Track trackMapped = Create(trackFromYt, trackFromDb);
-                return trackMapped;
-            });
+        //public async Task<GetTrackListResponse> GetList()
+        //{
+        //    var allTracks = await GetListFromDb();
+        //    var allTrackIds = allTracks.Select(t => (string) t.Id).ToList();
+        //    var allTracksFromYt = await _youtubeTrackRepo.GetList(allTrackIds);
 
-            return new GetTrackListResponse
-            {
-                Data = tracksMapped,
-                ThereIsMore = false,
-                TotalCount = allTrackIds.Count,
-            };
-        }
+        //    var tracksMapped = allTracks.Select(trackFromDb =>
+        //    {
+        //        var trackFromYt = allTracksFromYt.Single(t => t.Id == trackFromDb.Id);
+        //        Track trackMapped = Create(trackFromYt, trackFromDb);
+        //        return trackMapped;
+        //    });
 
-        private async Task<IEnumerable<dynamic>> GetListFromDb()
-        {
-            var trackCursor = await _tracksCollection.FindAsync(t => true);
-            var allTracks = (await trackCursor.ToListAsync()).Take(50);
+        //    return new GetTrackListResponse
+        //    {
+        //        Data = tracksMapped,
+        //        ThereIsMore = false,
+        //        TotalCount = allTrackIds.Count,
+        //    };
+        //}
 
-            return allTracks.Select(trackFromDb => new
-            {
-                Id = trackFromDb.GetValue("ytID").AsString,
-                Year = ExtractYear(trackFromDb),
-                Tags = trackFromDb.GetValue("tags").AsBsonArray.ToArray().Select(i => i.AsString),
-                Genres = trackFromDb.GetValue("genres").AsBsonArray.ToArray().Select(i => i.AsString),
-            });
-        }
+        //private async Task<IEnumerable<dynamic>> GetListFromDb()
+        //{
+        //    var trackCursor = await _tracksCollection.FindAsync(t => true);
+        //    var allTracks = (await trackCursor.ToListAsync()).Take(50);
 
-        private int? ExtractYear(BsonDocument track)
-        {
-            if (!track.ContainsValue("year"))
-                return null;
-            else
-            {
-                var yearBson = track.GetValue("year");
-                if (yearBson.IsInt32)
-                    return yearBson.AsInt32;
-                else if (yearBson.IsString)
-                    return int.Parse(yearBson.AsString);
-                else
-                {
-                    throw new Exception("Unsupported type for Track.Year");
-                }
-            }
-        }
+        //    return allTracks.Select(trackFromDb => new
+        //    {
+        //        Id = trackFromDb.GetValue("ytID").AsString,
+        //        Year = ExtractYear(trackFromDb),
+        //        Tags = trackFromDb.GetValue("tags").AsBsonArray.ToArray().Select(i => i.AsString),
+        //        Genres = trackFromDb.GetValue("genres").AsBsonArray.ToArray().Select(i => i.AsString),
+        //    });
+        //}
 
-        private static Track Create(YoutubeVideo fromYt, dynamic fromDb) =>
-            new Track
-            {
-                YtId = fromYt.Id,
-                Title = fromYt.Title,
-                Image = fromYt.Image,
-                Description = fromYt.Description,
-                Channel = new TrackChannel
-                {
-                    Id = fromYt.ChannelId,
-                    Title = fromYt.ChannelTitle,
-                },
-                Year = fromDb.Year,
-                Genres = fromDb.Genres,
-                Tags = fromDb.Tags
-            };
-    }
+        //private int? ExtractYear(BsonDocument track)
+        //{
+        //    if (!track.ContainsValue("year"))
+        //        return null;
+        //    else
+        //    {
+        //        var yearBson = track.GetValue("year");
+        //        if (yearBson.IsInt32)
+        //            return yearBson.AsInt32;
+        //        else if (yearBson.IsString)
+        //            return int.Parse(yearBson.AsString);
+        //        else
+        //        {
+        //            throw new Exception("Unsupported type for Track.Year");
+        //        }
+        //    }
+        //}
 
-    public class GetTrackListResponse
-    {
-        public IEnumerable<Track> Data { get; set; }
-        public int TotalCount { get; set; }
-        public bool ThereIsMore { get; set; }
-        public Permissions Permissions { get; } = new Permissions();
-    }
-
-    public class Permissions
-    {
-        public bool CanEditTrackData { get; } = true;
-        public bool CanFetchTrackRecommendations { get; } = true;
+        //private static Track Create(YoutubeVideo fromYt, dynamic fromDb) =>
+        //    new Track
+        //    {
+        //        YtId = fromYt.Id,
+        //        Title = fromYt.Title,
+        //        Image = fromYt.Image,
+        //        Description = fromYt.Description,
+        //        Channel = new TrackChannel
+        //        {
+        //            Id = fromYt.ChannelId,
+        //            Title = fromYt.ChannelTitle,
+        //        },
+        //        Year = fromDb.Year,
+        //        Genres = fromDb.Genres,
+        //        Tags = fromDb.Tags
+        //    };
     }
 }

@@ -9,10 +9,15 @@ namespace Music.Repositories
 {
     public class YoutubeVideoMasterRepository
     {
-        public async Task<IEnumerable<YoutubeVideo>> 
-            GetList(IEnumerable<string> ids)
+        private readonly YoutubeDataApiVideoRepository _repo;
+
+        public YoutubeVideoMasterRepository(YoutubeDataApiVideoRepository repo)
         {
-            throw new NotImplementedException();
+            _repo = repo;
         }
+
+        public Task<IEnumerable<YoutubeVideo>> 
+            GetList(IReadOnlyCollection<string> ids) =>
+            _repo.GetList(ids);
     }
 }

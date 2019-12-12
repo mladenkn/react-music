@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using Music.Operations;
+using Music.Repositories;
 using Music.Services;
 
 namespace Music
@@ -43,6 +44,10 @@ namespace Music
 
             services.AddTransient<HttpClient>();
             services.AddTransient<TrackService>();
+            services.AddTransient<MongoTrackRepository>();
+            services.AddTransient<TrackRepository>();
+            services.AddTransient<YoutubeVideoMasterRepository>();
+            services.AddTransient<YoutubeDataApiVideoRepository>();
 
             services.AddCors(options =>
             {
