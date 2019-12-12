@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using Music.Models;
+﻿using System.Threading.Tasks;
 using Music.Repositories;
 
 namespace Music.Services
@@ -18,7 +12,7 @@ namespace Music.Services
             _repo = repo;
         }
 
-        public Task<GetTrackListResponse> GetList() => _repo.GetList();
+        public Task<GetTrackListResponse> GetList(GetTracksArguments args) => _repo.GetCollection(args);
 
         //public async Task<GetTrackListResponse> GetList()
         //{

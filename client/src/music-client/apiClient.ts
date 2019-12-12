@@ -20,16 +20,17 @@ export const fetchTracksFromYT = (q: YoutubeTrackQuery) =>
 
 export const fetchTracks = async (query: TrackQueryData) => {
   const queryEntries = Object.entries(query).filter(([key, value]) => {
-    if(!value)
+    if(value === null  ||  value === undefined)
         return false;
     else if (Array.isArray(value) && value.length === 0)
         return false;
-    else if (Object.entries(value).length === 0)
+    else if (typeof value === 'object' && Object.entries(value).length === 0)
         return false;
     else
         return true;
   })
   const query_ = Object.fromEntries(queryEntries);
+  debugger;
   const r = await get<LoadedTracksResponse>(`${baseUrl}tracks`, query_);
   return r;
 };

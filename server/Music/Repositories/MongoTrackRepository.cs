@@ -16,10 +16,13 @@ namespace Music.Repositories
             _collection = db.GetCollection<BsonDocument>("tracks");
         }
 
-        public async Task<IReadOnlyCollection<TrackUserProps>> GetAll()
+        public async Task<IReadOnlyCollection<TrackUserProps>> GetCollection(GetTracksArguments args)
         {
-            var trackCursor = await _collection.FindAsync(t => true);
-            var allTracks = (await trackCursor.ToListAsync()).Take(50);
+            var allTracks = await _collection
+                .Find(t => true)
+                .Skip(args.Skip)
+                .Limit(args.Take)
+                .ToListAsync();
 
             return allTracks.Select(trackFromDb => new TrackUserProps
             {
@@ -29,6 +32,8 @@ namespace Music.Repositories
                 Genres = trackFromDb.GetValue("genres").AsBsonArray.ToArray().Select(i => i.AsString),
             }).ToList();
         }
+
+        public async Task<int> Count() => (int) await _collection.CountDocumentsAsync(t => true);
 
         private int? ExtractYear(BsonDocument track)
         {

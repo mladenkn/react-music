@@ -17,23 +17,25 @@ namespace Music.Repositories
             _mongoRepo = mongoRepo;
         }
 
-        public async Task<GetTrackListResponse> GetList()
+        public async Task<GetTrackListResponse> GetCollection(GetTracksArguments args)
         {
-            var allTracksFromDb = await _mongoRepo.GetAll();
+            var allTracksFromDb = await _mongoRepo.GetCollection(args);
             var allTracksFromDbIds = allTracksFromDb.Select(t => t.Id).ToArray();
             var tracksFromYoutube = await _videoRepo.GetList(allTracksFromDbIds);
 
-            var tracksFull = allTracksFromDb.Select(trackFromDb =>
+            var tracksFull = new List<Track>();
+            foreach (var trackFromDb in allTracksFromDb)
             {
-                var trackYtVideo = tracksFromYoutube.First(tv => tv.Id == trackFromDb.Id);
-                return Create(trackYtVideo, trackFromDb);
-            });
+                var trackYtVideo = tracksFromYoutube.FirstOrDefault(tv => tv.Id == trackFromDb.Id);
+                if(trackYtVideo != null)
+                    tracksFull.Add(Create(trackYtVideo, trackFromDb));
+            }
 
             return new GetTrackListResponse
             {
                 Data = tracksFull,
-                TotalCount =  tracksFull.Count(),
-                ThereIsMore = false,
+                TotalCount = await _mongoRepo.Count(),
+                ThereIsMore = true,
             };
         }
 
@@ -63,6 +65,12 @@ namespace Music.Repositories
         {
             throw new NotImplementedException();
         }
+    }
+
+    public class GetTracksArguments
+    {
+        public int Skip { get; set; }
+        public int Take { get; set; }
     }
 
     public class GetTrackListResponse

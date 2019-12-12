@@ -25,9 +25,10 @@ namespace Music.Repositories
             return (foundVideos, notFoundIds);
         }
 
-        public async Task Save(IEnumerable<YoutubeVideo> v)
+        public async Task Save(IReadOnlyCollection<YoutubeVideo> vids)
         {
-            await _col.InsertManyAsync(v);
+            if(vids.Count > 0)
+                await _col.InsertManyAsync(vids);
         }
 
         public async Task Update(YoutubeVideo v)

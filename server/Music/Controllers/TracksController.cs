@@ -18,9 +18,6 @@ namespace Music.Controllers
         }
 
         [HttpGet]
-        public Task<GetTrackListResponse> Get()
-        {
-            return _trackService.GetList();
-        }
+        public Task<GetTrackListResponse> Get([FromQuery] GetTracksArguments args) => _trackService.GetList(args);
     }
 }

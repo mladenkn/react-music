@@ -17,7 +17,7 @@ namespace Music.Repositories
             _youTubeService = youTubeService;
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetList(IReadOnlyCollection<string> ids)
+        public async Task<IReadOnlyCollection<YoutubeVideo>> GetList(IReadOnlyCollection<string> ids)
         {
             var r = new List<YoutubeVideo>(ids.Count);
 
