@@ -17,7 +17,7 @@ namespace Music.Repositories
             _mongoRepo = mongoRepo;
         }
 
-        public async Task<GetTrackListResponse> GetCollection(GetTracksArguments args)
+        public async Task<ListWithTotalCount<Track>> GetCollection(GetTracksArguments args)
         {
             var allTracksFromDb = await _mongoRepo.GetCollection(args);
             var allTracksFromDbIds = allTracksFromDb.Select(t => t.Id).ToArray();
@@ -31,7 +31,7 @@ namespace Music.Repositories
                     tracksFull.Add(Create(trackYtVideo, trackFromDb));
             }
 
-            return new GetTrackListResponse
+            return new ListWithTotalCount<Track>
             {
                 Data = tracksFull,
                 TotalCount = await _mongoRepo.Count(),
@@ -72,16 +72,5 @@ namespace Music.Repositories
         public int Take { get; set; }
     }
 
-    public class GetTrackListResponse
-    {
-        public IEnumerable<Track> Data { get; set; }
-        public int TotalCount { get; set; }
-        public GetTrackListResponsePermissions Permissions { get; } = new GetTrackListResponsePermissions();
-    }
-
-    public class GetTrackListResponsePermissions
-    {
-        public bool CanEditTrackData { get; } = true;
-        public bool CanFetchTrackRecommendations { get; } = true;
-    }
+    
 }
