@@ -48,6 +48,7 @@ namespace Music
             services.AddTransient<TrackRepository>();
             services.AddTransient<YoutubeVideoMasterRepository>();
             services.AddTransient<YoutubeDataApiVideoRepository>();
+            services.AddTransient<YoutubeVideoMongoRepository>();
 
             services.AddCors(options =>
             {

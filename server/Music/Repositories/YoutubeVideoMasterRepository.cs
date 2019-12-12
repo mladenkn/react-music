@@ -9,15 +9,27 @@ namespace Music.Repositories
 {
     public class YoutubeVideoMasterRepository
     {
-        private readonly YoutubeDataApiVideoRepository _repo;
+        private readonly YoutubeDataApiVideoRepository _remoteRepo;
+        private readonly YoutubeVideoMongoRepository _localRepo;
 
-        public YoutubeVideoMasterRepository(YoutubeDataApiVideoRepository repo)
+        public YoutubeVideoMasterRepository(YoutubeDataApiVideoRepository remoteRepo, YoutubeVideoMongoRepository localRepo)
         {
-            _repo = repo;
+            _remoteRepo = remoteRepo;
+            _localRepo = localRepo;
         }
 
-        public Task<IEnumerable<YoutubeVideo>> 
-            GetList(IReadOnlyCollection<string> ids) =>
-            _repo.GetList(ids);
+        public async Task<IEnumerable<YoutubeVideo>> 
+            GetList(IReadOnlyCollection<string> ids)
+        {
+            var (videosSavedLocally, notFoundVideosIds) = await _localRepo.GetList(ids);
+            if (notFoundVideosIds.Count() == 0)
+                return videosSavedLocally;
+            else
+            {
+                var remotelyFetchedVideos = await _remoteRepo.GetList(notFoundVideosIds);
+                await _localRepo.Save(remotelyFetchedVideos);
+                return videosSavedLocally.Concat(remotelyFetchedVideos);
+            }
+        }
     }
 }
