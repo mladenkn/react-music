@@ -57,7 +57,8 @@ export const useHomeViewLogic = () => {
     }
 
     const onTracksScrollToBottom = () => {
-        if(state.querySelection === QueryTypeSelection.TrackData  &&  wrapped.tracks.thereIsMore)
+        const thereIsMore = wrapped.tracks.data.length < wrapped.tracks.totalCount;
+        if(state.querySelection === QueryTypeSelection.TrackData && thereIsMore)
             wrapped.fetchMoreTracks(state.trackDataFormState!)        
     }
 

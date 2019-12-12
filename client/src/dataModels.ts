@@ -29,7 +29,6 @@ export interface TrackQueryData extends TrackDataForm {
 export interface LoadedTracksResponse {
     data: TrackData[]
     totalCount: number
-    thereIsMore: boolean
 }
 
 export interface YoutubeTrackQuery  {

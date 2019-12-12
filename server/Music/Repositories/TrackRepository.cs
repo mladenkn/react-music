@@ -35,7 +35,6 @@ namespace Music.Repositories
             {
                 Data = tracksFull,
                 TotalCount = await _mongoRepo.Count(),
-                ThereIsMore = true,
             };
         }
 
@@ -77,7 +76,6 @@ namespace Music.Repositories
     {
         public IEnumerable<Track> Data { get; set; }
         public int TotalCount { get; set; }
-        public bool ThereIsMore { get; set; }
         public GetTrackListResponsePermissions Permissions { get; } = new GetTrackListResponsePermissions();
     }
 

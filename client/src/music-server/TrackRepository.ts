@@ -55,13 +55,12 @@ export class TrackRepository extends MongoBaseRepository<TrackData> {
       .sort({ savedAt: -1 })
       .map(dissoc("savedAt"))
       .toArray()) as TrackData[];
-    const thereIsMore = data.length < totalCount;
 
     console.log(query);
     console.log(filter);
     console.log("TrackRepository.getList end");
 
-    return { data, thereIsMore, totalCount };
+    return { data, totalCount };
   }
 
   getWithIds(ids: string[]): Promise<TrackData[]> {
