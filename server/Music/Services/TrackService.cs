@@ -22,6 +22,11 @@ namespace Music.Services
                 TotalCount = r.TotalCount,
             };
         }
+
+        public async Task Save(TrackUserProps trackUserProps)
+        {
+            await _repo.Save(trackUserProps);
+        }
     }
 
     public class GetTrackListResponse : ListWithTotalCount<Track>

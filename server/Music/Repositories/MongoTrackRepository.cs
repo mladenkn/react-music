@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Music.Models;
 
 namespace Music.Repositories
 {
@@ -35,6 +36,11 @@ namespace Music.Repositories
 
         public async Task<int> Count() => (int) await _collection.CountDocumentsAsync(t => true);
 
+        public async Task Save(TrackUserProps track)
+        {
+
+        }
+
         private int? ExtractYear(BsonDocument track)
         {
             if (!track.ContainsValue("year"))
@@ -52,13 +58,5 @@ namespace Music.Repositories
                 }
             }
         }
-    }
-
-    public class TrackUserProps
-    {
-        public string Id { get; set; }
-        public IEnumerable<string> Tags { get; set; }
-        public IEnumerable<string> Genres { get; set; }
-        public int? Year { get; set; }
     }
 }

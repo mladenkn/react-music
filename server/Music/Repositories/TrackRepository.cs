@@ -55,14 +55,9 @@ namespace Music.Repositories
                 Tags = fromDb.Tags
             };
 
-        public async Task Save(Track t)
+        public async Task Save(TrackUserProps t)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task Update(Track t)
-        {
-            throw new NotImplementedException();
+            await _mongoRepo.Save(t);
         }
     }
 
