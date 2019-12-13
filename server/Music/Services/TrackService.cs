@@ -22,16 +22,16 @@ namespace Music.Services
                 TotalCount = r.TotalCount,
             };
         }
+    }
 
-        public class GetTrackListResponse : ListWithTotalCount<Track>
-        {
-            public GetTrackListResponsePermissions Permissions { get; } = new GetTrackListResponsePermissions();
-        }
+    public class GetTrackListResponse : ListWithTotalCount<Track>
+    {
+        public GetTrackListResponsePermissions Permissions { get; } = new GetTrackListResponsePermissions();
+    }
 
-        public class GetTrackListResponsePermissions
-        {
-            public bool CanEditTrackData { get; } = true;
-            public bool CanFetchTrackRecommendations { get; } = true;
-        }
+    public class GetTrackListResponsePermissions
+    {
+        public bool CanEditTrackData { get; } = true;
+        public bool CanFetchTrackRecommendations { get; } = true;
     }
 }
