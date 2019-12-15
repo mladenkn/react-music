@@ -14,7 +14,7 @@ namespace Music.Repositories
 
         public MongoTrackRepository(IMongoDatabase db)
         {
-            _collection = db.GetCollection<BsonDocument>("tracks");
+            _collection = db.GetCollection<BsonDocument>("tracks2");
         }
 
         public async Task<IReadOnlyCollection<TrackUserProps>> GetCollection(GetTracksArguments args)
@@ -27,7 +27,7 @@ namespace Music.Repositories
 
             return allTracks.Select(trackFromDb => new TrackUserProps
             {
-                Id = trackFromDb.GetValue("ytID").AsString,
+                YtId = trackFromDb.GetValue("ytID").AsString,
                 Year = ExtractYear(trackFromDb),
                 Tags = trackFromDb.GetValue("tags").AsBsonArray.ToArray().Select(i => i.AsString),
                 Genres = trackFromDb.GetValue("genres").AsBsonArray.ToArray().Select(i => i.AsString),
@@ -36,19 +36,39 @@ namespace Music.Repositories
 
         public async Task<int> Count() => (int) await _collection.CountDocumentsAsync(t => true);
 
-        public async Task Save(TrackUserProps track)
+        public async Task Save(IEnumerable<TrackUserProps> tracks)
         {
+            foreach (var track in tracks)
+            {
+                var trackBson = new BsonDocument
+                {
+                    { "ytID", track.YtId },
+                    { "tags", new BsonArray(track.Tags) },
+                    { "genres", new BsonArray(track.Genres) },
+                    { "year", track.Year },
+                };
 
+                var queryBuilder = Builders<BsonDocument>.Filter;
+                var trackFilter = queryBuilder.Eq("ytID", track.YtId);
+
+                var existingInstance = await _collection.Find(trackFilter).FirstOrDefaultAsync();
+                if (existingInstance == null)
+                    await _collection.InsertOneAsync(trackBson);
+                else
+                    await _collection.ReplaceOneAsync(trackFilter, trackBson);
+            }
         }
 
         private int? ExtractYear(BsonDocument track)
         {
-            if (!track.ContainsValue("year"))
+            if (!track.Contains("year"))
                 return null;
             else
             {
                 var yearBson = track.GetValue("year");
-                if (yearBson.IsInt32)
+                if (yearBson.IsBsonNull)
+                    return null;
+                else if (yearBson.IsInt32)
                     return yearBson.AsInt32;
                 else if (yearBson.IsString)
                     return int.Parse(yearBson.AsString);

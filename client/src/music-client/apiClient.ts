@@ -3,7 +3,8 @@ import {
   TrackData,
   LoadedTracksResponse,
   YoutubeTrackQuery,
-  WithUserPermissions
+  WithUserPermissions,
+  UserPermissions
 } from "../dataModels";
 import axios from "axios";
 
@@ -30,7 +31,6 @@ export const fetchTracks = async (query: TrackQueryData) => {
         return true;
   })
   const query_ = Object.fromEntries(queryEntries);
-  debugger;
   const r = await get<LoadedTracksResponse>(`${baseUrl}tracks`, query_);
   return r;
 };
@@ -40,11 +40,9 @@ export const fetchRelatedTracks = (videoID: string) =>
     videoID
   });
 
-export const saveTracks = (data: TrackData[]) => {
+export const saveTracks = async (data: TrackData[]) => {
   console.log(data);
-  return post<{
-    tracks: TrackData[];
-  }>(`${baseUrl}tracks`, { tracks: data });
+  return post2(`${baseUrl}tracks`, { tracks: data });
 };
 
 const get = <TResponse>(url: string, params: unknown) => {
@@ -60,6 +58,13 @@ const post = <TResponse>(url: string, params: unknown) => {
   const userKey = getUserKey();
   return axios
     .post<TResponse & WithUserPermissions>(url, { ...params, userKey })
+    .then(r => r.data);
+};
+
+const post2 = (url: string, params: unknown) => {
+  const userKey = getUserKey();
+  return axios
+    .post<UserPermissions>(url, { ...params, userKey })
     .then(r => r.data);
 };
 

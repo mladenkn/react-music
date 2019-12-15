@@ -20,13 +20,13 @@ namespace Music.Repositories
         public async Task<ListWithTotalCount<Track>> GetCollection(GetTracksArguments args)
         {
             var allTracksFromDb = await _mongoRepo.GetCollection(args);
-            var allTracksFromDbIds = allTracksFromDb.Select(t => t.Id).ToArray();
+            var allTracksFromDbIds = allTracksFromDb.Select(t => t.YtId).ToArray();
             var tracksFromYoutube = await _videoRepo.GetList(allTracksFromDbIds);
 
             var tracksFull = new List<Track>();
             foreach (var trackFromDb in allTracksFromDb)
             {
-                var trackYtVideo = tracksFromYoutube.FirstOrDefault(tv => tv.Id == trackFromDb.Id);
+                var trackYtVideo = tracksFromYoutube.FirstOrDefault(tv => tv.Id == trackFromDb.YtId);
                 if(trackYtVideo != null)
                     tracksFull.Add(Create(trackYtVideo, trackFromDb));
             }
@@ -55,10 +55,7 @@ namespace Music.Repositories
                 Tags = fromDb.Tags
             };
 
-        public async Task Save(TrackUserProps t)
-        {
-            await _mongoRepo.Save(t);
-        }
+        public Task Save(IEnumerable<TrackUserProps> tracks) => _mongoRepo.Save(tracks);
     }
 
     public class GetTracksArguments

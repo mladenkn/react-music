@@ -23,7 +23,7 @@ namespace Music.Models
 
     public class TrackUserProps
     {
-        public string Id { get; set; }
+        public string YtId { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public IEnumerable<string> Genres { get; set; }
         public int? Year { get; set; }
@@ -33,5 +33,11 @@ namespace Music.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
+    }
+
+    public class TrackPermissions
+    {
+        public bool CanEditTrackData { get; } = true;
+        public bool CanFetchTrackRecommendations { get; } = true;
     }
 }

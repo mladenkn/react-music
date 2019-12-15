@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Music.Models;
 using Music.Repositories;
 
@@ -23,20 +24,15 @@ namespace Music.Services
             };
         }
 
-        public async Task Save(TrackUserProps trackUserProps)
+        public async Task<TrackPermissions> Save(IEnumerable<TrackUserProps> tracks)
         {
-            await _repo.Save(trackUserProps);
+            await _repo.Save(tracks);
+            return new TrackPermissions();
         }
     }
 
     public class GetTrackListResponse : ListWithTotalCount<Track>
     {
-        public GetTrackListResponsePermissions Permissions { get; } = new GetTrackListResponsePermissions();
-    }
-
-    public class GetTrackListResponsePermissions
-    {
-        public bool CanEditTrackData { get; } = true;
-        public bool CanFetchTrackRecommendations { get; } = true;
+        public TrackPermissions Permissions { get; } = new TrackPermissions();
     }
 }

@@ -69,12 +69,11 @@ export const useHomeLogic = () => {
   }
 
   const onSaveTrack = async (track: TrackData) => {
-    const {tracks, permissions} = (await saveTracks([track]))
-    const updatedTrack = tracks[0]
+    const permissions = await saveTracks([track])
     const tracksData =
-        replaceMatches(state.tracks.data, t => t.ytId === updatedTrack.ytId, updatedTrack).allItems
+        replaceMatches(state.tracks.data, t => t.ytId === track.ytId, track).allItems
     const trackRecommendations =
-        replaceMatches(state.trackRecommendations, t => t.ytId === updatedTrack.ytId, updatedTrack).allItems
+        replaceMatches(state.trackRecommendations, t => t.ytId === track.ytId, track).allItems
     const tracks_ = { data: tracksData, totalCount: state.tracks.totalCount }
     setState({...state, tracks: tracks_, trackRecommendations, userPermissions: permissions})
   }

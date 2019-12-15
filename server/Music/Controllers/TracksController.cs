@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Music.Models;
 using Music.Repositories;
 using Music.Services;
+using Newtonsoft.Json.Linq;
 
 namespace Music.Controllers
 {
@@ -18,5 +21,13 @@ namespace Music.Controllers
 
         [HttpGet]
         public Task<GetTrackListResponse> Get([FromQuery] GetTracksArguments args) => _trackService.GetList(args);
+
+        [HttpPost]
+        public Task<TrackPermissions> Save(Post req) => _trackService.Save(req.Tracks);
+    }
+
+    public class Post
+    {
+        public IEnumerable<TrackUserProps> Tracks { get; set; }
     }
 }
