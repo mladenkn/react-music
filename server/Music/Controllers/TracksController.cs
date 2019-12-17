@@ -22,6 +22,9 @@ namespace Music.Controllers
         [HttpGet]
         public Task<GetTrackListResponse> Get([FromQuery] GetTracksArguments args) => _trackService.GetList(args);
 
+        [HttpGet("yt")]
+        public Task<SearchYoutubeResult> SearchYoutube([FromQuery] YoutubeTrackQuery args) => _trackService.SearchYoutube(args);
+
         [HttpPost]
         public Task<TrackPermissions> Save(Post req) => _trackService.Save(req.Tracks);
     }

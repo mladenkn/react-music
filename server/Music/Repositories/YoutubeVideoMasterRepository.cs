@@ -18,8 +18,7 @@ namespace Music.Repositories
             _localRepo = localRepo;
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> 
-            GetList(IReadOnlyCollection<string> ids)
+        public async Task<IEnumerable<YoutubeVideo>>GetList(IReadOnlyCollection<string> ids)
         {
             var (videosSavedLocally, notFoundVideosIds) = await _localRepo.GetList(ids);
             if (notFoundVideosIds.Count() == 0)

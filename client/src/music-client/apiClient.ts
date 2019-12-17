@@ -17,7 +17,7 @@ else if (process.env.NODE_ENV === "production")
 else throw new Error();
 
 export const fetchTracksFromYT = (q: YoutubeTrackQuery) =>
-  get<{ tracks: TrackData[] }>(baseUrl + "tracks-yt/", { query: q });
+  get<{ tracks: TrackData[] }>(`${baseUrl}tracks/yt/`, q);
 
 export const fetchTracks = async (query: TrackQueryData) => {
   const queryEntries = Object.entries(query).filter(([key, value]) => {

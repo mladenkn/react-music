@@ -1,5 +1,5 @@
 import { useHomeLogic } from "./home";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TrackDataForm } from "../view/TrackQueryInteractiveForm/rootLogic";
 import { YoutubeTrackQueryFormData } from "../view/YoutubeTrackQueryForm";
 import { pick, omit } from "ramda";
@@ -37,6 +37,14 @@ export const useHomeViewLogic = () => {
             channelTitle: undefined   
         } as YoutubeTrackQueryFormData,
     })
+
+    useEffect(() => {
+        exeTrackDataQueryOnChange();
+    }, [state.trackDataFormState])
+
+    useEffect(() => {
+        exeTrackDataYoutubeQueryOnChange();
+    }, [state.youtubeTrackForm])
      
     const setQuerySelection = (value: QueryTypeSelection) => setState({...state, querySelection: value })
     const setResultSelection = (value: QueryResultSelection) => setState({...state, resultSelection: value })
@@ -44,10 +52,10 @@ export const useHomeViewLogic = () => {
     
     const trackDataFormChange = (input: TrackDataForm) => {
         setState({ ...state, trackDataFormState: input });
-        exeTrackDataQueryOnChange(input);
     }
 
-    const exeTrackDataQueryOnChange = debounce((f: TrackDataForm) => wrapped.fetchTracks(f), 500)
+    const exeTrackDataQueryOnChange = debounce(() => wrapped.fetchTracks(state.trackDataFormState), 500)
+    const exeTrackDataYoutubeQueryOnChange = debounce(() => wrapped.fetchTracksFromYT(state.youtubeTrackForm), 500)
 
     const exeQuery = () => {
         if(state.querySelection === QueryTypeSelection.TrackData)

@@ -3,6 +3,7 @@ using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using MongoDB.Driver;
 using Music.Operations;
 using Music.Repositories;
 using Music.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Music
 {
@@ -25,6 +27,8 @@ namespace Music
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddMvc(o => o.EnableEndpointRouting = true);
+
             services.AddControllers();
 
             services.AddSingleton<IMongoDatabase>(_ =>
@@ -50,17 +54,9 @@ namespace Music
             services.AddTransient<YoutubeDataApiVideoRepository>();
             services.AddTransient<YoutubeVideoMongoRepository>();
 
-            services.AddCors(options =>
+            services.AddSwaggerGen(c =>
             {
-                options.AddPolicy("AllowAll",
-                    builder =>
-                    {
-                        builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader()
-                            ;
-                    });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
             });
         }
 
@@ -72,7 +68,19 @@ namespace Music
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("AllowAll");
+            //app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Music API V1");
+            });
+
+            app.UseCors(o => o
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+            );
 
             app.UseHttpsRedirection();
 

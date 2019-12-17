@@ -8,13 +8,15 @@ namespace Music.Repositories
 {
     public class TrackRepository
     {
+        private readonly YoutubeDataApiVideoRepository _videoRemoteRepo;
         private readonly YoutubeVideoMasterRepository _videoRepo;
         private readonly MongoTrackRepository _mongoRepo;
 
-        public TrackRepository(YoutubeVideoMasterRepository videoRepo, MongoTrackRepository mongoRepo)
+        public TrackRepository(YoutubeVideoMasterRepository videoRepo, MongoTrackRepository mongoRepo, YoutubeDataApiVideoRepository videoRemoteRepo)
         {
             _videoRepo = videoRepo;
             _mongoRepo = mongoRepo;
+            _videoRemoteRepo = videoRemoteRepo;
         }
 
         public async Task<ListWithTotalCount<Track>> GetCollection(GetTracksArguments args)
@@ -36,6 +38,11 @@ namespace Music.Repositories
                 Data = tracksFull,
                 TotalCount = await _mongoRepo.Count(),
             };
+        }
+        public async Task<IEnumerable<Track>> GetCollectionFromYoutube(YoutubeTrackQuery query)
+        {
+            //var videos = await _videoRemoteRepo.Search(query);
+            return new Track[0];
         }
 
         private static Track Create(YoutubeVideo fromYt, TrackUserProps fromDb) =>

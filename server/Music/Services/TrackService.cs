@@ -24,6 +24,15 @@ namespace Music.Services
             };
         }
 
+        public async Task<SearchYoutubeResult> SearchYoutube(YoutubeTrackQuery query)
+        {
+            var data = await _repo.GetCollectionFromYoutube(query);
+            return new SearchYoutubeResult
+            {
+                Tracks = data
+            };
+        }
+
         public async Task<TrackPermissions> Save(IEnumerable<TrackUserProps> tracks)
         {
             await _repo.Save(tracks);
@@ -33,6 +42,12 @@ namespace Music.Services
 
     public class GetTrackListResponse : ListWithTotalCount<Track>
     {
+        public TrackPermissions Permissions { get; } = new TrackPermissions();
+    }
+
+    public class SearchYoutubeResult
+    {
+        public IEnumerable<Track> Tracks { get; set; }
         public TrackPermissions Permissions { get; } = new TrackPermissions();
     }
 }

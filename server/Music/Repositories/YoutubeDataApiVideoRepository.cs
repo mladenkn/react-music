@@ -33,8 +33,28 @@ namespace Music.Repositories
 
             return r;
         }
+        public async Task<IReadOnlyCollection<YoutubeVideo>> Search(YoutubeTrackQuery query)
+        {
+            var request = _youTubeService.Search.List("snippet");
+            request.Type = "video";
+            request.Q = query.SearchQuery;
+            request.MaxResults = query.MaxResults;
 
-        private static YoutubeVideo MapToYoutubeVideo(Video fromYt) => new YoutubeVideo
+            var r = await request.ExecuteAsync();
+            var videos = r.Items.Select(item => new YoutubeVideo
+            {
+                ChannelId = item.Snippet.ChannelId,
+                ChannelTitle = item.Snippet.ChannelTitle,
+                Description = item.Snippet.Description,
+                Id = item.Id.VideoId,
+                Image = item.Snippet.Thumbnails.Medium.Url,
+                Title = item.Snippet.Title,
+            }).ToArray();
+
+            return videos;
+        }
+        
+    private static YoutubeVideo MapToYoutubeVideo(Video fromYt) => new YoutubeVideo
         {
             Id = fromYt.Id,
             Title = fromYt.Snippet.Title,
@@ -43,5 +63,12 @@ namespace Music.Repositories
             ChannelId = fromYt.Snippet.ChannelId,
             ChannelTitle = fromYt.Snippet.ChannelTitle,
         };
+    }
+
+    public class YoutubeTrackQuery
+    {
+        public string SearchQuery { get; set; }
+        public string ChannelTitle { get; set; }
+        public int MaxResults { get; set; } 
     }
 }
