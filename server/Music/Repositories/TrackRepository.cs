@@ -8,15 +8,13 @@ namespace Music.Repositories
 {
     public class TrackRepository
     {
-        private readonly YoutubeDataApiVideoRepository _videoRemoteRepo;
         private readonly YoutubeVideoMasterRepository _videoRepo;
         private readonly MongoTrackRepository _mongoRepo;
 
-        public TrackRepository(YoutubeVideoMasterRepository videoRepo, MongoTrackRepository mongoRepo, YoutubeDataApiVideoRepository videoRemoteRepo)
+        public TrackRepository(YoutubeVideoMasterRepository videoRepo, MongoTrackRepository mongoRepo)
         {
             _videoRepo = videoRepo;
             _mongoRepo = mongoRepo;
-            _videoRemoteRepo = videoRemoteRepo;
         }
 
         public async Task<ListWithTotalCount<Track>> GetCollection(GetTracksArguments args)
@@ -41,12 +39,20 @@ namespace Music.Repositories
         }
         public async Task<IEnumerable<Track>> GetCollectionFromYoutube(YoutubeTrackQuery query)
         {
-            //var videos = await _videoRemoteRepo.Search(query);
-            return new Track[0];
+            var videos = await _videoRepo.Search(query);
+            var tracksUserProps = await _mongoRepo.GetCollectionIfItemsExist(videos.Select(v => v.Id));
+            var tracks = videos.Select(video =>
+            {
+                var trackUserProps = tracksUserProps.FirstOrDefault(t => t.YtId == video.Id);
+                return Create(video, trackUserProps);
+            });
+            return tracks;
         }
 
-        private static Track Create(YoutubeVideo fromYt, TrackUserProps fromDb) =>
-            new Track
+        private static Track Create(YoutubeVideo fromYt, TrackUserProps usersProps)
+        {
+            var hasUsersProps = usersProps != null;
+            return new Track
             {
                 YtId = fromYt.Id,
                 Title = fromYt.Title,
@@ -57,10 +63,11 @@ namespace Music.Repositories
                     Id = fromYt.ChannelId,
                     Title = fromYt.ChannelTitle,
                 },
-                Year = fromDb.Year,
-                Genres = fromDb.Genres,
-                Tags = fromDb.Tags
+                Year = hasUsersProps ? usersProps.Year : null,
+                Genres = hasUsersProps ? usersProps.Genres : new string[0],
+                Tags = hasUsersProps ? usersProps.Tags : new string[0]
             };
+        }
 
         public Task Save(IEnumerable<TrackUserProps> tracks) => _mongoRepo.Save(tracks);
     }

@@ -64,11 +64,4 @@ namespace Music.Repositories
             ChannelTitle = fromYt.Snippet.ChannelTitle,
         };
     }
-
-    public class YoutubeTrackQuery
-    {
-        public string SearchQuery { get; set; }
-        public string ChannelTitle { get; set; }
-        public int MaxResults { get; set; } 
-    }
 }

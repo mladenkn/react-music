@@ -19,13 +19,24 @@ namespace Music.Repositories
 
         public async Task<IReadOnlyCollection<TrackUserProps>> GetCollection(GetTracksArguments args)
         {
-            var allTracks = await _collection
+            var tracksBson = await _collection
                 .Find(t => true)
                 .Skip(args.Skip)
                 .Limit(args.Take)
                 .ToListAsync();
+            return MapToTrackUserPropsCollection(tracksBson);
+        }
 
-            return allTracks.Select(trackFromDb => new TrackUserProps
+        public async Task<IReadOnlyCollection<TrackUserProps>> GetCollectionIfItemsExist(IEnumerable<string> ids)
+        {
+            var filter = Builders<BsonDocument>.Filter.In("ytID", ids);
+            var tracksBson = await _collection.Find(filter).ToListAsync();
+            return MapToTrackUserPropsCollection(tracksBson);
+        }
+
+        private IReadOnlyCollection<TrackUserProps> MapToTrackUserPropsCollection(IEnumerable<BsonDocument> tracksBson)
+        {
+            return tracksBson.Select(trackFromDb => new TrackUserProps
             {
                 YtId = trackFromDb.GetValue("ytID").AsString,
                 Year = ExtractYear(trackFromDb),

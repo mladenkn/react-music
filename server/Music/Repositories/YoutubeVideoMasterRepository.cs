@@ -12,13 +12,14 @@ namespace Music.Repositories
         private readonly YoutubeDataApiVideoRepository _remoteRepo;
         private readonly YoutubeVideoMongoRepository _localRepo;
 
-        public YoutubeVideoMasterRepository(YoutubeDataApiVideoRepository remoteRepo, YoutubeVideoMongoRepository localRepo)
+        public YoutubeVideoMasterRepository(YoutubeDataApiVideoRepository remoteRepo,
+            YoutubeVideoMongoRepository localRepo)
         {
             _remoteRepo = remoteRepo;
             _localRepo = localRepo;
         }
 
-        public async Task<IEnumerable<YoutubeVideo>>GetList(IReadOnlyCollection<string> ids)
+        public async Task<IEnumerable<YoutubeVideo>> GetList(IReadOnlyCollection<string> ids)
         {
             var (videosSavedLocally, notFoundVideosIds) = await _localRepo.GetList(ids);
             if (notFoundVideosIds.Count() == 0)
@@ -30,5 +31,14 @@ namespace Music.Repositories
                 return videosSavedLocally.Concat(remotelyFetchedVideos);
             }
         }
+
+        public Task<IReadOnlyCollection<YoutubeVideo>> Search(YoutubeTrackQuery query) => _remoteRepo.Search(query);
+    }
+    
+    public class YoutubeTrackQuery
+    {
+        public string SearchQuery { get; set; }
+        public string ChannelTitle { get; set; }
+        public int MaxResults { get; set; }
     }
 }
