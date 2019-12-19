@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Music.Models;
 using Music.Repositories;
 using Music.Services;
-using Newtonsoft.Json.Linq;
 
 namespace Music.Controllers
 {

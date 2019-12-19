@@ -2,3 +2,4 @@ server/Utilities/obj/
 server/Music/.vs/
 server/Music/bin/
 server/Music/obj/
+node_modules/
