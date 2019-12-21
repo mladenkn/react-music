@@ -5,7 +5,8 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace Music.Models
 {
-    public abstract class YoutubeVideoBase
+
+    public class YoutubeVideo
     {
         public string Id { get; set; }
 
@@ -36,10 +37,6 @@ namespace Music.Models
         public IEnumerable<YoutubeVideoThumbnail> Thumbnails { get; set; }
 
         public string ThumbnailsEtag { get; set; }
-    }
-
-    public class YoutubeVideo : YoutubeVideoBase
-    {
         public IEnumerable<string> Tags { get; set; }
 
         public string YoutubeCategoryId { get; set; }
@@ -49,10 +46,6 @@ namespace Music.Models
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
-    }
-
-    public class YoutubeVideoFromSearchResults : YoutubeVideoBase
-    {
     }
 
     public class YoutubeVideoStatistics

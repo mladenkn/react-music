@@ -36,29 +36,6 @@ namespace Music.Repositories
 
             return r;
         }
-
-        public async Task<IReadOnlyCollection<YoutubeVideoFromSearchResults>> Search(YoutubeTrackQuery query)
-        {
-            var request = _youTubeService.Search.List("snippet");
-            request.Type = "video";
-            request.Q = query.SearchQuery;
-            request.MaxResults = query.MaxResults;
-
-            var r = await request.ExecuteAsync();
-            var videos = r.Items.Select(item => new YoutubeVideoFromSearchResults
-            {
-                Id = item.Id.VideoId,
-                Title = item.Snippet.Title,
-                Description = item.Snippet.Description,
-                ChannelId = item.Snippet.ChannelId,
-                ChannelTitle = item.Snippet.ChannelTitle,
-                PublishedAt = item.Snippet.PublishedAt,
-                Thumbnails = YoutubeVideoThumbnail.CreateCollection(item.Snippet.Thumbnails),
-                ThumbnailsEtag = item.Snippet.Thumbnails.ETag,
-            }).ToArray();
-
-            return videos;
-        }
         
         private static YoutubeVideo MapToYoutubeVideo(Video fromYt)
         {

@@ -49,7 +49,7 @@ namespace Music.Repositories
             return tracks;
         }
 
-        private static Track Create(YoutubeVideoBase fromYt, TrackUserProps usersProps)
+        private static Track Create(YoutubeVideo fromYt, TrackUserProps usersProps)
         {
             var hasUsersProps = usersProps != null;
             return new Track
