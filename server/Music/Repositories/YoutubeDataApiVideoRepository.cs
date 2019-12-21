@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Microsoft.EntityFrameworkCore.InMemory.Query.Internal;
 using Music.Models;
 using Utilities;
 
@@ -35,7 +37,7 @@ namespace Music.Repositories
             return r;
         }
 
-        public async Task<IReadOnlyCollection<YoutubeVideo>> Search(YoutubeTrackQuery query)
+        public async Task<IReadOnlyCollection<YoutubeVideoFromSearchResults>> Search(YoutubeTrackQuery query)
         {
             var request = _youTubeService.Search.List("snippet");
             request.Type = "video";
@@ -43,14 +45,16 @@ namespace Music.Repositories
             request.MaxResults = query.MaxResults;
 
             var r = await request.ExecuteAsync();
-            var videos = r.Items.Select(item => new YoutubeVideo
+            var videos = r.Items.Select(item => new YoutubeVideoFromSearchResults
             {
+                Id = item.Id.VideoId,
+                Title = item.Snippet.Title,
+                Description = item.Snippet.Description,
                 ChannelId = item.Snippet.ChannelId,
                 ChannelTitle = item.Snippet.ChannelTitle,
-                Description = item.Snippet.Description,
-                Id = item.Id.VideoId,
-                Image = item.Snippet.Thumbnails.Medium.Url,
-                Title = item.Snippet.Title,
+                PublishedAt = item.Snippet.PublishedAt,
+                Thumbnails = YoutubeVideoThumbnail.CreateCollection(item.Snippet.Thumbnails),
+                ThumbnailsEtag = item.Snippet.Thumbnails.ETag,
             }).ToArray();
 
             return videos;
@@ -64,7 +68,6 @@ namespace Music.Repositories
             {
                 Id = fromYt.Id,
                 Title = fromYt.Snippet.Title,
-                Image = fromYt.Snippet.Thumbnails.Medium.Url,
                 Description = fromYt.Snippet.Description,
                 ChannelId = fromYt.Snippet.ChannelId,
                 ChannelTitle = fromYt.Snippet.ChannelTitle,
@@ -73,7 +76,7 @@ namespace Music.Repositories
                 YoutubeCategoryId = fromYt.Snippet.CategoryId,
                 Thumbnails = YoutubeVideoThumbnail.CreateCollection(fromYt.Snippet.Thumbnails),
                 ThumbnailsEtag = fromYt.Snippet.Thumbnails.ETag,
-                Duration = ParseDuration(fromYt.ContentDetails.Duration),
+                Duration = XmlConvert.ToTimeSpan(fromYt.ContentDetails.Duration),
                 Statistics = new YoutubeVideoStatistics
                 {
                     CommentCount = fromYt.Statistics.CommentCount,
@@ -92,29 +95,36 @@ namespace Music.Repositories
             };
         }
 
-        private static TimeSpan ParseDuration(string durationString)
-        {
-            var indexOfH = durationString.IndexOf('H');
-            var indexOfM = durationString.IndexOf('M');
-            var indexOfS = durationString.IndexOf('S');
+        //private static TimeSpan ParseDuration(string durationString)
+        //{
+        //    var indexOfH = durationString.IndexOf('H');
+        //    var indexOfM = durationString.IndexOf('M');
+        //    var indexOfS = durationString.IndexOf('S');
 
-            var minutesLowerBound = indexOfH == -1 ? durationString.IndexOf('T') : indexOfH;
+        //    try
+        //    {
+        //        var minutesLowerBound = indexOfH == -1 ? durationString.IndexOf('T') : indexOfH;
 
-            int secs;
-            if (indexOfS != -1)
-            {
-                var secsString = durationString.SubstringBetweenIndexes(indexOfM + 1, indexOfS);
-                secs = int.Parse(secsString);
-            }
-            else
-                secs = 0;
+        //        int secs;
+        //        if (indexOfS != -1)
+        //        {
+        //            var secsString = durationString.SubstringBetweenIndexes(indexOfM + 1, indexOfS);
+        //            secs = int.Parse(secsString);
+        //        }
+        //        else
+        //            secs = 0;
 
-            var minutesString = durationString.SubstringBetweenIndexes(minutesLowerBound + 1, indexOfM);
+        //        var minutesString = durationString.SubstringBetweenIndexes(minutesLowerBound + 1, indexOfM);
 
-            var minutes = int.Parse(minutesString);
-            var secsTotal = secs + minutes * 60;
-            var r = TimeSpan.FromSeconds(secsTotal);
-            return r;
-        }
+        //        var minutes = int.Parse(minutesString);
+        //        var secsTotal = secs + minutes * 60;
+        //        var r = TimeSpan.FromSeconds(secsTotal);
+        //        return r;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        throw e;
+        //    }
+        //}
     }
 }

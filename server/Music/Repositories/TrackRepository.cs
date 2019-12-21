@@ -37,7 +37,7 @@ namespace Music.Repositories
                 TotalCount = await _mongoRepo.Count(),
             };
         }
-        public async Task<IEnumerable<Track>> GetCollectionFromYoutube(YoutubeTrackQuery query)
+        public async Task<IEnumerable<Track>> GetCollectionFromYoutubeSearch(YoutubeTrackQuery query)
         {
             var videos = await _videoRepo.Search(query);
             var tracksUserProps = await _mongoRepo.GetCollectionIfItemsExist(videos.Select(v => v.Id));
@@ -49,14 +49,14 @@ namespace Music.Repositories
             return tracks;
         }
 
-        private static Track Create(YoutubeVideo fromYt, TrackUserProps usersProps)
+        private static Track Create(YoutubeVideoBase fromYt, TrackUserProps usersProps)
         {
             var hasUsersProps = usersProps != null;
             return new Track
             {
                 YtId = fromYt.Id,
                 Title = fromYt.Title,
-                Image = fromYt.Image,
+                Image = fromYt.GetImage(),
                 Description = fromYt.Description,
                 Channel = new TrackChannel
                 {
@@ -77,6 +77,4 @@ namespace Music.Repositories
         public int Skip { get; set; }
         public int Take { get; set; }
     }
-
-    
 }

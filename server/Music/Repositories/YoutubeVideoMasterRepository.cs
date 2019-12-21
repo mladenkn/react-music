@@ -32,7 +32,7 @@ namespace Music.Repositories
             }
         }
 
-        public Task<IReadOnlyCollection<YoutubeVideo>> Search(YoutubeTrackQuery query) => _remoteRepo.Search(query);
+        public Task<IReadOnlyCollection<YoutubeVideoFromSearchResults>> Search(YoutubeTrackQuery query) => _remoteRepo.Search(query);
     }
     
     public class YoutubeTrackQuery

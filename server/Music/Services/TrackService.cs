@@ -26,7 +26,7 @@ namespace Music.Services
 
         public async Task<SearchYoutubeResult> SearchYoutube(YoutubeTrackQuery query)
         {
-            var data = await _repo.GetCollectionFromYoutube(query);
+            var data = await _repo.GetCollectionFromYoutubeSearch(query);
             return new SearchYoutubeResult
             {
                 Tracks = data

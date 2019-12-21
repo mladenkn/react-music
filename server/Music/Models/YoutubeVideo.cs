@@ -5,13 +5,27 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace Music.Models
 {
-    public class YoutubeVideo
+    public abstract class YoutubeVideoBase
     {
         public string Id { get; set; }
 
         public string Title { get; set; }
 
-        public string Image { get; set; }
+        public string GetImage()
+        {
+            bool HasThumbnail(string name) => Thumbnails.Any(t => t.Name == name);
+
+            string GetThumbnail(string name) => Thumbnails.First(t => t.Name == name).Name;
+
+            if (HasThumbnail("Default__"))
+                return GetThumbnail("Default__");
+            else if (HasThumbnail("Standard"))
+                return GetThumbnail("Standard");
+            else if (HasThumbnail("Medium"))
+                return GetThumbnail("Medium");
+            else
+                throw new Exception();
+        }
 
         public string Description { get; set; }
 
@@ -24,7 +38,10 @@ namespace Music.Models
         public IEnumerable<YoutubeVideoThumbnail> Thumbnails { get; set; }
 
         public string ThumbnailsEtag { get; set; }
+    }
 
+    public class YoutubeVideo : YoutubeVideoBase
+    {
         public IEnumerable<string> Tags { get; set; }
 
         public string YoutubeCategoryId { get; set; }
@@ -34,6 +51,10 @@ namespace Music.Models
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
+    }
+
+    public class YoutubeVideoFromSearchResults : YoutubeVideoBase
+    {
     }
 
     public class YoutubeVideoStatistics
