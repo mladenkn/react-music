@@ -1,4 +1,5 @@
-﻿using Google.Apis.Services;
+﻿using System.Net.Http;
+using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MongoDB.Driver;
 using Music.Repositories;
@@ -18,10 +19,14 @@ namespace Executables
             var mongoClient = new MongoClient("mongodb://localhost:27017");
             var mongoDatabase = mongoClient.GetDatabase("music");
             YoutubeVideoMongoRepository = new YoutubeVideoMongoRepository(mongoDatabase);
+
+            YoutubeHtmlScrapperVideoRepository = new YoutubeHtmlScrapperVideoRepository(new HttpClient());
         }
 
-        public YoutubeDataApiVideoRepository YoutubeDataApiVideoRepository { get; set; }
+        public YoutubeDataApiVideoRepository YoutubeDataApiVideoRepository { get; }
 
-        public YoutubeVideoMongoRepository YoutubeVideoMongoRepository { get; set; }
+        public YoutubeVideoMongoRepository YoutubeVideoMongoRepository { get; }
+
+        public YoutubeHtmlScrapperVideoRepository YoutubeHtmlScrapperVideoRepository { get; }
     }
 }
