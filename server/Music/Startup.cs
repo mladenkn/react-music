@@ -8,10 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using Music.Operations;
 using Music.Repositories;
 using Music.Services;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Music
 {
@@ -37,8 +35,6 @@ namespace Music
                 var database = client.GetDatabase("music");
                 return database;
             });
-
-            services.AddTransient<MigrationToRelational>();
 
             services.AddTransient<YouTubeService>(_ => new YouTubeService(new BaseClientService.Initializer
                 {

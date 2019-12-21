@@ -17,6 +17,14 @@ namespace Music.Repositories
             _col = db.GetCollection<YoutubeVideo>("youtubeVideos");
         }
 
+        public async Task<IEnumerable<string>> GetAllIds()
+        {
+            var props = Builders<YoutubeVideo>.Projection.Include(v => v.Id);
+            var vids = await _col.Find(v => true).Project(props).ToListAsync();
+            var ids = vids.Select(v => v.GetElement("_id").Value.AsString);
+            return ids;
+        }
+
         public async Task<(IEnumerable<YoutubeVideo> videos, IReadOnlyCollection<string> notFoundIds)>
             GetList(IEnumerable<string> wantedVideosIds)
         {

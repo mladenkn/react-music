@@ -3,3 +3,6 @@ server/Music/.vs/
 server/Music/bin/
 server/Music/obj/
 node_modules/
+server/Operations/bin/
+server/Operations/obj/
+server/Utilities/bin/
