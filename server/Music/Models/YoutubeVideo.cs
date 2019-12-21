@@ -13,18 +13,16 @@ namespace Music.Models
 
         public string GetImage()
         {
-            bool HasThumbnail(string name) => Thumbnails.Any(t => t.Name == name);
+            var namesByPriorities = new[] { "Default__", "Standard", "Medium", "High", "Maxres" };
 
-            string GetThumbnail(string name) => Thumbnails.First(t => t.Name == name).Name;
+            foreach (var thumbnailName in namesByPriorities)
+            {
+                var thumbnail = Thumbnails.FirstOrDefault(t => t.Name == thumbnailName);
+                if (thumbnail != null)
+                    return thumbnail.Url;
+            }
 
-            if (HasThumbnail("Default__"))
-                return GetThumbnail("Default__");
-            else if (HasThumbnail("Standard"))
-                return GetThumbnail("Standard");
-            else if (HasThumbnail("Medium"))
-                return GetThumbnail("Medium");
-            else
-                throw new Exception();
+            return null;
         }
 
         public string Description { get; set; }

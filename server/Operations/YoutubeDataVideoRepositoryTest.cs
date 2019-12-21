@@ -30,7 +30,6 @@ namespace Executables
                 Assert.Equal(youtubeVideoFromSearch.ChannelId, youtubeVideoFromList.ChannelId);
                 Assert.Equal(youtubeVideoFromSearch.Description, youtubeVideoFromList.Description);
                 Assert.Equal(youtubeVideoFromSearch.ChannelTitle, youtubeVideoFromList.ChannelTitle);
-                Assert.Equal(youtubeVideoFromSearch.Duration, youtubeVideoFromList.Duration);
                 Assert.Equal(youtubeVideoFromSearch.PublishedAt, youtubeVideoFromList.PublishedAt);
                 Assert.Equal(youtubeVideoFromSearch.Title, youtubeVideoFromList.Title);
                 Assert.Equal(youtubeVideoFromSearch.Thumbnails.Count(), youtubeVideoFromList.Thumbnails.Count());

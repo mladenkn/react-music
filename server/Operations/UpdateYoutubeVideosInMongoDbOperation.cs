@@ -16,9 +16,8 @@ namespace Executables
             var storedVideosIds = await services.YoutubeVideoMongoRepository.GetAllIds();
             var storedVideosUpdated = await services.YoutubeDataApiVideoRepository.GetList(storedVideosIds.ToArray());
 
-            var filePath = @"C:\Users\a\Documents\projekti\music\server\Operations\Files\storedVideosUpdated.json";
             var videosJson = JsonConvert.SerializeObject(storedVideosUpdated, Formatting.Indented);
-            File.WriteAllText(filePath, videosJson);
+            await Helpers.WriteToFile("storedVideosUpdated.json", videosJson);
 
             //await mongoRepo.Save(storedVideosUpdated);
         }
