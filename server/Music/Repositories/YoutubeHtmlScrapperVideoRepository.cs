@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -55,6 +56,24 @@ namespace Music.Repositories
             }
 
             return null;
+        }
+
+        public async Task<IEnumerable<string>> SearchIds(string searchQuery)
+        {
+            var r = await _httpClient.GetAsync("https://www.youtube.com/results?search_query=" + searchQuery);
+            var htmlString = await r.Content.ReadAsStringAsync();
+
+            var document = await _htmlParser.OpenAsync(c => c.Content(htmlString));
+
+            var beforeIdUrlContent = "/watch?v=";
+
+            var urls = document.QuerySelectorAll("#results a")
+                .Where(anchorTag => anchorTag.Attributes.Any(a => a.Name == "href"))
+                .Select(anchorTag => anchorTag.Attributes.First(a => a.Name == "href").Value)
+                .Where(url => url.StartsWith(beforeIdUrlContent))
+                .Select(url => url.Substring(beforeIdUrlContent.Length));
+
+            return urls;
         }
 
         private async Task<string> GetVideoHtml(string videoId)
