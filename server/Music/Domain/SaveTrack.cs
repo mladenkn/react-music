@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Kernel;
 using MediatR;
 using Music.Domain.Shared;
 
@@ -16,16 +17,15 @@ namespace Music.Domain
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class SaveTrackRequest : IRequest<IEnumerable<Track>>
+    public class SaveTrackYoutubeExecutor : ServiceBase
     {
-        public TrackUserProps Track { get; set; }
-    }
-
-    public class SaveTrackYoutubeHandler : IRequestHandler<QueryTracksRequest, IEnumerable<Track>>
-    {
-        public Task<IEnumerable<Track>> Handle(QueryTracksRequest request, CancellationToken cancellationToken)
+        public SaveTrackYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Track>> Execute(QueryTracksRequest request)
+        {
+
         }
     }
 }

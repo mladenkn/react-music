@@ -1,17 +1,20 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kernel
 {
-    public abstract class RequestHandlerBase<TRequest, TResponse> : IRequestHandler<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+    public interface IRequestHandler
+    {
+        Task<object> Handle(object request);
+    }
+
+    public abstract class RequestHandlerBase : IRequestHandler
     {
         private readonly IServiceProvider _serviceProvider;
+        private Func<object, Task<object>> _handler;
 
         protected DbContext Db { get; }
 
@@ -26,6 +29,11 @@ namespace Kernel
 
         protected TService GetService<TService>() => _serviceProvider.GetService<TService>();
 
-        public abstract Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken);
+        protected void RegisterHandler<TRequest, TResponse>(Func<TRequest, Task<TResponse>> handler)
+        {
+
+        }
+
+        public Task<object> Handle(object request) => _handler(request);
     }
 }

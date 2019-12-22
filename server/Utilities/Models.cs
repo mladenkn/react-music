@@ -4,9 +4,15 @@ namespace Utilities
 {
     public class ListWithTotalCount<T>
     {
-        public IReadOnlyList<T> Data { get; set; }
+        public IReadOnlyList<T> Data { get; }
 
-        public int TotalCount { get; set; }
+        public int TotalCount { get; }
+
+        public ListWithTotalCount(IReadOnlyList<T> data, int totalCount)
+        {
+            Data = data;
+            TotalCount = totalCount;
+        }
     }
 
     public class Range<T>

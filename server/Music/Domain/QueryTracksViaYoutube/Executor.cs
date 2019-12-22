@@ -14,13 +14,27 @@ using Utilities;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class QueryTracksViaYoutubeService : ServiceBase
+    public class QueryTracksViaYoutubeExecutor : ServiceBase
     {
-        public QueryTracksViaYoutubeService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task<IEnumerable<string>> SearchVideoIdsOnYt(string searchQuery)
+        public async Task<IEnumerable<Track>> Execute(string searchQuery)
+        {
+            var wantedTracksIds = (await SearchVideoIdsOnYt(searchQuery)).ToArray();
+
+            var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksIds);
+            var videosFromYt = await GetVideosFromYoutube(notFoundVideosIds.ToArray());
+            Db.AddRange(videosFromYt);
+            await Db.SaveChangesAsync();
+
+            var tracks = await GetTracks(wantedTracksIds);
+
+            return tracks;
+        }
+
+        private async Task<IEnumerable<string>> SearchVideoIdsOnYt(string searchQuery)
         {
             var httpClient = GetService<HttpClient>();
             var htmlParser = GetService<IBrowsingContext>();
@@ -41,7 +55,7 @@ namespace Music.Domain.QueryTracksViaYoutube
             return urls;
         }
 
-        public async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
+        private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
             var notFoundIds = await Db.Set<YoutubeVideoDbModel>()
                 .Where(v => ids.All(id => id != v.Id))
@@ -50,7 +64,7 @@ namespace Music.Domain.QueryTracksViaYoutube
             return notFoundIds;
         }
 
-        public async Task<IReadOnlyCollection<YoutubeVideo>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
+        private async Task<IReadOnlyCollection<YoutubeVideo>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
         {
             var r = new List<YoutubeVideo>(ids.Count);
             var chunkCount = ids.Count < 50 ? 1 : ids.Count / 50;
@@ -68,13 +82,7 @@ namespace Music.Domain.QueryTracksViaYoutube
             return r;
         }
 
-        public async Task SaveVideos(IEnumerable<YoutubeVideo> videos)
-        {
-            Db.AddRange(videos);
-            await Db.SaveChangesAsync();
-        }
-
-        public async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
+        private async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
         {
             var tracks = await Db.Set<TrackUserPropsDbModel>()
                 .Where(t => ids.Contains(t.YoutubeVideoId))
