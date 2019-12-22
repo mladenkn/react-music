@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Kernel;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
 using Utilities;
 
 namespace Music.Domain
 {
-    public class QueryTracksRequest : IRequest<IEnumerable<Track>>
+    public class QueryTracksRequest
     {
         public int Skip { get; set; }
 

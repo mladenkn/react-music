@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Music.Domain.Models;
 
 namespace Music.Api.Controllers
 {
@@ -17,6 +15,6 @@ namespace Music.Api.Controllers
         public Task SearchYoutube() => throw new NotImplementedException();
 
         [HttpPost]
-        public Task<TrackPermissions> Save() => throw new NotImplementedException();
+        public Task Save() => throw new NotImplementedException();
     }
 }

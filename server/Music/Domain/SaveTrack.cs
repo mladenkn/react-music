@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Kernel;
-using MediatR;
 using Music.Domain.Shared;
 
 namespace Music.Domain
@@ -23,7 +21,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task<IEnumerable<Track>> Execute(QueryTracksRequest request)
+        public async Task Execute(QueryTracksRequest request)
         {
 
         }
