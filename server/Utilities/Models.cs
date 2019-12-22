@@ -8,4 +8,11 @@ namespace Utilities
 
         public int TotalCount { get; set; }
     }
+
+    public class Range<T>
+    {
+        public T LowerBound { get; set; }
+
+        public T UpperBound { get; set; }
+    }
 }

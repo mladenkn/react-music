@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Music.Domain.Models;
+using Music.Domain.Shared;
 
-namespace Music.Domain.Features
+namespace Music.Domain
 {
+    public class TrackUserProps
+    {
+        public long TrackYtId { get; set; }
+
+        public int? Year { get; set; }
+
+        public IReadOnlyCollection<string> Tags { get; set; }
+    }
+
     public class SaveTrackRequest : IRequest<IEnumerable<Track>>
     {
         public TrackUserProps Track { get; set; }

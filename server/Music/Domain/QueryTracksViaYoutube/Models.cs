@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
 
-namespace Music.Domain.Models
+namespace Music.Domain.QueryTracksViaYoutube
 {
     public class YoutubeVideo
     {
@@ -52,11 +54,11 @@ namespace Music.Domain.Models
         public ulong? ViewCount { get; set; }
 
         public ulong? LikeCount { get; set; }
-        
+
         public ulong? DislikeCount { get; set; }
 
         public ulong? FavoriteCount { get; set; }
-        
+
         public ulong? CommentCount { get; set; }
     }
 

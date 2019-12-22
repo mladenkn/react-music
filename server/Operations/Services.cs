@@ -2,7 +2,6 @@
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using MongoDB.Driver;
-using Music.Repositories;
 
 namespace Executables
 {

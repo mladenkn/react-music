@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Music.Domain.Models;
+using Music.Domain.Shared;
 
-namespace Music.Domain.Features
+namespace Music.Domain.QueryTracksViaYoutube
 {
     public class QueryTracksViaYoutubeRequest : IRequest<IEnumerable<Track>>
     {

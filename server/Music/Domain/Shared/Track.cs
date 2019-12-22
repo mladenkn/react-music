@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Music.Domain.Models
+namespace Music.Domain.Shared
 {
     public class Track
     {
@@ -19,24 +19,10 @@ namespace Music.Domain.Models
         public TrackChannel Channel { get; set; }
     }
 
-    public class TrackUserProps
-    {
-        public long TrackYtId { get; set; }
-
-        public int? Year { get; set; }
-
-        public IReadOnlyCollection<string> Tags { get; set; }
-    }
-
     public class TrackChannel
     {
         public string Id { get; set; }
-        public string Title { get; set; }
-    }
 
-    public class TrackPermissions
-    {
-        public bool CanEditTrackData { get; } = true;
-        public bool CanFetchTrackRecommendations { get; } = true;
+        public string Title { get; set; }
     }
 }
