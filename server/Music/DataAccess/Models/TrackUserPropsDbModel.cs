@@ -12,6 +12,13 @@ namespace Music.DataAccess.Models
 
         public int? Year { get; set; }
 
-        public IReadOnlyCollection<string> Tags { get; set; }
+        public IReadOnlyCollection<TrackUserPropsTag> Tags { get; set; }
+    }
+
+    public class TrackUserPropsTag
+    {
+        public string YoutubeVideoId { get; set; }
+
+        public string Value { get; set; }
     }
 }

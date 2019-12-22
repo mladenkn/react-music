@@ -22,6 +22,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         public async Task<IEnumerable<Track>> Execute(string searchQuery)
         {
+            var channels = await Db.Query<YoutubeChannelDbModel>().ToArrayAsync();
             var wantedTracksIds = (await SearchVideoIdsOnYt(searchQuery)).ToArray();
 
             var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksIds);
@@ -68,11 +69,11 @@ namespace Music.Domain.QueryTracksViaYoutube
         {
             var r = new List<YoutubeVideo>(ids.Count);
             var chunkCount = ids.Count < 50 ? 1 : ids.Count / 50;
-            var youTubeService = Resolve<YouTubeService>();
+            var youTubeService = Resolve<IYoutubeService>();
 
             foreach (var idsChunk in ids.Batch(chunkCount))
             {
-                var allTracksFromYtRequest = youTubeService.Videos.List("snippet,contentDetails,statistics,topicDetails");
+                var allTracksFromYtRequest = youTubeService.ListVideos("snippet,contentDetails,statistics,topicDetails");
                 allTracksFromYtRequest.Id = string.Join(",", idsChunk);
                 var allVideosFromYt = await allTracksFromYtRequest.ExecuteAsync();
                 var allVideosFromYtMapped = allVideosFromYt.Items.Select(v => Mapper.Map<YoutubeVideo>(v));

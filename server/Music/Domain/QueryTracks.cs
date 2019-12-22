@@ -34,10 +34,10 @@ namespace Music.Domain
             var query = Db.Query<TrackUserPropsDbModel>().AsQueryable();
 
             if (req.MustHaveAnyTag != null)
-                query = query.Where(track => track.Tags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag)));
+                query = query.Where(track => track.Tags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.MustHaveEveryTag != null)
-                query = query.Where(track => track.Tags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag)));
+                query = query.Where(track => track.Tags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
                 query = query.Where(track => track.Year >= req.YearRange.LowerBound &&

@@ -14,6 +14,7 @@ using Music.DataAccess;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using YouTubeService = Music.Domain.QueryTracksViaYoutube.YouTubeService;
 
 namespace Music
 {
@@ -40,18 +41,19 @@ namespace Music
                 return database;
             });
 
-            services.AddTransient<YouTubeService>(_ => new YouTubeService(new BaseClientService.Initializer
+            services.AddTransient<Google.Apis.YouTube.v3.YouTubeService>(_ => new Google.Apis.YouTube.v3.YouTubeService(new BaseClientService.Initializer
                 {
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
+
+            services.AddTransient<IYoutubeService, YouTubeService>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
             });
 
-            services.AddDbContext<MusicDbContext>(o => o.UseInMemoryDatabase("music"));
             services.AddTransient<HttpClient>();
             services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
 

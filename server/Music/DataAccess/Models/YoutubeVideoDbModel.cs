@@ -58,13 +58,34 @@ namespace Music.DataAccess.Models
     {
         public string VideoId { get; set; }
 
-        public IReadOnlyCollection<string> TopicIds { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicIdsDbModel> TopicIds { get; set; }
 
-        public IReadOnlyCollection<string> RelevantTopicIds { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsRelevantTopicIdsDbModel> RelevantTopicIds { get; set; }
 
-        public IReadOnlyCollection<string> TopicCategories { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicCategoriesDbModel> TopicCategories { get; set; }
 
         public string ETag { get; set; }
+    }
+
+    public class YoutubeVideoTopicDetailsTopicIdsDbModel 
+    {
+        public string VideoId { get; set; }
+
+        public string Value { get; set; }
+    }
+
+    public class YoutubeVideoTopicDetailsRelevantTopicIdsDbModel
+    {
+        public string VideoId { get; set; }
+
+        public string Value { get; set; }
+    }
+
+    public class YoutubeVideoTopicDetailsTopicCategoriesDbModel
+    {
+        public string VideoId { get; set; }
+
+        public string Value { get; set; }
     }
 
     public class YoutubeVideoTagDbModel
