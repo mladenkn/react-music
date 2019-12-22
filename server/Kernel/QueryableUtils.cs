@@ -6,11 +6,13 @@ using Utilities;
 
 namespace Kernel
 {
-    public static class ListWithTotalCount
+    public static class QueryableUtils
     {
-        public static async Task<ListWithTotalCount<TQueryProjectedModel>> FromQuery<TQueryModel, TQueryProjectedModel>(
-            IQueryable<TQueryModel> query, Func<IQueryable<TQueryModel>, IQueryable<TQueryProjectedModel>> upgradeQuery
-            )
+        public static async Task<ArrayWithTotalCount<TQueryProjectedModel>> ToArrayWithTotalCount<TQueryModel,
+            TQueryProjectedModel>(
+            this IQueryable<TQueryModel> query,
+            Func<IQueryable<TQueryModel>, IQueryable<TQueryProjectedModel>> upgradeQuery
+        )
         {
             var listTask = upgradeQuery(query).ToArrayAsync();
             var countTask = query.CountAsync();
@@ -19,8 +21,8 @@ namespace Kernel
 
             var list = await listTask;
             var count = await countTask;
-            
-            return new ListWithTotalCount<TQueryProjectedModel>(list, count);
+
+            return new ArrayWithTotalCount<TQueryProjectedModel>(list, count);
         }
     }
 }

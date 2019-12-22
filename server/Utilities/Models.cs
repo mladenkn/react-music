@@ -2,13 +2,13 @@
 
 namespace Utilities
 {
-    public class ListWithTotalCount<T>
+    public class ArrayWithTotalCount<T>
     {
-        public IReadOnlyList<T> Data { get; }
+        public T[] Data { get; }
 
         public int TotalCount { get; }
 
-        public ListWithTotalCount(IReadOnlyList<T> data, int totalCount)
+        public ArrayWithTotalCount(T[] data, int totalCount)
         {
             Data = data;
             TotalCount = totalCount;

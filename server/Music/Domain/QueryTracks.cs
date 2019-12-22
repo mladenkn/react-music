@@ -32,7 +32,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task<ListWithTotalCount<Track>> Execute(QueryTracksRequest req)
+        public async Task<ArrayWithTotalCount<Track>> Execute(QueryTracksRequest req)
         {
             var query = Db.Set<TrackUserPropsDbModel>().AsQueryable();
 
@@ -46,8 +46,7 @@ namespace Music.Domain
                 query = query.Where(track => track.Year >= req.YearRange.LowerBound &&
                                              track.Year < req.YearRange.UpperBound);
 
-            var result = await ListWithTotalCount.FromQuery(
-                query,
+            var result = await query.ToArrayWithTotalCount(
                 q => q
                     .Skip(req.Skip)
                     .Take(req.Take)
