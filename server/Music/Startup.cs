@@ -1,13 +1,18 @@
 using System.Net.Http;
+using AngleSharp;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Music.DataAccess;
+using Music.Domain;
+using Music.Domain.QueryTracksViaYoutube;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
 {
@@ -40,12 +45,18 @@ namespace Music
                 }
             ));
 
-            services.AddTransient<HttpClient>();
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
             });
+
+            services.AddDbContext<MusicDbContext>(o => o.UseInMemoryDatabase("music"));
+            services.AddTransient<HttpClient>();
+            services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
+
+            services.AddTransient<QueryTracksExecutor>();
+            services.AddTransient<QueryTracksViaYoutubeExecutor>();
+            services.AddTransient<SaveTrackYoutubeExecutor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

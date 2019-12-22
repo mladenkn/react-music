@@ -1,5 +1,4 @@
-﻿{
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
@@ -8,23 +7,23 @@
       "sslPort": 44365
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": false,
-      "launchUrl": "tracks",
+      "launchBrowser": true,
+      "launchUrl": "api/example",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Music": {
       "commandName": "Project",
-      "launchBrowser": false,
       "launchUrl": "tracks",
-      "applicationUrl": "https://localhost:5001;http://localhost:8081",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:8081"
     }
   }
 }
