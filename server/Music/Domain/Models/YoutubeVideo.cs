@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Google.Apis.YouTube.v3.Data;
 
-namespace Music.Models
+namespace Music.Domain.Models
 {
-
     public class YoutubeVideo
     {
         public string Id { get; set; }

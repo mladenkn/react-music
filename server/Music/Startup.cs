@@ -8,8 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Music.Domain.Services;
 using Music.Repositories;
-using Music.Services;
 
 namespace Music
 {

@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Music.Models;
-using Music.Repositories;
-using Music.Services;
+using Music.Domain.Models;
+using Music.Domain.Services;
 
-namespace Music.Controllers
+namespace Music.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

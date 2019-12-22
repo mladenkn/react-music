@@ -1,42 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Music.Models;
-using Music.Repositories;
+using Music.Domain.Models;
 
-namespace Music.Services
+namespace Music.Domain.Services
 {
     public class TrackService
     {
-        private readonly TrackRepository _repo;
-
-        public TrackService(TrackRepository repo)
-        {
-            _repo = repo;
-        }
 
         public async Task<GetTrackListResponse> GetList(GetTracksArguments args)
         {
-            var r = await _repo.GetCollection(args);
-            return new GetTrackListResponse
-            {
-                Data = r.Data,
-                TotalCount = r.TotalCount,
-            };
+            throw new NotImplementedException();
+
         }
 
         public async Task<SearchYoutubeResult> SearchYoutube(YoutubeTrackQuery query)
         {
-            var data = await _repo.GetCollectionFromYoutubeSearch(query);
-            return new SearchYoutubeResult
-            {
-                Tracks = data
-            };
+            throw new NotImplementedException();
+
         }
 
         public async Task<TrackPermissions> Save(IEnumerable<TrackUserProps> tracks)
         {
-            await _repo.Save(tracks);
-            return new TrackPermissions();
+            throw new NotImplementedException();
         }
     }
 
@@ -49,5 +35,18 @@ namespace Music.Services
     {
         public IEnumerable<Track> Tracks { get; set; }
         public TrackPermissions Permissions { get; } = new TrackPermissions();
+    }
+
+    public class GetTracksArguments
+    {
+        public int Skip { get; set; }
+        public int Take { get; set; }
+    }
+
+    public class YoutubeTrackQuery
+    {
+        public string SearchQuery { get; set; }
+        public string ChannelTitle { get; set; }
+        public int MaxResults { get; set; }
     }
 }

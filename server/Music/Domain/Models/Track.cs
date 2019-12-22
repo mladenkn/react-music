@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Music.Models
+namespace Music.Domain.Models
 {
     public class Track
     {
@@ -14,19 +14,18 @@ namespace Music.Models
 
         public int? Year { get; set; }
 
-        public IEnumerable<string> Genres { get; set; }
-
-        public IEnumerable<string> Tags { get; set; }
+        public IReadOnlyCollection<string> Tags { get; set; }
 
         public TrackChannel Channel { get; set; }
     }
 
     public class TrackUserProps
     {
-        public string YtId { get; set; }
-        public IEnumerable<string> Tags { get; set; }
-        public IEnumerable<string> Genres { get; set; }
+        public long TrackYtId { get; set; }
+
         public int? Year { get; set; }
+
+        public IReadOnlyCollection<string> Tags { get; set; }
     }
 
     public class TrackChannel

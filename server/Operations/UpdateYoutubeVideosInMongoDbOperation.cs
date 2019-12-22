@@ -8,7 +8,7 @@ namespace Executables
 {
     public class UpdateYoutubeVideosInMongoDbOperation
     {
-        [Fact]
+        //[Fact]
         public async Task Run()
         {
             var services = new Services();
