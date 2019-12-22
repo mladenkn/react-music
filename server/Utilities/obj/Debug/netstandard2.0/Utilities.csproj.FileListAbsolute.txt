@@ -5,3 +5,4 @@ C:\Users\a\Documents\projekti\music\server\Utilities\obj\Debug\netstandard2.0\Ut
 C:\Users\a\Documents\projekti\music\server\Utilities\obj\Debug\netstandard2.0\Utilities.AssemblyInfo.cs
 C:\Users\a\Documents\projekti\music\server\Utilities\obj\Debug\netstandard2.0\Utilities.dll
 C:\Users\a\Documents\projekti\music\server\Utilities\obj\Debug\netstandard2.0\Utilities.pdb
+C:\Users\a\Documents\projekti\music\server\Utilities\obj\Debug\netstandard2.0\Utilities.csprojAssemblyReference.cache
