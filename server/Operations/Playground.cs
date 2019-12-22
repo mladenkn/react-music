@@ -10,7 +10,6 @@ namespace Executables
         [Fact]
         public async Task Run()
         {
-            var services = new Services();
             var a = new []
             {
                 "PT11M", "PT11S", "PT11H",
