@@ -9,14 +9,14 @@ namespace Kernel
     {
         private readonly IServiceProvider _serviceProvider;
 
-        protected DbContext Db { get; }
+        protected IDatabase Db { get; }
 
         protected IMapper Mapper { get; }
 
         protected ServiceBase(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Db = _serviceProvider.GetService<DbContext>();
+            Db = _serviceProvider.GetService<IDatabase>();
             Mapper = _serviceProvider.GetService<IMapper>();
         }
 

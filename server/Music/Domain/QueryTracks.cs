@@ -31,7 +31,7 @@ namespace Music.Domain
 
         public async Task<ArrayWithTotalCount<Track>> Execute(QueryTracksRequest req)
         {
-            var query = Db.Set<TrackUserPropsDbModel>().AsQueryable();
+            var query = Db.Query<TrackUserPropsDbModel>().AsQueryable();
 
             if (req.MustHaveAnyTag != null)
                 query = query.Where(track => track.Tags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag)));

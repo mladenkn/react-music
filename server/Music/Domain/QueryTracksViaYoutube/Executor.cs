@@ -57,7 +57,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var notFoundIds = await Db.Set<YoutubeVideoDbModel>()
+            var notFoundIds = await Db.Query<YoutubeVideoDbModel>()
                 .Where(v => ids.All(id => id != v.Id))
                 .Select(v => v.Id)
                 .ToListAsync();
@@ -84,7 +84,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
         {
-            var tracks = await Db.Set<TrackUserPropsDbModel>()
+            var tracks = await Db.Query<TrackUserPropsDbModel>()
                 .Where(t => ids.Contains(t.YoutubeVideoId))
                 .ProjectTo<Track>(Mapper.ConfigurationProvider)
                 .ToListAsync();
