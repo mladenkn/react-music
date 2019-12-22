@@ -6,3 +6,5 @@ node_modules/
 server/Operations/bin/
 server/Operations/obj/
 server/Utilities/bin/
+server/Kernel/obj/
+server/Kernel/bin/

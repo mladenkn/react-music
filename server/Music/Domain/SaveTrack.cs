@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Music.Domain.Models;
 using Music.Domain.Shared;
 
 namespace Music.Domain

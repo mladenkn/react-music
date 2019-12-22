@@ -6,7 +6,7 @@ namespace Music.DataAccess.Models
     {
         public int UserId { get; set; }
 
-        public long TrackYtId { get; set; }
+        public string YtId { get; set; }
 
         public int? Year { get; set; }
 
