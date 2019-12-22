@@ -77,7 +77,7 @@ namespace Music.Domain.QueryTracksViaYoutube
         public async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
         {
             var tracks = await Db.Set<TrackUserPropsDbModel>()
-                .Where(t => ids.Contains(t.YtId))
+                .Where(t => ids.Contains(t.YoutubeVideoId))
                 .ProjectTo<Track>(Mapper.ConfigurationProvider)
                 .ToListAsync();
             return tracks;

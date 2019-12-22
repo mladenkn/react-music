@@ -6,7 +6,9 @@ namespace Music.DataAccess.Models
     {
         public int UserId { get; set; }
 
-        public string YtId { get; set; }
+        public string YoutubeVideoId { get; set; }
+
+        public YoutubeVideoDbModel YoutubeVideo { get; set; }
 
         public int? Year { get; set; }
 

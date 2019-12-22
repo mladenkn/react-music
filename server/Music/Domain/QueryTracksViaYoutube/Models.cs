@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
 
 namespace Music.Domain.QueryTracksViaYoutube
@@ -12,20 +14,6 @@ namespace Music.Domain.QueryTracksViaYoutube
         public string Id { get; set; }
 
         public string Title { get; set; }
-
-        public string GetImage()
-        {
-            var namesByPriorities = new[] { "Default__", "Standard", "Medium", "High", "Maxres" };
-
-            foreach (var thumbnailName in namesByPriorities)
-            {
-                var thumbnail = Thumbnails.FirstOrDefault(t => t.Name == thumbnailName);
-                if (thumbnail != null)
-                    return thumbnail.Url;
-            }
-
-            return null;
-        }
 
         public string Description { get; set; }
 
@@ -84,28 +72,44 @@ namespace Music.Domain.QueryTracksViaYoutube
         public long? Height { get; set; }
 
         public string Etag { get; set; }
+    }
 
-        public static IEnumerable<YoutubeVideoThumbnail> CreateCollection(ThumbnailDetails thumbnailDetails)
+    public class YoutubeVideoProfile : Profile
+    {
+        public YoutubeVideoProfile()
         {
-            var arr = new[]
-            {
-                (name: nameof(thumbnailDetails.Default__), thumbNail: thumbnailDetails.Default__),
-                (name: nameof(thumbnailDetails.High), thumbNail: thumbnailDetails.High),
-                (name: nameof(thumbnailDetails.Maxres), thumbNail: thumbnailDetails.Maxres),
-                (name: nameof(thumbnailDetails.Medium), thumbNail: thumbnailDetails.Medium),
-                (name: nameof(thumbnailDetails.Standard), thumbNail: thumbnailDetails.Standard),
-            };
-
-            return arr
-                .Where(item => item.thumbNail != null)
-                .Select(i => new YoutubeVideoThumbnail
+            CreateMap<Video, YoutubeVideo>()
+                .IncludeMembers(src => src.Snippet)
+                .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
+                .ForMember(dst => dst.ThumbnailsEtag, o => o.MapFrom(src => src.Snippet.Thumbnails.ETag))
+                .ForMember(dst => dst.Duration, o => o.MapFrom(src => XmlConvert.ToTimeSpan(src.ContentDetails.Duration)))
+                .IncludeMembers(src => src.Statistics)
+                .IncludeMembers(src => src.TopicDetails)
+                .AfterMap((src, dst) =>
                 {
-                    Etag = i.thumbNail.ETag,
-                    Height = i.thumbNail.Height,
-                    Name = i.name,
-                    Url = i.thumbNail.Url,
-                    Width = i.thumbNail.Width,
-                });
+                    var thumbnailDetails = src.Snippet.Thumbnails;
+
+                    var arr = new[]
+                    {
+                        (name: nameof(thumbnailDetails.Default__), thumbNail: thumbnailDetails.Default__),
+                        (name: nameof(thumbnailDetails.High), thumbNail: thumbnailDetails.High),
+                        (name: nameof(thumbnailDetails.Maxres), thumbNail: thumbnailDetails.Maxres),
+                        (name: nameof(thumbnailDetails.Medium), thumbNail: thumbnailDetails.Medium),
+                        (name: nameof(thumbnailDetails.Standard), thumbNail: thumbnailDetails.Standard),
+                    };
+
+                    dst.Thumbnails = arr
+                        .Where(item => item.thumbNail != null)
+                        .Select(i => new YoutubeVideoThumbnail
+                        {
+                            Etag = i.thumbNail.ETag,
+                            Height = i.thumbNail.Height,
+                            Name = i.name,
+                            Url = i.thumbNail.Url,
+                            Width = i.thumbNail.Width,
+                        });
+                })
+                ;
         }
     }
 }
