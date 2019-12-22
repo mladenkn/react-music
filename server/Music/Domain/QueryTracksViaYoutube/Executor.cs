@@ -14,7 +14,7 @@ using Utilities;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class QueryTracksViaYoutubeExecutor : ServiceBase
+    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
     {
         public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Kernel
 {
-    public abstract class ServiceBase
+    public abstract class ServiceResolverAware
     {
         private readonly IServiceProvider _serviceProvider;
 
@@ -13,7 +13,7 @@ namespace Kernel
 
         protected IMapper Mapper { get; }
 
-        protected ServiceBase(IServiceProvider serviceProvider)
+        protected ServiceResolverAware(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
             Db = _serviceProvider.GetService<IDatabase>();

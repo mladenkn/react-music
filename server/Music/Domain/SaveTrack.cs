@@ -15,13 +15,13 @@ namespace Music.Domain
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class SaveTrackYoutubeExecutor : ServiceBase
+    public class SaveTrackYoutubeExecutor : ServiceResolverAware
     {
         public SaveTrackYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task Execute(QueryTracksRequest request)
+        public async Task Execute(TrackUserProps trackProps)
         {
 
         }
