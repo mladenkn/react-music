@@ -19,11 +19,14 @@ namespace Music.Domain.QueryTracksViaYoutube
             {
                 var service = GetService<QueryTracksViaYoutubeService>();
 
-                var wantedTracksIds = await service.SearchVideoIdsOnYt(request.SearchQuery);
-                var (videosFromDb, notFoundVideosIds) = await service.GetKnownVideos(wantedTracksIds);
+                var wantedTracksIds = (await service.SearchVideoIdsOnYt(request.SearchQuery)).ToArray();
+                
+                var notFoundVideosIds = await service.FilterToUnknownVideosIds(wantedTracksIds);
                 var videosFromYt = await service.GetVideosFromYoutube(notFoundVideosIds.ToArray());
                 await service.SaveVideos(videosFromYt);
-                var tracks = await service.VideosToTracks(videosFromDb.Concat(videosFromYt));
+
+                var tracks = await service.GetTracks(wantedTracksIds);
+
                 return tracks;
             });
         }

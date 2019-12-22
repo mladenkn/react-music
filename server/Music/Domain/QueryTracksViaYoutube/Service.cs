@@ -41,17 +41,13 @@ namespace Music.Domain.QueryTracksViaYoutube
             return urls;
         }
 
-        public async Task<(IReadOnlyCollection<YoutubeVideo> videos, IEnumerable<string> notFoundIds)> 
-            GetKnownVideos(IEnumerable<string> ids)
+        public async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var videos = await Db.Set<YoutubeVideoDbModel>()
-                .Where(v => ids.Contains(v.Id))
-                .ProjectTo<YoutubeVideo>(Mapper.ConfigurationProvider)
+            var notFoundIds = await Db.Set<YoutubeVideoDbModel>()
+                .Where(v => ids.All(id => id != v.Id))
+                .Select(v => v.Id)
                 .ToListAsync();
-
-            var notFoundIds = ids.Where(id => videos.All(v => v.Id != id));
-
-            return (videos, notFoundIds);
+            return notFoundIds;
         }
 
         public async Task<IReadOnlyCollection<YoutubeVideo>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
@@ -78,11 +74,13 @@ namespace Music.Domain.QueryTracksViaYoutube
             await Db.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyCollection<Track>> VideosToTracks(IEnumerable<YoutubeVideo> videos)
+        public async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
         {
             var tracks = await Db.Set<TrackUserPropsDbModel>()
-                .Where(t => videos.Any(v => v.Id == t.YtId))
+                .Where(t => ids.Contains(t.YtId))
+                .ProjectTo<Track>(Mapper.ConfigurationProvider)
                 .ToListAsync();
+            return tracks;
         }
     }
 }
