@@ -20,6 +20,6 @@ namespace Kernel
             Mapper = _serviceProvider.GetService<IMapper>();
         }
 
-        protected TService GetService<TService>() => _serviceProvider.GetService<TService>();
+        protected TService Resolve<TService>() => _serviceProvider.GetService<TService>();
     }
 }

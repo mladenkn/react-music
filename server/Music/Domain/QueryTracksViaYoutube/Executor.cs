@@ -36,8 +36,8 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IEnumerable<string>> SearchVideoIdsOnYt(string searchQuery)
         {
-            var httpClient = GetService<HttpClient>();
-            var htmlParser = GetService<IBrowsingContext>();
+            var httpClient = Resolve<HttpClient>();
+            var htmlParser = Resolve<IBrowsingContext>();
 
             var r = await httpClient.GetAsync("https://www.youtube.com/results?search_query=" + searchQuery);
             var htmlString = await r.Content.ReadAsStringAsync();
@@ -68,7 +68,7 @@ namespace Music.Domain.QueryTracksViaYoutube
         {
             var r = new List<YoutubeVideo>(ids.Count);
             var chunkCount = ids.Count < 50 ? 1 : ids.Count / 50;
-            var youTubeService = GetService<YouTubeService>();
+            var youTubeService = Resolve<YouTubeService>();
 
             foreach (var idsChunk in ids.Batch(chunkCount))
             {
