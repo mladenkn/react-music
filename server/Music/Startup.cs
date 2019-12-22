@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using Music.Domain.Services;
-using Music.Repositories;
 
 namespace Music
 {
@@ -43,12 +42,6 @@ namespace Music
             ));
 
             services.AddTransient<HttpClient>();
-            services.AddTransient<TrackService>();
-            services.AddTransient<MongoTrackRepository>();
-            services.AddTransient<TrackRepository>();
-            services.AddTransient<YoutubeVideoMasterRepository>();
-            services.AddTransient<YoutubeDataApiVideoRepository>();
-            services.AddTransient<YoutubeVideoMongoRepository>();
 
             services.AddSwaggerGen(c =>
             {

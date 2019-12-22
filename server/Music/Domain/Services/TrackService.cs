@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Music.Domain.Models;
+using Utilities;
 
 namespace Music.Domain.Services
 {
