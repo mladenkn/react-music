@@ -11,9 +11,9 @@ namespace Music.DataAccess.Models
 
         public string Description { get; set; }
 
-        public string ChannelId { get; set; }
+        public string YoutubeChannelId { get; set; }
 
-        public string ChannelTitle { get; set; }
+        public YoutubeChannelDbModel YoutubeChannel { get; set; }
 
         public DateTime? PublishedAt { get; set; }
 
@@ -30,6 +30,13 @@ namespace Music.DataAccess.Models
         public YoutubeVideoStatisticsDbModel Statistics { get; set; }
 
         public YoutubeVideoTopicDetailsDbModel TopicDetails { get; set; }
+    }
+
+    public class YoutubeChannelDbModel
+    {
+        public string Id { get; set; }
+
+        public string Title { get; set; }
     }
 
     public class YoutubeVideoStatisticsDbModel

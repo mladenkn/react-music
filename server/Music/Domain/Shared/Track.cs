@@ -34,7 +34,7 @@ namespace Music.Domain.Shared
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>
                     src.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
-                .ForMember(dst => dst.YoutubeChannelId, o => o.MapFrom(src => src.YoutubeVideo.ChannelId))
+                .ForMember(dst => dst.YoutubeChannelId, o => o.MapFrom(src => src.YoutubeVideo.YoutubeChannelId))
                 .ForMember(dst => dst.YoutubeChannelTitle, o => o.MapFrom(src => src.YoutubeVideo.ChannelTitle))
                 ;
         }
