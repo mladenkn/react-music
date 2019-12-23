@@ -29,15 +29,15 @@ namespace Music.Domain
         {
         }
 
-        public async Task<ArrayWithTotalCount<Track>> Execute(QueryTracksRequest req)
+        public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
-            var query = Db.Query<TrackUserPropsDbModel>().AsQueryable();
+            var query = Db.Query<DataAccess.Models.TrackUserProps>().AsQueryable();
 
             if (req.MustHaveAnyTag != null)
-                query = query.Where(track => track.Tags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(track => track.TrackUserPropsTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.MustHaveEveryTag != null)
-                query = query.Where(track => track.Tags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(track => track.TrackUserPropsTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
                 query = query.Where(track => track.Year >= req.YearRange.LowerBound &&
@@ -47,7 +47,7 @@ namespace Music.Domain
                 q => q
                     .Skip(req.Skip)
                     .Take(req.Take)
-                    .ProjectTo<Track>(Mapper.ConfigurationProvider)
+                    .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
             );
 
             return result;

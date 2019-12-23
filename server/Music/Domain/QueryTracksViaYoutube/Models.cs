@@ -9,7 +9,7 @@ using Google.Apis.YouTube.v3.Data;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class YoutubeVideo
+    public class YoutubeVideoModel
     {
         public string Id { get; set; }
 
@@ -23,7 +23,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         public DateTime? PublishedAt { get; set; }
 
-        public IEnumerable<YoutubeVideoThumbnail> Thumbnails { get; set; }
+        public IEnumerable<YoutubeVideoThumbnailModel> Thumbnails { get; set; }
 
         public string ThumbnailsEtag { get; set; }
         public IEnumerable<string> Tags { get; set; }
@@ -32,13 +32,15 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         public TimeSpan Duration { get; set; }
 
-        public YoutubeVideoStatistics Statistics { get; set; }
+        public YoutubeVideoStatisticsModel Statistics { get; set; }
 
-        public YoutubeVideoTopicDetails TopicDetails { get; set; }
+        public YoutubeVideoTopicDetailsModel TopicDetails { get; set; }
     }
 
-    public class YoutubeVideoStatistics
+    public class YoutubeVideoStatisticsModel
     {
+        public string VideoId { get; set; }
+
         public ulong? ViewCount { get; set; }
 
         public ulong? LikeCount { get; set; }
@@ -50,8 +52,10 @@ namespace Music.Domain.QueryTracksViaYoutube
         public ulong? CommentCount { get; set; }
     }
 
-    public class YoutubeVideoTopicDetails
+    public class YoutubeVideoTopicDetailsModel
     {
+        public string VideoId { get; set; }
+
         public IReadOnlyCollection<string> TopicIds { get; set; }
 
         public IReadOnlyCollection<string> RelevantTopicIds { get; set; }
@@ -61,8 +65,10 @@ namespace Music.Domain.QueryTracksViaYoutube
         public string ETag { get; set; }
     }
 
-    public class YoutubeVideoThumbnail
+    public class YoutubeVideoThumbnailModel
     {
+        public string VideoId { get; set; }
+
         public string Name { get; set; }
 
         public string Url { get; set; }
@@ -78,7 +84,7 @@ namespace Music.Domain.QueryTracksViaYoutube
     {
         public YoutubeVideoProfile()
         {
-            CreateMap<Video, YoutubeVideo>()
+            CreateMap<Video, YoutubeVideoModel>()
                 .IncludeMembers(src => src.Snippet)
                 .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
                 .ForMember(dst => dst.ThumbnailsEtag, o => o.MapFrom(src => src.Snippet.Thumbnails.ETag))
@@ -100,7 +106,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
                     dst.Thumbnails = arr
                         .Where(item => item.thumbNail != null)
-                        .Select(i => new YoutubeVideoThumbnail
+                        .Select(i => new YoutubeVideoThumbnailModel
                         {
                             Etag = i.thumbNail.ETag,
                             Height = i.thumbNail.Height,

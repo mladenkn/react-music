@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Music.DataAccess.Models
 {
-    public class YoutubeVideoDbModel
+    public class YoutubeVideo
     {
         public string Id { get; set; }
 
@@ -13,33 +13,33 @@ namespace Music.DataAccess.Models
 
         public string YoutubeChannelId { get; set; }
 
-        public YoutubeChannelDbModel YoutubeChannel { get; set; }
+        public YoutubeChannel YoutubeChannel { get; set; }
 
         public DateTime? PublishedAt { get; set; }
 
-        public IEnumerable<YoutubeVideoThumbnailDbModel> Thumbnails { get; set; }
+        public IEnumerable<YoutubeVideoThumbnail> Thumbnails { get; set; }
 
         public string ThumbnailsEtag { get; set; }
 
-        public IReadOnlyCollection<YoutubeVideoTagDbModel> Tags { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTag> Tags { get; set; }
 
         public string YoutubeCategoryId { get; set; }
 
         public TimeSpan Duration { get; set; }
 
-        public YoutubeVideoStatisticsDbModel Statistics { get; set; }
+        public YoutubeVideoStatistics Statistics { get; set; }
 
-        public YoutubeVideoTopicDetailsDbModel TopicDetails { get; set; }
+        public YoutubeVideoTopicDetails TopicDetails { get; set; }
     }
 
-    public class YoutubeChannelDbModel
+    public class YoutubeChannel
     {
         public string Id { get; set; }
 
         public string Title { get; set; }
     }
 
-    public class YoutubeVideoStatisticsDbModel
+    public class YoutubeVideoStatistics
     {
         public string VideoId { get; set; }
 
@@ -54,48 +54,48 @@ namespace Music.DataAccess.Models
         public ulong? CommentCount { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsDbModel
+    public class YoutubeVideoTopicDetails
     {
         public string VideoId { get; set; }
 
-        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicIdsDbModel> TopicIds { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicIds> TopicIds { get; set; }
 
-        public IReadOnlyCollection<YoutubeVideoTopicDetailsRelevantTopicIdsDbModel> RelevantTopicIds { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsRelevantTopicIds> RelevantTopicIds { get; set; }
 
-        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicCategoriesDbModel> TopicCategories { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicCategories> TopicCategories { get; set; }
 
         public string ETag { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsTopicIdsDbModel 
+    public class YoutubeVideoTopicDetailsTopicIds 
     {
         public string VideoId { get; set; }
 
         public string Value { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsRelevantTopicIdsDbModel
+    public class YoutubeVideoTopicDetailsRelevantTopicIds
     {
         public string VideoId { get; set; }
 
         public string Value { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsTopicCategoriesDbModel
+    public class YoutubeVideoTopicDetailsTopicCategories
     {
         public string VideoId { get; set; }
 
         public string Value { get; set; }
     }
 
-    public class YoutubeVideoTagDbModel
+    public class YoutubeVideoTag
     {
         public string VideoId { get; set; } 
 
         public string Value { get; set; }
     }
 
-    public class YoutubeVideoThumbnailDbModel
+    public class YoutubeVideoThumbnail
     {
         public string VideoId { get; set; }
 

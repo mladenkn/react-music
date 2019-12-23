@@ -5,7 +5,7 @@ using Music.DataAccess.Models;
 
 namespace Music.Domain.Shared
 {
-    public class Track
+    public class TrackModel
     {
         public string YtId { get; set; }
 
@@ -28,13 +28,13 @@ namespace Music.Domain.Shared
     {
         public MapperProfile()
         {
-            CreateMap<TrackUserPropsDbModel, Track>()
+            CreateMap<DataAccess.Models.TrackUserProps, TrackModel>()
                 .ForMember(dst => dst.YtId, o => o.MapFrom(src => src.YoutubeVideoId))
                 .IncludeMembers(src => src.YoutubeVideo)
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>
                     src.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
-                .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.Tags.Select(t => t.Value)))
+                .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.TrackUserPropsTags.Select(t => t.Value)))
                 ;
         }
     }

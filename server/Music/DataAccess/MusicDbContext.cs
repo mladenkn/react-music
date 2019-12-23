@@ -5,14 +5,22 @@ namespace Music.DataAccess
 {
     public class MusicDbContext : DbContext
     {
-        public DbSet<YoutubeVideoDbModel> YoutubeVideos { get; set; }
+        public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
-        public DbSet<TrackUserPropsDbModel> TrackUserProps { get; set; }
+        public DbSet<TrackUserProps> TrackUserProps { get; set; }
         
-        public DbSet<YoutubeChannelDbModel> YoutubeChannels { get; set; }
+        public DbSet<YoutubeChannel> YoutubeChannels { get; set; }
 
         public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TrackUserProps>()
+                .HasMany(t => t.TrackUserPropsTags)
+                .WithOne()
+                ;
         }
     }
 }

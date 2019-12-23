@@ -19,10 +19,10 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<Track>> Get([FromQuery]QueryTracksRequest req) => Resolve<QueryTracksExecutor>().Execute(req);
+        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]QueryTracksRequest req) => Resolve<QueryTracksExecutor>().Execute(req);
 
         [HttpGet("yt")]
-        public Task<IEnumerable<Track>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
+        public Task<IEnumerable<TrackModel>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
             Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
 
         [HttpPost]

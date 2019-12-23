@@ -20,9 +20,9 @@ namespace Music.Domain.QueryTracksViaYoutube
         {
         }
 
-        public async Task<IEnumerable<Track>> Execute(string searchQuery)
+        public async Task<IEnumerable<TrackModel>> Execute(string searchQuery)
         {
-            var channels = await Db.Query<YoutubeChannelDbModel>().ToArrayAsync();
+            var channels = await Db.Query<YoutubeChannel>().ToArrayAsync();
             var wantedTracksIds = (await SearchVideoIdsOnYt(searchQuery)).ToArray();
 
             var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksIds);
@@ -58,16 +58,16 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var notFoundIds = await Db.Query<YoutubeVideoDbModel>()
+            var notFoundIds = await Db.Query<YoutubeVideo>()
                 .Where(v => ids.All(id => id != v.Id))
                 .Select(v => v.Id)
                 .ToListAsync();
             return notFoundIds;
         }
 
-        private async Task<IReadOnlyCollection<YoutubeVideo>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
+        private async Task<IReadOnlyCollection<YoutubeVideoModel>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
         {
-            var r = new List<YoutubeVideo>(ids.Count);
+            var r = new List<YoutubeVideoModel>(ids.Count);
             var chunkCount = ids.Count < 50 ? 1 : ids.Count / 50;
             var youTubeService = Resolve<IYoutubeService>();
 
@@ -76,18 +76,18 @@ namespace Music.Domain.QueryTracksViaYoutube
                 var allTracksFromYtRequest = youTubeService.ListVideos("snippet,contentDetails,statistics,topicDetails");
                 allTracksFromYtRequest.Id = string.Join(",", idsChunk);
                 var allVideosFromYt = await allTracksFromYtRequest.ExecuteAsync();
-                var allVideosFromYtMapped = allVideosFromYt.Items.Select(v => Mapper.Map<YoutubeVideo>(v));
+                var allVideosFromYtMapped = allVideosFromYt.Items.Select(v => Mapper.Map<YoutubeVideoModel>(v));
                 r.AddRange(allVideosFromYtMapped);
             }
 
             return r;
         }
 
-        private async Task<IReadOnlyCollection<Track>> GetTracks(IEnumerable<string> ids)
+        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> ids)
         {
-            var tracks = await Db.Query<TrackUserPropsDbModel>()
+            var tracks = await Db.Query<DataAccess.Models.TrackUserProps>()
                 .Where(t => ids.Contains(t.YoutubeVideoId))
-                .ProjectTo<Track>(Mapper.ConfigurationProvider)
+                .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
                 .ToListAsync();
             return tracks;
         }
