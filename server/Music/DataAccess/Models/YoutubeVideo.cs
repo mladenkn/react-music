@@ -41,7 +41,9 @@ namespace Music.DataAccess.Models
 
     public class YoutubeVideoStatistics
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public ulong? ViewCount { get; set; }
 
@@ -56,7 +58,9 @@ namespace Music.DataAccess.Models
 
     public class YoutubeVideoTopicDetails
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicIds> TopicIds { get; set; }
 
@@ -67,37 +71,47 @@ namespace Music.DataAccess.Models
         public string ETag { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsTopicIds 
+    public class YoutubeVideoTopicDetailsTopicIds
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public string Value { get; set; }
     }
 
     public class YoutubeVideoTopicDetailsRelevantTopicIds
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public string Value { get; set; }
     }
 
     public class YoutubeVideoTopicDetailsTopicCategories
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public string Value { get; set; }
     }
 
     public class YoutubeVideoTag
     {
-        public string VideoId { get; set; } 
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; } 
 
         public string Value { get; set; }
     }
 
     public class YoutubeVideoThumbnail
     {
-        public string VideoId { get; set; }
+        public int Id { get; set; }
+
+        public string YoutubeVideoId { get; set; }
 
         public string Name { get; set; }
 

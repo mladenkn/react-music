@@ -19,7 +19,7 @@ namespace Music.DataAccess.Models
 
     public class TrackUserPropsTag
     {
-        public string TrackUserPropsId { get; set; }
+        public int TrackUserPropsId { get; set; }
 
         public string Value { get; set; }
     }
