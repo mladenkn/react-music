@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
@@ -132,7 +133,7 @@ namespace Executables
         }
 
         [Fact]
-        public async Task Can_Add_YoutubeVideoWithRelationProperties()
+        public async Task Can_Add_Full_TrackUserProps_With_Full_YouTubeVideo()
         {
             var video = new YoutubeVideo
             {
@@ -195,34 +196,81 @@ namespace Executables
                 }
             };
 
+            var trackUserProps = new TrackUserProps
+            {
+                TrackUserPropsTags = new[]
+                {
+                    new TrackUserPropsTag {Value = Guid.NewGuid().ToString()},
+                    new TrackUserPropsTag {Value = Guid.NewGuid().ToString()},
+                },
+                User = new User
+                {
+                    Email = Guid.NewGuid().ToString()
+                },
+                YoutubeVideo = video,
+                Year = 1997,
+            };
+
             using (var services = new Services(DatabaseType.SqlServer))
             {
                 services.DbContext.Database.EnsureDeleted();
                 services.DbContext.Database.EnsureCreated();
 
-                services.DbContext.Add(video);
+                services.DbContext.Add(trackUserProps);
                 await services.DbContext.SaveChangesAsync();
             }
             
             using (var services = new Services(DatabaseType.SqlServer))
             {
-                var videoFromDb = await services.DbContext.Set<YoutubeVideo>()
-                    .Include(v => v.TopicDetails)
-                    .Include(v => v.Thumbnails)
-                    .Include(v => v.Tags)
-                    .Include(v => v.Statistics)
+                var trackUserPropsFromDb = await services.DbContext.Set<TrackUserProps>()
+                    .Include(t => t.YoutubeVideo)
+                        .ThenInclude(v => v.Statistics)
+                    .Include(t => t.YoutubeVideo)
+                        .ThenInclude(v => v.Tags)
+                    .Include(t => t.YoutubeVideo)
+                        .ThenInclude(v => v.Thumbnails)
+                    .Include(t => t.YoutubeVideo)
+                        .ThenInclude(v => v.TopicDetails)
+                            .ThenInclude(td => td.RelevantTopicIds)
+                    .Include(t => t.YoutubeVideo)
+                        .ThenInclude(v => v.YoutubeChannel)
+                    .Include(t => t.TrackUserPropsTags)
                     .SingleAsync();
 
-                Assert.Equal(video.Id, videoFromDb.Id);
-                Assert.Equal(video.Description, videoFromDb.Description);
-                Assert.Equal(video.Duration, videoFromDb.Duration);
-                Assert.Equal(video.ThumbnailsEtag, videoFromDb.ThumbnailsEtag);
-                Assert.Equal(video.YoutubeCategoryId, videoFromDb.YoutubeCategoryId);
-                Assert.Equal(video.Title, videoFromDb.Title);
-                Assert.Equal(video.YoutubeChannelId, videoFromDb.YoutubeChannelId);
+                Assert.True(trackUserPropsFromDb.Id > 0);
+                Assert.Equal(trackUserProps.User.Id, trackUserPropsFromDb.UserId);
+                Assert.Equal(trackUserProps.Year, trackUserPropsFromDb.Year);
 
-                Assert.Equal(video.TopicDetails.ETag, videoFromDb.TopicDetails.ETag);
+                Assert.True(Enumerable.SequenceEqual(
+                    trackUserProps.TrackUserPropsTags.Select(t => t.Value).OrderBy(t => t),
+                    trackUserPropsFromDb.TrackUserPropsTags.Select(t => t.Value).OrderBy(t => t)
+                ));
+                
+                Assert.Equal(video.Id, trackUserPropsFromDb.YoutubeVideo.Id);
+                Assert.Equal(video.Description, trackUserPropsFromDb.YoutubeVideo.Description);
+                Assert.Equal(video.Duration, trackUserPropsFromDb.YoutubeVideo.Duration);
+                Assert.Equal(video.ThumbnailsEtag, trackUserPropsFromDb.YoutubeVideo.ThumbnailsEtag);
+                Assert.Equal(video.YoutubeCategoryId, trackUserPropsFromDb.YoutubeVideo.YoutubeCategoryId);
+                Assert.Equal(video.Title, trackUserPropsFromDb.YoutubeVideo.Title);
+                Assert.Equal(video.YoutubeChannelId, trackUserPropsFromDb.YoutubeVideo.YoutubeChannelId);
+
+                Assert.Equal(video.TopicDetails.ETag, trackUserPropsFromDb.YoutubeVideo.TopicDetails.ETag);
                 Assert.True(video.TopicDetails.Id > 0);
+                
+                Assert.True(Enumerable.SequenceEqual(
+                    trackUserPropsFromDb.YoutubeVideo.Tags.Select(t => t.Value).OrderBy(t => t),
+                    trackUserPropsFromDb.YoutubeVideo.Tags.Select(t => t.Value).OrderBy(t => t)
+                ));
+
+                Assert.True(Enumerable.SequenceEqual(
+                    trackUserPropsFromDb.YoutubeVideo.TopicDetails.RelevantTopicIds.Select(t => t.Value).OrderBy(t => t),
+                    trackUserPropsFromDb.YoutubeVideo.TopicDetails.RelevantTopicIds.Select(t => t.Value).OrderBy(t => t)
+                ));
+
+                Assert.True(Enumerable.SequenceEqual(
+                    trackUserPropsFromDb.YoutubeVideo.Thumbnails.Select(t => t.Url).OrderBy(t => t),
+                    trackUserPropsFromDb.YoutubeVideo.Thumbnails.Select(t => t.Url).OrderBy(t => t)
+                ));
 
                 services.DbContext.Database.EnsureDeleted();
             }

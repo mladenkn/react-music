@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Utilities
 {
-    public static class Utils
+    public static class CollectionUtils
     {
         public static IEnumerable<IEnumerable<TSource>> Batch<TSource>(this IEnumerable<TSource> source, int size)
         {
@@ -80,7 +80,6 @@ namespace Utilities
                             yield return resultSelector(bucket);
                         }
                     }
-                
             }
         }
 

@@ -8,6 +8,8 @@ namespace Music.DataAccess.Models
 
         public int UserId { get; set; }
 
+        public User User { get; set; }
+
         public string YoutubeVideoId { get; set; }
 
         public YoutubeVideo YoutubeVideo { get; set; }
