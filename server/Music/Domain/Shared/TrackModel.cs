@@ -29,14 +29,16 @@ namespace Music.Domain.Shared
         public MapperProfile()
         {
             CreateMap<DataAccess.Models.TrackUserProps, TrackModel>()
-                .ForMember(dst => dst.Image, o => o.MapFrom(src =>
-                    src.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url)
-                )
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.TrackUserPropsTags.Select(t => t.Value)))
                 .IncludeMembers(src => src.YoutubeVideo)
                 ;
 
-            CreateMap<YoutubeVideo, TrackModel>(MemberList.None)
+            CreateMap<YoutubeVideo, TrackModel>()
+                .ForMember(dst => dst.Image, o => o.MapFrom(src =>
+                    src.Thumbnails.First(t => t.Name == "Default__").Url)
+                )
+                .ForMember(dst => dst.YoutubeVideoId, o => o.Ignore())
+                .ForMember(dst => dst.Year, o => o.Ignore())
                 ;
         }
     }

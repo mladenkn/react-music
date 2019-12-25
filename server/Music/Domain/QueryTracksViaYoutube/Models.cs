@@ -85,7 +85,11 @@ namespace Music.Domain.QueryTracksViaYoutube
                 .ForMember(dst => dst.Duration, o => o.MapFrom(src => XmlConvert.ToTimeSpan(src.ContentDetails.Duration)))
                 ;
             
-            CreateMap<VideoSnippet, YoutubeVideoModel>(MemberList.None)
+            CreateMap<VideoSnippet, YoutubeVideoModel>()
+                .ForMember(dst => dst.Id, o => o.Ignore())
+                .ForMember(dst => dst.Duration, o => o.Ignore())
+                .ForMember(dst => dst.Statistics, o => o.Ignore())
+                .ForMember(dst => dst.TopicDetails, o => o.Ignore())
                 .ForMember(dst => dst.Thumbnails, o => o.MapFrom((src, dst) =>
                 {
                     var arr = new[]
