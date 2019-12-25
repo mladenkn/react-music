@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
+using Music.DataAccess.Models;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
@@ -26,6 +27,7 @@ namespace Music.Domain.QueryTracksViaYoutube
         public IEnumerable<YoutubeVideoThumbnailModel> Thumbnails { get; set; }
 
         public string ThumbnailsEtag { get; set; }
+
         public IEnumerable<string> Tags { get; set; }
 
         public string YoutubeCategoryId { get; set; }
@@ -39,8 +41,6 @@ namespace Music.Domain.QueryTracksViaYoutube
 
     public class YoutubeVideoStatisticsModel
     {
-        public string VideoId { get; set; }
-
         public ulong? ViewCount { get; set; }
 
         public ulong? LikeCount { get; set; }
@@ -54,8 +54,6 @@ namespace Music.Domain.QueryTracksViaYoutube
 
     public class YoutubeVideoTopicDetailsModel
     {
-        public string VideoId { get; set; }
-
         public IReadOnlyCollection<string> TopicIds { get; set; }
 
         public IReadOnlyCollection<string> RelevantTopicIds { get; set; }
@@ -67,8 +65,6 @@ namespace Music.Domain.QueryTracksViaYoutube
 
     public class YoutubeVideoThumbnailModel
     {
-        public string VideoId { get; set; }
-
         public string Name { get; set; }
 
         public string Url { get; set; }
@@ -85,26 +81,24 @@ namespace Music.Domain.QueryTracksViaYoutube
         public YoutubeVideoProfile()
         {
             CreateMap<Video, YoutubeVideoModel>()
-                .IncludeMembers(src => src.Snippet)
                 .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
-                .ForMember(dst => dst.ThumbnailsEtag, o => o.MapFrom(src => src.Snippet.Thumbnails.ETag))
                 .ForMember(dst => dst.Duration, o => o.MapFrom(src => XmlConvert.ToTimeSpan(src.ContentDetails.Duration)))
-                .IncludeMembers(src => src.Statistics)
-                .IncludeMembers(src => src.TopicDetails)
-                .AfterMap((src, dst) =>
+                .IncludeMembers(src => src.Snippet)
+                ;
+            
+            CreateMap<VideoSnippet, YoutubeVideoModel>(MemberList.None)
+                .ForMember(dst => dst.Thumbnails, o => o.MapFrom((src, dst) =>
                 {
-                    var thumbnailDetails = src.Snippet.Thumbnails;
-
                     var arr = new[]
                     {
-                        (name: nameof(thumbnailDetails.Default__), thumbNail: thumbnailDetails.Default__),
-                        (name: nameof(thumbnailDetails.High), thumbNail: thumbnailDetails.High),
-                        (name: nameof(thumbnailDetails.Maxres), thumbNail: thumbnailDetails.Maxres),
-                        (name: nameof(thumbnailDetails.Medium), thumbNail: thumbnailDetails.Medium),
-                        (name: nameof(thumbnailDetails.Standard), thumbNail: thumbnailDetails.Standard),
+                        (name: nameof(src.Thumbnails.Default__), thumbNail: src.Thumbnails.Default__),
+                        (name: nameof(src.Thumbnails.High), thumbNail: src.Thumbnails.High),
+                        (name: nameof(src.Thumbnails.Maxres), thumbNail: src.Thumbnails.Maxres),
+                        (name: nameof(src.Thumbnails.Medium), thumbNail: src.Thumbnails.Medium),
+                        (name: nameof(src.Thumbnails.Standard), thumbNail: src.Thumbnails.Standard),
                     };
 
-                    dst.Thumbnails = arr
+                    return arr
                         .Where(item => item.thumbNail != null)
                         .Select(i => new YoutubeVideoThumbnailModel
                         {
@@ -114,7 +108,13 @@ namespace Music.Domain.QueryTracksViaYoutube
                             Url = i.thumbNail.Url,
                             Width = i.thumbNail.Width,
                         });
-                })
+                }))
+                ;
+
+            CreateMap<VideoStatistics, YoutubeVideoStatisticsModel>()
+                ;
+
+            CreateMap<VideoTopicDetails, YoutubeVideoTopicDetailsModel>()
                 ;
         }
     }
