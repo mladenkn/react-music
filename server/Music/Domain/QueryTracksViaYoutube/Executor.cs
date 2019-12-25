@@ -22,7 +22,6 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         public async Task<IEnumerable<TrackModel>> Execute(string searchQuery)
         {
-            var channels = await Db.Query<YoutubeChannel>().ToArrayAsync();
             var wantedTracksIds = (await SearchVideoIdsOnYt(searchQuery)).ToArray();
 
             var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksIds);
@@ -56,12 +55,12 @@ namespace Music.Domain.QueryTracksViaYoutube
             return urls;
         }
 
-        private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
+        private async Task<IReadOnlyCollection<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
             var notFoundIds = await Db.Query<YoutubeVideo>()
                 .Where(v => ids.All(id => id != v.Id))
                 .Select(v => v.Id)
-                .ToListAsync();
+                .ToArrayAsync();
             return notFoundIds;
         }
 
@@ -85,6 +84,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> ids)
         {
+            // popravit
             var tracks = await Db.Query<DataAccess.Models.TrackUserProps>()
                 .Where(t => ids.Contains(t.YoutubeVideoId))
                 .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)

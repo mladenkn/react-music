@@ -64,7 +64,7 @@ namespace Music.DataAccess.Models
 
         public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicIds> TopicIds { get; set; }
 
-        public IReadOnlyCollection<YoutubeVideoTopicDetailsRelevantTopicIds> RelevantTopicIds { get; set; }
+        public IReadOnlyCollection<YoutubeVideoTopicDetailsRelevantTopicId> RelevantTopicIds { get; set; }
 
         public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicCategories> TopicCategories { get; set; }
 
@@ -80,7 +80,7 @@ namespace Music.DataAccess.Models
         public string Value { get; set; }
     }
 
-    public class YoutubeVideoTopicDetailsRelevantTopicIds
+    public class YoutubeVideoTopicDetailsRelevantTopicId
     {
         public int Id { get; set; }
 

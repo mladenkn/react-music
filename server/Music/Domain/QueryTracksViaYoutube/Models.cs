@@ -30,7 +30,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         public IEnumerable<string> Tags { get; set; }
 
-        public string YoutubeCategoryId { get; set; }
+        public string CategoryId { get; set; }
 
         public TimeSpan Duration { get; set; }
 
@@ -81,9 +81,8 @@ namespace Music.Domain.QueryTracksViaYoutube
         public YoutubeVideoProfile()
         {
             CreateMap<Video, YoutubeVideoModel>()
-                .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
-                .ForMember(dst => dst.Duration, o => o.MapFrom(src => XmlConvert.ToTimeSpan(src.ContentDetails.Duration)))
                 .IncludeMembers(src => src.Snippet)
+                .ForMember(dst => dst.Duration, o => o.MapFrom(src => XmlConvert.ToTimeSpan(src.ContentDetails.Duration)))
                 ;
             
             CreateMap<VideoSnippet, YoutubeVideoModel>(MemberList.None)
@@ -115,6 +114,60 @@ namespace Music.Domain.QueryTracksViaYoutube
                 ;
 
             CreateMap<VideoTopicDetails, YoutubeVideoTopicDetailsModel>()
+                ;
+            
+
+            CreateMap<YoutubeVideoModel, YoutubeVideo>()
+                .ForMember(dst => dst.YoutubeChannelId, o => o.MapFrom(src => src.ChannelId))
+                .ForPath(dst => dst.YoutubeChannel.Id, o => o.MapFrom(src => src.ChannelId))
+                .ForPath(dst => dst.YoutubeChannel.Title, o => o.MapFrom(src => src.ChannelTitle))
+                .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.CategoryId))
+                .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.Tags.Select(t => new YoutubeVideoTag
+                {
+                    Value = t,
+                    YoutubeVideoId = src.Id
+                })))
+                ;
+
+            CreateMap<YoutubeVideo, YoutubeVideoModel>()
+                .ForMember(dst => dst.ChannelId, o => o.MapFrom(src => src.YoutubeChannelId))
+                .ForMember(dst => dst.ChannelTitle, o => o.MapFrom(src => src.YoutubeChannel.Title))
+                .ForMember(dst => dst.CategoryId, o => o.MapFrom(src => src.YoutubeCategoryId))
+                ;
+
+            CreateMap<YoutubeVideoStatisticsModel, YoutubeVideoStatistics>()
+                .ForMember(dst => dst.YoutubeVideoId, o => o.Ignore())
+                .ForMember(dst => dst.Id, o => o.Ignore())
+                .ReverseMap()
+                ;
+
+            CreateMap<YoutubeVideoTopicDetailsModel, YoutubeVideoTopicDetails>()
+                .ForMember(dst => dst.YoutubeVideoId, o => o.Ignore())
+                .ForMember(dst => dst.Id, o => o.Ignore())
+                .ForMember(dst => dst.RelevantTopicIds, o => o.MapFrom(src => src.RelevantTopicIds.Select(tId => new YoutubeVideoTopicDetailsRelevantTopicId
+                {
+                    Value = tId,
+                })))
+                .ForMember(dst => dst.TopicCategories, o => o.MapFrom(src => src.TopicCategories.Select(tId => new YoutubeVideoTopicDetailsTopicCategories
+                {
+                    Value = tId,
+                })))
+                .ForMember(dst => dst.TopicIds, o => o.MapFrom(src => src.TopicIds.Select(tId => new YoutubeVideoTopicDetailsTopicIds
+                {
+                    Value = tId,
+                })))
+                ;
+
+            CreateMap<YoutubeVideoTopicDetails, YoutubeVideoTopicDetailsModel>()
+                .ForMember(dst => dst.RelevantTopicIds, o => o.MapFrom(src => src.RelevantTopicIds.Select(t => t.Value)))
+                .ForMember(dst => dst.TopicCategories, o => o.MapFrom(src => src.TopicCategories.Select(t => t.Value)))
+                .ForMember(dst => dst.TopicIds, o => o.MapFrom(src => src.TopicIds.Select(t => t.Value)))
+                ;
+
+            CreateMap<YoutubeVideoThumbnailModel, YoutubeVideoThumbnail>()
+                .ForMember(dst => dst.YoutubeVideoId, o => o.Ignore())
+                .ForMember(dst => dst.Id, o => o.Ignore())
+                .ReverseMap()
                 ;
         }
     }

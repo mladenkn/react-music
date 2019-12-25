@@ -175,11 +175,11 @@ namespace Executables
                     ETag = Guid.NewGuid().ToString(),
                     RelevantTopicIds = new []
                     {
-                        new YoutubeVideoTopicDetailsRelevantTopicIds
+                        new YoutubeVideoTopicDetailsRelevantTopicId
                         {
                             Value = Guid.NewGuid().ToString(),
                         },
-                        new YoutubeVideoTopicDetailsRelevantTopicIds
+                        new YoutubeVideoTopicDetailsRelevantTopicId
                         {
                             Value = Guid.NewGuid().ToString(),
                         },
@@ -240,6 +240,7 @@ namespace Executables
                 Assert.True(trackUserPropsFromDb.Id > 0);
                 Assert.Equal(trackUserProps.User.Id, trackUserPropsFromDb.UserId);
                 Assert.Equal(trackUserProps.Year, trackUserPropsFromDb.Year);
+                Assert.Equal(trackUserProps.YoutubeVideoId, trackUserPropsFromDb.YoutubeVideo.Id);
 
                 Assert.True(Enumerable.SequenceEqual(
                     trackUserProps.TrackUserPropsTags.Select(t => t.Value).OrderBy(t => t),
@@ -256,7 +257,8 @@ namespace Executables
 
                 Assert.Equal(video.TopicDetails.ETag, trackUserPropsFromDb.YoutubeVideo.TopicDetails.ETag);
                 Assert.True(video.TopicDetails.Id > 0);
-                
+                Assert.Equal(video.TopicDetails.YoutubeVideoId, video.Id);
+
                 Assert.True(Enumerable.SequenceEqual(
                     trackUserPropsFromDb.YoutubeVideo.Tags.Select(t => t.Value).OrderBy(t => t),
                     trackUserPropsFromDb.YoutubeVideo.Tags.Select(t => t.Value).OrderBy(t => t)
