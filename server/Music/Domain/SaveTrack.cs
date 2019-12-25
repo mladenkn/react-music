@@ -6,7 +6,7 @@ using Music.Domain.Shared;
 
 namespace Music.Domain
 {
-    public class TrackUserPropsUpdateModel
+    public class TrackUpdateModel
     {
         public long TrackYtId { get; set; }
 
@@ -21,7 +21,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task Execute(TrackUserPropsUpdateModel trackProps)
+        public async Task Execute(TrackUpdateModel trackProps)
         {
 
         }

@@ -33,14 +33,14 @@ namespace Music.Domain.Shared
                     src.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src =>
-                    (src.TrackUserPropsId > 0  &&  src.TrackUserProps.TrackUserPropsTags != null) ? 
-                        src.TrackUserProps.TrackUserPropsTags.Select(t => t.Value) : 
+                    (src.TrackId > 0  &&  src.Track.TrackTags != null) ? 
+                        src.Track.TrackTags.Select(t => t.Value) : 
                         null
                     ))
                 .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
                 .ForMember(dst => dst.Year, o => o.MapFrom(src => 
-                    src.TrackUserPropsId > 0 ? 
-                        src.TrackUserProps.Year : 
+                    src.TrackId > 0 ? 
+                        src.Track.Year : 
                         null
                     ))
                 ;

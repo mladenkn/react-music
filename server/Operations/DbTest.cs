@@ -39,11 +39,11 @@ namespace Executables
         }
 
         [Fact]
-        public async Task Cannot_Add_TrackUserPropsTag_When_No_Such_TrackUserProps_Exists()
+        public async Task Cannot_Add_TrackTag_When_No_Such_Track_Exists()
         {
-            var trackUserPropsTag = new TrackUserPropsTag
+            var trackUserPropsTag = new TrackTag
             {
-                TrackUserPropsId = 1,
+                TrackId = 1,
                 Value = "tag"
             };
 
@@ -60,7 +60,7 @@ namespace Executables
         }
 
         [Fact]
-        public async Task Cannot_Add_TrackUserProps_When_No_Such_YoutubeVideo_Exists()
+        public async Task Cannot_Add_Track_When_No_Such_YoutubeVideo_Exists()
         {
             var user = new User
             {
@@ -75,7 +75,7 @@ namespace Executables
                 services.DbContext.Add(user);
                 await services.DbContext.SaveChangesAsync();
 
-                var trackUserProps = new TrackUserProps
+                var trackUserProps = new Track
                 {
                     UserId = 1,
                     YoutubeVideoId = "1",
@@ -133,7 +133,7 @@ namespace Executables
         }
 
         [Fact]
-        public async Task Can_Add_Full_TrackUserProps_With_Full_YouTubeVideo()
+        public async Task Can_Add_Full_Track_With_Full_YouTubeVideo()
         {
             var video = new YoutubeVideo
             {
@@ -196,12 +196,12 @@ namespace Executables
                 }
             };
 
-            var trackUserProps = new TrackUserProps
+            var trackUserProps = new Track
             {
-                TrackUserPropsTags = new[]
+                TrackTags = new[]
                 {
-                    new TrackUserPropsTag {Value = Guid.NewGuid().ToString()},
-                    new TrackUserPropsTag {Value = Guid.NewGuid().ToString()},
+                    new TrackTag {Value = Guid.NewGuid().ToString()},
+                    new TrackTag {Value = Guid.NewGuid().ToString()},
                 },
                 User = new User
                 {
@@ -222,7 +222,7 @@ namespace Executables
             
             using (var services = new Services(DatabaseType.SqlServer))
             {
-                var trackUserPropsFromDb = await services.DbContext.Set<TrackUserProps>()
+                var trackUserPropsFromDb = await services.DbContext.Set<Track>()
                     .Include(t => t.YoutubeVideo)
                         .ThenInclude(v => v.Statistics)
                     .Include(t => t.YoutubeVideo)
@@ -234,7 +234,7 @@ namespace Executables
                             .ThenInclude(td => td.RelevantTopicIds)
                     .Include(t => t.YoutubeVideo)
                         .ThenInclude(v => v.YoutubeChannel)
-                    .Include(t => t.TrackUserPropsTags)
+                    .Include(t => t.TrackTags)
                     .SingleAsync();
 
                 Assert.True(trackUserPropsFromDb.Id > 0);
@@ -243,8 +243,8 @@ namespace Executables
                 Assert.Equal(trackUserProps.YoutubeVideoId, trackUserPropsFromDb.YoutubeVideo.Id);
 
                 Assert.True(Enumerable.SequenceEqual(
-                    trackUserProps.TrackUserPropsTags.Select(t => t.Value).OrderBy(t => t),
-                    trackUserPropsFromDb.TrackUserPropsTags.Select(t => t.Value).OrderBy(t => t)
+                    trackUserProps.TrackTags.Select(t => t.Value).OrderBy(t => t),
+                    trackUserPropsFromDb.TrackTags.Select(t => t.Value).OrderBy(t => t)
                 ));
                 
                 Assert.Equal(video.Id, trackUserPropsFromDb.YoutubeVideo.Id);

@@ -2,7 +2,7 @@
 
 namespace Music.DataAccess.Models
 {
-    public class TrackUserProps
+    public class Track
     {
         public int Id { get; set; }
 
@@ -16,12 +16,12 @@ namespace Music.DataAccess.Models
 
         public int? Year { get; set; }
 
-        public IReadOnlyCollection<TrackUserPropsTag> TrackUserPropsTags { get; set; }
+        public IReadOnlyCollection<TrackTag> TrackTags { get; set; }
     }
 
-    public class TrackUserPropsTag
+    public class TrackTag
     {
-        public int TrackUserPropsId { get; set; }
+        public int TrackId { get; set; }
 
         public string Value { get; set; }
     }

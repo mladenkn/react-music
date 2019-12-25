@@ -31,13 +31,13 @@ namespace Music.Domain
 
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
-            var query = Db.Query<DataAccess.Models.TrackUserProps>().AsQueryable();
+            var query = Db.Query<Track>().AsQueryable();
 
             if (req.MustHaveAnyTag != null)
-                query = query.Where(track => track.TrackUserPropsTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(track => track.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.MustHaveEveryTag != null)
-                query = query.Where(track => track.TrackUserPropsTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(track => track.TrackTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
                 query = query.Where(track => track.Year >= req.YearRange.LowerBound &&
