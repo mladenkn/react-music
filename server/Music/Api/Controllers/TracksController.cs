@@ -26,6 +26,6 @@ namespace Music.Api.Controllers
             Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
 
         [HttpPost]
-        public Task Save(TrackUserProps trackProps) => Resolve<SaveTrackYoutubeExecutor>().Execute(trackProps);
+        public Task Save(TrackUserPropsUpdateModel trackProps) => Resolve<SaveTrackYoutubeExecutor>().Execute(trackProps);
     }
 }

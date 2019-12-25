@@ -38,15 +38,6 @@ namespace Executables.FeatureTests
 
                 var db = serviceScope.ServiceProvider.GetService<MusicDbContext>();
                 db.Database.EnsureCreated();
-
-                var youtubeChannel = new YoutubeChannel
-                {
-                    Id = "Channel",
-                    Title = "Channel"
-                };
-
-                db.Add(youtubeChannel);
-                db.SaveChanges();
             });
 
             var server = new TestServer(builder);

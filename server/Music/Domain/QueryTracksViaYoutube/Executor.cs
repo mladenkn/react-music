@@ -82,11 +82,10 @@ namespace Music.Domain.QueryTracksViaYoutube
             return r;
         }
 
-        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> ids)
+        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksIds)
         {
-            // popravit
-            var tracks = await Db.Query<DataAccess.Models.TrackUserProps>()
-                .Where(t => ids.Contains(t.YoutubeVideoId))
+            var tracks = await Db.Query<YoutubeVideo>()
+                .Where(t => wantedTracksIds.Contains(t.Id))
                 .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
                 .ToListAsync();
             return tracks;

@@ -131,6 +131,8 @@ namespace Music.Domain.QueryTracksViaYoutube
                     Value = t,
                     YoutubeVideoId = src.Id
                 })))
+                .ForMember(dst => dst.TrackUserPropsId, o => o.Ignore())
+                .ForMember(dst => dst.TrackUserProps, o => o.Ignore())
                 ;
 
             CreateMap<YoutubeVideo, YoutubeVideoModel>()
