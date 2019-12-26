@@ -18,8 +18,7 @@ namespace Executables
             var dbOptionsBuilder = new DbContextOptionsBuilder<MusicDbContext>();
 
             if (databaseType == DatabaseType.SqlServer)
-                dbOptionsBuilder.UseSqlServer(
-                    "Data Source=DESKTOP-VSBO5TE\\SQLEXPRESS;Initial Catalog=MusicAutomatedTests;Integrated Security=True");
+                dbOptionsBuilder.UseSqlServer(Config.TestDatabaseConnectionString);
             else
                 dbOptionsBuilder.UseInMemoryDatabase(Guid.NewGuid().ToString());
 

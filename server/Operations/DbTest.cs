@@ -9,14 +9,12 @@ namespace Executables
 {
     public class DbTest
     {
+        private readonly IDataGenerator _dataGenerator = new DataGenerator();
+
         [Fact]
         public async Task Can_Add_One_YoutubeChannel()
         {
-            var channel = new YoutubeChannel
-            {
-                Id = "1",
-                Title = "channel"
-            };
+            var channel = _dataGenerator.YoutubeChannel(c => c.Id);
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -41,11 +39,7 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_TrackTag_When_No_Such_Track_Exists()
         {
-            var trackUserPropsTag = new TrackTag
-            {
-                TrackId = 1,
-                Value = "tag"
-            };
+            var trackUserPropsTag = _dataGenerator.TrackTag(t => t.TrackId);
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -62,10 +56,7 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_Track_When_No_Such_YoutubeVideo_Exists()
         {
-            var user = new User
-            {
-                Email = "user@gmail.com"
-            };
+            var user = _dataGenerator.User();
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -91,21 +82,12 @@ namespace Executables
         [Fact]
         public async Task Can_Add_YoutubeVideo()
         {
-            var video = new YoutubeVideo
-            {
-                Id = Guid.NewGuid().ToString(),
-                Description = Guid.NewGuid().ToString(),
-                Duration = TimeSpan.FromSeconds(2),
-                ThumbnailsEtag = Guid.NewGuid().ToString(),
-                YoutubeCategoryId = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString(),
-                YoutubeChannelId = "YoutubeChannel 1",
-                YoutubeChannel = new YoutubeChannel
-                {
-                    Id = "YoutubeChannel 1",
-                    Title = "YoutubeChannel 1",
-                }
-            };
+            var video = _dataGenerator.YoutubeVideo(
+                v => v.Id, 
+                v => v.YoutubeChannelId, 
+                v => v.YoutubeChannel, 
+                v => v.YoutubeChannel.Id
+            );
 
             using (var services = new Services(DatabaseType.SqlServer))
             {

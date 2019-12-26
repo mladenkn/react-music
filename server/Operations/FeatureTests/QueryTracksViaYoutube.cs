@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
@@ -23,6 +24,21 @@ namespace Executables.FeatureTests
         {
             var builder = new WebHostBuilder().UseStartup<Startup>();
 
+            var videosInDb = new[]
+            {
+                new YoutubeVideo
+                {
+                }
+            };
+
+            var videosFromApiList = new[]
+            {
+                new Video
+                {
+
+                }
+            };
+
             builder.ConfigureServices(services =>
             {
                 var descriptor = services.SingleOrDefault(
@@ -30,8 +46,7 @@ namespace Executables.FeatureTests
                 if (descriptor != null) 
                     services.Remove(descriptor);
 
-                var dbName = "music-test-" + Guid.NewGuid();
-                services.AddDbContext<MusicDbContext>(o => o.UseInMemoryDatabase(dbName));
+                services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.TestDatabaseConnectionString));
 
                 var sp = services.BuildServiceProvider();
                 using var serviceScope = sp.CreateScope();
