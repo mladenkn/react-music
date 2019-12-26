@@ -7,13 +7,14 @@ using AngleSharp;
 using AutoMapper.QueryableExtensions;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
+using Music.DataAccess;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
 using Utilities;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
+    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware<MusicDbContext>
     {
         public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -36,7 +37,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IReadOnlyCollection<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var notFoundIds = await Db.Query<YoutubeVideo>()
+            var notFoundIds = await Db.YoutubeVideos
                 .Where(v => ids.All(id => id != v.Id))
                 .Select(v => v.Id)
                 .ToArrayAsync();
@@ -61,7 +62,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksIds)
         {
-            var tracks = await Db.Query<YoutubeVideo>()
+            var tracks = await Db.YoutubeVideos
                 .Where(t => wantedTracksIds.Contains(t.Id))
                 .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
                 .ToListAsync();

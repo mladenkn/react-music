@@ -5,6 +5,10 @@ namespace Music.DataAccess
 {
     public class MusicDbContext : DbContext
     {
+        public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
+
+        public DbSet<Track> Tracks { get; set; }
+
         public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
         {
         }

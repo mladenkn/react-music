@@ -7,13 +7,14 @@ using AngleSharp;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Kernel;
+using Music.DataAccess;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
     public delegate Task<IEnumerable<string>> SearchYoutubeVideosIds(string searchQuery);
     public delegate Task<IList<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids);
 
-    public class QueryTracksViaYoutubeServices : ServiceResolverAware
+    public class QueryTracksViaYoutubeServices : ServiceResolverAware<MusicDbContext>
     {
         public QueryTracksViaYoutubeServices(IServiceProvider serviceProvider) : base(serviceProvider)
         {

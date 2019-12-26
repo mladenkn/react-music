@@ -1,5 +1,6 @@
 using System.Net.Http;
 using AngleSharp;
+using AutoMapper;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Kernel;
@@ -9,8 +10,10 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Music.DataAccess.Models;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
+using Music.Domain.Shared;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
@@ -38,21 +41,21 @@ namespace Music
                 return database;
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
+            });
+            services.AddAutoMapper(typeof(TrackModelMapperProfile).Assembly);
+            services.AddTransient<HttpClient>();
+            services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
+
             services.AddTransient<YouTubeService>(_ => new YouTubeService(new BaseClientService.Initializer
                 {
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-            //services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s =>s.SearchYoutubeVideosIds);
+            //services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
             //services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
-            });
-
-            services.AddTransient<HttpClient>();
-            services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
 
             services.AddTransient<QueryTracksExecutor>();
             services.AddTransient<QueryTracksViaYoutubeExecutor>();

@@ -24,9 +24,9 @@ namespace Music.Domain.Shared
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class MapperProfile : Profile
+    public class TrackModelMapperProfile : Profile
     {
-        public MapperProfile()
+        public TrackModelMapperProfile()
         {
             CreateMap<YoutubeVideo, TrackModel>()
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>

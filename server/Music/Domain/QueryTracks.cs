@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Kernel;
+using Music.DataAccess;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
 using Utilities;
@@ -23,7 +24,7 @@ namespace Music.Domain
         public Range<int> YearRange { get; set; }
     }
 
-    public class QueryTracksExecutor : ServiceResolverAware
+    public class QueryTracksExecutor : ServiceResolverAware<MusicDbContext>
     {
         public QueryTracksExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -31,7 +32,7 @@ namespace Music.Domain
 
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
-            var query = Db.Query<Track>().AsQueryable();
+            var query = Db.Tracks.AsQueryable();
 
             if (req.MustHaveAnyTag != null)
                 query = query.Where(track => track.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));

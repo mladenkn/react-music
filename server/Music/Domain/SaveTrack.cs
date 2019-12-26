@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kernel;
+using Music.DataAccess;
 using Music.Domain.Shared;
 
 namespace Music.Domain
@@ -15,7 +16,7 @@ namespace Music.Domain
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class SaveTrackYoutubeExecutor : ServiceResolverAware
+    public class SaveTrackYoutubeExecutor : ServiceResolverAware<MusicDbContext>
     {
         public SaveTrackYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
