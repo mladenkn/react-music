@@ -136,11 +136,11 @@ namespace Executables
             {
                 TopicIds = new []
                 {
-                    new YoutubeVideoTopicDetailsTopicIds
+                    new YoutubeVideoTopicDetailsTopicId
                     {
                         Value = NextString(),
                     },
-                    new YoutubeVideoTopicDetailsTopicIds
+                    new YoutubeVideoTopicDetailsTopicId
                     {
                         Value = NextString(),
                     }
@@ -158,11 +158,11 @@ namespace Executables
                 },
                 TopicCategories = new[]
                 {
-                    new YoutubeVideoTopicDetailsTopicCategories
+                    new YoutubeVideoTopicDetailsTopicCategory
                     {
                         Value = NextString(),
                     },
-                    new YoutubeVideoTopicDetailsTopicCategories
+                    new YoutubeVideoTopicDetailsTopicCategory
                     {
                         Value = NextString(),
                     }

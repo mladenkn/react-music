@@ -154,11 +154,11 @@ namespace Music.Domain.QueryTracksViaYoutube
                 {
                     Value = tId,
                 })))
-                .ForMember(dst => dst.TopicCategories, o => o.MapFrom(src => src.TopicCategories.Select(tId => new YoutubeVideoTopicDetailsTopicCategories
+                .ForMember(dst => dst.TopicCategories, o => o.MapFrom(src => src.TopicCategories.Select(tId => new YoutubeVideoTopicDetailsTopicCategory
                 {
                     Value = tId,
                 })))
-                .ForMember(dst => dst.TopicIds, o => o.MapFrom(src => src.TopicIds.Select(tId => new YoutubeVideoTopicDetailsTopicIds
+                .ForMember(dst => dst.TopicIds, o => o.MapFrom(src => src.TopicIds.Select(tId => new YoutubeVideoTopicDetailsTopicId
                 {
                     Value = tId,
                 })))
