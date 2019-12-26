@@ -9,12 +9,14 @@ namespace Executables
 {
     public class DbTest
     {
-        private readonly IDataGenerator _dataGenerator = new DataGenerator();
+        private readonly DataGenerator _dataGenerator = new DataGenerator();
 
         [Fact]
         public async Task Can_Add_One_YoutubeChannel()
         {
-            var channel = _dataGenerator.YoutubeChannel(c => c.Id);
+            var channel = _dataGenerator.YoutubeChannel(
+                parts => parts.Add(c => c.Id)
+            );
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -39,7 +41,9 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_TrackTag_When_No_Such_Track_Exists()
         {
-            var trackUserPropsTag = _dataGenerator.TrackTag(t => t.TrackId);
+            var trackUserPropsTag = _dataGenerator.TrackTag(
+                parts => parts.Add(t => t.TrackId)    
+            );
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -56,7 +60,9 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_Track_When_No_Such_YoutubeVideo_Exists()
         {
-            var user = _dataGenerator.User();
+            var user = _dataGenerator.User(
+                parts => parts.Add(u => u.Id)    
+            );
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -83,10 +89,8 @@ namespace Executables
         public async Task Can_Add_YoutubeVideo()
         {
             var video = _dataGenerator.YoutubeVideo(
-                v => v.Id, 
-                v => v.YoutubeChannelId, 
-                v => v.YoutubeChannel, 
-                v => v.YoutubeChannel.Id
+                parts => parts.Add(v => v.Id),
+                v => { v.YoutubeChannel = _dataGenerator.YoutubeChannel(parts => parts.Add(c => c.Id)); }
             );
 
             using (var services = new Services(DatabaseType.SqlServer))
@@ -117,66 +121,28 @@ namespace Executables
         [Fact]
         public async Task Can_Add_Full_Track_With_Full_YouTubeVideo()
         {
-            var video = new YoutubeVideo
-            {
-                Id = Guid.NewGuid().ToString(),
-                Description = Guid.NewGuid().ToString(),
-                Duration = TimeSpan.FromSeconds(2),
-                Statistics = new YoutubeVideoStatistics
+            var video = _dataGenerator.YoutubeVideo(
+                parts => parts.Add(v => v.Id).Add(v => v.YoutubeChannelId),
+                v =>
                 {
-                    CommentCount = 1,
-                },
-                Tags = new []
-                {
-                    new YoutubeVideoTag
+                    v.Statistics = _dataGenerator.YoutubeVideoStatistics();
+                    v.Tags = new[]
                     {
-                        Value = Guid.NewGuid().ToString(),
-                    },
-                    new YoutubeVideoTag
+                        _dataGenerator.YoutubeVideoTag(),
+                        _dataGenerator.YoutubeVideoTag(),
+                    };
+                    v.Thumbnails = new[]
                     {
-                        Value = Guid.NewGuid().ToString(),
-                    }
-                },
-                Thumbnails = new []
-                {
-                    new YoutubeVideoThumbnail
-                    {
-                        Name = Guid.NewGuid().ToString(),
-                        Etag = Guid.NewGuid().ToString(),
-                        Url = Guid.NewGuid().ToString()
-                    },
-                    new YoutubeVideoThumbnail
-                    {
-                        Name = Guid.NewGuid().ToString(),
-                        Etag = Guid.NewGuid().ToString(),
-                        Url = Guid.NewGuid().ToString()
-                    },
-                },
-                TopicDetails = new YoutubeVideoTopicDetails
-                {
-                    ETag = Guid.NewGuid().ToString(),
-                    RelevantTopicIds = new []
-                    {
-                        new YoutubeVideoTopicDetailsRelevantTopicId
-                        {
-                            Value = Guid.NewGuid().ToString(),
-                        },
-                        new YoutubeVideoTopicDetailsRelevantTopicId
-                        {
-                            Value = Guid.NewGuid().ToString(),
-                        },
-                    }
-                },
-                ThumbnailsEtag = Guid.NewGuid().ToString(),
-                YoutubeCategoryId = Guid.NewGuid().ToString(),
-                Title = Guid.NewGuid().ToString(),
-                YoutubeChannelId = "YoutubeChannel 1",
-                YoutubeChannel = new YoutubeChannel
-                {
-                    Id = "YoutubeChannel 1",
-                    Title = "YoutubeChannel 1",
+                        _dataGenerator.YoutubeVideoThumbnail(),
+                        _dataGenerator.YoutubeVideoThumbnail(),
+                    };
+                    v.YoutubeChannel = _dataGenerator.YoutubeChannel(
+                        parts => { },
+                        c => { c.Id = v.YoutubeChannelId; }
+                    );
+                    v.TopicDetails = _dataGenerator.YoutubeVideoTopicDetails();
                 }
-            };
+            );
 
             var trackUserProps = new Track
             {
