@@ -2,19 +2,16 @@ using System.Net.Http;
 using AngleSharp;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using Music.DataAccess;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
-using YouTubeService = Music.Domain.QueryTracksViaYoutube.YouTubeService;
 
 namespace Music
 {
@@ -41,13 +38,16 @@ namespace Music
                 return database;
             });
 
-            services.AddTransient<Google.Apis.YouTube.v3.YouTubeService>(_ => new Google.Apis.YouTube.v3.YouTubeService(new BaseClientService.Initializer
+            services.AddTransient<YouTubeService>(_ => new YouTubeService(new BaseClientService.Initializer
                 {
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
 
-            services.AddTransient<IYoutubeService, YouTubeService>();
+            services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s =>
+                s.SearchYoutubeVideosIds);
+
+            services.AddDelegateTransient<ListYoutubeVideos, YouTubeService>(s => s.Videos.List);
 
             services.AddSwaggerGen(c =>
             {
