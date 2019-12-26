@@ -9,14 +9,12 @@ namespace Executables
 {
     public class DbTest
     {
-        private readonly DataGenerator _dataGenerator = new DataGenerator();
+        private readonly DataGenerator _gen = new DataGenerator();
 
         [Fact]
         public async Task Can_Add_One_YoutubeChannel()
         {
-            var channel = _dataGenerator.YoutubeChannel(
-                parts => parts.Add(c => c.Id)
-            );
+            var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -41,9 +39,7 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_TrackTag_When_No_Such_Track_Exists()
         {
-            var trackUserPropsTag = _dataGenerator.TrackTag(
-                parts => parts.Add(t => t.TrackId)    
-            );
+            var trackUserPropsTag = _gen.TrackTag(t => { t.TrackId = _gen.Int(); });
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -60,9 +56,7 @@ namespace Executables
         [Fact]
         public async Task Cannot_Add_Track_When_No_Such_YoutubeVideo_Exists()
         {
-            var user = _dataGenerator.User(
-                parts => parts.Add(u => u.Id)    
-            );
+            var user = _gen.User();
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
@@ -88,9 +82,13 @@ namespace Executables
         [Fact]
         public async Task Can_Add_YoutubeVideo()
         {
-            var video = _dataGenerator.YoutubeVideo(
-                parts => parts.Add(v => v.Id),
-                v => { v.YoutubeChannel = _dataGenerator.YoutubeChannel(parts => parts.Add(c => c.Id)); }
+            var video = _gen.YoutubeVideo(
+                v =>
+                {
+                    v.Id = _gen.String();
+                    v.YoutubeChannelId = _gen.String();
+                    v.YoutubeChannel = _gen.YoutubeChannel(c => { c.Id = v.YoutubeChannelId; });
+                }
             );
 
             using (var services = new Services(DatabaseType.SqlServer))
@@ -121,43 +119,39 @@ namespace Executables
         [Fact]
         public async Task Can_Add_Full_Track_With_Full_YouTubeVideo()
         {
-            var video = _dataGenerator.YoutubeVideo(
-                parts => parts.Add(v => v.Id).Add(v => v.YoutubeChannelId),
+            var video = _gen.YoutubeVideo(
                 v =>
                 {
-                    v.Statistics = _dataGenerator.YoutubeVideoStatistics();
+                    v.Id = _gen.String();
+                    v.Statistics = _gen.YoutubeVideoStatistics();
                     v.Tags = new[]
                     {
-                        _dataGenerator.YoutubeVideoTag(),
-                        _dataGenerator.YoutubeVideoTag(),
+                        _gen.YoutubeVideoTag(),
+                        _gen.YoutubeVideoTag(),
                     };
                     v.Thumbnails = new[]
                     {
-                        _dataGenerator.YoutubeVideoThumbnail(),
-                        _dataGenerator.YoutubeVideoThumbnail(),
+                        _gen.YoutubeVideoThumbnail(),
+                        _gen.YoutubeVideoThumbnail(),
                     };
-                    v.YoutubeChannel = _dataGenerator.YoutubeChannel(
-                        parts => { },
+                    v.YoutubeChannelId = _gen.String();
+                    v.YoutubeChannel = _gen.YoutubeChannel(
                         c => { c.Id = v.YoutubeChannelId; }
                     );
-                    v.TopicDetails = _dataGenerator.YoutubeVideoTopicDetails();
+                    v.TopicDetails = _gen.YoutubeVideoTopicDetails();
                 }
             );
 
-            var trackUserProps = new Track
+            var trackUserProps = _gen.Track(t =>
             {
-                TrackTags = new[]
+                t.TrackTags = new[]
                 {
-                    new TrackTag {Value = Guid.NewGuid().ToString()},
-                    new TrackTag {Value = Guid.NewGuid().ToString()},
-                },
-                User = new User
-                {
-                    Email = Guid.NewGuid().ToString()
-                },
-                YoutubeVideo = video,
-                Year = 1997,
-            };
+                    _gen.TrackTag(),
+                    _gen.TrackTag(),
+                };
+                t.User = _gen.User();
+                t.YoutubeVideo = video;
+            });
 
             using (var services = new Services(DatabaseType.SqlServer))
             {
