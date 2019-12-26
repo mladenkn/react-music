@@ -43,11 +43,8 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-
-            services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s =>
-                s.SearchYoutubeVideosIds);
-
-            services.AddDelegateTransient<ListYoutubeVideos, YouTubeService>(s => s.Videos.List);
+            //services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s =>s.SearchYoutubeVideosIds);
+            //services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
 
             services.AddSwaggerGen(c =>
             {

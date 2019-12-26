@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Apis.YouTube.v3.Data;
 using Music.DataAccess.Models;
 
 namespace Executables
@@ -61,6 +62,24 @@ namespace Executables
                 YoutubeCategoryId = String(),
                 Title = String(),
                 PublishedAt = DateTime.MinValue,
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public Video Video(Action<Video> addMore = null)
+        {
+            var r = new Video
+            {
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public VideoSnippet VideoSnippet(Action<VideoSnippet> addMore = null)
+        {
+            var r = new VideoSnippet
+            {
             };
             addMore?.Invoke(r);
             return r;

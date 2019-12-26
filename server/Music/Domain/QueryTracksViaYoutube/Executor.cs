@@ -51,10 +51,8 @@ namespace Music.Domain.QueryTracksViaYoutube
 
             foreach (var idsChunk in ids.Batch(chunkCount))
             {
-                var allTracksFromYtRequest = listVideos("snippet,contentDetails,statistics,topicDetails");
-                allTracksFromYtRequest.Id = string.Join(",", idsChunk);
-                var allVideosFromYt = await allTracksFromYtRequest.ExecuteAsync();
-                var allVideosFromYtMapped = allVideosFromYt.Items.Select(v => Mapper.Map<YoutubeVideoModel>(v));
+                var allVideosFromYt = await listVideos(new [] {"snippet","contentDetails","statistics","topicDetails"}, idsChunk);
+                var allVideosFromYtMapped = allVideosFromYt.Select(v => Mapper.Map<YoutubeVideoModel>(v));
                 r.AddRange(allVideosFromYtMapped);
             }
 

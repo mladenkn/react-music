@@ -8,7 +8,7 @@ namespace Kernel
     public abstract class ServiceResolverAware
     {
         private readonly IServiceProvider _serviceProvider;
-
+        
         protected IDatabase Db { get; }
 
         protected IMapper Mapper { get; }
