@@ -107,11 +107,11 @@ namespace Executables.FeatureTests
                 CollectionUtils.AreEquivalentNoOrder(searchedVideoIds, serverResponseTracks.Select(t => t.YoutubeVideoId))
             );
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db_ = Helpers.UseDbContext())
             {
-                var allVideoIds = services.DbContext.YoutubeVideos.Select(v => v.Id);
+                var allVideoIds = db_.YoutubeVideos.Select(v => v.Id);
                 Assert.True(CollectionUtils.AreEquivalentNoOrder(shouldBeVideoIdsInDbAtTheEnd, allVideoIds));
-                services.DbContext.Database.EnsureDeleted();
+                db_.Database.EnsureDeleted();
             }
         }
     }

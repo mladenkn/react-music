@@ -1,5 +1,8 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Music.DataAccess;
 
 namespace Executables
 {
@@ -9,6 +12,13 @@ namespace Executables
         {
             var filePath = @"C:\Users\a\Documents\projekti\music\server\Operations\Files\" + fileName;
             await File.WriteAllTextAsync(filePath, fileContent);
+        }
+
+        public static MusicDbContext UseDbContext()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder<MusicDbContext>();
+            dbOptionsBuilder.UseSqlServer(Config.TestDatabaseConnectionString);
+            return new MusicDbContext(dbOptionsBuilder.Options);
         }
     }
 }

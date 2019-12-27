@@ -16,23 +16,23 @@ namespace Executables
         {
             var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                services.DbContext.Database.EnsureDeleted();
-                services.DbContext.Database.EnsureCreated();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                services.DbContext.Add(channel);
-                await services.DbContext.SaveChangesAsync();
+                db.Add(channel);
+                await db.SaveChangesAsync();
             }
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                var channelQueryResult = await services.DbContext.Set<YoutubeChannel>().ToArrayAsync();
+                var channelQueryResult = await db.Set<YoutubeChannel>().ToArrayAsync();
                 Assert.Single(channelQueryResult);
                 Assert.Equal(channel.Id, channelQueryResult[0].Id);
                 Assert.Equal(channel.Title, channelQueryResult[0].Title);
 
-                services.DbContext.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
             }
         }
 
@@ -41,15 +41,15 @@ namespace Executables
         {
             var trackUserPropsTag = _gen.TrackTag(t => { t.TrackId = _gen.Int(); });
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                services.DbContext.Database.EnsureDeleted();
-                services.DbContext.Database.EnsureCreated();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                services.DbContext.Add(trackUserPropsTag);
-                await Assert.ThrowsAnyAsync<DbUpdateException>(() => services.DbContext.SaveChangesAsync());
+                db.Add(trackUserPropsTag);
+                await Assert.ThrowsAnyAsync<DbUpdateException>(() => db.SaveChangesAsync());
 
-                services.DbContext.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
             }
         }
 
@@ -58,13 +58,13 @@ namespace Executables
         {
             var user = _gen.User();
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                services.DbContext.Database.EnsureDeleted();
-                services.DbContext.Database.EnsureCreated();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                services.DbContext.Add(user);
-                await services.DbContext.SaveChangesAsync();
+                db.Add(user);
+                await db.SaveChangesAsync();
 
                 var trackUserProps = new Track
                 {
@@ -72,10 +72,10 @@ namespace Executables
                     YoutubeVideoId = "1",
                 };
 
-                services.DbContext.Add(trackUserProps);
-                await Assert.ThrowsAnyAsync<DbUpdateException>(() => services.DbContext.SaveChangesAsync());
+                db.Add(trackUserProps);
+                await Assert.ThrowsAnyAsync<DbUpdateException>(() => db.SaveChangesAsync());
 
-                services.DbContext.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
             }
         }
 
@@ -91,18 +91,18 @@ namespace Executables
                 }
             );
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                services.DbContext.Database.EnsureDeleted();
-                services.DbContext.Database.EnsureCreated();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                services.DbContext.Add(video);
-                await services.DbContext.SaveChangesAsync();
+                db.Add(video);
+                await db.SaveChangesAsync();
             }
-            
-            using (var services = new Services(DatabaseType.SqlServer))
+
+            using (var db = Helpers.UseDbContext())
             {
-                var videoFromDb = await services.DbContext.Set<YoutubeVideo>().SingleAsync();
+                var videoFromDb = await db.Set<YoutubeVideo>().SingleAsync();
 
                 Assert.Equal(video.Id, videoFromDb.Id);
                 Assert.Equal(video.Description, videoFromDb.Description);
@@ -112,7 +112,7 @@ namespace Executables
                 Assert.Equal(video.Title, videoFromDb.Title);
                 Assert.Equal(video.YoutubeChannelId, videoFromDb.YoutubeChannelId);
 
-                services.DbContext.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
             }
         }
 
@@ -153,18 +153,18 @@ namespace Executables
                 t.YoutubeVideo = video;
             });
 
-            using (var services = new Services(DatabaseType.SqlServer))
+            using (var db = Helpers.UseDbContext())
             {
-                services.DbContext.Database.EnsureDeleted();
-                services.DbContext.Database.EnsureCreated();
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
 
-                services.DbContext.Add(trackUserProps);
-                await services.DbContext.SaveChangesAsync();
+                db.Add(trackUserProps);
+                await db.SaveChangesAsync();
             }
-            
-            using (var services = new Services(DatabaseType.SqlServer))
+
+            using (var db = Helpers.UseDbContext())
             {
-                var trackUserPropsFromDb = await services.DbContext.Set<Track>()
+                var trackUserPropsFromDb = await db.Set<Track>()
                     .Include(t => t.YoutubeVideo)
                         .ThenInclude(v => v.Statistics)
                     .Include(t => t.YoutubeVideo)
@@ -216,7 +216,7 @@ namespace Executables
                     trackUserPropsFromDb.YoutubeVideo.Thumbnails.Select(t => t.Url).OrderBy(t => t)
                 ));
 
-                services.DbContext.Database.EnsureDeleted();
+                db.Database.EnsureDeleted();
             }
         }
     }
