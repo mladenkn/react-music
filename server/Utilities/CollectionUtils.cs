@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Utilities
 {
     public static class CollectionUtils
     {
+        public static bool AreEquivalentNoOrder<T>(this IEnumerable<T> col1, IEnumerable<T> col2)
+        {
+            var col1Sorted = col1.OrderBy(i => i);
+            var col2Sorted = col2.OrderBy(i => i);
+            return Enumerable.SequenceEqual(col1Sorted, col2Sorted);
+        }
+
         public static IEnumerable<IEnumerable<TSource>> Batch<TSource>(this IEnumerable<TSource> source, int size)
         {
             return Batch(source, size, x => x);

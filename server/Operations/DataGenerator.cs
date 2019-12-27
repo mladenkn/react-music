@@ -1,6 +1,7 @@
 ﻿using System;
 using Google.Apis.YouTube.v3.Data;
 using Music.DataAccess.Models;
+using Music.Domain.QueryTracksViaYoutube;
 
 namespace Executables
 {
@@ -67,19 +68,16 @@ namespace Executables
             return r;
         }
 
-        public Video Video(Action<Video> addMore = null)
+        public YoutubeVideoModel YoutubeVideoModel(Action<YoutubeVideoModel> addMore = null)
         {
-            var r = new Video
+            var r = new YoutubeVideoModel
             {
-            };
-            addMore?.Invoke(r);
-            return r;
-        }
-
-        public VideoSnippet VideoSnippet(Action<VideoSnippet> addMore = null)
-        {
-            var r = new VideoSnippet
-            {
+                Description = String(),
+                Duration = TimeSpan.FromSeconds(Int()),
+                ThumbnailsEtag = String(),
+                CategoryId = String(),
+                Title = String(),
+                PublishedAt = DateTime.MinValue,
             };
             addMore?.Invoke(r);
             return r;

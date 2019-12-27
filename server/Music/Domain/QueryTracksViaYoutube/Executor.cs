@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using AngleSharp;
 using AutoMapper.QueryableExtensions;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
@@ -23,47 +21,47 @@ namespace Music.Domain.QueryTracksViaYoutube
         public async Task<IEnumerable<TrackModel>> Execute(string searchQuery)
         {
             var searchYoutubeVideosIds = Resolve<SearchYoutubeVideosIds>();
-            var wantedTracksIds = (await searchYoutubeVideosIds(searchQuery)).ToArray();
+            var wantedTracksYtIds = (await searchYoutubeVideosIds(searchQuery)).ToArray();
 
-            var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksIds);
+            var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksYtIds);
             var videosFromYt = await GetVideosFromYoutube(notFoundVideosIds.ToArray());
-            Db.AddRange(videosFromYt);
+            var videosFromYtMapped = videosFromYt.Select(v => Mapper.Map<YoutubeVideo>(v));
+            Db.AddRange(videosFromYtMapped);
             await Db.SaveChangesAsync();
 
-            var tracks = await GetTracks(wantedTracksIds);
+            var tracks = await GetTracks(wantedTracksYtIds);
 
             return tracks;
         }
 
-        private async Task<IReadOnlyCollection<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
+        private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var notFoundIds = await Db.YoutubeVideos
-                .Where(v => ids.All(id => id != v.Id))
+            var foundIds = await Db.YoutubeVideos
                 .Select(v => v.Id)
+                .Where(vId => ids.Contains(vId))
                 .ToArrayAsync();
+            var notFoundIds = ids.Except(foundIds);
             return notFoundIds;
         }
 
         private async Task<IReadOnlyCollection<YoutubeVideoModel>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
         {
             var r = new List<YoutubeVideoModel>(ids.Count);
-            var chunkCount = ids.Count < 50 ? 1 : ids.Count / 50;
             var listVideos = Resolve<ListYoutubeVideos>();
 
-            foreach (var idsChunk in ids.Batch(chunkCount))
+            foreach (var idsChunk in ids.Batch(50))
             {
                 var allVideosFromYt = await listVideos(new [] {"snippet","contentDetails","statistics","topicDetails"}, idsChunk);
-                var allVideosFromYtMapped = allVideosFromYt.Select(v => Mapper.Map<YoutubeVideoModel>(v));
-                r.AddRange(allVideosFromYtMapped);
+                r.AddRange(allVideosFromYt);
             }
 
             return r;
         }
 
-        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksIds)
+        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
             var tracks = await Db.YoutubeVideos
-                .Where(t => wantedTracksIds.Contains(t.Id))
+                .Where(v => wantedTracksYtIds.Contains(v.Id))
                 .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
                 .ToListAsync();
             return tracks;

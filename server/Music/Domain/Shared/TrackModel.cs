@@ -28,21 +28,22 @@ namespace Music.Domain.Shared
     {
         public TrackModelMapperProfile()
         {
+            var emptyTagsArray = new string[0];
             CreateMap<YoutubeVideo, TrackModel>()
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>
                     src.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src =>
-                    (src.TrackId > 0  &&  src.Track.TrackTags != null) ? 
-                        src.Track.TrackTags.Select(t => t.Value) : 
-                        null
-                    ))
+                    src.TrackId > 0 ?
+                        src.Track.TrackTags.Select(t => t.Value).ToArray() :
+                        emptyTagsArray
+                ))
                 .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
-                .ForMember(dst => dst.Year, o => o.MapFrom(src => 
-                    src.TrackId > 0 ? 
-                        src.Track.Year : 
+                .ForMember(dst => dst.Year, o => o.MapFrom(src =>
+                    src.TrackId > 0 ?
+                        src.Track.Year :
                         null
-                    ))
+                ))
                 ;
         }
     }
