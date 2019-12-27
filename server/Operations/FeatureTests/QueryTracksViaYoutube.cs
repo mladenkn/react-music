@@ -87,16 +87,14 @@ namespace Executables.FeatureTests
             });
 
             using var server = new TestServer(builder);
-
-            using var servicesScope = server.Services.CreateScope();
+            var client = server.CreateClient();
+            var servicesScope = server.Services.CreateScope();
             var db = servicesScope.ServiceProvider.GetService<MusicDbContext>();
+
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
-
             db.AddRange(videosInDb);
             db.SaveChanges();
-
-            using var client = server.CreateClient();
 
             var serverResponse = await client.GetAsync("api/tracks/yt?searchQuery=mia");
             Assert.Equal(HttpStatusCode.OK, serverResponse.StatusCode);
