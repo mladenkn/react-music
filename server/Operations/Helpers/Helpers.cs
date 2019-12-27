@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess;
 
-namespace Executables
+namespace Executables.Helpers
 {
-    public static class Helpers
+    public static class Utils
     {
         public static async Task WriteToFile(string fileName, string fileContent)
         {

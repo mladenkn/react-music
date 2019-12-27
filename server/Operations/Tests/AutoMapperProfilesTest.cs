@@ -2,7 +2,7 @@
 using Music.Domain.Shared;
 using Xunit;
 
-namespace Executables
+namespace Executables.Tests
 {
     public class AutoMapperProfilesTest
     {

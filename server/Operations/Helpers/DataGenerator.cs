@@ -1,9 +1,8 @@
 ﻿using System;
-using Google.Apis.YouTube.v3.Data;
 using Music.DataAccess.Models;
 using Music.Domain.QueryTracksViaYoutube;
 
-namespace Executables
+namespace Executables.Helpers
 {
     public class DataGenerator
     {

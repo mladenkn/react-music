@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Executables.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Xunit;
 
-namespace Executables
+namespace Executables.Tests
 {
     public class DbTest
     {
@@ -16,7 +16,7 @@ namespace Executables
         {
             var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -25,7 +25,7 @@ namespace Executables
                 await db.SaveChangesAsync();
             }
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 var channelQueryResult = await db.Set<YoutubeChannel>().ToArrayAsync();
                 Assert.Single(channelQueryResult);
@@ -41,7 +41,7 @@ namespace Executables
         {
             var trackUserPropsTag = _gen.TrackTag(t => { t.TrackId = _gen.Int(); });
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -58,7 +58,7 @@ namespace Executables
         {
             var user = _gen.User();
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -91,7 +91,7 @@ namespace Executables
                 }
             );
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -100,7 +100,7 @@ namespace Executables
                 await db.SaveChangesAsync();
             }
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 var videoFromDb = await db.Set<YoutubeVideo>().SingleAsync();
 
@@ -153,7 +153,7 @@ namespace Executables
                 t.YoutubeVideo = video;
             });
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -162,7 +162,7 @@ namespace Executables
                 await db.SaveChangesAsync();
             }
 
-            using (var db = Helpers.UseDbContext())
+            using (var db = Utils.UseDbContext())
             {
                 var trackUserPropsFromDb = await db.Set<Track>()
                     .Include(t => t.YoutubeVideo)
