@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Utilities
+﻿namespace Utilities
 {
     public class ArrayWithTotalCount<T>
     {

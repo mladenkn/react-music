@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
 using Kernel;
 using Music.DataAccess;
-using Music.DataAccess.Models;
 using Music.Domain.Shared;
 using Utilities;
 

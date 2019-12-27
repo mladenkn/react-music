@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kernel;
 using Music.DataAccess;
-using Music.Domain.Shared;
 
 namespace Music.Domain
 {
