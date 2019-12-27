@@ -69,85 +69,93 @@ namespace Executables.FeatureTests
 
             var shouldBeVideoIdsInDbAtTheEnd = Enumerable.Union(searchedVideoIds, videosInDb.Select(v => v.Id));
 
-            await ServerTest.New()
-                .ConfigureServices(services =>
-                {
-                    services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
-                    services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
+            await ServerTest.Run(options =>
+            {
+                options.ConfigureServices(services =>
                     {
-                        Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
-                        return videosFromApiList;
+                        services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
+                        services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
+                        {
+                            Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
+                            return videosFromApiList;
+                        });
+                    })
+                    .PrepareDatabase(db =>
+                    {
+                        db.AddRange(videosInDb);
+                        db.SaveChanges();
+                    })
+                    .Act(httpClient => httpClient.GetAsync("api/tracks/yt?searchQuery=mia"))
+                    .Assert(async (serverResponse, db) =>
+                    {
+                        Assert.Equal(HttpStatusCode.OK, serverResponse.StatusCode);
+
+                        var responseContent =
+                            JsonConvert.DeserializeObject<TrackModel[]>(
+                                await serverResponse.Content.ReadAsStringAsync());
+
+                        Assert.True(
+                            CollectionUtils.AreEquivalentNoOrder(searchedVideoIds,
+                                responseContent.Select(t => t.YoutubeVideoId))
+                        );
+
+                        var allVideoIds = db.YoutubeVideos.Select(v => v.Id);
+                        Assert.True(CollectionUtils.AreEquivalentNoOrder(shouldBeVideoIdsInDbAtTheEnd, allVideoIds));
                     });
-                })
-                .PrepareDatabase(db =>
-                {
-                    db.AddRange(videosInDb);
-                    db.SaveChanges();
-                })
-                .Act(httpClient => httpClient.GetAsync("api/tracks/yt?searchQuery=mia"))
-                .Assert(async (serverResponse, db) =>
-                {
-                    Assert.Equal(HttpStatusCode.OK, serverResponse.StatusCode);
-
-                    var responseContent =
-                        JsonConvert.DeserializeObject<TrackModel[]>(await serverResponse.Content.ReadAsStringAsync());
-
-                    Assert.True(
-                        CollectionUtils.AreEquivalentNoOrder(searchedVideoIds,
-                            responseContent.Select(t => t.YoutubeVideoId))
-                    );
-
-                    var allVideoIds = db.YoutubeVideos.Select(v => v.Id);
-                    Assert.True(CollectionUtils.AreEquivalentNoOrder(shouldBeVideoIdsInDbAtTheEnd, allVideoIds));
-                })
-                .Run();
+            });
         }
+    }
+
+    public class ServerTestOptions
+    {
+        public Action<IServiceCollection> ConfigureServices { get; set; }
+        public Action<MusicDbContext> PrepareDatabase { get; set; }
+        public Func<HttpClient, Task<HttpResponseMessage>> Act { get; set; }
+        public Func<HttpResponseMessage, MusicDbContext, Task> Assert { get; set; }
+    }
+
+    public class ServerTestOptionsBuilder
+    {
+        private readonly ServerTestOptions _options = new ServerTestOptions();
+
+        public ServerTestOptionsBuilder ConfigureServices(Action<IServiceCollection> configureServicesActual)
+        {
+            _options.ConfigureServices = configureServicesActual;
+            return this;
+        }
+
+        public ServerTestOptionsBuilder PrepareDatabase(Action<MusicDbContext> prepareDatabaseActual)
+        {
+            _options.PrepareDatabase = prepareDatabaseActual;
+            return this;
+        }
+
+        public ServerTestOptionsBuilder Act(Func<HttpClient, Task<HttpResponseMessage>> actActual)
+        {
+            _options.Act = actActual;
+            return this;
+        }
+
+        public ServerTestOptionsBuilder Assert(Func<HttpResponseMessage, MusicDbContext, Task> assertActual)
+        {
+            _options.Assert = assertActual;
+            return this;
+        }
+
+        public ServerTestOptions Build() => _options;
     }
 
     public class ServerTest
     {
-        private Action<IServiceCollection> _configureServicesActual;
-        private Action<MusicDbContext> _prepareDatabaseActual;
-        private Func<HttpClient, Task<HttpResponseMessage>> _actActual;
-        private Func<HttpResponseMessage, MusicDbContext, Task> _assertActual;
-
-        public ServerTest ConfigureServices(Action<IServiceCollection> configureServicesActual)
+        public static async Task Run(Action<ServerTestOptionsBuilder> addOptions)
         {
-            _configureServicesActual = configureServicesActual;
-            return this;
+            var optionsBuilder = new ServerTestOptionsBuilder();
+            addOptions(optionsBuilder);
+            var options = optionsBuilder.Build();
+            await Run(options);
         }
 
-        public ServerTest PrepareDatabase(Action<MusicDbContext> prepareDatabaseActual)
-        {
-            _prepareDatabaseActual = prepareDatabaseActual;
-            return this;
-        }
-
-        public ServerTest Act(Func<HttpClient, Task<HttpResponseMessage>> actActual)
-        {
-            _actActual = actActual;
-            return this;
-        }
-
-        public ServerTest Assert(Func<HttpResponseMessage, MusicDbContext, Task> assertActual)
-        {
-            _assertActual = assertActual;
-            return this;
-        }
-        
-        public async Task Run()
-        {
-            var (_, client, _, db, dispose) = CreateTestServer(_configureServicesActual);
-
-            _prepareDatabaseActual(db);
-            var serverResponse = await _actActual(client);
-            await _assertActual(serverResponse, db);
-
-            dispose();
-        }
-
-        private static (TestServer server, HttpClient client, IServiceProvider serviceProvider, MusicDbContext db, Action dispose)
-            CreateTestServer(Action<IServiceCollection> consumeServiceCollection)
+        public static async Task Run(ServerTestOptions options)
         {
             var builder = new WebHostBuilder().UseStartup<Startup>();
             builder.ConfigureServices(services =>
@@ -156,7 +164,7 @@ namespace Executables.FeatureTests
                 if (descriptor != null)
                     services.Remove(descriptor);
                 services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.TestDatabaseConnectionString));
-                consumeServiceCollection(services);
+                options.ConfigureServices(services);
             });
 
             var server = new TestServer(builder);
@@ -168,18 +176,15 @@ namespace Executables.FeatureTests
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            void Dispose()
-            {
-                db.Database.EnsureDeleted();
-                db.Dispose();
-                server.Dispose();
-                client.Dispose();
-                servicesScope.Dispose();
-            }
+            options.PrepareDatabase(db);
+            var serverResponse = await options.Act(client);
+            await options.Assert(serverResponse, db);
 
-            return (server, client, serviceProvider, db, Dispose);
+            db.Database.EnsureDeleted();
+            db.Dispose();
+            server.Dispose();
+            client.Dispose();
+            servicesScope.Dispose();
         }
-
-        public static ServerTest New() => new ServerTest();
     }
 }
