@@ -6,6 +6,16 @@ namespace Utilities
 {
     public static class CollectionUtils
     {
+        public static T[] Repeat<T>(Func<T> getNext, int count)
+        {
+            var r = new T[count];
+            for (var i = 0; i < count; i++)
+            {
+                r[i] = getNext();
+            }
+            return r;
+        }
+
         public static bool AreEquivalentNoOrder<T>(this IEnumerable<T> col1, IEnumerable<T> col2)
         {
             var col1Sorted = col1.OrderBy(i => i);

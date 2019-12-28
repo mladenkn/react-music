@@ -36,7 +36,7 @@ namespace Executables.Helpers
         {
             var track = new Track
             {
-                Year = 1997,
+                Year = Int(),
             };
             addMore?.Invoke(track);
             return track;

@@ -13,7 +13,7 @@ namespace Executables.Helpers
 {
     public class ServerTestOptions
     {
-        public Action<IServiceCollection> ConfigureServices { get; set; }
+        public Action<IServiceCollection> ConfigureServices { get; set; } = (services) => { };
         public Action<MusicDbContext> PrepareDatabase { get; set; }
         public Func<HttpClient, Task<HttpResponseMessage>> Act { get; set; }
         public Func<HttpResponseMessage, MusicDbContext, Task> Assert { get; set; }

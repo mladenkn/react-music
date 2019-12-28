@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Executables.Tests.Features
 {
-    public class QueryTracksViaYoutube
+    public class QueryTracksViaYoutubeTest
     {
         private readonly DataGenerator _gen = new DataGenerator();
 
@@ -60,7 +60,8 @@ namespace Executables.Tests.Features
 
             await ServerTest.Run(options =>
             {
-                options.ConfigureServices(services =>
+                options
+                    .ConfigureServices(services =>
                     {
                         services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
                         services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
