@@ -1,4 +1,5 @@
 ﻿using System;
+using Google.Apis.YouTube.v3.Data;
 using Music.DataAccess.Models;
 using Music.Domain.QueryTracksViaYoutube;
 
@@ -52,6 +53,81 @@ namespace Executables.Helpers
             return r;
         }
 
+        public Video Video(Action<Video> addMore = null)
+        {
+            var r = new Video
+            {
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public VideoSnippet VideoSnippet(Action<VideoSnippet> addMore = null)
+        {
+            var r = new VideoSnippet
+            {
+                CategoryId = String(),
+                ChannelId = String(),
+                ChannelTitle = String(),
+                Description = String(),
+                PublishedAt = DateTime.Today,
+                Tags = new[] { String(), String() },
+                Title = String(),
+                ETag = String(),
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public Thumbnail Thumbnail(Action<Thumbnail> addMore = null)
+        {
+            var r = new Thumbnail
+            {
+                Url = String(),
+                Width = Int(),
+                Height = Int(),
+                ETag = String()
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public VideoStatistics VideoStatistics(Action<VideoStatistics> addMore = null)
+        {
+            var r = new VideoStatistics
+            {
+                ViewCount = (ulong) Int(),
+                LikeCount = (ulong)Int(),
+                DislikeCount = (ulong)Int(),
+                FavoriteCount = (ulong)Int(),
+                CommentCount = (ulong)Int(),
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
+        public VideoTopicDetails VideoTopicDetails(Action<VideoTopicDetails> addMore = null)
+        {
+            var r = new VideoTopicDetails
+            {
+                TopicIds = new []
+                {
+                    String(), String()
+                },
+                RelevantTopicIds = new[]
+                {
+                    String(), String()
+                },
+                TopicCategories = new[]
+                {
+                    String(), String(), String(), String()
+                },
+                ETag = String(),
+            };
+            addMore?.Invoke(r);
+            return r;
+        }
+
         public YoutubeVideo YoutubeVideo(Action<YoutubeVideo> addMore = null)
         {
             var r = new YoutubeVideo
@@ -60,21 +136,6 @@ namespace Executables.Helpers
                 Duration = TimeSpan.FromSeconds(Int()),
                 ThumbnailsEtag = String(),
                 YoutubeCategoryId = String(),
-                Title = String(),
-                PublishedAt = DateTime.MinValue,
-            };
-            addMore?.Invoke(r);
-            return r;
-        }
-
-        public YoutubeVideoModel YoutubeVideoModel(Action<YoutubeVideoModel> addMore = null)
-        {
-            var r = new YoutubeVideoModel
-            {
-                Description = String(),
-                Duration = TimeSpan.FromSeconds(Int()),
-                ThumbnailsEtag = String(),
-                CategoryId = String(),
                 Title = String(),
                 PublishedAt = DateTime.MinValue,
             };
@@ -110,7 +171,7 @@ namespace Executables.Helpers
         {
             var r = new YoutubeVideoStatistics
             {
-                ViewCount = (ulong) Int(),
+                ViewCount = (ulong)Int(),
                 LikeCount = (ulong)Int(),
                 DislikeCount = (ulong)Int(),
                 FavoriteCount = (ulong)Int(),
@@ -124,7 +185,7 @@ namespace Executables.Helpers
         {
             var r = new YoutubeVideoTopicDetails
             {
-                TopicIds = new []
+                TopicIds = new[]
                 {
                     new YoutubeVideoTopicDetailsTopicId
                     {

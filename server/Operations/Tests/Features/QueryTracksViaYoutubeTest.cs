@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Executables.Helpers;
+using Google.Apis.YouTube.v3.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
@@ -16,7 +18,7 @@ namespace Executables.Tests.Features
         private readonly DataGenerator _gen = new DataGenerator();
 
         [Fact]
-        public async Task Run()
+        public async Task General()
         {
             var searchedVideoIds = new[]
             {
@@ -44,15 +46,43 @@ namespace Executables.Tests.Features
 
             var videosFromApiList = new[]
             {
-                _gen.YoutubeVideoModel(v =>
+                _gen.Video(v =>
                 {
                     v.Id = searchedVideoIds[1];
-                    v.ChannelId = _gen.String();
+                    v.ContentDetails = new VideoContentDetails
+                    {
+                        Duration = "PT3M20S"
+                    };
+                    v.Statistics = _gen.VideoStatistics();
+                    v.TopicDetails = _gen.VideoTopicDetails();
+                    v.Snippet = _gen.VideoSnippet(s =>
+                    {
+                        s.Thumbnails = new ThumbnailDetails
+                        {
+                            Default__ = _gen.Thumbnail(),
+                            ETag = _gen.String(),
+                            Medium = _gen.Thumbnail(),
+                        };
+                    });
                 }),
-                _gen.YoutubeVideoModel(v =>
+                _gen.Video(v =>
                 {
                     v.Id = searchedVideoIds[2];
-                    v.ChannelId = _gen.String();
+                    v.ContentDetails = new VideoContentDetails
+                    {
+                        Duration = "PT3H2M31S"
+                    };
+                    v.Statistics = _gen.VideoStatistics();
+                    v.TopicDetails = _gen.VideoTopicDetails();
+                    v.Snippet = _gen.VideoSnippet(s =>
+                    {
+                        s.Thumbnails = new ThumbnailDetails
+                        {
+                            Default__ = _gen.Thumbnail(),
+                            ETag = _gen.String(),
+                            Medium = _gen.Thumbnail(),
+                        };
+                    });
                 }),
             };
 
@@ -64,11 +94,11 @@ namespace Executables.Tests.Features
                     .ConfigureServices(services =>
                     {
                         services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
-                        //services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
-                        //{
-                        //    Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
-                        //    return videosFromApiList;
-                        //});
+                        services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
+                        {
+                            Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
+                            return videosFromApiList;
+                        });
                     })
                     .PrepareDatabase(db =>
                     {
@@ -91,6 +121,77 @@ namespace Executables.Tests.Features
 
                         var allVideoIds = db.YoutubeVideos.Select(v => v.Id);
                         Assert.True(CollectionUtils.AreEquivalentNoOrder(shouldBeVideoIdsInDbAtTheEnd, allVideoIds));
+                    });
+            });
+        }
+        [Fact]
+        public async Task DataShouldBeRegularlyPersistedAndRead()
+        {
+            var searchedVideoIds = new[]
+            {
+                _gen.String(), _gen.String(),
+            };
+
+            var videosFromApiList = new[]
+            {
+                _gen.Video(v =>
+                {
+                    v.Id = searchedVideoIds[0];
+                    v.ContentDetails = new VideoContentDetails
+                    {
+                        Duration = "PT3M20S"
+                    };
+                    v.Statistics = _gen.VideoStatistics();
+                    v.TopicDetails = _gen.VideoTopicDetails();
+                    v.Snippet = _gen.VideoSnippet(s =>
+                    {
+                        s.Thumbnails = new ThumbnailDetails
+                        {
+                            Default__ = _gen.Thumbnail(),
+                            ETag = _gen.String(),
+                            Medium = _gen.Thumbnail(),
+                        };
+                    });
+                }),
+                _gen.Video(v =>
+                {
+                    v.Id = searchedVideoIds[1];
+                    v.ContentDetails = new VideoContentDetails
+                    {
+                        Duration = "PT3H2M31S"
+                    };
+                    v.Statistics = _gen.VideoStatistics();
+                    v.TopicDetails = _gen.VideoTopicDetails();
+                    v.Snippet = _gen.VideoSnippet(s =>
+                    {
+                        s.Thumbnails = new ThumbnailDetails
+                        {
+                            Default__ = _gen.Thumbnail(),
+                            ETag = _gen.String(),
+                            Medium = _gen.Thumbnail(),
+                        };
+                    });
+                }),
+            };
+
+            await ServerTest.Run(options =>
+            {
+                options
+                    .ConfigureServices(services =>
+                    {
+                        services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
+                        services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
+                        {
+                            Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
+                            return videosFromApiList;
+                        });
+                    })
+                    .Act(httpClient => httpClient.GetAsync("api/tracks/yt?searchQuery=mia"))
+                    .Assert(async (serverResponse, db) =>
+                    {
+                        Assert.Equal(HttpStatusCode.OK, serverResponse.StatusCode);
+
+                        var allVideoIds = db.YoutubeVideos.Select(v => v.Id);
                     });
             });
         }
