@@ -64,11 +64,11 @@ namespace Executables.Tests.Features
                     .ConfigureServices(services =>
                     {
                         services.AddTransient<SearchYoutubeVideosIds>(_ => async searchQuery => searchedVideoIds);
-                        services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
-                        {
-                            Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
-                            return videosFromApiList;
-                        });
+                        //services.AddTransient<ListYoutubeVideos>(_ => async (parts, ids) =>
+                        //{
+                        //    Assert.True(CollectionUtils.AreEquivalentNoOrder(ids, videosFromApiList.Select(v => v.Id)));
+                        //    return videosFromApiList;
+                        //});
                     })
                     .PrepareDatabase(db =>
                     {

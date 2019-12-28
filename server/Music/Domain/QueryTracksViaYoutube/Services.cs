@@ -5,13 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp;
 using Google.Apis.YouTube.v3;
+using Google.Apis.YouTube.v3.Data;
 using Kernel;
 using Music.DataAccess;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
     public delegate Task<IEnumerable<string>> SearchYoutubeVideosIds(string searchQuery);
-    public delegate Task<IReadOnlyCollection<YoutubeVideoModel>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids);
+    public delegate Task<IReadOnlyCollection<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids);
 
     public class QueryTracksViaYoutubeServices : ServiceResolverAware<MusicDbContext>
     {
@@ -40,7 +41,7 @@ namespace Music.Domain.QueryTracksViaYoutube
             return urls;
         }
 
-        public async Task<IReadOnlyCollection<YoutubeVideoModel>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids)
+        public async Task<IReadOnlyCollection<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids)
         {
             var partsAsOneString = string.Join(",", parts);
             var idsAsOneString = string.Join(",", ids);
@@ -48,7 +49,7 @@ namespace Music.Domain.QueryTracksViaYoutube
             var request = ytService.Videos.List(partsAsOneString);
             request.Id = idsAsOneString;
             var result = await request.ExecuteAsync();
-            return result.Items.Select(v => Mapper.Map<YoutubeVideoModel>(v)).ToArray();
+            return result.Items.ToList();
         }
     }
 }

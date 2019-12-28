@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using Google.Apis.YouTube.v3.Data;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess;
@@ -44,9 +45,9 @@ namespace Music.Domain.QueryTracksViaYoutube
             return notFoundIds;
         }
 
-        private async Task<IReadOnlyCollection<YoutubeVideoModel>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
+        private async Task<IReadOnlyCollection<Video>> GetVideosFromYoutube(IReadOnlyCollection<string> ids)
         {
-            var r = new List<YoutubeVideoModel>(ids.Count);
+            var r = new List<Video>(ids.Count);
             var listVideos = Resolve<ListYoutubeVideos>();
 
             foreach (var idsChunk in ids.Batch(50))
