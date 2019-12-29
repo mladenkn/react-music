@@ -38,27 +38,27 @@ namespace Music.Domain
             var query = Db.Tracks.AsQueryable();
 
             if (req.TitleContains != null)
-                query = query.Where(track => track.YoutubeVideo.Title.Contains(req.TitleContains));
+                query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));
 
             if(req.YoutubeChannelId != null)
-                query = query.Where(track => track.YoutubeVideo.YoutubeChannelId == req.YoutubeChannelId);
+                query = query.Where(t => t.YoutubeVideo.YoutubeChannelId == req.YoutubeChannelId);
 
             if (req.MustHaveAnyTag != null)
-                query = query.Where(track => track.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(t => t.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.MustHaveEveryTag != null)
-                query = query.Where(track => track.TrackTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(t => t.TrackTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
-                query = query.Where(track => track.Year >= req.YearRange.LowerBound &&
-                                             track.Year < req.YearRange.UpperBound);
+                query = query.Where(t => t.Year >= req.YearRange.LowerBound &&
+                                             t.Year < req.YearRange.UpperBound);
 
-            var result = await query.ToArrayWithTotalCount(
-                q => q
+            var result = await query
+                .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
+                .ToArrayWithTotalCount(q => q
                     .Skip(req.Skip)
                     .Take(req.Take)
-                    .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
-            );
+                );
 
             return result;
         }
