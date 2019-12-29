@@ -138,7 +138,15 @@ namespace Executables.Tests
                         v.YoutubeChannel = _gen.YoutubeChannel(
                             c => { c.Id = v.YoutubeChannelId; }
                         );
-                        v.TopicDetails = _gen.YoutubeVideoTopicDetails();
+                        v.TopicDetails = _gen.YoutubeVideoTopicDetails(td =>
+                        {
+                            foreach (var item in td.TopicCategories)
+                                item.YoutubeVideoId = v.Id;
+                            foreach (var item in td.TopicIds)
+                                item.YoutubeVideoId = v.Id;
+                            foreach (var item in td.RelevantTopicIds)
+                                item.YoutubeVideoId = v.Id;
+                        });
                     }
                 );
             });

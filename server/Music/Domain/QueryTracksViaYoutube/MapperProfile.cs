@@ -38,7 +38,7 @@ namespace Music.Domain.QueryTracksViaYoutube
 
                     return arr
                         .Where(item => item.thumbNail != null)
-                        .Select(i => new YoutubeVideoThumbnail()
+                        .Select(i => new YoutubeVideoThumbnail
                         {
                             Etag = i.thumbNail.ETag,
                             Height = i.thumbNail.Height,
@@ -54,6 +54,17 @@ namespace Music.Domain.QueryTracksViaYoutube
                 {
                     Value = t
                 })))
+                .AfterMap((src, dst) =>
+                {
+                    dst.Statistics.YoutubeVideoId = src.Id;
+                    dst.TopicDetails.YoutubeVideoId = src.Id;
+                    foreach (var tc in dst.TopicDetails.TopicCategories) 
+                        tc.YoutubeVideoId = src.Id;
+                    foreach (var rtId in dst.TopicDetails.RelevantTopicIds)
+                        rtId.YoutubeVideoId = src.Id;
+                    foreach (var tId in dst.TopicDetails.TopicIds)
+                        tId.YoutubeVideoId = src.Id;
+                })
                 ;
             ;
 

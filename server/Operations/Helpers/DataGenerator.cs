@@ -96,6 +96,7 @@ namespace Executables.Helpers
         {
             var r = new VideoStatistics
             {
+                ETag = String(),
                 ViewCount = (ulong) Int(),
                 LikeCount = (ulong)Int(),
                 DislikeCount = (ulong)Int(),
@@ -171,6 +172,7 @@ namespace Executables.Helpers
         {
             var r = new YoutubeVideoStatistics
             {
+                ETag = String(),
                 ViewCount = (ulong)Int(),
                 LikeCount = (ulong)Int(),
                 DislikeCount = (ulong)Int(),
