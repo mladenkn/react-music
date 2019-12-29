@@ -58,6 +58,8 @@ namespace Music.DataAccess.Models
         public ulong? FavoriteCount { get; set; }
 
         public ulong? CommentCount { get; set; }
+
+        public string ETag { get; set; }
     }
 
     public class YoutubeVideoTopicDetails

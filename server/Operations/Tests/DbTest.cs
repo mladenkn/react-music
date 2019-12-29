@@ -102,7 +102,7 @@ namespace Executables.Tests
 
             using (var db = Utils.UseDbContext())
             {
-                var videoFromDb = db.Set<YoutubeVideo>().Single();
+                var videoFromDb = db.Set<YoutubeVideo>().Include(v => v.YoutubeChannel).Single();
                 videoFromDb.Should().BeEquivalentTo(video);
                 db.Database.EnsureDeleted();
             }
