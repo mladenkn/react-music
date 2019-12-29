@@ -37,43 +37,58 @@ namespace Executables.Tests
         }
 
         [Fact]
-        public void Cannot_Add_TrackTag_When_No_Such_Track_Exists()
+        public void Should_Fail_Trying_To_Add_Models_Because_Of_Foreign_key_constraint_violations()
         {
-            var trackUserPropsTag = _gen.TrackTag(t => { t.TrackId = _gen.Int(); });
-
+            var models = new (object model, string errorMessageContains)[]
+            {
+                (
+                    model: _gen.TrackTag(t => { t.TrackId = _gen.Int(); }), 
+                    errorMessageContains: "FK_TrackTag_Tracks_TrackId"
+                ),
+                (
+                    model: _gen.Track(t =>
+                    {
+                        t.YoutubeVideoId = "1";
+                        t.User = _gen.User();
+                    }),
+                    errorMessageContains: "FK_Tracks_YoutubeVideos_YoutubeVideoId"
+                ),
+                (
+                    model: _gen.Track(t =>
+                    {
+                        t.UserId = 1;
+                        t.YoutubeVideo = _gen.YoutubeVideo(v =>
+                        {
+                            v.Id = _gen.String();
+                            v.YoutubeChannel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
+                        });
+                    }),
+                    errorMessageContains: "FK_Tracks_User_UserId"
+                ),
+            };
+            
             using (var db = Utils.UseDbContext())
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
-                db.Add(trackUserPropsTag);
-                db.Invoking(_ => _.SaveChanges()).Should().Throw<DbUpdateException>();
-
-                db.Database.EnsureDeleted();
-            }
-        }
-
-        [Fact]
-        public void Cannot_Add_Track_When_No_Such_YoutubeVideo_Exists()
-        {
-            var user = _gen.User();
-
-            using (var db = Utils.UseDbContext())
-            {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
-
-                db.Add(user);
-                db.SaveChanges();
-
-                var trackUserProps = new Track
+                foreach (var model in models)
                 {
-                    UserId = 1,
-                    YoutubeVideoId = "1",
-                };
+                    db.Add(model.model);
+                    FailAddingOne(model.model, model.errorMessageContains);
+                }
 
-                db.Add(trackUserProps);
-                db.Invoking(_ => _.SaveChanges()).Should().Throw<DbUpdateException>();
+                void FailAddingOne(object model, string errorMsgContains)
+                {
+                    db.Add(model);
+                    db.Invoking(_ => _.SaveChanges())
+                        .Should()
+                        .Throw<DbUpdateException>()
+                        .Where(e => e.InnerException.Message.Contains(errorMsgContains));
+                    var entries = db.ChangeTracker.Entries();
+                    foreach (var entry in entries)
+                        entry.State = EntityState.Detached;
+                }
 
                 db.Database.EnsureDeleted();
             }
