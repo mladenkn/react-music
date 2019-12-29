@@ -16,6 +16,10 @@ namespace Music.Domain
 
         public int Take { get; set; }
 
+        public string TitleContains { get; set; }
+
+        public string YoutubeChannelId { get; set; }
+
         public IEnumerable<string> MustHaveEveryTag { get; set; }
 
         public IEnumerable<string> MustHaveAnyTag { get; set; }
@@ -32,6 +36,12 @@ namespace Music.Domain
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
             var query = Db.Tracks.AsQueryable();
+
+            if (req.TitleContains != null)
+                query = query.Where(track => track.YoutubeVideo.Title.Contains(req.TitleContains));
+
+            if(req.YoutubeChannelId != null)
+                query = query.Where(track => track.YoutubeVideo.YoutubeChannelId == req.YoutubeChannelId);
 
             if (req.MustHaveAnyTag != null)
                 query = query.Where(track => track.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
