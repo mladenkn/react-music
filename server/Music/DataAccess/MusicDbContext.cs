@@ -3,7 +3,7 @@ using Music.DataAccess.Models;
 
 namespace Music.DataAccess
 {
-    public class MusicDbContext : DbContext
+    public sealed class MusicDbContext : DbContext
     {
         public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
@@ -11,6 +11,7 @@ namespace Music.DataAccess
 
         public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
