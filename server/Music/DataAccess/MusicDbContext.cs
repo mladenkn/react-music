@@ -9,6 +9,8 @@ namespace Music.DataAccess
 
         public DbSet<Track> Tracks { get; set; }
 
+        public DbSet<TrackTag> TrackTags { get; set; }
+
         public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
