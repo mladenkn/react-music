@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Executables.Tests.Features
+namespace Music.Domain.Shared
 {
-    public class UpdateTrack
+    public interface ICurrentUserContext
     {
-        
+        int Id { get; }
     }
 }

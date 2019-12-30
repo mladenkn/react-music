@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
+using Microsoft.Extensions.Options;
 using Music;
 using Music.DataAccess;
 
@@ -63,6 +66,14 @@ namespace Executables.Helpers
         public static async Task Run(ServerTestOptions options)
         {
             var builder = new WebHostBuilder().UseStartup<Startup>();
+
+            using (var db = Utils.UseDbContext())
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+                options.PrepareDatabase(db);
+            }
+
             builder.ConfigureServices(services =>
             {
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<MusicDbContext>));
@@ -74,22 +85,17 @@ namespace Executables.Helpers
 
             var server = new TestServer(builder);
             var client = server.CreateClient();
-            var servicesScope = server.Services.CreateScope();
-            var serviceProvider = servicesScope.ServiceProvider;
-
-            var db = serviceProvider.GetService<MusicDbContext>();
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
-
-            options.PrepareDatabase(db);
+            
             var serverResponse = await options.Act(client);
-            await options.Assert(serverResponse, db);
 
-            db.Database.EnsureDeleted();
-            db.Dispose();
+            using (var db = Utils.UseDbContext())
+            {
+                await options.Assert(serverResponse, db);
+                db.Database.EnsureDeleted();
+            }
+
             server.Dispose();
             client.Dispose();
-            servicesScope.Dispose();
         }
     }
 }
