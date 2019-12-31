@@ -27,13 +27,13 @@ namespace Music.Domain
 
         public async Task Execute(SaveTrackModel saveModel)
         {
-            var track = await Db.Tracks
+            var track = await Db.TrackUserProps
                 .FirstOrDefaultAsync(t => t.YoutubeVideoId == saveModel.TrackYtId);
 
             var currentUserContext = Resolve<ICurrentUserContext>();
 
             var newTags = saveModel.Tags
-                .Select(t => new TrackTag { TrackId = track?.Id ?? 0, Value = t })
+                .Select(t => new TrackUserPropsTag { TrackUserPropsId = track?.Id ?? 0, Value = t })
                 .ToArray();
 
             if (track != null)
@@ -42,9 +42,9 @@ namespace Music.Domain
                     throw new ApplicationException("Trying to update other users track.");
 
                 track.Year = saveModel.Year;
-                Db.Tracks.Update(track);
+                Db.TrackUserProps.Update(track);
 
-                var tagsToDelete = await Db.TrackTags.Where(t => t.TrackId == track.Id).ToArrayAsync();
+                var tagsToDelete = await Db.TrackTags.Where(t => t.TrackUserPropsId == track.Id).ToArrayAsync();
                 Db.TrackTags.RemoveRange(tagsToDelete);
 
                 Db.TrackTags.AddRange(newTags);
@@ -53,7 +53,7 @@ namespace Music.Domain
             }
             else
             {
-                var newTrack = new Track
+                var newTrack = new TrackUserProps
                 {
                     TrackTags = newTags,
                     UserId = currentUserContext.Id,

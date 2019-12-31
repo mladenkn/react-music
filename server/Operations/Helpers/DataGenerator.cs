@@ -33,9 +33,9 @@ namespace Executables.Helpers
             return r;
         }
 
-        public Track Track(Action<Track> addMore = null)
+        public TrackUserProps Track(Action<TrackUserProps> addMore = null)
         {
-            var track = new Track
+            var track = new TrackUserProps
             {
                 Year = Int(),
             };
@@ -43,9 +43,9 @@ namespace Executables.Helpers
             return track;
         }
 
-        public TrackTag TrackTag(Action<TrackTag> addMore = null)
+        public TrackUserPropsTag TrackTag(Action<TrackUserPropsTag> addMore = null)
         {
-            var r = new TrackTag
+            var r = new TrackUserPropsTag
             {
                 Value = String(),
             };

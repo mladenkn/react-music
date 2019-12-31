@@ -15,8 +15,8 @@ namespace Executables.Tests
             var models = new (object model, string errorMessageContains)[]
             {
                 (
-                    model: _gen.TrackTag(t => { t.TrackId = _gen.Int(); }),
-                    errorMessageContains: "FK_TrackTags_Tracks_TrackId"
+                    model: _gen.TrackTag(t => { t.TrackUserPropsId = _gen.Int(); }),
+                    errorMessageContains: "FK_TrackUserPropsTags_TrackUserProps_TrackUserPropsId"
                 ),
                 (
                     model: _gen.Track(t =>
@@ -24,7 +24,7 @@ namespace Executables.Tests
                         t.YoutubeVideoId = "1";
                         t.User = _gen.User();
                     }),
-                    errorMessageContains: "FK_Tracks_YoutubeVideos_YoutubeVideoId"
+                    errorMessageContains: "FK_TrackUserProps_YoutubeVideos_YoutubeVideoId"
                 ),
                 (
                     model: _gen.Track(t =>
@@ -36,7 +36,7 @@ namespace Executables.Tests
                             v.YoutubeChannel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
                         });
                     }),
-                    errorMessageContains: "FK_Tracks_Users_UserId"
+                    errorMessageContains: "FK_TrackUserProps_Users_UserId"
                 ),
             };
 
@@ -53,6 +53,7 @@ namespace Executables.Tests
 
                 void FailAddingOne(object model, string errorMsgContains)
                 {
+                    //db.Add(model);
                     //try
                     //{
                     //    db.SaveChanges();
@@ -66,6 +67,7 @@ namespace Executables.Tests
                         .Should()
                         .Throw<DbUpdateException>()
                         .Where(e => e.InnerException.Message.Contains(errorMsgContains));
+
                     var entries = db.ChangeTracker.Entries();
                     foreach (var entry in entries)
                         entry.State = EntityState.Detached;

@@ -35,7 +35,7 @@ namespace Music.Domain
 
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
-            var query = Db.Tracks.AsQueryable();
+            var query = Db.TrackUserProps.AsQueryable();
 
             if (req.TitleContains != null)
                 query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));

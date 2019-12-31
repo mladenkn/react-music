@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Music.DataAccess.Models
 {
-    public class Track
+    public class TrackUserProps
     {
         [Required]
         public int Id { get; set; }
@@ -20,13 +20,13 @@ namespace Music.DataAccess.Models
 
         public int? Year { get; set; }
 
-        public IReadOnlyCollection<TrackTag> TrackTags { get; set; }
+        public IReadOnlyCollection<TrackUserPropsTag> TrackTags { get; set; }
     }
 
-    public class TrackTag
+    public class TrackUserPropsTag
     {
         [Required]
-        public int TrackId { get; set; }
+        public int TrackUserPropsId { get; set; }
 
         [Required]
         public string Value { get; set; }

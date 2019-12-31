@@ -35,8 +35,8 @@ namespace Executables.Tests.Features
                     });
                     t.TrackTags = new[]
                     {
-                        new TrackTag { Value = "1" },
-                        new TrackTag { Value = "2" },
+                        new TrackUserPropsTag { Value = "1" },
+                        new TrackUserPropsTag { Value = "2" },
                     };
                 });
 
@@ -129,7 +129,7 @@ namespace Executables.Tests.Features
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
                     .Assert(async (response, db) =>
                     {
-                        var trackFromDb = db.Tracks.Single();
+                        var trackFromDb = db.TrackUserProps.Single();
                         trackFromDb.Year.Should().Be(track.Year);
                         response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
                     });
@@ -146,7 +146,7 @@ namespace Executables.Tests.Features
         private void Assert(HttpResponseMessage serverResponse, MusicDbContext db, SaveTrackModel saveTrackModel)
         {
             serverResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var readTrack = db.Tracks.Include(t => t.TrackTags).Single();
+            var readTrack = db.TrackUserProps.Include(t => t.TrackTags).Single();
             var shouldBeTrackProps = new
             {
                 YoutubeVideoId = saveTrackModel.TrackYtId,

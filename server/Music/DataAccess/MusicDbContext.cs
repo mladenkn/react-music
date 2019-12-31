@@ -9,9 +9,9 @@ namespace Music.DataAccess
     {
         public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
-        public DbSet<Track> Tracks { get; set; }
+        public DbSet<TrackUserProps> TrackUserProps { get; set; }
 
-        public DbSet<TrackTag> TrackTags { get; set; }
+        public DbSet<TrackUserPropsTag> TrackTags { get; set; }
 
         public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
         {
@@ -21,12 +21,12 @@ namespace Music.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<YoutubeVideo>()
-                .HasOne(v => v.Track)
+                .HasOne(v => v.TrackUserProps)
                 .WithOne(t => t.YoutubeVideo)
-                .HasForeignKey<Track>(t => t.YoutubeVideoId)
+                .HasForeignKey<TrackUserProps>(t => t.YoutubeVideoId)
                 ;
 
-            modelBuilder.Entity<TrackTag>()
+            modelBuilder.Entity<TrackUserPropsTag>()
                 .HasKey(trackUserPropsTags => trackUserPropsTags.Value)
                 ;
 
@@ -35,9 +35,8 @@ namespace Music.DataAccess
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if (entityType.ClrType.IsAnyOf(typeof(YoutubeVideoStatistics), typeof(YoutubeVideoTopicDetails)))
-                {
-                }
+                if (entityType.ClrType.IsAnyOf(typeof(YoutubeVideoStatistics), typeof(YoutubeVideoTopicDetails), typeof(TrackUserProps)))
+                    ;
                 else
                     entityType.SetTableName(entityType.DisplayName() + "s");
             }

@@ -42,7 +42,7 @@ namespace Music.DataAccess.Models
         [Required]
         public int TrackId { get; set; }
 
-        public Track Track { get; set; }
+        public TrackUserProps TrackUserProps { get; set; }
     }
 
     public class YoutubeChannel

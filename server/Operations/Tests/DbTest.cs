@@ -119,7 +119,7 @@ namespace Executables.Tests
 
             using (var db = Utils.UseDbContext())
             {
-                var trackUserPropsFromDb = db.Set<Track>()
+                var trackUserPropsFromDb = db.Set<TrackUserProps>()
                     .Include(t => t.YoutubeVideo)
                         .ThenInclude(v => v.Statistics)
                     .Include(t => t.YoutubeVideo)
@@ -145,7 +145,7 @@ namespace Executables.Tests
                 trackUserPropsFromDb.UserId.Should().Be(trackUserProps.User.Id);
 
                 trackUserPropsFromDb.Should().BeEquivalentTo(trackUserProps, 
-                    o => o.Excluding(v => v.YoutubeVideo.Track)
+                    o => o.Excluding(v => v.YoutubeVideo.TrackUserProps)
                 );
 
                 trackUserProps.YoutubeVideo.TopicDetails.Id.Should().BeGreaterThan(0);

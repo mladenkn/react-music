@@ -35,13 +35,13 @@ namespace Music.Domain.Shared
                 )
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src =>
                     src.TrackId > 0 ?
-                        src.Track.TrackTags.Select(t => t.Value).ToArray() :
+                        src.TrackUserProps.TrackTags.Select(t => t.Value).ToArray() :
                         emptyTagsArray
                 ))
                 .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
                 .ForMember(dst => dst.Year, o => o.MapFrom(src =>
                     src.TrackId > 0 ?
-                        src.Track.Year :
+                        src.TrackUserProps.Year :
                         null
                 ))
                 ;

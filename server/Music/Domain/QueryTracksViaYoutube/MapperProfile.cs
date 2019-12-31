@@ -48,7 +48,7 @@ namespace Music.Domain.QueryTracksViaYoutube
                         });
                 }))
                 .ForMember(dst => dst.ThumbnailsEtag, o => o.MapFrom(src => src.Snippet.Thumbnails.ETag))
-                .ForMember(dst => dst.Track, o => o.Ignore())
+                .ForMember(dst => dst.TrackUserProps, o => o.Ignore())
                 .ForMember(dst => dst.TrackId, o => o.Ignore())
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.Snippet.Tags.Select(t => new YoutubeVideoTag
                 {
