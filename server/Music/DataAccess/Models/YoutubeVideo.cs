@@ -39,10 +39,7 @@ namespace Music.DataAccess.Models
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
 
-        [Required]
-        public int TrackId { get; set; }
-
-        public TrackUserProps TrackUserProps { get; set; }
+        public IReadOnlyCollection<TrackUserProps> TrackUserProps { get; set; }
     }
 
     public class YoutubeChannel

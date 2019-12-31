@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using Music.DataAccess.Models;
@@ -33,16 +34,24 @@ namespace Music.Domain.Shared
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>
                     src.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
-                .ForMember(dst => dst.Tags, o => o.MapFrom(src =>
-                    src.TrackId > 0 ?
-                        src.TrackUserProps.TrackTags.Select(t => t.Value).ToArray() :
-                        emptyTagsArray
+                //.ForMember(dst => dst.Tags, o => o.MapFrom((src, dst, member, resContext) =>
+                //    src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"]) == null ?
+                //        emptyTagsArray :
+                //        src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"])
+                //            .TrackTags.Select(t => t.Value).ToArray()
+                //))
+                .ForMember(dst => dst.Tags, o => o.MapFrom((src, dst, member, resContext) =>
+                    src.TrackUserProps.FirstOrDefault() == null ?
+                        emptyTagsArray :
+                        src.TrackUserProps.FirstOrDefault()
+                            .TrackTags.Select(t => t.Value).ToArray()
                 ))
                 .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
-                .ForMember(dst => dst.Year, o => o.MapFrom(src =>
-                    src.TrackId > 0 ?
-                        src.TrackUserProps.Year :
-                        null
+                //.ForMember(dst => dst.Year, o => o.MapFrom((src, dst, member, resContext) =>
+                //    src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"])?.Year
+                //))
+                .ForMember(dst => dst.Year, o => o.MapFrom((src, dst, member, resContext) =>
+                    src.TrackUserProps.FirstOrDefault()?.Year
                 ))
                 ;
         }

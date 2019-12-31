@@ -21,9 +21,8 @@ namespace Music.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<YoutubeVideo>()
-                .HasOne(v => v.TrackUserProps)
+                .HasMany(v => v.TrackUserProps)
                 .WithOne(t => t.YoutubeVideo)
-                .HasForeignKey<TrackUserProps>(t => t.YoutubeVideoId)
                 ;
 
             modelBuilder.Entity<TrackUserPropsTag>()

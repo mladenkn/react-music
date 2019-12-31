@@ -63,6 +63,8 @@ namespace Executables.Helpers
             await Run(options);
         }
 
+        public static Task Run(ServerTestOptionsBuilder optionsBuilder) => Run(optionsBuilder.Build());
+
         public static async Task Run(ServerTestOptions options)
         {
             var builder = new WebHostBuilder().UseStartup<Startup>();

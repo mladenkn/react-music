@@ -159,5 +159,112 @@ namespace Executables.Tests
                 db.Database.EnsureDeleted();
             }
         }
+
+
+
+        [Fact]
+        public void Can_Add_Full_YouTubeVideo()
+        {
+            var ytVideo = _gen.YoutubeVideo(
+                v =>
+                {
+                    v.Id = _gen.String();
+                    v.Statistics = _gen.YoutubeVideoStatistics();
+                    v.Tags = new[]
+                    {
+                        _gen.YoutubeVideoTag(),
+                        _gen.YoutubeVideoTag(),
+                    };
+                    v.Thumbnails = new[]
+                    {
+                        _gen.YoutubeVideoThumbnail(),
+                        _gen.YoutubeVideoThumbnail(),
+                    };
+                    v.YoutubeChannelId = _gen.String();
+                    v.YoutubeChannel = _gen.YoutubeChannel(
+                        c => { c.Id = v.YoutubeChannelId; }
+                    );
+                    v.TopicDetails = _gen.YoutubeVideoTopicDetails(td =>
+                    {
+                        foreach (var item in td.TopicCategories)
+                            item.YoutubeVideoId = v.Id;
+                        foreach (var item in td.TopicIds)
+                            item.YoutubeVideoId = v.Id;
+                        foreach (var item in td.RelevantTopicIds)
+                            item.YoutubeVideoId = v.Id;
+                    });
+                    v.TrackUserProps = new[]
+                    {
+                        _gen.Track(t =>
+                        {
+                            t.User = _gen.User();
+                            t.TrackTags = new[]
+                            {
+                                _gen.TrackTag(),
+                                _gen.TrackTag(),
+                            };
+                        }),
+                        _gen.Track(t =>
+                        {
+                            t.User = _gen.User();
+                            t.TrackTags = new[]
+                            {
+                                _gen.TrackTag(),
+                            };
+                        }),
+                    };
+                }
+            );
+
+            using (var db = Utils.UseDbContext(_dbName))
+            {
+                db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
+
+                db.Add(ytVideo);
+                db.SaveChanges();
+            }
+
+            using (var db = Utils.UseDbContext(_dbName))
+            {
+                var ytVideoFromDb = db.YoutubeVideos
+                    .Include(v => v.Statistics)
+                    .Include(v => v.Tags)
+                    .Include(v => v.Thumbnails)
+                    .Include(v => v.TopicDetails)
+                        .ThenInclude(td => td.RelevantTopicIds)
+                    .Include(v => v.TopicDetails)
+                        .ThenInclude(td => td.TopicIds)
+                    .Include(v => v.TopicDetails)
+                        .ThenInclude(td => td.TopicCategories)
+                    .Include(v => v.YoutubeChannel)
+                    .Include(v => v.TrackUserProps)
+                        .ThenInclude(td => td.TrackTags)
+                    .Single();
+
+                ytVideo.Should().BeEquivalentTo(
+                    ytVideoFromDb,
+                    o => o.Excluding(v => v.Id)
+                        .Excluding(v => v.Statistics.Id)
+                        .Excluding(v => v.Statistics.YoutubeVideoId)
+                        .Excluding(v => v.Tags)
+                        .Excluding(v => v.Thumbnails)
+                        .Excluding(v => v.TopicDetails.Id)
+                        .Excluding(v => v.TopicDetails.YoutubeVideoId)
+                        .Excluding(v => v.TrackUserProps)
+                );
+
+                ytVideoFromDb.TrackUserProps.SelectMany(t => t.TrackTags.Select(tt => tt.Value)).Should().BeEquivalentTo(
+                    ytVideo.TrackUserProps.SelectMany(t => t.TrackTags.Select(tt => tt.Value))
+                );
+
+                ytVideoFromDb.TopicDetails.Id.Should().BeGreaterThan(0);
+                ytVideoFromDb.TopicDetails.YoutubeVideoId.Should().Be(
+                    ytVideo.Id
+                );
+
+                db.Database.EnsureDeleted();
+            }
+        }
     }
 }
