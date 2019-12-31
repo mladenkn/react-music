@@ -48,12 +48,12 @@ namespace Executables.Tests.Features
                 };
 
                 options
-                    .ConfigureServices(services => ConfigureServices(services, track.User.Id))
                     .PrepareDatabase(db =>
                     {
                         db.Add(track);
                         db.SaveChanges();
                     })
+                    .ConfigureServices(services => ConfigureServices(services, track.User.Id))
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
                     .Assert(async (serverResponse, db) => Assert(serverResponse, db, saveTrackModel));
             });
@@ -80,15 +80,59 @@ namespace Executables.Tests.Features
                 };
 
                 options
-                    .ConfigureServices(services => ConfigureServices(services, user.Id))
                     .PrepareDatabase(db =>
                     {
                         db.Add(youtubeVideo);
                         db.Add(user);
                         db.SaveChanges();
                     })
+                    .ConfigureServices(services => ConfigureServices(services, user.Id))
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
                     .Assert(async (serverResponse, db) => Assert(serverResponse, db, saveTrackModel));
+            });
+        }
+
+        [Fact]
+        public async Task FailsWhenTryingToUpdateOtherUsersTrack()
+        {
+            await ServerTest.Run(options =>
+            {
+                var tracksUser = _gen.User();
+                var otherUser = _gen.User();
+
+                var track = _gen.Track(t =>
+                {
+                    t.User = tracksUser;
+                    t.YoutubeVideo = _gen.YoutubeVideo(v =>
+                    {
+                        v.Id = _gen.String();
+                        v.YoutubeChannel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
+                    });
+                    t.YoutubeVideoId = t.YoutubeVideo.Id;
+                });
+
+                var saveTrackModel = new SaveTrackModel
+                {
+                    Tags = new string[0],
+                    TrackYtId = track.YoutubeVideoId,
+                };
+
+                options
+                    .PrepareDatabase(db =>
+                    {
+                        db.Add(tracksUser);
+                        db.Add(otherUser);
+                        db.Add(track);
+                        db.SaveChanges();
+                    })
+                    .ConfigureServices(services => ConfigureServices(services, otherUser.Id))
+                    .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
+                    .Assert(async (response, db) =>
+                    {
+                        var trackFromDb = db.Tracks.Single();
+                        trackFromDb.Year.Should().Be(track.Year);
+                        response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
+                    });
             });
         }
 

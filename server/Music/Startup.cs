@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
+using Music.Api;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
@@ -30,7 +31,7 @@ namespace Music
         {
             //services.AddMvc(o => o.EnableEndpointRouting = true);
 
-            services.AddControllers();
+            services.AddControllers(o => o.Filters.Add(new ExceptionToHttpResponseMapper()));
 
             services.AddSingleton<IMongoDatabase>(_ =>
             {
