@@ -33,7 +33,7 @@ namespace Music.Domain
             var currentUserContext = Resolve<ICurrentUserContext>();
 
             var newTags = saveModel.Tags
-                .Select(t => new TrackTag { TrackId = track.Id, Value = t })
+                .Select(t => new TrackTag { TrackId = track?.Id ?? 0, Value = t })
                 .ToArray();
 
             if (track != null)

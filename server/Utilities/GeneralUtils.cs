@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -16,5 +17,7 @@ namespace Utilities
             );
             return httpClient.PostAsync(url, content_);
         }
+
+        public static bool IsAnyOf(this object o, params object[] values) => values.Contains(o);
     }
 }

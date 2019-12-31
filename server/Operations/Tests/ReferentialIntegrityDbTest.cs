@@ -16,7 +16,7 @@ namespace Executables.Tests
             {
                 (
                     model: _gen.TrackTag(t => { t.TrackId = _gen.Int(); }),
-                    errorMessageContains: "FK_TrackTag_Tracks_TrackId"
+                    errorMessageContains: "FK_TrackTags_Tracks_TrackId"
                 ),
                 (
                     model: _gen.Track(t =>
@@ -36,7 +36,7 @@ namespace Executables.Tests
                             v.YoutubeChannel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
                         });
                     }),
-                    errorMessageContains: "FK_Tracks_User_UserId"
+                    errorMessageContains: "FK_Tracks_Users_UserId"
                 ),
             };
 
@@ -53,6 +53,14 @@ namespace Executables.Tests
 
                 void FailAddingOne(object model, string errorMsgContains)
                 {
+                    //try
+                    //{
+                    //    db.SaveChanges();
+                    //}
+                    //catch (DbUpdateException e)
+                    //{
+                    //}
+
                     db.Add(model);
                     db.Invoking(_ => _.SaveChanges())
                         .Should()

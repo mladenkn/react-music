@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
+using Utilities;
 
 namespace Music.DataAccess
 {
@@ -30,6 +32,15 @@ namespace Music.DataAccess
 
             modelBuilder.Entity<User>()
                 ;
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (entityType.ClrType.IsAnyOf(typeof(YoutubeVideoStatistics), typeof(YoutubeVideoTopicDetails)))
+                {
+                }
+                else
+                    entityType.SetTableName(entityType.DisplayName() + "s");
+            }
         }
     }
 }
