@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Executables.Helpers;
 using FluentAssertions;
@@ -11,13 +12,14 @@ namespace Executables.Tests
     public class DbTest
     {
         private readonly DataGenerator _gen = new DataGenerator();
+        private readonly string _dbName = Guid.NewGuid().ToString();
 
         [Fact]
         public void Can_Add_One_YoutubeChannel()
         {
             var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -26,7 +28,7 @@ namespace Executables.Tests
                 db.SaveChanges();
             }
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 var channelFromDb = db.Set<YoutubeChannel>().Single();
                 channelFromDb.Id.Should().Be(channel.Id);
@@ -48,7 +50,8 @@ namespace Executables.Tests
                 }
             );
 
-            using (var db = Utils.UseDbContext())
+
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -57,7 +60,7 @@ namespace Executables.Tests
                 db.SaveChanges();
             }
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 var videoFromDb = db.Set<YoutubeVideo>().Include(v => v.YoutubeChannel).Single();
                 videoFromDb.Should().BeEquivalentTo(video);
@@ -108,7 +111,7 @@ namespace Executables.Tests
                 );
             });
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -117,7 +120,7 @@ namespace Executables.Tests
                 db.SaveChanges();
             }
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 var trackUserPropsFromDb = db.Set<TrackUserProps>()
                     .Include(t => t.YoutubeVideo)

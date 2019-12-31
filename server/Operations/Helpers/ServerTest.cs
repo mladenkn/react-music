@@ -67,7 +67,9 @@ namespace Executables.Helpers
         {
             var builder = new WebHostBuilder().UseStartup<Startup>();
 
-            using (var db = Utils.UseDbContext())
+            var dbName = Guid.NewGuid().ToString();
+
+            using (var db = Utils.UseDbContext(dbName))
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
@@ -79,7 +81,7 @@ namespace Executables.Helpers
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<MusicDbContext>));
                 if (descriptor != null)
                     services.Remove(descriptor);
-                services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.TestDatabaseConnectionString));
+                services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.GetTestDatabaseConnectionString(dbName)));
                 options.ConfigureServices(services);
             });
 
@@ -88,7 +90,7 @@ namespace Executables.Helpers
             
             var serverResponse = await options.Act(client);
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(dbName))
             {
                 await options.Assert(serverResponse, db);
                 db.Database.EnsureDeleted();

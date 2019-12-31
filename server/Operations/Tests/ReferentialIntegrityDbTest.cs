@@ -1,4 +1,5 @@
-﻿using Executables.Helpers;
+﻿using System;
+using Executables.Helpers;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
@@ -8,6 +9,7 @@ namespace Executables.Tests
     public class ReferentialIntegrityDbTest
     {
         private readonly DataGenerator _gen = new DataGenerator();
+        private readonly string _dbName = Guid.NewGuid().ToString();
 
         [Fact]
         public void Should_Fail_Trying_To_Add_Models_Because_Of_Foreign_key_constraint_violations()
@@ -40,7 +42,7 @@ namespace Executables.Tests
                 ),
             };
 
-            using (var db = Utils.UseDbContext())
+            using (var db = Utils.UseDbContext(_dbName))
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();

@@ -13,10 +13,10 @@ namespace Executables.Helpers
             await File.WriteAllTextAsync(filePath, fileContent);
         }
 
-        public static MusicDbContext UseDbContext()
+        public static MusicDbContext UseDbContext(string dbName)
         {
             var dbOptionsBuilder = new DbContextOptionsBuilder<MusicDbContext>();
-            dbOptionsBuilder.UseSqlServer(Config.TestDatabaseConnectionString);
+            dbOptionsBuilder.UseSqlServer(Config.GetTestDatabaseConnectionString(dbName));
             return new MusicDbContext(dbOptionsBuilder.Options);
         }
     }
