@@ -18,6 +18,13 @@ namespace Utilities
             return httpClient.PostAsync(url, content_);
         }
 
+        public static async Task<T> ParseAsJson<T>(this HttpContent httpContent)
+        {
+            var contentString = await httpContent.ReadAsStringAsync();
+            var parsed = JsonConvert.DeserializeObject<T>(contentString);
+            return parsed;
+        }
+
         public static bool IsAnyOf(this object o, params object[] values) => values.Contains(o);
     }
 }

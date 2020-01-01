@@ -14,14 +14,8 @@ namespace Kernel
             Func<IQueryable<TQueryModel>, IQueryable<TQueryProjectedModel>> upgradeQuery
         )
         {
-            var listTask = upgradeQuery(query).ToArrayAsync();
-            var countTask = query.CountAsync();
-
-            await Task.WhenAll(listTask, countTask);
-
-            var list = await listTask;
-            var count = await countTask;
-
+            var list = await upgradeQuery(query).ToArrayAsync();
+            var count = await query.CountAsync();
             return new ArrayWithTotalCount<TQueryProjectedModel>(list, count);
         }
     }

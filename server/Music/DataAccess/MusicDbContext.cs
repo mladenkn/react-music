@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Utilities;
 

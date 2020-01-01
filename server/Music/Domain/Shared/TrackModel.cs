@@ -43,6 +43,19 @@ namespace Music.Domain.Shared
                         .ToArray(),
             };
 
+        public static Expression<Func<TrackUserProps, TrackModel>> FromTrackUserProps => trackUserProps =>
+            new TrackModel
+            {
+                YoutubeVideoId = trackUserProps.YoutubeVideoId,
+                Title = trackUserProps.YoutubeVideo.Title,
+                Description = trackUserProps.YoutubeVideo.Description,
+                Image = trackUserProps.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url,
+                YoutubeChannelId = trackUserProps.YoutubeVideo.YoutubeChannelId,
+                YoutubeChannelTitle = trackUserProps.YoutubeVideo.YoutubeChannel.Title,
+                Year = trackUserProps.Year,
+                Tags = trackUserProps.TrackTags.Select(t => t.Value).ToArray(),
+            };
+
         private static string[] EmptyTagsArray = new string[0];
     }
 }

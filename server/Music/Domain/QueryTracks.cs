@@ -35,7 +35,9 @@ namespace Music.Domain
 
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
         {
-            var query = Db.TrackUserProps.AsQueryable();
+            var userId = Resolve<ICurrentUserContext>().Id;
+
+            var query = Db.TrackUserProps.Where(t => t.UserId == userId);
 
             if (req.TitleContains != null)
                 query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));
@@ -47,14 +49,14 @@ namespace Music.Domain
                 query = query.Where(t => t.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
             if (req.MustHaveEveryTag != null)
-                query = query.Where(t => t.TrackTags.All(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
+                query = query.Where(t => t.TrackTags.All(trackTag => req.MustHaveEveryTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
                 query = query.Where(t => t.Year >= req.YearRange.LowerBound &&
                                              t.Year < req.YearRange.UpperBound);
 
             var result = await query
-                .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
+                .Select(TrackModel.FromTrackUserProps)
                 .ToArrayWithTotalCount(q => q
                     .Skip(req.Skip)
                     .Take(req.Take)
