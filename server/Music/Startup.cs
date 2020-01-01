@@ -44,7 +44,7 @@ namespace Music
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
             });
-            services.AddAutoMapper(typeof(TrackModelMapperProfile).Assembly);
+            services.AddAutoMapper(typeof(YoutubeVideoMapperProfile).Assembly);
             services.AddTransient<HttpClient>();
             services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
 

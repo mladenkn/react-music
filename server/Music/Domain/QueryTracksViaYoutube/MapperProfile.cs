@@ -6,9 +6,9 @@ using Music.DataAccess.Models;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class YoutubeVideoProfile : Profile
+    public class YoutubeVideoMapperProfile : Profile
     {
-        public YoutubeVideoProfile()
+        public YoutubeVideoMapperProfile()
         {
             CreateMap<Video, YoutubeVideo>()
                 .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
