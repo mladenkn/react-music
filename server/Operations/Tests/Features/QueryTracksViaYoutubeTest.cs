@@ -114,10 +114,10 @@ namespace Executables.Tests.Features
                         return videosFromApiList;
                     });
                 })
-                .PrepareDatabase(db =>
+                .PrepareDatabase(async db =>
                 {
                     db.AddRange(videosInDb);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 })
                 .Act(httpClient => httpClient.GetAsync("api/tracks/yt?searchQuery=mia"))
                 .Assert(async (serverResponse, db) =>
@@ -130,7 +130,7 @@ namespace Executables.Tests.Features
 
                     responseContent.Select(t => t.YoutubeVideoId).Should().BeEquivalentTo(searchedVideoIds);
 
-                    var allVideoIds = db.YoutubeVideos.Select(v => v.Id);
+                    var allVideoIds = await db.YoutubeVideos.Select(v => v.Id).ToArrayAsync();
                     allVideoIds.Should().BeEquivalentTo(shouldBeVideoIdsInDbAtTheEnd);
                 });
 

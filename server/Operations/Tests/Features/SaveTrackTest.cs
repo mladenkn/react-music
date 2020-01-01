@@ -48,14 +48,14 @@ namespace Executables.Tests.Features
                 };
 
                 options
-                    .PrepareDatabase(db =>
+                    .PrepareDatabase(async db =>
                     {
                         db.Add(track);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     })
                     .ConfigureServices(services => ConfigureServices(services, track.User.Id))
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
-                    .Assert(async (serverResponse, db) => Assert(serverResponse, db, saveTrackModel));
+                    .Assert(async (serverResponse, db) => await Assert(serverResponse, db, saveTrackModel));
             });
         }
 
@@ -80,15 +80,15 @@ namespace Executables.Tests.Features
                 };
 
                 options
-                    .PrepareDatabase(db =>
+                    .PrepareDatabase(async db =>
                     {
                         db.Add(youtubeVideo);
                         db.Add(user);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     })
                     .ConfigureServices(services => ConfigureServices(services, user.Id))
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
-                    .Assert(async (serverResponse, db) => Assert(serverResponse, db, saveTrackModel));
+                    .Assert(async (serverResponse, db) => await Assert(serverResponse, db, saveTrackModel));
             });
         }
 
@@ -118,18 +118,18 @@ namespace Executables.Tests.Features
                 };
 
                 options
-                    .PrepareDatabase(db =>
+                    .PrepareDatabase(async db =>
                     {
                         db.Add(tracksUser);
                         db.Add(otherUser);
                         db.Add(track);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     })
                     .ConfigureServices(services => ConfigureServices(services, otherUser.Id))
                     .Act(httpClient => httpClient.PostJsonAsync("api/tracks", saveTrackModel))
                     .Assert(async (response, db) =>
                     {
-                        var trackFromDb = db.TrackUserProps.Single();
+                        var trackFromDb = await db.TrackUserProps.SingleAsync();
                         trackFromDb.Year.Should().Be(track.Year);
                         response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.BadRequest);
                     });
@@ -143,10 +143,10 @@ namespace Executables.Tests.Features
             services.AddTransient<ICurrentUserContext>(sp => currentUserContext.Object);
         }
 
-        private void Assert(HttpResponseMessage serverResponse, MusicDbContext db, SaveTrackModel saveTrackModel)
+        private async Task Assert(HttpResponseMessage serverResponse, MusicDbContext db, SaveTrackModel saveTrackModel)
         {
             serverResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-            var readTrack = db.TrackUserProps.Include(t => t.TrackTags).Single();
+            var readTrack = await db.TrackUserProps.Include(t => t.TrackTags).SingleAsync();
             var shouldBeTrackProps = new
             {
                 YoutubeVideoId = saveTrackModel.TrackYtId,

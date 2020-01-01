@@ -16,7 +16,7 @@ namespace Executables.Helpers
     public class ServerTestOptions
     {
         public IEnumerable<Action<IServiceCollection>> ConfigureServices { get; } = new List<Action<IServiceCollection>>();
-        public IEnumerable<Action<MusicDbContext>> PrepareDatabase { get; } = new List<Action<MusicDbContext>>();
+        public IEnumerable<Func<MusicDbContext, Task>> PrepareDatabase { get; } = new List<Func<MusicDbContext, Task>>();
         public Func<HttpClient, Task<HttpResponseMessage>> Act { get; set; }
         public IEnumerable<Func<HttpResponseMessage, MusicDbContext, Task>> Assert { get; } = new List<Func<HttpResponseMessage, MusicDbContext, Task>>();
     }
@@ -31,9 +31,9 @@ namespace Executables.Helpers
             return this;
         }
 
-        public ServerTestOptionsBuilder PrepareDatabase(Action<MusicDbContext> prepareDatabaseActual)
+        public ServerTestOptionsBuilder PrepareDatabase(Func<MusicDbContext, Task> prepareDatabaseActual)
         {
-            ((List<Action<MusicDbContext>>)_options.PrepareDatabase).Add(prepareDatabaseActual);
+            ((List<Func<MusicDbContext, Task>>)_options.PrepareDatabase).Add(prepareDatabaseActual);
             return this;
         }
 
@@ -72,9 +72,10 @@ namespace Executables.Helpers
 
             using (var db = Utils.UseDbContext(dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
-                options.PrepareDatabase.ForEach(action => action(db));
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
+                foreach (var action in options.PrepareDatabase)
+                    await action(db);
             }
 
             builder.ConfigureServices(services =>
@@ -93,8 +94,9 @@ namespace Executables.Helpers
 
             using (var db = Utils.UseDbContext(dbName))
             {
-                options.Assert.ForEach(action => action(serverResponse, db));
-                db.Database.EnsureDeleted();
+                foreach (var action in options.Assert)
+                    await action(serverResponse, db);
+                await db.Database.EnsureDeletedAsync();
             }
 
             server.Dispose();

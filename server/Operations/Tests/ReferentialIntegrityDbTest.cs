@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Executables.Helpers;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +13,7 @@ namespace Executables.Tests
         private readonly string _dbName = Guid.NewGuid().ToString();
 
         [Fact]
-        public void Should_Fail_Trying_To_Add_Models_Because_Of_Foreign_key_constraint_violations()
+        public async Task Should_Fail_Trying_To_Add_Models_Because_Of_Foreign_key_constraint_violations()
         {
             var models = new (object model, string errorMessageContains)[]
             {
@@ -42,10 +43,10 @@ namespace Executables.Tests
                 ),
             };
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
 
                 foreach (var model in models)
                 {
@@ -58,7 +59,7 @@ namespace Executables.Tests
                     //db.Add(model);
                     //try
                     //{
-                    //    db.SaveChanges();
+                    //    await db.SaveChangesAsync();
                     //}
                     //catch (DbUpdateException e)
                     //{
@@ -75,7 +76,7 @@ namespace Executables.Tests
                         entry.State = EntityState.Detached;
                 }
 
-                db.Database.EnsureDeleted();
+                await db.Database.EnsureDeletedAsync();
             }
         }
     }

@@ -15,31 +15,31 @@ namespace Executables.Tests
         private readonly string _dbName = Guid.NewGuid().ToString();
 
         [Fact]
-        public void Can_Add_One_YoutubeChannel()
+        public async Task Can_Add_One_YoutubeChannel()
         {
             var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
 
                 db.Add(channel);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
                 var channelFromDb = db.Set<YoutubeChannel>().Single();
                 channelFromDb.Id.Should().Be(channel.Id);
                 channelFromDb.Title.Should().Be(channel.Title);
 
-                db.Database.EnsureDeleted();
+                await db.Database.EnsureDeletedAsync();
             }
         }
         
         [Fact]
-        public void Can_Add_YoutubeVideo()
+        public async Task Can_Add_YoutubeVideo()
         {
             var video = _gen.YoutubeVideo(
                 v =>
@@ -51,25 +51,25 @@ namespace Executables.Tests
             );
 
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
 
                 db.Add(video);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
                 var videoFromDb = db.Set<YoutubeVideo>().Include(v => v.YoutubeChannel).Single();
                 videoFromDb.Should().BeEquivalentTo(video);
-                db.Database.EnsureDeleted();
+                await db.Database.EnsureDeletedAsync();
             }
         }
 
         [Fact]
-        public void Can_Add_Full_Track_With_Full_YouTubeVideo()
+        public async Task Can_Add_Full_Track_With_Full_YouTubeVideo()
         {
             var trackUserProps = _gen.Track(t =>
             {
@@ -111,16 +111,16 @@ namespace Executables.Tests
                 );
             });
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
 
                 db.Add(trackUserProps);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
                 var trackUserPropsFromDb = db.Set<TrackUserProps>()
                     .Include(t => t.YoutubeVideo)
@@ -156,14 +156,14 @@ namespace Executables.Tests
                     trackUserProps.YoutubeVideo.Id
                 );
 
-                db.Database.EnsureDeleted();
+                await db.Database.EnsureDeletedAsync();
             }
         }
 
 
 
         [Fact]
-        public void Can_Add_Full_YouTubeVideo()
+        public async Task Can_Add_Full_YouTubeVideo()
         {
             var ytVideo = _gen.YoutubeVideo(
                 v =>
@@ -216,16 +216,16 @@ namespace Executables.Tests
                 }
             );
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
-                db.Database.EnsureDeleted();
-                db.Database.EnsureCreated();
+                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureCreatedAsync();
 
                 db.Add(ytVideo);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
 
-            using (var db = Utils.UseDbContext(_dbName))
+            await using (var db = Utils.UseDbContext(_dbName))
             {
                 var ytVideoFromDb = db.YoutubeVideos
                     .Include(v => v.Statistics)
@@ -263,7 +263,7 @@ namespace Executables.Tests
                     ytVideo.Id
                 );
 
-                db.Database.EnsureDeleted();
+                await db.Database.EnsureDeletedAsync();
             }
         }
     }
