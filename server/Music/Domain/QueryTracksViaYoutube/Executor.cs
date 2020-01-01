@@ -61,9 +61,11 @@ namespace Music.Domain.QueryTracksViaYoutube
 
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
+            var curUserId = Resolve<ICurrentUserContext>().Id;
+            var mappingParams = new Dictionary<string, object> { {"userId", curUserId} };
             var tracks = await Db.YoutubeVideos
                 .Where(v => wantedTracksYtIds.Contains(v.Id))
-                .ProjectTo<TrackModel>(Mapper.ConfigurationProvider)
+                .ProjectTo<TrackModel>(Mapper.ConfigurationProvider, mappingParams)
                 .ToListAsync();
             return tracks;
         }

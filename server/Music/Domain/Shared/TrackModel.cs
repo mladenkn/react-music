@@ -30,7 +30,8 @@ namespace Music.Domain.Shared
         public TrackModelMapperProfile()
         {
             var emptyTagsArray = new string[0];
-            CreateMap<YoutubeVideo, TrackModel>()
+            _ = CreateMap<YoutubeVideo, TrackModel>()
+                .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
                 .ForMember(dst => dst.Image, o => o.MapFrom(src =>
                     src.Thumbnails.First(t => t.Name == "Default__").Url)
                 )
@@ -40,19 +41,20 @@ namespace Music.Domain.Shared
                 //        src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"])
                 //            .TrackTags.Select(t => t.Value).ToArray()
                 //))
-                .ForMember(dst => dst.Tags, o => o.MapFrom((src, dst, member, resContext) =>
+                .ForMember(dst => dst.Tags, o => o.MapFrom(src =>
                     src.TrackUserProps.FirstOrDefault() == null ?
                         emptyTagsArray :
                         src.TrackUserProps.FirstOrDefault()
                             .TrackTags.Select(t => t.Value).ToArray()
                 ))
-                .ForMember(dst => dst.YoutubeVideoId, o => o.MapFrom(src => src.Id))
-                //.ForMember(dst => dst.Year, o => o.MapFrom((src, dst, member, resContext) =>
-                //    src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"])?.Year
-                //))
+                //.ForMember(dst => dst.Tags, o => o.MapFrom((src, dst, member, resContext) => emptyTagsArray))
                 .ForMember(dst => dst.Year, o => o.MapFrom((src, dst, member, resContext) =>
-                    src.TrackUserProps.FirstOrDefault()?.Year
+                    src.TrackUserProps.FirstOrDefault(t => t.UserId == (int)resContext.Items["userId"])?.Year
                 ))
+                //.ForMember(dst => dst.Year, o => o.MapFrom(src =>
+                //    src.TrackUserProps.FirstOrDefault() == null ? null : src.TrackUserProps.FirstOrDefault().Year
+                //))
+                //.ForMember(dst => dst.Year, o => o.MapFrom((src, dst, member, resContext) => 1990))
                 ;
         }
     }

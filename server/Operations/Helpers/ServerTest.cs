@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,20 +7,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using Microsoft.Extensions.Options;
 using Music;
 using Music.DataAccess;
+using Utilities;
 
 namespace Executables.Helpers
 {
     public class ServerTestOptions
     {
-        public Action<IServiceCollection> ConfigureServices { get; set; } = services => { };
-        public Action<MusicDbContext> PrepareDatabase { get; set; } = db => { };
+        public IEnumerable<Action<IServiceCollection>> ConfigureServices { get; } = new List<Action<IServiceCollection>>();
+        public IEnumerable<Action<MusicDbContext>> PrepareDatabase { get; } = new List<Action<MusicDbContext>>();
         public Func<HttpClient, Task<HttpResponseMessage>> Act { get; set; }
-        public Func<HttpResponseMessage, MusicDbContext, Task> Assert { get; set; }
+        public IEnumerable<Func<HttpResponseMessage, MusicDbContext, Task>> Assert { get; } = new List<Func<HttpResponseMessage, MusicDbContext, Task>>();
     }
 
     public class ServerTestOptionsBuilder
@@ -28,13 +27,13 @@ namespace Executables.Helpers
 
         public ServerTestOptionsBuilder ConfigureServices(Action<IServiceCollection> configureServicesActual)
         {
-            _options.ConfigureServices = configureServicesActual;
+            ((List<Action<IServiceCollection>>) _options.ConfigureServices).Add(configureServicesActual);
             return this;
         }
 
         public ServerTestOptionsBuilder PrepareDatabase(Action<MusicDbContext> prepareDatabaseActual)
         {
-            _options.PrepareDatabase = prepareDatabaseActual;
+            ((List<Action<MusicDbContext>>)_options.PrepareDatabase).Add(prepareDatabaseActual);
             return this;
         }
 
@@ -46,7 +45,7 @@ namespace Executables.Helpers
 
         public ServerTestOptionsBuilder Assert(Func<HttpResponseMessage, MusicDbContext, Task> assertActual)
         {
-            _options.Assert = assertActual;
+            ((List<Func<HttpResponseMessage, MusicDbContext, Task>>)_options.Assert).Add(assertActual);
             return this;
         }
 
@@ -75,7 +74,7 @@ namespace Executables.Helpers
             {
                 db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
-                options.PrepareDatabase(db);
+                options.PrepareDatabase.ForEach(action => action(db));
             }
 
             builder.ConfigureServices(services =>
@@ -84,7 +83,7 @@ namespace Executables.Helpers
                 if (descriptor != null)
                     services.Remove(descriptor);
                 services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.GetTestDatabaseConnectionString(dbName)));
-                options.ConfigureServices(services);
+                options.ConfigureServices.ForEach(action => action(services));
             });
 
             var server = new TestServer(builder);
@@ -94,7 +93,7 @@ namespace Executables.Helpers
 
             using (var db = Utils.UseDbContext(dbName))
             {
-                await options.Assert(serverResponse, db);
+                options.Assert.ForEach(action => action(serverResponse, db));
                 db.Database.EnsureDeleted();
             }
 

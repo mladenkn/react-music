@@ -10,10 +10,14 @@ namespace Utilities
         {
             var r = new T[count];
             for (var i = 0; i < count; i++)
-            {
                 r[i] = getNext();
-            }
             return r;
+        }
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> forItem)
+        {
+            foreach (var item in items)
+                forItem(item);
         }
 
         public static bool AreEquivalentNoOrder<T>(this IEnumerable<T> col1, IEnumerable<T> col2)
