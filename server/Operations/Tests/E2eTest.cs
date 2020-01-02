@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Executables.Helpers;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Music;
 using Music.DataAccess;
 using Music.DataAccess.Models;
+using Music.Domain.Shared;
 using Utilities;
 using Guid = System.Guid;
 
@@ -65,16 +68,27 @@ namespace Executables.Tests
                 }),
             };
 
-            var dbName = Guid.NewGuid().ToString();
-            
-            using (var db = Utils.UseDatabase(dbName))
+            var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(async db =>
             {
-                await db.Database.EnsureDeletedAsync();
-                await db.Database.EnsureCreatedAsync();
                 db.AddRange(trackUserProps);
                 await db.SaveChangesAsync();
-            }
-            
+            });
+
+            var httpClient = SetupAndGetHttpClient(dbClient.DatabaseName);
+            var firstReqResponse = await httpClient.GetAsync("/api/tracks/skip=0&take=100");
+            var firstReqTracks = await firstReqResponse.Content.ParseAsJson<ArrayWithTotalCount<TrackModel>>();
+
+            // obični query, assert
+            // query preko yt i dodaje 2 trake, uzme traku iz odgovora od servera, nešto postavi i posta na server
+            // obični query, assert
+            // briše neku traku
+            // obični query sa filterima, assert
+        }
+
+        private HttpClient SetupAndGetHttpClient(string dbName)
+        {
             var builder = new WebHostBuilder().UseStartup<Startup>();
 
             builder.ConfigureServices(services =>
@@ -88,14 +102,8 @@ namespace Executables.Tests
             using var server = new TestServer(builder);
             using var client = server.CreateClient();
 
-            
-            // obični query, assert
-            // query preko yt i dodaje 2 trake, uzme traku iz odgovora od servera, nešto postavi i posta na server
-            // obični query, assert
-            // briše neku traku
-            // obični query, assert
+            return client;
         }
-
 
         private YoutubeVideo GenerateYoutubeVideo()
         {

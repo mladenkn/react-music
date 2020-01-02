@@ -66,15 +66,13 @@ namespace Executables.Helpers
 
         public static async Task Run(ServerTestOptions options)
         {
-            var dbName = Guid.NewGuid().ToString();
+            await using var dbClient = await TestDatabaseClient.Create();
 
-            using (var db = Utils.UseDatabase(dbName))
+            await dbClient.UseIt(async db =>
             {
-                await db.Database.EnsureDeletedAsync();
-                await db.Database.EnsureCreatedAsync();
                 foreach (var action in options.PrepareDatabase)
                     await action(db);
-            }
+            });
 
             var builder = new WebHostBuilder().UseStartup<Startup>();
 
@@ -83,7 +81,7 @@ namespace Executables.Helpers
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<MusicDbContext>));
                 if (descriptor != null)
                     services.Remove(descriptor);
-                services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.GetTestDatabaseConnectionString(dbName)));
+                services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.GetTestDatabaseConnectionString(dbClient.DatabaseName)));
                 options.ConfigureServices.ForEach(action => action(services));
             });
 
@@ -92,12 +90,12 @@ namespace Executables.Helpers
             
             var serverResponse = await options.Act(client);
 
-            using (var db = Utils.UseDatabase(dbName))
+            await dbClient.UseIt(async db =>
             {
                 foreach (var action in options.Assert)
                     await action(serverResponse, db);
                 await db.Database.EnsureDeletedAsync();
-            }
+            });
         }
     }
 }

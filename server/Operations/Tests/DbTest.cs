@@ -18,7 +18,9 @@ namespace Executables.Tests
         {
             var channel = _gen.YoutubeChannel(c => { c.Id = _gen.String(); });
 
-            await Utils.UseDatabase(
+            await using var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(
                 async db =>
                 {
                     db.Add(channel);
@@ -45,7 +47,9 @@ namespace Executables.Tests
                 }
             );
 
-            await Utils.UseDatabase(
+            await using var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(
                 async db =>
                 {
                     db.Add(video);
@@ -102,7 +106,9 @@ namespace Executables.Tests
                 );
             });
 
-            await Utils.UseDatabase(
+            await using var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(
                 async db =>
                 {
                     db.Add(trackUserProps);
@@ -201,7 +207,9 @@ namespace Executables.Tests
                 }
             );
 
-            await Utils.UseDatabase(
+            await using var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(
                 async db =>
                 {
                     db.Add(ytVideo);

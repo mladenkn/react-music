@@ -42,7 +42,9 @@ namespace Executables.Tests
                 ),
             };
 
-            await Utils.UseDatabase(
+            await using var dbClient = await TestDatabaseClient.Create();
+
+            await dbClient.UseIt(
                 async db =>
                 {
                     foreach (var model in models)
