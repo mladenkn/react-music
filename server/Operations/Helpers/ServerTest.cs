@@ -66,17 +66,17 @@ namespace Executables.Helpers
 
         public static async Task Run(ServerTestOptions options)
         {
-            var builder = new WebHostBuilder().UseStartup<Startup>();
-
             var dbName = Guid.NewGuid().ToString();
 
-            using (var db = Utils.UseDbContext(dbName))
+            using (var db = Utils.UseDatabase(dbName))
             {
                 await db.Database.EnsureDeletedAsync();
                 await db.Database.EnsureCreatedAsync();
                 foreach (var action in options.PrepareDatabase)
                     await action(db);
             }
+
+            var builder = new WebHostBuilder().UseStartup<Startup>();
 
             builder.ConfigureServices(services =>
             {
@@ -87,20 +87,17 @@ namespace Executables.Helpers
                 options.ConfigureServices.ForEach(action => action(services));
             });
 
-            var server = new TestServer(builder);
-            var client = server.CreateClient();
+            using var server = new TestServer(builder);
+            using var client = server.CreateClient();
             
             var serverResponse = await options.Act(client);
 
-            using (var db = Utils.UseDbContext(dbName))
+            using (var db = Utils.UseDatabase(dbName))
             {
                 foreach (var action in options.Assert)
                     await action(serverResponse, db);
                 await db.Database.EnsureDeletedAsync();
             }
-
-            server.Dispose();
-            client.Dispose();
         }
     }
 }

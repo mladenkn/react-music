@@ -10,7 +10,6 @@ namespace Executables.Tests
     public class ReferentialIntegrityDbTest
     {
         private readonly DataGenerator _gen = new DataGenerator();
-        private readonly string _dbName = Guid.NewGuid().ToString();
 
         [Fact]
         public async Task Should_Fail_Trying_To_Add_Models_Because_Of_Foreign_key_constraint_violations()
@@ -43,41 +42,38 @@ namespace Executables.Tests
                 ),
             };
 
-            await using (var db = Utils.UseDbContext(_dbName))
-            {
-                await db.Database.EnsureDeletedAsync();
-                await db.Database.EnsureCreatedAsync();
-
-                foreach (var model in models)
+            await Utils.UseDatabase(
+                async db =>
                 {
-                    db.Add(model.model);
-                    FailAddingOne(model.model, model.errorMessageContains);
+                    foreach (var model in models)
+                    {
+                        db.Add(model.model);
+                        await FailAddingOne(model.model, model.errorMessageContains);
+                    }
+
+                    async Task FailAddingOne(object model, string errorMsgContains)
+                    {
+                        //db.Add(model);
+                        //try
+                        //{
+                        //    await db.SaveChangesAsync();
+                        //}
+                        //catch (DbUpdateException e)
+                        //{
+                        //}
+
+                        db.Add(model);
+                        (await db.Invoking(_ => _.SaveChangesAsync())
+                            .Should()
+                            .ThrowAsync<DbUpdateException>())
+                            .Where(e => e.InnerException.Message.Contains(errorMsgContains));
+
+                        var entries = db.ChangeTracker.Entries();
+                        foreach (var entry in entries)
+                            entry.State = EntityState.Detached;
+                    }
                 }
-
-                void FailAddingOne(object model, string errorMsgContains)
-                {
-                    //db.Add(model);
-                    //try
-                    //{
-                    //    await db.SaveChangesAsync();
-                    //}
-                    //catch (DbUpdateException e)
-                    //{
-                    //}
-
-                    db.Add(model);
-                    db.Invoking(_ => _.SaveChanges())
-                        .Should()
-                        .Throw<DbUpdateException>()
-                        .Where(e => e.InnerException.Message.Contains(errorMsgContains));
-
-                    var entries = db.ChangeTracker.Entries();
-                    foreach (var entry in entries)
-                        entry.State = EntityState.Detached;
-                }
-
-                await db.Database.EnsureDeletedAsync();
-            }
+            );
         }
     }
 }

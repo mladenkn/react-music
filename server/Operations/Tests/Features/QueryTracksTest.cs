@@ -113,14 +113,14 @@ namespace Executables.Tests.Features
                     .Assert(async (response, db) =>
                     {
                         response.StatusCode.Should().BeEquivalentTo(HttpStatusCode.OK);
-                        var responseTracks = await response.Content.ParseAsJson<ArrayWithTotalCount<TrackModel>>();
+                        var responseContent = await response.Content.ParseAsJson<ArrayWithTotalCount<TrackModel>>();
                         var shouldBeResponseTracks = new[]
                         {
                             TrackModelMatcherOfIndex(0),
                             TrackModelMatcherOfIndex(1),
                             TrackModelMatcherOfIndex(2)
                         };
-                        responseTracks.Data.Should().BeEquivalentTo(shouldBeResponseTracks);
+                        responseContent.Data.Should().BeEquivalentTo(shouldBeResponseTracks);
                     });
             });
         }
