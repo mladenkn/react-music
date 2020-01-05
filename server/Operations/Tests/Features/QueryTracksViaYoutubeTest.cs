@@ -201,7 +201,7 @@ namespace Executables.Tests.Features
                 .Assert(async (serverResponse, db) =>
                 {
                     Assert.Equal(HttpStatusCode.OK, serverResponse.StatusCode);
-                    var allVideos = db.YoutubeVideos
+                    var allVideos = await db.YoutubeVideos
                         .Include(v => v.YoutubeChannel)
                         .Include(v => v.Statistics)
                         .Include(v => v.Tags)
@@ -210,7 +210,7 @@ namespace Executables.Tests.Features
                             .ThenInclude(td => td.RelevantTopicIds)
                         .Include(v => v.TopicDetails)
                             .ThenInclude(td => td.TopicIds)
-                        .ToArray();
+                        .ToArrayAsync();
 
                     allVideos.Should().BeEquivalentTo(
                         new[]
