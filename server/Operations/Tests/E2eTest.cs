@@ -28,7 +28,7 @@ namespace Executables.Tests
     {
         private readonly DataGenerator _gen = new DataGenerator();
 
-        [Fact]
+        //[Fact]
         public async Task Run()
         {
             var users = CollectionUtils.Repeat(() => _gen.User(), 4);
