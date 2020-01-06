@@ -1,9 +1,7 @@
 import {
   TrackQueryData,
   TrackData,
-  LoadedTracksResponse,
   YoutubeTrackQuery,
-  WithUserPermissions,
   UserPermissions
 } from "../dataModels";
 import axios from "axios";
@@ -16,57 +14,75 @@ else if (process.env.NODE_ENV === "production")
   baseUrl = window.location.href + "api/";
 else throw new Error();
 
-export const fetchTracksFromYT = (q: YoutubeTrackQuery) =>
-  get<{ tracks: TrackData[] }>(`${baseUrl}tracks/yt/`, q);
+const allPermissions = {
+    canEditTrackData: true,
+    canFetchTrackRecommendations: true
+};
+
+const withAllPermissions = <T>(o: T) => ({
+  ...o,
+  permissions: allPermissions,
+});
+
+export const fetchTracksFromYT = async (q: YoutubeTrackQuery) => {
+  const r = await axios.get<TrackData[]>(
+    `${baseUrl}tracks/yt/${q.searchQuery}`
+  );
+  return withAllPermissions({ tracks: r.data });
+};
 
 export const fetchTracks = async (query: TrackQueryData) => {
-  const queryEntries = Object.entries(query).filter(([key, value]) => {
-    if(value === null  ||  value === undefined)
-        return false;
-    else if (Array.isArray(value) && value.length === 0)
-        return false;
-    else if (typeof value === 'object' && Object.entries(value).length === 0)
-        return false;
-    else
-        return true;
-  })
-  const query_ = Object.fromEntries(queryEntries);
-  const r = await get<LoadedTracksResponse>(`${baseUrl}tracks`, query_);
-  return r;
+  var query_ = {
+    skip: query.skip,
+    take: query.take,
+    titleContains: query.titleMatch,
+    mustHaveEveryTag: query.mustContainAllTags,
+    mustHaveAnyTag: query.mustContainAllTags,
+    yearRange: {
+      from: query.yearSpan && query.yearSpan.from,
+      to: query.yearSpan && query.yearSpan!.to
+    }
+  };
+  const r = await axios.get<{ data: TrackData[]; totalCount: number }>(
+    `${baseUrl}tracks`,
+    { params: query_ }
+  );
+  return withAllPermissions(r.data);
 };
 
-export const fetchRelatedTracks = (videoID: string) =>
-  get<{ tracks: TrackData[] }>(`${baseUrl}tracks/recommendations/`, {
-    videoID
-  });
+export const fetchRelatedTracks = (
+  videoID: string
+): Promise<{ tracks: TrackData[]; permissions: UserPermissions }> => {
+  throw new Error("fetchRelatedTracks not implemented");
+};
 
 export const saveTracks = async (data: TrackData[]) => {
-  console.log(data);
-  return post2(`${baseUrl}tracks`, { tracks: data });
+  await axios.post(`${baseUrl}tracks`, data[0]);
+  return allPermissions;
 };
 
-const get = <TResponse>(url: string, params: unknown) => {
-  const userKey = getUserKey();
-  return axios
-    .get<TResponse & WithUserPermissions>(url, {
-      params: { ...params, userKey }
-    })
-    .then(r => r.data);
-};
+// const get = <TResponse>(url: string, params: object) => {
+//   const userKey = getUserKey();
+//   return axios
+//     .get<TResponse & WithUserPermissions>(url, {
+//       params: { ...params, userKey }
+//     })
+//     .then(r => r.data);
+// };
 
-const post = <TResponse>(url: string, params: unknown) => {
-  const userKey = getUserKey();
-  return axios
-    .post<TResponse & WithUserPermissions>(url, { ...params, userKey })
-    .then(r => r.data);
-};
+// const post = <TResponse>(url: string, params: object) => {
+//   const userKey = getUserKey();
+//   return axios
+//     .post<TResponse & WithUserPermissions>(url, { ...params, userKey })
+//     .then(r => r.data);
+// };
 
-const post2 = (url: string, params: unknown) => {
-  const userKey = getUserKey();
-  return axios
-    .post<UserPermissions>(url, { ...params, userKey })
-    .then(r => r.data);
-};
+// const post2 = (url: string, params: object) => {
+//   const userKey = getUserKey();
+//   return axios
+//     .post<UserPermissions>(url, { ...params, userKey })
+//     .then(r => r.data);
+// };
 
-const getUserKey = () =>
-  (localStorage.getItem("userKey") || undefined) as string | undefined;
+// const getUserKey = () =>
+//   (localStorage.getItem("userKey") || undefined) as string | undefined;

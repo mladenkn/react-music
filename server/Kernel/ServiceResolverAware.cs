@@ -17,10 +17,10 @@ namespace Kernel
         protected ServiceResolverAware(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            Db = _serviceProvider.GetService<TDbContext>();
-            Mapper = _serviceProvider.GetService<IMapper>();
+            Db = _serviceProvider.GetRequiredService<TDbContext>();
+            Mapper = _serviceProvider.GetRequiredService<IMapper>();
         }
 
-        protected TService Resolve<TService>() => _serviceProvider.GetService<TService>();
+        protected TService Resolve<TService>() => _serviceProvider.GetRequiredService<TService>();
     }
 }

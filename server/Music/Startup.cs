@@ -3,6 +3,7 @@ using AngleSharp;
 using AutoMapper;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.OpenApi.Models;
@@ -12,7 +13,6 @@ using MongoDB.Driver;
 using Music.Api;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
-using Music.Domain.Shared;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
@@ -53,8 +53,8 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-            //services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
-            //services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
+            services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
+            services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
 
             services.AddTransient<QueryTracksExecutor>();
             services.AddTransient<QueryTracksViaYoutubeExecutor>();
