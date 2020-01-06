@@ -1,6 +1,7 @@
 using System.Net.Http;
 using AngleSharp;
 using AutoMapper;
+using ElmahCore.Mvc;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Kernel;
@@ -49,6 +50,7 @@ namespace Music
             });
 
             services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=DESKTOP-VSBO5TE\\SQLEXPRESS;Initial Catalog=MusicTest;Integrated Security=True"));
+            services.AddTransient<DataPersistor>();
 
             services.AddSwaggerGen(c =>
             {
@@ -72,6 +74,8 @@ namespace Music
             services.AddTransient<SaveTrackYoutubeExecutor>();
 
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
+
+            services.AddElmah();
 
             _reconfigureServices?.Invoke(services);
         }
@@ -108,6 +112,8 @@ namespace Music
             {
                 endpoints.MapControllers();
             });
+
+            app.UseElmah();
         }
     }
 }

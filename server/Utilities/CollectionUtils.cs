@@ -6,6 +6,19 @@ namespace Utilities
 {
     public static class CollectionUtils
     {
+        public static IEnumerable<TSource> DistinctBy<TSource, TKey>
+            (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            var seenKeys = new HashSet<TKey>();
+            foreach (var element in source)
+            {
+                if (seenKeys.Add(keySelector(element)))
+                {
+                    yield return element;
+                }
+            }
+        }
+
         public static T[] Repeat<T>(Func<T> getNext, int count)
         {
             var r = new T[count];

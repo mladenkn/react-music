@@ -26,8 +26,9 @@ namespace Music.Domain.QueryTracksViaYoutube
             var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksYtIds);
             var videosFromYt = await GetVideosFromYoutube(notFoundVideosIds.ToArray());
             var videosFromYtMapped = videosFromYt.Select(v => Mapper.Map<YoutubeVideo>(v));
-            Db.AddRange(videosFromYtMapped);
-            await Db.SaveChangesAsync();
+
+            var dataPersistor = Resolve<DataPersistor>();
+            await dataPersistor.InsertYoutubeVideos(videosFromYtMapped);
 
             var tracks = await GetTracks(wantedTracksYtIds);
 

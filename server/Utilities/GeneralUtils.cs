@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,5 +27,7 @@ namespace Utilities
         }
 
         public static bool IsAnyOf(this object o, params object[] values) => values.Contains(o);
+
+        public static bool IsIn<T>(this T o, IEnumerable<T> enumerable) => enumerable.Contains(o);
     }
 }

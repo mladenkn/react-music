@@ -24,6 +24,19 @@ namespace Utilities
 
             return memberExpression.ToString();
         }
+        
+        public static T ShallowCopy<T>(T sourceObject) where T : new()
+        {
+            var destinationObject = new T();
+            var type = typeof(T);
+            var props = type.GetProperties();
+            foreach (var propInfo in props)
+            {
+                var propValue = propInfo.GetValue(sourceObject);
+                propInfo.SetValue(destinationObject, propValue);
+            }
+            return destinationObject;
+        }
 
         private static MemberExpression GetMemberExpr<TSource, TProperty>(
             Expression<Func<TSource, TProperty>> propertyLambda)
