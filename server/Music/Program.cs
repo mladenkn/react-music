@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Music.DataAccess;
 
 namespace Music
 {
@@ -8,6 +10,12 @@ namespace Music
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+
+            using var serviceScope = host.Services.CreateScope();
+            var db = serviceScope.ServiceProvider.GetRequiredService<MusicDbContext>();
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
             host.Run();
         }
 

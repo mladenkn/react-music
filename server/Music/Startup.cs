@@ -6,11 +6,13 @@ using Google.Apis.YouTube.v3;
 using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using Music.Api;
+using Music.DataAccess;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
@@ -46,6 +48,8 @@ namespace Music
                 return database;
             });
 
+            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=DESKTOP-VSBO5TE\\SQLEXPRESS;Initial Catalog=MusicTest;Integrated Security=True"));
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Music API", Version = "v1" });
@@ -59,6 +63,7 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
+            services.AddTransient<QueryTracksViaYoutubeServices>();
             services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
             services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
 
