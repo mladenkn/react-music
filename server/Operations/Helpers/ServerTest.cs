@@ -76,13 +76,18 @@ namespace Executables.Helpers
 
             var builder = new WebHostBuilder().UseStartup<Startup>();
 
-            builder.ConfigureServices(services =>
+            void ReconfigureServices(IServiceCollection services) 
             {
                 var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<MusicDbContext>));
                 if (descriptor != null)
                     services.Remove(descriptor);
                 services.AddDbContext<MusicDbContext>(o => o.UseSqlServer(Config.GetTestDatabaseConnectionString(dbClient.DatabaseName)));
                 options.ConfigureServices.ForEach(action => action(services));
+            }
+
+            builder.ConfigureServices(services =>
+            {
+                services.AddTransient<Startup.ReconfigureServices>(sp => ReconfigureServices);
             });
 
             using var server = new TestServer(builder);

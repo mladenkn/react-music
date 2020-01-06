@@ -20,6 +20,20 @@ namespace Utilities
                 forItem(item);
         }
 
+        public static void RemoveWhere<T>(this ICollection<T> collection, Func<T, bool> shouldRemove)
+        {
+            var toRemove = new List<T>();
+            foreach (var item in collection)
+            {
+                if(shouldRemove(item))
+                    toRemove.Add(item);
+            }
+            foreach (var item in toRemove)
+            {
+                collection.Remove(item);
+            }
+        }
+
         public static bool AreEquivalentNoOrder<T>(this IEnumerable<T> col1, IEnumerable<T> col2)
         {
             var col1Sorted = col1.OrderBy(i => i);

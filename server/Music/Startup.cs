@@ -13,14 +13,20 @@ using MongoDB.Driver;
 using Music.Api;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
+using Music.Domain.Shared;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public delegate void ReconfigureServices(IServiceCollection serviceCollection);
+
+        private readonly ReconfigureServices _reconfigureServices;
+
+        public Startup(IConfiguration configuration, ReconfigureServices reconfigureServices = null)
         {
+            _reconfigureServices = reconfigureServices;
             Configuration = configuration;
         }
 
@@ -59,6 +65,10 @@ namespace Music
             services.AddTransient<QueryTracksExecutor>();
             services.AddTransient<QueryTracksViaYoutubeExecutor>();
             services.AddTransient<SaveTrackYoutubeExecutor>();
+
+            services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
+
+            _reconfigureServices?.Invoke(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
