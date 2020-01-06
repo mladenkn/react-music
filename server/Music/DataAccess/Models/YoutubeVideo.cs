@@ -24,7 +24,6 @@ namespace Music.DataAccess.Models
 
         public IEnumerable<YoutubeVideoThumbnail> Thumbnails { get; set; }
 
-        [Required]
         public string ThumbnailsEtag { get; set; }
 
         public IReadOnlyCollection<YoutubeVideoTag> Tags { get; set; }
@@ -69,7 +68,6 @@ namespace Music.DataAccess.Models
 
         public ulong? CommentCount { get; set; }
 
-        [Required]
         public string ETag { get; set; }
     }
 
@@ -87,7 +85,6 @@ namespace Music.DataAccess.Models
 
         public IReadOnlyCollection<YoutubeVideoTopicDetailsTopicCategory> TopicCategories { get; set; }
 
-        [Required]
         public string ETag { get; set; }
     }
 
@@ -157,7 +154,6 @@ namespace Music.DataAccess.Models
 
         public long? Height { get; set; }
 
-        [Required]
         public string Etag { get; set; }
     }
 }
