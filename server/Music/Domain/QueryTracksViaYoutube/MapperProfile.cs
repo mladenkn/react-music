@@ -56,13 +56,17 @@ namespace Music.Domain.QueryTracksViaYoutube
                 .AfterMap((src, dst) =>
                 {
                     dst.Statistics.YoutubeVideoId = src.Id;
-                    dst.TopicDetails.YoutubeVideoId = src.Id;
-                    foreach (var tc in dst.TopicDetails.TopicCategories) 
-                        tc.YoutubeVideoId = src.Id;
-                    foreach (var rtId in dst.TopicDetails.RelevantTopicIds)
-                        rtId.YoutubeVideoId = src.Id;
-                    foreach (var tId in dst.TopicDetails.TopicIds)
-                        tId.YoutubeVideoId = src.Id;
+
+                    if (dst.TopicDetails != null)
+                    {
+                        dst.TopicDetails.YoutubeVideoId = src.Id;
+                        foreach (var tc in dst.TopicDetails.TopicCategories)
+                            tc.YoutubeVideoId = src.Id;
+                        foreach (var rtId in dst.TopicDetails.RelevantTopicIds)
+                            rtId.YoutubeVideoId = src.Id;
+                        foreach (var tId in dst.TopicDetails.TopicIds)
+                            tId.YoutubeVideoId = src.Id;
+                    }
                 })
                 ;
             ;

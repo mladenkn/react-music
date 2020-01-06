@@ -15,20 +15,19 @@ else if (process.env.NODE_ENV === "production")
 else throw new Error();
 
 const allPermissions = {
-    canEditTrackData: true,
-    canFetchTrackRecommendations: true
+  canEditTrackData: true,
+  canFetchTrackRecommendations: true
 };
 
 const withAllPermissions = <T>(o: T) => ({
   ...o,
-  permissions: allPermissions,
+  permissions: allPermissions
 });
 
 export const fetchTracksFromYT = async (q: YoutubeTrackQuery) => {
-  const r = await axios.get<TrackData[]>(
-    `${baseUrl}tracks/yt`,
-    { params: { searchQuery: q.searchQuery } }
-  );
+  const r = await axios.get<TrackData[]>(`${baseUrl}tracks/yt`, {
+    params: { searchQuery: q.searchQuery }
+  });
   return withAllPermissions({ tracks: r.data });
 };
 
@@ -58,7 +57,12 @@ export const fetchRelatedTracks = (
 };
 
 export const saveTracks = async (data: TrackData[]) => {
-  await axios.post(`${baseUrl}tracks`, data[0]);
+  const firstTrackMapped = {
+    trackYtId: data[0].ytId,
+    tags: data[0].tags,
+    year: data[0].year
+  };
+  await axios.post(`${baseUrl}tracks`, firstTrackMapped);
   return allPermissions;
 };
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Kernel;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,39 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]QueryTracksRequest req) =>
-            Resolve<QueryTracksExecutor>().Execute(req);
+        public async Task<ArrayWithTotalCount<dynamic>> Get([FromQuery]QueryTracksRequest req)
+        {
+            var r = await Resolve<QueryTracksExecutor>().Execute(req);
+            var data = r.Data.Select(TrackModelToClientModel).ToArray();
+            return new ArrayWithTotalCount<dynamic>(data, r.TotalCount);
+        }
 
         [HttpGet("yt")]
-        public Task<IEnumerable<TrackModel>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
-            Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
+        public async Task<IEnumerable<dynamic>> QueryTracksViaYoutube([FromQuery]string searchQuery)
+        {
+            var r = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
+            return r.Select(TrackModelToClientModel);
+        }
 
         [HttpPost]
         public Task Save([FromBody]SaveTrackModel trackProps) => 
             Resolve<SaveTrackYoutubeExecutor>().Execute(trackProps);
+
+        private dynamic TrackModelToClientModel(TrackModel track) =>
+            new
+            {
+                YtId = track.YoutubeVideoId,
+                track.Title,
+                track.Description,
+                track.Image,
+                track.Year,
+                Genres = new string[0],
+                track.Tags,
+                Channel = new
+                {
+                    Id = track.YoutubeChannelId,
+                    Title = track.YoutubeChannelTitle,
+                }
+            };
     }
 }

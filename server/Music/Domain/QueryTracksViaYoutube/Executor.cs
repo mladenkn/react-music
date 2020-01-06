@@ -25,6 +25,17 @@ namespace Music.Domain.QueryTracksViaYoutube
 
             var notFoundVideosIds = await FilterToUnknownVideosIds(wantedTracksYtIds);
             var videosFromYt = await GetVideosFromYoutube(notFoundVideosIds.ToArray());
+
+            foreach (var videoFromYt in videosFromYt)
+            {
+                if (videoFromYt.ContentDetails == null)
+                    throw new Exception("Video from YouTube missing ContentDetails part");
+                if (videoFromYt.Snippet == null)
+                    throw new Exception("Video from YouTube missing Snippet part");
+                if (videoFromYt.Statistics == null)
+                    throw new Exception("Video from YouTube missing Snippet part");
+            }
+
             var videosFromYtMapped = videosFromYt.Select(v => Mapper.Map<YoutubeVideo>(v));
 
             var dataPersistor = Resolve<DataPersistor>();
