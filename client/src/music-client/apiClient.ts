@@ -26,7 +26,8 @@ const withAllPermissions = <T>(o: T) => ({
 
 export const fetchTracksFromYT = async (q: YoutubeTrackQuery) => {
   const r = await axios.get<TrackData[]>(
-    `${baseUrl}tracks/yt/${q.searchQuery}`
+    `${baseUrl}tracks/yt`,
+    { params: { searchQuery: q.searchQuery } }
   );
   return withAllPermissions({ tracks: r.data });
 };
