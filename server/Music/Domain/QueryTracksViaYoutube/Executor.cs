@@ -29,11 +29,13 @@ namespace Music.Domain.QueryTracksViaYoutube
             foreach (var videoFromYt in videosFromYt)
             {
                 if (videoFromYt.ContentDetails == null)
-                    throw new Exception("Video from YouTube missing ContentDetails part");
+                    throw new Exception("Video from YouTube API missing ContentDetails part");
                 if (videoFromYt.Snippet == null)
-                    throw new Exception("Video from YouTube missing Snippet part");
+                    throw new Exception("Video from YouTube API missing Snippet part");
+                if (videoFromYt.Snippet.Thumbnails == null)
+                    throw new Exception("Video from YouTube API missing Snippet.Thumbnails part");
                 if (videoFromYt.Statistics == null)
-                    throw new Exception("Video from YouTube missing Snippet part");
+                    throw new Exception("Video from YouTube API missing Snippet part");
             }
 
             var videosFromYtMapped = videosFromYt.Select(v => Mapper.Map<YoutubeVideo>(v));

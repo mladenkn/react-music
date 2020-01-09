@@ -15,7 +15,7 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var db = serviceScope.ServiceProvider.GetRequiredService<MusicDbContext>();
 
-            db.Database.EnsureDeleted();
+            //db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
             db.Add(new User
