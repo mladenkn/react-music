@@ -49,7 +49,7 @@ namespace Music
                 return database;
             });
 
-            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=DESKTOP-VSBO5TE\\SQLEXPRESS;Initial Catalog=MusicTest;Integrated Security=True"));
+            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
             services.AddTransient<DataPersistor>();
 
             services.AddSwaggerGen(c =>
