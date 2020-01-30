@@ -14,8 +14,6 @@ export const generateArray = <T> (getNext: () => T, count: number) => {;
     return r;
 }
 
-export type AsyncOperationStatus = 'NEVER_INITIATED' | 'PROCESSING' | 'COMPLETED';
-
 export const replaceMatches = <T> (arr: T[], doesMatch: (item: T) => boolean, replaceWith: T) => {
     const {allItems, updatedItems} = updateMatches(arr, doesMatch, () => replaceWith);
     return {allItems, newItems: updatedItems};

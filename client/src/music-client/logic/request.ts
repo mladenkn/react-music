@@ -1,12 +1,9 @@
-export interface RequestState<TData = undefined> {
-    id: number
+import { AsyncOperationStatus } from "../shared"
+
+export interface RequestLogic<TParameters, TData> {
     data?: TData
     errorMessage?: string
-    status: 'PROCESSING' | 'PROCESSED' | 'ERROR'
-}
-
-export interface RequestLogic<TParameters> {
-    lastOne: RequestState,
+    status: AsyncOperationStatus
     initiate(params: TParameters): void
 }
 

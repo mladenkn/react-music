@@ -14,9 +14,7 @@ function createWindow() {
     icon: __dirname + '/music.png'
 })
 
-  const appUrl = process.env.ELECTRON_ENV === 'development' ? 
-    'http://localhost:3000' :
-    `http://localhost:8082`;
+  const appUrl = 'http://localhost:3000';
 
   mainWindow.loadURL(appUrl)
 
