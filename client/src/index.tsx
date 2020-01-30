@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './music-client/view/index.css';
-import { AppRootUI } from './music-client/view/AppRoot';
+import { Root } from './music-client/view/Root';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <AppRootUI />,
+  <Root />,
   document.getElementById('root')
 );
 

@@ -10,6 +10,6 @@ export interface RequestLogic<TParameters> {
     initiate(params: TParameters): void
 }
 
-export const useRequestLogic = <TParameters = undefined> (url: string): RequestLogic<TParameters> => {
-    
+export const useRequestLogic = <TParameters = undefined, TData = undefined> (url: string): RequestLogic<TParameters, TData> => {
+    throw new Error('Not implemented.')
 }
