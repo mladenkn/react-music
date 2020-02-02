@@ -1,5 +1,5 @@
 import axios from "axios";
-import { MusicDbTrackQueryForm } from "./logic/trackQueryForm";
+import { MusicDbTrackQueryForm, Paging } from "./logic/trackQueryForm";
 import { Track } from "./shared";
 
 let baseUrl: string;
@@ -10,26 +10,33 @@ else if (process.env.NODE_ENV === "production")
   baseUrl = window.location.href + "api/";
 else throw new Error();
 
-export const fetchTracksFromYT = async (searchQuery: string) => {
+export const fetchFromYT = async (searchQuery: string) => {
   const r = await axios.get<Track[]>(`${baseUrl}tracks/yt`, {
     params: { searchQuery }
   });
-  return r.data;
+  return r;
 };
 
-export const fetchTracks = async (query: MusicDbTrackQueryForm) => {
+export const fetchFromMusicDb = async (query: MusicDbTrackQueryForm & Paging) => {
   const r = await axios.get<{ data: Track[]; totalCount: number }>(
     `${baseUrl}tracks`, { params: query }
   );
-  return r.data;
+  return r;
 };
 
-export const fetchRelatedTracks = (
+export const fetchRelated = (
   videoId: string
 ): Promise<Track[]> => {
   throw new Error("fetchRelatedTracks not implemented");
 };
 
-export const saveTracks = async (data: Track) => {
+export const save = async (data: Track) => {
   await axios.post(`${baseUrl}tracks`, data);
 };
+
+export const tracksApi = {
+  fetchFromYT,
+  fetchFromMusicDb,
+  fetchRelated,
+  save 
+}
