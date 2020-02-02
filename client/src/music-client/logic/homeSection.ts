@@ -2,16 +2,9 @@ import { TrackQueryForm, createInitialTrackQueryForm } from "./trackQueryForm";
 import { Track } from "../shared";
 import { tracksApi } from "../apiClient";
 import { useImmer } from "use-immer";
-
-interface HomeSection {
-    trackQueryForm: TrackQueryForm
-    setTrackQueryForm(trackQueryForm: TrackQueryForm): void
-    saveTrack(t: Track): void
-}
-
-interface State {
-    trackQueryForm: TrackQueryForm
-}
+import { useEffect } from "react";
+import { useRequestLogic } from "./request";
+import { HomeSection, State } from "./homeSection.types";
 
 const pageSize = 20;
 
@@ -20,16 +13,24 @@ export const useHomeSection = (): HomeSection => {
     const [state, updateState] = useImmer<State>({
         trackQueryForm: createInitialTrackQueryForm()
     })
-    
-    const setTrackQueryForm = (trackQueryForm: TrackQueryForm) => {
+
+    const fetchTracksFromMusicDbLogic = useRequestLogic(tracksApi.fetchFromMusicDb)
+    const fetchMoreTracksFromMusicDbLogic = useRequestLogic(tracksApi.fetchFromMusicDb)
+    const fetchTracksFromYoutubeLogic = useRequestLogic(tracksApi.fetchFromYT)
+
+    useEffect(() => {
         if(state.trackQueryForm!.dataSource === 'MusicDb'){
             const reqParams = { ...state.trackQueryForm!.fields!, take: pageSize, skip: 0 }
-            return tracksApi.fetchFromMusicDb(reqParams)
-                .then(response => ({ fromMusicDbSource: response.data }))
+            fetchTracksFromMusicDbLogic.initiate(reqParams)
         }
-        else 
-            return tracksApi.fetchFromYT(state.trackQueryForm.searchQuery!)
-                .then(response => ({ fromYt: response.data }))
+        else
+            fetchTracksFromYoutubeLogic.initiate(state.trackQueryForm.searchQuery!)
+    }, [state.trackQueryForm])
+    
+    const setTrackQueryForm = (trackQueryForm: TrackQueryForm) => {
+        updateState(draft => {
+            draft.trackQueryForm = trackQueryForm;
+        })
     }
 
     const saveTrack = (t: Track) => tracksApi.save(t)

@@ -4,13 +4,12 @@ import { useImmer } from 'use-immer'
 
 export interface RequestLogic<TParameters, TData> {
     data?: TData
-    errorMessage?: string
+    error?: any
     status: AsyncOperationStatus | 'NOT_INITIATED'
     initiate(params: TParameters): void
 }
 
 interface State {
-    nextRequestId: number,
     lastRequest?: {
         data?: any
         status: AsyncOperationStatus
@@ -22,7 +21,6 @@ export const useRequestLogic = <TParameters = undefined, TData = undefined> (
     : RequestLogic<TParameters, TData> => 
 {        
     const [state, updateState] = useImmer<State>({
-        nextRequestId: 1,
     })
 
     const initiate = async (params: TParameters) => {
@@ -31,8 +29,7 @@ export const useRequestLogic = <TParameters = undefined, TData = undefined> (
                 data: undefined,
                 status: 'PROCESSING'
             }
-            draft.nextRequestId++
-        })   
+        })
         
         const response = await doRequestActual(params)
 
@@ -54,12 +51,12 @@ export const useRequestLogic = <TParameters = undefined, TData = undefined> (
 
     return didInitiate ? {
         data: state.lastRequest!.data,
+        error: undefined,
         status: state.lastRequest!.status,
-        errorMessage: undefined,
         initiate
     } : {
         data: undefined,
-        errorMessage: state.lastRequest!.data!.errorMessage,
+        error: undefined,
         status: 'NOT_INITIATED',
         initiate
     }
