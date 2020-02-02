@@ -1,11 +1,11 @@
-import { AsyncOperationStatus } from "../shared"
+import { AsyncOperationStatus } from "../../utils/types"
 import { AxiosResponse } from "axios"
 import { useImmer } from 'use-immer'
 
 export interface RequestLogic<TParameters, TData> {
     data?: TData
     errorMessage?: string
-    status: AsyncOperationStatus
+    status: AsyncOperationStatus | 'NOT_INITIATED'
     initiate(params: TParameters): void
 }
 
@@ -13,7 +13,7 @@ interface State {
     nextRequestId: number,
     lastRequest?: {
         data?: any
-        status: 'PROCESSING' | 'PROCESSED' | 'ERROR'
+        status: AsyncOperationStatus
     }
 }
 
@@ -54,13 +54,13 @@ export const useRequestLogic = <TParameters = undefined, TData = undefined> (
 
     return didInitiate ? {
         data: state.lastRequest!.data,
-        status: state.lastRequest!.status as AsyncOperationStatus,
+        status: state.lastRequest!.status,
         errorMessage: undefined,
         initiate
     } : {
         data: undefined,
         errorMessage: state.lastRequest!.data!.errorMessage,
-        status: 'NOT_INITIATED' as AsyncOperationStatus,
+        status: 'NOT_INITIATED',
         initiate
     }
 }
