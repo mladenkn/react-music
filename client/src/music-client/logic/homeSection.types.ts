@@ -1,39 +1,61 @@
-import { TrackQueryForm } from "./trackQueryForm";
+import { TrackQueryForm, MusicDbTrackQueryForm } from "./trackQueryForm";
 import { Track } from "../shared";
 import { AsyncOperationStatus, ArrayWithTotalCount } from "../../utils/types";
 
-// export interface FetchedTracksFromMusicDbEvent {
-//     type: 'FetchedTracksFromMusicDbEvent',
-//     data: ArrayWithTotalCount<Track>
-// }
+class Event {
+    readonly at!: Date;
+}
 
-// export interface FetchedTracksNextPageFromMusicDbEvent {
-//     type: 'FetchedTracksNextPageFromMusicDbEvent',
-//     data: ArrayWithTotalCount<Track>
-// }
+class UpdatedTrackQueryForm extends Event {
+    readonly form!: TrackQueryForm
+}
 
-// export interface FetchedTracksFromYouTubeEvent {
-//     type: 'FetchedTracksFromYouTubeEvent',
-//     data: Track[]
-// }
+class InititatedFetchedTracksNextPageFromMusicDb extends Event {
+    readonly form!: MusicDbTrackQueryForm
+}
 
-// type TracksFetchEvent = FetchedTracksFromMusicDbEvent | FetchedTracksNextPageFromMusicDbEvent | FetchedTracksFromYouTubeEvent
+class InititatedFetchedTracksFromMusicDb extends Event {
+    readonly form!: MusicDbTrackQueryForm
+}
+
+class InititatedFetchedTracksFromYouTube extends Event {
+    readonly searchQuery!: string
+}
+
+class FetchedTracksFromMusicDb extends Event {
+    readonly payload!: ArrayWithTotalCount<Track>;
+}
+
+class FetchedTracksNextPageFromMusicDb extends Event {
+    readonly payload!: ArrayWithTotalCount<Track>;
+}
+
+class FetchedTracksFromYouTube extends Event {
+    readonly payload!: Track[]
+}
+
+class FetchTracksFromMusicDbFailure extends Event {
+    readonly error!: {}
+}
+
+class FetchTracksNextPageFromMusicDbFailure extends Event {
+    readonly error!: {}
+}
+
+class FetchTracksFromYouTubeFailure extends Event {
+    readonly error!: {}
+}
 
 export interface HomeSection {
     trackQueryForm: TrackQueryForm
     tracksFromMusicDb: {
-        data: ArrayWithTotalCount<Track[]>
+        data?: ArrayWithTotalCount<Track[]>
         status: AsyncOperationStatus
     }
     tracksFromYouTube: {
-        data: Track[]
+        data?: Track[]
         status: AsyncOperationStatus
     }
     setTrackQueryForm(trackQueryForm: TrackQueryForm): void
     saveTrack(t: Track): Promise<void>
-}
-
-export interface State {
-    trackQueryForm: TrackQueryForm
-    // lastTracksFetchEvent: TracksFetchEvent
 }
