@@ -14,7 +14,7 @@ import {
   fetchTracksNextPageFailed
 } from "./trackPlaylist.events";
 import { useRequestIdGenerator } from "./requestIdGenerator";
-import { tryExtractMusicDbPlaylistState, tryExtractYoutubePlaylistState } from "./trackPlaylist.selectors";
+import { tryExtractMusicDbPlaylistState, tryExtractYoutubePlaylistState, getLastMusicDbFetchId, getNumberOfTracksFetched } from "./trackPlaylist.selectors";
 
 export interface TrackPlaylist {
   queryForm: TrackQueryForm;
@@ -76,8 +76,8 @@ export const useTrackPlaylist = (): TrackPlaylist => {
   const saveTrack = (t: Track) => tracksApi.save(t);
 
   const fetchTracksNextPage = () => {
-    const initialRequestId = 0
-    const skip = 20
+    const initialRequestId = getLastMusicDbFetchId(history)
+    const skip = getNumberOfTracksFetched(history)
     const reqId = nextRequestId()
     tracksApi.fetchFromMusicDb({ ...queryForm.fields!, take: pageSize, skip })
       .then(r => history.save(fetchedTracksNextPage({ initialRequestId, data: r.data, id: reqId })))
