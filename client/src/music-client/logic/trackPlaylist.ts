@@ -3,7 +3,7 @@ import { Track } from "../shared";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
 import { ArrayWithTotalCount, AsyncOperationStatus } from "../../utils/types";
-import { useHistory, History } from "../../utils/es/history";
+import { useHistory } from "../../utils/es/history";
 import {
   updatedQueryTrackForm,
   initiatedTracksFetch,
@@ -14,6 +14,7 @@ import {
   fetchTracksNextPageFailed
 } from "./trackPlaylist.events";
 import { useRequestIdGenerator } from "./requestIdGenerator";
+import { tryExtractMusicDbPlaylistState, tryExtractYoutubePlaylistState } from "./trackPlaylist.selectors";
 
 export interface TrackPlaylist {
   queryForm: TrackQueryForm;
@@ -85,52 +86,3 @@ export const useTrackPlaylist = (): TrackPlaylist => {
 
   return { queryForm, fromMusicDb, fromYouTube, fetchTracksNextPage, setQueryForm, saveTrack }
 };
-
-const tryExtractMusicDbPlaylistState = (history: History) => {
-  const lastRequest = history.latestWhereType(initiatedTracksFetch)!
-
-  if(lastRequest.payload.data.dataSource !== 'MusicDb')
-    return undefined
-
-  const lastRequestId = lastRequest.payload.id
-  const fetchedEvent = history.whereType(fetchedTracksFromMusicDb).find(e => e.payload.requestId === lastRequestId)
-  if(fetchedEvent){
-    return {
-      list: fetchedEvent.payload.data,
-      status: 'PROCESSED' as AsyncOperationStatus
-    }
-  }
-  
-  return tryExtractErrorStateForRequest(history, lastRequestId) || processingRequestState
-}
-
-const tryExtractYoutubePlaylistState = (history: History) => {
-  const lastRequest = history.latestWhereType(initiatedTracksFetch)!
-
-  if(lastRequest.payload.data.dataSource !== 'YouTube')
-    return undefined
-
-  const lastRequestId = lastRequest.payload.id
-  const fetchedEvent = history.whereType(fetchedTracksFromYouTube).find(e => e.payload.requestId === lastRequestId)
-  if(fetchedEvent){
-    return {
-      list: fetchedEvent.payload.data,
-      status: 'PROCESSED' as AsyncOperationStatus
-    }
-  }
-  
-  return tryExtractErrorStateForRequest(history, lastRequestId) || processingRequestState
-}
-
-const tryExtractErrorStateForRequest = (history: History, requestId: number) => {
-  const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === requestId)
-  return failedEvent && {
-    list: undefined,
-    status: 'ERROR' as AsyncOperationStatus
-  }
-}
-
-const processingRequestState = {
-  list: undefined,
-  status: 'ERROR' as AsyncOperationStatus
-}
