@@ -56,7 +56,7 @@ export const useTrackPlaylist = (): TrackPlaylist => {
         .catch(() => history.save(fetchTracksFailed(requestId)));
     else
       tracksApi
-        .fetchFromYT(lastUpdatedQueryTrackForm.payload.searchQuery!)
+        .fetchFromYouTube(lastUpdatedQueryTrackForm.payload.searchQuery!)
         .then(r => history.save(fetchedTracksFromYouTube({ data: r.data, requestId })))
         .catch(() => history.save(fetchTracksFailed(requestId)));
 

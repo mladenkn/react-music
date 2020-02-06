@@ -11,7 +11,7 @@ else if (process.env.NODE_ENV === "production")
   baseUrl = window.location.href + "api/";
 else throw new Error();
 
-export const fetchFromYT = async (searchQuery: string) => {
+export const fetchFromYouTube = async (searchQuery: string) => {
   const r = await axios.get<Track[]>(`${baseUrl}tracks/yt`, {
     params: { searchQuery }
   });
@@ -36,7 +36,7 @@ export const save = async (data: Track) => {
 };
 
 export const tracksApi = {
-  fetchFromYT,
+  fetchFromYouTube,
   fetchFromMusicDb,
   fetchRelated,
   save 
