@@ -10,26 +10,26 @@ import {
   fetchTracksFailed,
   fetchedTracksFromMusicDb,
   fetchedTracksFromYouTube
-} from "./homeSection.events";
+} from "./trackPlaylist.events";
 import { useRequestIdGenerator } from "./requestIdGenerator";
 
-export interface HomeSection {
-  trackQueryForm: TrackQueryForm;
-  tracksFromMusicDb?: {
-    data?: ArrayWithTotalCount<Track[]>;
+export interface TrackPlaylist {
+  form: TrackQueryForm;
+  fromMusicDb?: {
+    list?: ArrayWithTotalCount<Track[]>;
     status: AsyncOperationStatus;
   };
-  tracksFromYouTube?: {
-    data?: Track[];
+  fromYouTube?: {
+    list?: Track[];
     status: AsyncOperationStatus;
   };
-  setTrackQueryForm(trackQueryForm: TrackQueryForm): void;
+  setTrackQueryForm(form: TrackQueryForm): void;
   saveTrack(t: Track): Promise<void>;
 }
 
 const pageSize = 20;
 
-export const useHomeSection = (): HomeSection => {
+export const useTrackPlaylist = (): TrackPlaylist => {
   const history = useHistory();
 
   const updatedQueryTrackFormEvents = history.whereType(updatedQueryTrackForm);
@@ -58,8 +58,8 @@ export const useHomeSection = (): HomeSection => {
 
   }, [updatedQueryTrackFormEvents.length]);
 
-  const setTrackQueryForm = (trackQueryForm: TrackQueryForm) => {
-    history.save(updatedQueryTrackForm(trackQueryForm));
+  const setTrackQueryForm = (form: TrackQueryForm) => {
+    history.save(updatedQueryTrackForm(form));
   };
 
   const saveTrack = (t: Track) => tracksApi.save(t);
