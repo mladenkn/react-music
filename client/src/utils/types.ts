@@ -4,3 +4,13 @@ export interface ArrayWithTotalCount<T> {
 }
 
 export type AsyncOperationStatus = 'PROCESSING' | 'PROCESSED' | 'ERROR'
+
+export interface Identifable<TData> {
+  id: number
+  data: TData
+}
+
+export interface BelongsToRequest<TData = {}> {
+  requestId: number
+  data: TData
+}
