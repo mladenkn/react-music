@@ -18,3 +18,7 @@ export function createEvent<TArgs extends any[], TPayload>(
   actionCreator.type = type;
   return actionCreator;
 }
+
+export function isOfType<TArgs extends any[] = any[], TPayload = {}>(e: Event<TPayload>, ec: EventCreator<TArgs, TPayload>){
+  return e.type === ec.type;
+}

@@ -3,7 +3,7 @@ import { Track } from "../shared";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
 import { ArrayWithTotalCount, AsyncOperationStatus } from "../../utils/types";
-import { useHistory } from "../../utils/es/history";
+import { useHistory, History } from "../../utils/es/history";
 import {
   updatedQueryTrackForm,
   initiatedTracksFetch,
@@ -14,16 +14,16 @@ import {
 import { useRequestIdGenerator } from "./requestIdGenerator";
 
 export interface TrackPlaylist {
-  form: TrackQueryForm;
+  queryForm: TrackQueryForm;
   fromMusicDb?: {
-    list?: ArrayWithTotalCount<Track[]>;
+    list?: ArrayWithTotalCount<Track>;
     status: AsyncOperationStatus;
   };
   fromYouTube?: {
     list?: Track[];
     status: AsyncOperationStatus;
   };
-  setTrackQueryForm(form: TrackQueryForm): void;
+  setQueryForm(form: TrackQueryForm): void;
   saveTrack(t: Track): Promise<void>;
 }
 
@@ -58,11 +58,75 @@ export const useTrackPlaylist = (): TrackPlaylist => {
 
   }, [updatedQueryTrackFormEvents.length]);
 
-  const setTrackQueryForm = (form: TrackQueryForm) => {
-    history.save(updatedQueryTrackForm(form));
-  };
+  let fromMusicDb: TrackPlaylist['fromMusicDb'];
+  let fromYouTube: TrackPlaylist['fromYouTube'];
+
+  const queryForm = history.whereTypeSingle(updatedQueryTrackForm)!.payload;
+
+  if(queryForm.dataSource === 'MusicDb')
+    fromMusicDb = extractMusicDbPlaylistInfo(history)
+  else 
+    fromYouTube = extractYoutubePlaylistInfo(history)
+
+  const setQueryForm = (form: TrackQueryForm) => history.save(updatedQueryTrackForm(form));
 
   const saveTrack = (t: Track) => tracksApi.save(t);
 
-  throw new Error("Not implemented.");
+  return { queryForm, fromMusicDb, fromYouTube, setQueryForm, saveTrack }
 };
+
+const extractMusicDbPlaylistInfo = (history: History) => {
+  const lastRequest = history.whereTypeSingle(initiatedTracksFetch)!
+
+  if(lastRequest.payload.data.dataSource !== 'MusicDb')
+    return undefined
+
+  const lastRequestId = lastRequest.payload.id
+  const fetchedEvent = history.whereType(fetchedTracksFromMusicDb).find(e => e.payload.requestId === lastRequestId)
+  if(fetchedEvent){
+    return {
+      list: fetchedEvent.payload.data,
+      status: 'PROCESSED' as AsyncOperationStatus
+    }
+  }
+  
+  const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === lastRequestId)
+  if(failedEvent)
+    return {
+      list: undefined,
+      status: 'ERROR' as AsyncOperationStatus
+    }
+
+  return {
+    list: undefined,
+    status: 'PROCESSING' as AsyncOperationStatus
+  }
+}
+
+const extractYoutubePlaylistInfo = (history: History) => {
+  const lastRequest = history.whereTypeSingle(initiatedTracksFetch)!
+
+  if(lastRequest.payload.data.dataSource !== 'YouTube')
+    return undefined
+
+    const lastRequestId = lastRequest.payload.id
+    const fetchedEvent = history.whereType(fetchedTracksFromYouTube).find(e => e.payload.requestId === lastRequestId)
+    if(fetchedEvent){
+      return {
+        list: fetchedEvent.payload.data,
+        status: 'PROCESSED' as AsyncOperationStatus
+      }
+    }
+    
+    const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === lastRequestId)
+    if(failedEvent)
+      return {
+        list: undefined,
+        status: 'ERROR' as AsyncOperationStatus
+      }
+  
+    return {
+      list: undefined,
+      status: 'PROCESSING' as AsyncOperationStatus
+    }
+}
