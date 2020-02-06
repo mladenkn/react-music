@@ -13,9 +13,9 @@ export const fetchTracksFailed = createEvent('fetchTracksFailed', (requestId: nu
 
 export const fetchedTracksFromMusicDb = createEvent(
     'fetchedTracksFromMusicDb', 
-    (response: BelongsToRequest<ArrayWithTotalCount<Track>>) => response
+    (response: {requestId: number, data: ArrayWithTotalCount<Track>}) => response
 )
-export const fetchedTracksFromYouTube = createEvent('fetchedTracksFromYoutube', (response: BelongsToRequest<Track[]>) => response)
+export const fetchedTracksFromYouTube = createEvent('fetchedTracksFromYoutube', (response: {requestId: number, data: Track[]} ) => response)
 
 export const initiatedTracksNextPageFetch = createEvent(
     'initiatedTracksNextPageFetch', 
@@ -23,6 +23,6 @@ export const initiatedTracksNextPageFetch = createEvent(
 )
 export const fetchedTracksNextPage = createEvent(
     'fetchedTracksNextPage', 
-    (response: BelongsToRequest<ArrayWithTotalCount<Track>>) => response
+    (response: {initialRequestId: number, id: number, data: ArrayWithTotalCount<Track>}) => response
 )
-export const fetchTracksNextPageFailed = createEvent('fetchTracksNextPageFailed', (requestId: number) => ({ requestId }))
+export const fetchTracksNextPageFailed = createEvent('fetchTracksNextPageFailed', (a: {initialRequestId: number, requestId: number}) => a)

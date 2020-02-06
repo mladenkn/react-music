@@ -9,7 +9,9 @@ import {
   initiatedTracksFetch,
   fetchTracksFailed,
   fetchedTracksFromMusicDb,
-  fetchedTracksFromYouTube
+  fetchedTracksFromYouTube,
+  fetchedTracksNextPage,
+  fetchTracksNextPageFailed
 } from "./trackPlaylist.events";
 import { useRequestIdGenerator } from "./requestIdGenerator";
 
@@ -23,6 +25,7 @@ export interface TrackPlaylist {
     list?: Track[];
     status: AsyncOperationStatus;
   };
+  fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void;
   saveTrack(t: Track): Promise<void>;
 }
@@ -61,22 +64,30 @@ export const useTrackPlaylist = (): TrackPlaylist => {
   let fromMusicDb: TrackPlaylist['fromMusicDb'];
   let fromYouTube: TrackPlaylist['fromYouTube'];
 
-  const queryForm = history.whereTypeSingle(updatedQueryTrackForm)!.payload;
+  const queryForm = history.latestWhereType(updatedQueryTrackForm)!.payload;
 
   if(queryForm.dataSource === 'MusicDb')
-    fromMusicDb = extractMusicDbPlaylistInfo(history)
+    fromMusicDb = tryExtractMusicDbPlaylistState(history)
   else 
-    fromYouTube = extractYoutubePlaylistInfo(history)
+    fromYouTube = tryExtractYoutubePlaylistState(history)
 
   const setQueryForm = (form: TrackQueryForm) => history.save(updatedQueryTrackForm(form));
-
   const saveTrack = (t: Track) => tracksApi.save(t);
 
-  return { queryForm, fromMusicDb, fromYouTube, setQueryForm, saveTrack }
+  const fetchTracksNextPage = () => {
+    const initialRequestId = 0
+    const skip = 20
+    const reqId = nextRequestId()
+    tracksApi.fetchFromMusicDb({ ...queryForm.fields!, take: pageSize, skip })
+      .then(r => history.save(fetchedTracksNextPage({ initialRequestId, data: r.data, id: reqId })))
+      .then(r => history.save(fetchTracksNextPageFailed({ initialRequestId, requestId: reqId })))
+  }
+
+  return { queryForm, fromMusicDb, fromYouTube, fetchTracksNextPage, setQueryForm, saveTrack }
 };
 
-const extractMusicDbPlaylistInfo = (history: History) => {
-  const lastRequest = history.whereTypeSingle(initiatedTracksFetch)!
+const tryExtractMusicDbPlaylistState = (history: History) => {
+  const lastRequest = history.latestWhereType(initiatedTracksFetch)!
 
   if(lastRequest.payload.data.dataSource !== 'MusicDb')
     return undefined
@@ -90,43 +101,36 @@ const extractMusicDbPlaylistInfo = (history: History) => {
     }
   }
   
-  const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === lastRequestId)
-  if(failedEvent)
-    return {
-      list: undefined,
-      status: 'ERROR' as AsyncOperationStatus
-    }
-
-  return {
-    list: undefined,
-    status: 'PROCESSING' as AsyncOperationStatus
-  }
+  return tryExtractErrorStateForRequest(history, lastRequestId) || processingRequestState
 }
 
-const extractYoutubePlaylistInfo = (history: History) => {
-  const lastRequest = history.whereTypeSingle(initiatedTracksFetch)!
+const tryExtractYoutubePlaylistState = (history: History) => {
+  const lastRequest = history.latestWhereType(initiatedTracksFetch)!
 
   if(lastRequest.payload.data.dataSource !== 'YouTube')
     return undefined
 
-    const lastRequestId = lastRequest.payload.id
-    const fetchedEvent = history.whereType(fetchedTracksFromYouTube).find(e => e.payload.requestId === lastRequestId)
-    if(fetchedEvent){
-      return {
-        list: fetchedEvent.payload.data,
-        status: 'PROCESSED' as AsyncOperationStatus
-      }
-    }
-    
-    const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === lastRequestId)
-    if(failedEvent)
-      return {
-        list: undefined,
-        status: 'ERROR' as AsyncOperationStatus
-      }
-  
+  const lastRequestId = lastRequest.payload.id
+  const fetchedEvent = history.whereType(fetchedTracksFromYouTube).find(e => e.payload.requestId === lastRequestId)
+  if(fetchedEvent){
     return {
-      list: undefined,
-      status: 'PROCESSING' as AsyncOperationStatus
+      list: fetchedEvent.payload.data,
+      status: 'PROCESSED' as AsyncOperationStatus
     }
+  }
+  
+  return tryExtractErrorStateForRequest(history, lastRequestId) || processingRequestState
+}
+
+const tryExtractErrorStateForRequest = (history: History, requestId: number) => {
+  const failedEvent = history.whereType(fetchTracksFailed).find(e => e.payload.requestId === requestId)
+  return failedEvent && {
+    list: undefined,
+    status: 'ERROR' as AsyncOperationStatus
+  }
+}
+
+const processingRequestState = {
+  list: undefined,
+  status: 'ERROR' as AsyncOperationStatus
 }
