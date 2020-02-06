@@ -1,9 +1,10 @@
-interface Event<TPayload> {
+export interface Event<TPayload = {}> {
   type: string,
+  time: Date
   payload: TPayload
 }
 
-interface EventCreator<TArgs extends any[], TPayload> {
+export interface EventCreator<TArgs extends any[] = any[], TPayload = {}> {
   (...args: TArgs): Event<TPayload>
   type: string
 }
@@ -12,7 +13,7 @@ export function createEvent<TArgs extends any[], TPayload>(
   type: string, createPayload: (...args: TArgs) => TPayload
 ) {
   const actionCreator = (...args: TArgs) => ({
-    type, payload: createPayload(...args)
+    type, time: new Date(), payload: createPayload(...args)
   });
   actionCreator.type = type;
   return actionCreator;
