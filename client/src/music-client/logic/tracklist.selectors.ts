@@ -4,7 +4,8 @@ import {
   fetchedTracksFromYouTube,
   fetchTracksFailed,
   initiatedTracksFetch,
-  fetchedTracksNextPage
+  fetchedTracksNextPage,
+  selectedTrack
 } from "./tracklist.events"
 import { AsyncOperationStatus } from "../../utils/types"
 
@@ -85,6 +86,13 @@ export const getNumberOfTracksFetched = (history: History) => {
       0
     )
   )
+}
+
+export const getSelectedTrackYoutubeId = (history: History) => {
+  const lastEvent = history.latestWhereType(selectedTrack)
+  if(!lastEvent)
+    return undefined
+  return lastEvent.payload.trackYoutubeId;
 }
 
 const processingRequestState = {

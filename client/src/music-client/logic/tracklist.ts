@@ -11,14 +11,16 @@ import {
   fetchedTracksFromMusicDb,
   fetchedTracksFromYouTube,
   fetchedTracksNextPage,
-  fetchTracksNextPageFailed
+  fetchTracksNextPageFailed,
+  selectedTrack
 } from "./tracklist.events"
 import { useRequestIdGenerator } from "./requestIdGenerator"
 import {
   tryExtractMusicDbTracklistState,
   tryExtractYoutubeTracklistState,
   getLastMusicDbFetchId,
-  getNumberOfTracksFetched
+  getNumberOfTracksFetched,
+  getSelectedTrackYoutubeId
 } from "./tracklist.selectors"
 
 export interface Tracklist {
@@ -31,9 +33,11 @@ export interface Tracklist {
     list?: Track[]
     status: AsyncOperationStatus
   }
+  selectedTrackId?: string
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: Track): Promise<void>
+  onTrackClick(trackYoutubeId: string): void
 }
 
 const pageSize = 20
@@ -106,12 +110,18 @@ export const useTracklist = (): Tracklist => {
       )
   }
 
+  const onTrackClick = (trackYoutubeId: string) => {
+    history.save(selectedTrack(trackYoutubeId))
+  }
+
   return {
     queryForm,
     fromMusicDb,
     fromYouTube,
     fetchTracksNextPage,
     setQueryForm,
-    saveTrack
+    saveTrack,
+    onTrackClick,
+    selectedTrackId: getSelectedTrackYoutubeId(history)
   }
 }

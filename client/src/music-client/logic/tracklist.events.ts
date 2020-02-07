@@ -43,3 +43,8 @@ export const fetchTracksNextPageFailed = createEvent(
   "fetchTracksNextPageFailed",
   (a: { initialRequestId: number; requestId: number }) => a
 )
+
+export const selectedTrack = createEvent(
+  'selectedTrack',
+  (trackYoutubeId: string) => ({ trackYoutubeId })
+)
