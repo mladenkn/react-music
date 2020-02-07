@@ -1,7 +1,7 @@
 import { percent, ems } from "../../../utils/css";
-import { createStyles, makeStyles, withStyles } from "@material-ui/styles";
+import { createStyles, withStyles } from "@material-ui/styles";
 import React, { useState, Fragment } from "react";
-import { ButtonBase, Card, IconButton, Typography, Dialog, WithStyles } from "@material-ui/core"
+import { Card, IconButton, Typography, Dialog, WithStyles } from "@material-ui/core"
 import { TrackEditablePropsEditUI } from "./TrackEditablePropsPropsEdit"
 import EditIcon from "@material-ui/icons/Edit"
 import SaveIcon from "@material-ui/icons/Save"
@@ -9,7 +9,7 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import DescriptionIcon from "@material-ui/icons/Description"
 import PlayCircleOutlinedIcon from "@material-ui/icons/PlayCircleOutlineOutlined"
 import { TrackEditablePropsReadonlyUI } from "./TrackEditablePropsReadonly";
-import { TrackViewData, TrackDataEditableProps } from "../../logic/homeView";
+import { TrackDataEditableProps } from "../../logic/homeView";
 import { useFormLogicWithState } from "../../../utils";
 import discogsIconUrl from '../icons/discogs.png'
 import youtubeIconUrl from '../icons/youtube.png'
@@ -17,6 +17,7 @@ import recommendationUrl from '../icons/recommendation2.png'
 import { Link } from "../../../utils/components";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
+import { TrackViewModel } from "../../shared";
 
 const styles = createStyles({
   paper: {
@@ -79,7 +80,7 @@ const styles = createStyles({
 
 type ItemProps = {
   className?: string
-  track: TrackViewData
+  track: TrackViewModel
   onPlay: () => void
   onSave: (t: TrackDataEditableProps) => void
   fetchRecommendationsOf: (trackId: string) => void
@@ -89,7 +90,7 @@ type ItemProps = {
 
 export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 
-const useLogic = (onFinsihEdit: (t: TrackDataEditableProps) => void, trackInitial: TrackViewData) => {
+const useLogic = (onFinsihEdit: (t: TrackDataEditableProps) => void, trackInitial: TrackViewModel) => {
   const [isEdit, setIsEdit] = useState(false)
   const [descriptionModalOpen, setDescriptionModalOpen] = useState(false)
   const form = useFormLogicWithState(trackInitial.editableProps)
@@ -107,7 +108,7 @@ const useLogic = (onFinsihEdit: (t: TrackDataEditableProps) => void, trackInitia
  
 const TrackUI_ = (p: ItemProps) => {
   const logic = useLogic(p.onSave, p.track)
-  if(!p.track.channel)
+  if(!p.track.youtubeChannelTitle)
     console.log(p.track)
 	return (
     <Fragment>
@@ -120,7 +121,7 @@ const TrackUI_ = (p: ItemProps) => {
           <div className={p.classes.right}>
             <div className={p.classes.data}>
               <div className={p.classes.props}>              
-                <Typography className={p.classes.normalFontSize}>{p.track.channel.title}</Typography>
+                <Typography className={p.classes.normalFontSize}>{p.track.youtubeChannelTitle}</Typography>
                 {logic.isEdit ?
                   <TrackEditablePropsEditUI 
                     formLogic={logic.form} 
@@ -137,7 +138,7 @@ const TrackUI_ = (p: ItemProps) => {
                   <DescriptionIcon className={p.classes.actionIcon} />
                 </IconButton>
                 {p.track.canFetchRecommendations && 
-                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={() => p.fetchRecommendationsOf(p.track.id)}>
+                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={() => p.fetchRecommendationsOf(p.track.youtubeVideoId)}>
                     <img src={recommendationUrl} className={p.classes.actionIcon} />
                   </IconButton>
                 }
@@ -161,12 +162,12 @@ const TrackUI_ = (p: ItemProps) => {
                     <PlayCircleOutlinedIcon className={p.classes.actionIcon} />
                   </IconButton>
                 }
-                <Link href={p.track.discogsSearchURL}>
+                <Link href={p.track.discogsSearchUrl}>
                   <IconButton className={p.classes.actionButton}>
                     <img src={discogsIconUrl} className={p.classes.actionIcon} />
                   </IconButton>
                 </Link>
-                <Link href={p.track.ytURL}>
+                <Link href={p.track.youtubeVideoUrl}>
                   <IconButton className={p.classes.actionButton}>
                     <img src={youtubeIconUrl} className={p.classes.actionIcon} />
                   </IconButton> 

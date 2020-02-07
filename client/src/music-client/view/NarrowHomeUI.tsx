@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { HomeProps } from "./HomeUI";
 import { makeStyles } from '@material-ui/styles';
 import { TrackListUI } from './Tracklist';

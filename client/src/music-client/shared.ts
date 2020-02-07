@@ -4,6 +4,7 @@ export interface Track {
   image: string;
   description: string;
   youtubeChannelId: string;
+  youtubeChannelTitle: string;
   year: number;
   tags: string[];
 }
@@ -12,7 +13,9 @@ export interface TrackViewModel extends Track {
   discogsSearchUrl: string
   youtubeVideoUrl: string
   isSelected: boolean
-  
+  canFetchRecommendations: boolean
+  canEdit: boolean
+  canPlay: boolean
 }
 
 export interface SaveTrackModel {

@@ -1,16 +1,16 @@
 import { makeStyles, List, ListItem, Typography } from "@material-ui/core"
 import React from 'react'
 import { TrackUI, TrackUIClasses } from "./TrackUI"
-import { TrackViewData, TrackDataEditableProps } from "../../logic/homeView";
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/components";
 import clsx from "clsx";
+import { TrackViewModel } from "../../shared";
 
 interface TrackListProps {
   className?: string
   trackClasses?: TrackUIClasses
   listClassName: string
-  tracks: TrackViewData[]
+  tracks: TrackViewModel[]
   tracksTotalCount: number
   onPlayTrack: (trackId: string) => void
   onSaveTrack: (t: TrackDataEditableProps & {id: string}) => void
@@ -40,14 +40,14 @@ export const TrackListUI = (p: TrackListProps) => {
       {p.displayTrackCount && <Typography className={classes.trackCount}>Showing {p.tracks.length} of {p.tracksTotalCount}</Typography>      }
       <List className={clsx(classes.list, p.listClassName)} onScroll={onScroll} disablePadding>
         {p.tracks.map(t => (
-          <ListItem disableGutters key={t.id}>
+          <ListItem disableGutters key={t.youtubeVideoId}>
             <TrackUI 
               fetchRecommendationsOf={p.fetchRecommendationsOf} 
               track={t} 
-              onPlay={() => p.onPlayTrack(t.id)} 
-              onSave={editedProps => p.onSaveTrack({...editedProps, id: t.id})} 
-              onClick={() => p.onItemClick(t.id)}
-              isFocused={p.selectedItemId === t.id}
+              onPlay={() => p.onPlayTrack(t.youtubeVideoId)} 
+              onSave={editedProps => p.onSaveTrack({...editedProps, id: t.youtubeVideoId})} 
+              onClick={() => p.onItemClick(t.youtubeVideoId)}
+              isFocused={p.selectedItemId === t.youtubeVideoId}
               classes={p.trackClasses}
             />
           </ListItem>
