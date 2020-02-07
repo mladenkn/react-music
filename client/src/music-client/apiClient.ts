@@ -18,7 +18,7 @@ export const fetchFromYouTube = async (searchQuery: string) => {
 };
 
 export const fetchFromMusicDb = async (query: MusicDbTrackQueryForm & Paging) => {
-  const r = await axios.get<{ data: ArrayWithTotalCount<Track>; totalCount: number }>(
+  const r = await axios.get<ArrayWithTotalCount<Track>>(
     `${baseUrl}tracks`, { params: query }
   );
   return r;
