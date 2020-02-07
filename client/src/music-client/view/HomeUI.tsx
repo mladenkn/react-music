@@ -6,7 +6,6 @@ import { TrackPlayerUI } from "./TrackPlayer";
 import { ems, percent } from "../../utils/css";
 import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
 import { QueryTypeSelection } from "../logic/homeView";
-import { UserKeyInput } from "./UserKeyInput";
 import { TrackQueryInteractiveForm } from "./TrackQueryInteractiveForm";
 import { useTracklistLogic } from "../logic/tracklist.decorated";
  
@@ -73,7 +72,7 @@ export const HomeUI = (p: HomeProps) => {
 
   return (
       <div className={clsx(classes.root, p.className)}>
-        <div className={classes.querySide}>            
+        {/* <div className={classes.querySide}>            
           <Tabs 
             indicatorColor='primary'
             className={classes.queryTabs}
@@ -124,7 +123,7 @@ export const HomeUI = (p: HomeProps) => {
           height={215}
           playImmediately={p.logic.playingTrackPlaysImmediately} 
           videoId={p.logic.playingTrackId} 
-        />
+        /> */}
       </div>
   )
 }

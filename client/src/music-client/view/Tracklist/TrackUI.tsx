@@ -2,7 +2,7 @@ import { percent, ems } from "../../../utils/css";
 import { createStyles, withStyles } from "@material-ui/styles";
 import React, { useState, Fragment } from "react";
 import { Card, IconButton, Typography, Dialog, WithStyles } from "@material-ui/core"
-import { TrackEditablePropsEditUI } from "./TrackEditablePropsPropsEdit"
+import { TrackEditablePropsEditUI } from "./TrackEditablePropsEdit"
 import EditIcon from "@material-ui/icons/Edit"
 import SaveIcon from "@material-ui/icons/Save"
 import CancelIcon from "@material-ui/icons/Cancel"

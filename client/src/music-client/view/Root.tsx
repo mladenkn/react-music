@@ -1,12 +1,11 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from '@material-ui/styles'
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { HomeUI as WideHomeUI, HomeProps } from "./HomeUI";
 import clsx from 'clsx'
 import { ems } from "../../utils/css";
 import MediaQuery from 'react-responsive'
 import { NarrowHomeUI } from "./NarrowHomeUI";
-import { useHomeViewLogic } from "../logic/homeView";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -42,7 +41,7 @@ const theme = createMuiTheme({
   }
 })
 
-export const AppRootUI = (p: AppRootProps) => {
+export const Root = (p: AppRootProps) => {
   const classes = useAppRootStyles()
   return (
     <ThemeProvider theme={theme}>

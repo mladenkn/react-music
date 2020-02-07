@@ -4,7 +4,6 @@ import clsx from 'clsx'
 import { Formik } from "formik";
 import { ems, percent } from "../../utils/css";
 import ChipInput from "../../utils/view/ChipInput";
-import { useFormLogic } from "../../utils";
 
 const useTrackQueryFromStyles = makeStyles(() => ({
 	root: {
@@ -54,29 +53,29 @@ interface TrackQueryFromProps {
   onChange: (i: TrackDataForm) => void
 }
 
-const useLogic = (p: TrackQueryFromProps) => {  
+// const useLogic = (p: TrackQueryFromProps) => {  
 
-  const mapInput = (yearSpanTo: 'incr' | 'decr') => (i: TrackDataForm) => {
-    const num = yearSpanTo === 'incr' ? 1 : -1
-    const mappedYearSpan = i.yearSpan && 
-    { from: i.yearSpan.from, to: i.yearSpan!.to && i.yearSpan!.to + num }
-    return {...i, yearSpan: mappedYearSpan}
-  }
+//   const mapInput = (yearSpanTo: 'incr' | 'decr') => (i: TrackDataForm) => {
+//     const num = yearSpanTo === 'incr' ? 1 : -1
+//     const mappedYearSpan = i.yearSpan && 
+//     { from: i.yearSpan.from, to: i.yearSpan!.to && i.yearSpan!.to + num }
+//     return {...i, yearSpan: mappedYearSpan}
+//   }
 
-  const formLogic = useFormLogic(
-    p.input, p.onChange, mapInput('incr'), mapInput('decr')
-  )
+//   const formLogic = useFormLogic(
+//     p.input, p.onChange, mapInput('incr'), mapInput('decr')
+//   )
 
-  return formLogic
-}
+//   return formLogic
+// }
 
 export const TrackQueryFromUI = (p: TrackQueryFromProps) => {
   const classes = useTrackQueryFromStyles()
-  const { input, onPropChange } = useLogic(p)
+  // const { input, onPropChange } = useLogic(p)
  
 	return (
     <div className={clsx(classes.root, p.className)}>
-      <FormGroup className={classes.formElement} row>
+      {/* <FormGroup className={classes.formElement} row>
         <ChipInput
           label="Genres"
           className={classes.chipListEditor}
@@ -123,7 +122,7 @@ export const TrackQueryFromUI = (p: TrackQueryFromProps) => {
             onChange={onPropChange(['yearSpan', 'to'])}
           />
         </Fragment>
-      </FormGroup>
+      </FormGroup> */}
     </div>
 	)
 }

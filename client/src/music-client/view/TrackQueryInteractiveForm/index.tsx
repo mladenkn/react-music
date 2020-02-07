@@ -49,7 +49,6 @@ const mapFieldValueToName = (field: Field) => {
 
 export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
   const {
-    form: { input, onPropChange },
     availableTags,
     popupState,
     inactiveFields,
@@ -60,25 +59,25 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
 
   const classes = useStyles();
 
-  const maybeRenderChipListElement = (
-    name: Field,
-    label: string,
-    availableOptions: string[],
-    selectedOptions: string[]
-  ) =>
-    isFieldActive(name) && (
-      <ChipListElement
-        label={label}
-        availableOptions={availableOptions}
-        value={selectedOptions}
-        onChange={onPropChange(name)}
-        onRemove={() => setFieldInactive(name)}
-      />
-    );
+  // const maybeRenderChipListElement = (
+  //   name: Field,
+  //   label: string,
+  //   availableOptions: string[],
+  //   selectedOptions: string[]
+  // ) =>
+  //   isFieldActive(name) && (
+  //     <ChipListElement
+  //       label={label}
+  //       availableOptions={availableOptions}
+  //       value={selectedOptions}
+  //       onChange={onPropChange(name)}
+  //       onRemove={() => setFieldInactive(name)}
+  //     />
+  //   );
 
   return (
     <div className={clsx(p.className, classes.root)}>
-      {maybeRenderChipListElement(
+      {/* {maybeRenderChipListElement(
         "mustContainAllTags",
         "Must have all tags",
         availableTags,
@@ -114,7 +113,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
             {mapFieldValueToName(f)}
           </MenuItem>
         ))}
-      </Menu>
+      </Menu> */}
     </div>
   );
 };

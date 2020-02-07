@@ -1,5 +1,4 @@
 import { TrackQueryFromProps } from ".";
-import { useFormLogic } from "../../../utils";
 import { useImmer } from "use-immer";
 import { difference } from "lodash";
 
@@ -56,12 +55,12 @@ export const useRootLogic = (p: TrackQueryFromProps) => {
     return { ...i, yearSpan: mappedYearSpan };
   };
 
-  const formLogic = useFormLogic(
-    p.input,
-    p.onChange,
-    mapInput("incr"),
-    mapInput("decr")
-  );
+  // const formLogic = useFormLogic(
+  //   p.input,
+  //   p.onChange,
+  //   mapInput("incr"),
+  //   mapInput("decr")
+  // );
 
   const setFieldActive = (field: Field) => {
     popupState.close()
@@ -71,7 +70,7 @@ export const useRootLogic = (p: TrackQueryFromProps) => {
   };
 
   const setFieldInactive = (field: Field) => {
-    formLogic.onPropChange(field)(getDefaultFieldValue(field));
+    // formLogic.onPropChange(field)(getDefaultFieldValue(field));
     updateState(draft => {
       draft.activeFields = draft.activeFields.filter(f => f !== field);
     });
@@ -94,7 +93,7 @@ export const useRootLogic = (p: TrackQueryFromProps) => {
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" });
 
   return {
-    form: formLogic,
+    // form: formLogic,
     availableTags,
     popupState,
     inactiveFields,

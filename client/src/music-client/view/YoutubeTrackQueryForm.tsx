@@ -2,7 +2,6 @@ import React from 'react'
 import { makeStyles } from "@material-ui/styles";
 import { FormGroup, TextField } from "@material-ui/core";
 import { ems } from "../../utils/css";
-import { useFormLogicWithState, useFormLogic } from "../../utils";
 
 const useYoutubeTrackQueryFormStyles = makeStyles({
   formElement: {
@@ -29,10 +28,10 @@ export interface Props {
 export const YoutubeTrackQueryForm = (p: Props) => {
 
   const classes = useYoutubeTrackQueryFormStyles()
-  const { input, onPropChange } = useFormLogic(p.input, p.onChange)
+  // const { input, onPropChange } = useFormLogic(p.input, p.onChange)
   return (
     <div>
-      <FormGroup className={classes.formElement} row>
+      {/* <FormGroup className={classes.formElement} row>
         <TextField 
           fullWidth
           InputLabelProps={{className: classes.fieldLabel}}
@@ -50,7 +49,7 @@ export const YoutubeTrackQueryForm = (p: Props) => {
           value={input.channelTitle}
           onChange={onPropChange('channelTitle')}
         />
-      </FormGroup>
+      </FormGroup> */}
     </div>
   )
 }

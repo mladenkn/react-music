@@ -2,8 +2,6 @@ import { makeStyles, Typography, Grid, InputLabel } from "@material-ui/core"
 import React from 'react'
 import clsx from 'clsx'
 import { Formik } from "formik";
-import { TextField } from "../../utils/view/formikEnhancedComponents"
-import { ChipListEditor } from "../../utils/view/ChipListEditor";
 import { ems, percent } from "../../utils/css";
 
 interface TrackData {
@@ -77,9 +75,9 @@ export const TrackFormUI = (p: TrackFormUIProps) => {
             </div>
             <div className={classes.yearProp}>
               <InputLabel className={classes.fontSize}>Year:</InputLabel>
-              <TextField className={classes.yearValue} type='number' name='year' />
+              {/* <TextField className={classes.yearValue} type='number' name='year' /> */}
             </div>
-            <ChipListEditor 
+            {/* <ChipListEditor 
               fullWidth
               className={classes.chipListEditor}
               classes={{
@@ -100,7 +98,7 @@ export const TrackFormUI = (p: TrackFormUIProps) => {
               label='Tags'
               initialValue={values.tags} 
               onChange={value => handleChange({ target: {name: 'tags', value } } )}
-            />
+            /> */}
         </div>
       )}
     </Formik>

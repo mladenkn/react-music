@@ -7,7 +7,6 @@ import { Button, Dialog, MenuItem, Select } from '@material-ui/core';
 import { TrackPlayerUI } from './TrackPlayer';
 import { YoutubeTrackQueryForm } from './YoutubeTrackQueryForm';
 import { QueryTypeSelection } from '../logic/homeView';
-import { UserKeyInput } from './UserKeyInput';
 import { TrackQueryInteractiveForm } from './TrackQueryInteractiveForm';
 
 const useNarrowHomeUIStyles = makeStyles({
@@ -64,7 +63,7 @@ export const NarrowHomeUI = (p: HomeProps) => {
   const [queryModalOpen, setQueryModalOpen] = useState(false)
   return (
     <div className={classes.root}>
-      <Dialog onClose={() => setQueryModalOpen(false)} open={queryModalOpen}>
+      {/* <Dialog onClose={() => setQueryModalOpen(false)} open={queryModalOpen}>
         <div className={classes.queryModalContent}>        
           <Select 
             className={classes.queryModalQueryTypeSelector}
@@ -125,7 +124,7 @@ export const NarrowHomeUI = (p: HomeProps) => {
         fetchRecommendationsOf={p.logic.fetchRecommendationsOf} 
         selectedItemId={p.logic.selectedItemId}
         onScrollToBottom={p.logic.onTracksScrollToBottom}
-      />
+      /> */}
     </div>
   )
 }
