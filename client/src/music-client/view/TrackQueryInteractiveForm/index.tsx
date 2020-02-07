@@ -36,12 +36,8 @@ const mapFieldValueToName = (field: Field) => {
   switch (field) {
     case "channel":
       return "Channel";
-    case "mustContainAllGenres":
-      return "Must have all genres";
     case "mustContainAllTags":
       return "Must have all tags";
-    case "mustContainSomeGenres":
-      return "Must have all genres";
     case "mustContainSomeTags":
       return "Must have some tags";
     case "titleMatch":
@@ -55,7 +51,6 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
   const {
     form: { input, onPropChange },
     availableTags,
-    availableGenres,
     popupState,
     inactiveFields,
     setFieldActive,
@@ -94,18 +89,6 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
         "Must have some tags",
         availableTags,
         input.mustContainSomeTags
-      )}
-      {maybeRenderChipListElement(
-        "mustContainAllGenres",
-        "Must have all genres",
-        availableGenres,
-        input.mustContainAllGenres
-      )}
-      {maybeRenderChipListElement(
-        "mustContainSomeGenres",
-        "Must have some genres",
-        availableGenres,
-        input.mustContainSomeGenres
       )}
       {isFieldActive("yearSpan") && (
         <InlineRangeElement

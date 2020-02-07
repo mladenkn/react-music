@@ -8,8 +8,6 @@ const { usePopupState } = require("material-ui-popup-state/hooks");
 export interface TrackDataForm {
   titleMatch: string | undefined;
   channel: string | undefined;
-  mustContainAllGenres: string[];
-  mustContainSomeGenres: string[];
   mustContainAllTags: string[];
   mustContainSomeTags: string[];
   yearSpan?: {
@@ -26,16 +24,12 @@ interface State {
 
 const nullableFields: Field[] = ["titleMatch", "channel"];
 const arrayFields: Field[] = [
-  "mustContainAllGenres",
-  "mustContainSomeGenres",
   "mustContainAllTags",
   "mustContainSomeTags"
 ];
 
 const avaiableFields: Field[] = [
   //"channel",
-  "mustContainAllGenres",
-  // "mustContainSomeGenres",
   "mustContainAllTags",
   // "mustContainSomeTags",
   //"titleMatch",
@@ -97,22 +91,11 @@ export const useRootLogic = (p: TrackQueryFromProps) => {
     "sdfsdf"
   ];
 
-  const availableGenres = [
-    "trance",
-    "techno",
-    "house",
-    "smirujuće",
-    "tralalal",
-    "sldkfjsdlf",
-    "sdfsdf"
-  ];
-
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" });
 
   return {
     form: formLogic,
     availableTags,
-    availableGenres,
     popupState,
     inactiveFields,
     setFieldActive,
