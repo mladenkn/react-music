@@ -42,7 +42,7 @@ export interface Tracklist {
 
 const pageSize = 20
 
-export const useTracklist = (): Tracklist => {
+export const useTracklistLogic = (): Tracklist => {
   const history = useHistory()
 
   const updatedQueryTrackFormEvents = history.whereType(updatedQueryTrackForm)

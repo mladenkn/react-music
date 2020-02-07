@@ -42,20 +42,12 @@ const theme = createMuiTheme({
   }
 })
 
-const useWrappedHomeViewLogic = () => {
-  const wrapped = useHomeViewLogic()
-  useEffect(() => {
-    wrapped.exeQuery()
-  }, [])
-  return wrapped
-}
-
 export const AppRootUI = (p: AppRootProps) => {
   const classes = useAppRootStyles()
   return (
     <ThemeProvider theme={theme}>
       <div className={clsx(classes.root, p.className)}>
-        <HomeUI className={classes.home} logic={useWrappedHomeViewLogic()} />
+        <HomeUI className={classes.home} />
       </div>
     </ThemeProvider>
   )

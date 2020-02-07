@@ -1,8 +1,8 @@
-import { useTracklist as useTracklist_, Tracklist } from "./tracklist"
+import { useTracklistLogic as useTracklistLogic_, Tracklist } from "./tracklist"
 import { Track, TrackViewModel } from "../shared"
 
-export const useTracklist = () => {
-  const wrapped = useTracklist_()
+export const useTracklistLogic = () => {
+  const wrapped = useTracklistLogic_()
   return {
     ...wrapped,
     fromMusicDb: mapTracksFromMusicDb(wrapped.fromMusicDb, wrapped.selectedTrackId),

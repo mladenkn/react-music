@@ -8,6 +8,7 @@ import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
 import { QueryTypeSelection } from "../logic/homeView";
 import { UserKeyInput } from "./UserKeyInput";
 import { TrackQueryInteractiveForm } from "./TrackQueryInteractiveForm";
+import { useTracklistLogic } from "../logic/tracklist.decorated";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -63,11 +64,13 @@ const useHomeStyles = makeStyles(() => ({
  
 export interface HomeProps {
   className?: string
-  logic: HomeViewLogic
 }
- 
+
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
+
+  const tracklistLogic = useTracklistLogic()
+
   return (
       <div className={clsx(classes.root, p.className)}>
         <div className={classes.querySide}>            
