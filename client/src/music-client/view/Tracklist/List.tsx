@@ -4,7 +4,7 @@ import { TrackUI, TrackUIClasses } from "./TrackUI"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/components";
 import clsx from "clsx";
-import { TrackViewModel } from "../../shared";
+import { TrackViewModel, TrackEditableProps } from "../../shared";
 
 interface TrackListProps {
   className?: string
@@ -13,7 +13,7 @@ interface TrackListProps {
   tracks: TrackViewModel[]
   tracksTotalCount: number
   onPlayTrack: (trackId: string) => void
-  onSaveTrack: (t: TrackDataEditableProps & {id: string}) => void
+  onSaveTrack: (t: TrackEditableProps & {id: string}) => void
   onItemClick: (trackId: string) => void
   fetchRecommendationsOf: (trackId: string) => void
   onScrollToBottom: () => void

@@ -3,7 +3,7 @@ import { ems } from "../../../utils/css"
 import clsx from "clsx"
 import { Chip, Typography } from "@material-ui/core";
 import React from 'react'
-import { TrackDataEditableProps } from "../../logic/homeView";
+import { TrackEditableProps } from "../../shared";
 
 const useItemEditablePropsReadonlyStyles = makeStyles(() => ({
 	root: {
@@ -31,7 +31,7 @@ const useItemEditablePropsReadonlyStyles = makeStyles(() => ({
 
 interface Props {
   className?: string
-  track: TrackDataEditableProps
+  track: TrackEditableProps
   textClassName?: string
 }
 

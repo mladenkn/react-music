@@ -4,7 +4,7 @@ import { makeStyles, TextField } from "@material-ui/core";
 import React from 'react'
 import ChipInput from "../../../utils/components/ChipInput";
 import { FormLogic } from "../../../utils";
-import { TrackDataEditableProps } from "../../logic/homeView";
+import { TrackEditableProps } from "../../shared";
 
 const useItemEditablePropsEditStyles = makeStyles(() => ({
 	root: {
@@ -25,7 +25,7 @@ const useItemEditablePropsEditStyles = makeStyles(() => ({
 
 interface Props {
 	className?: string
-  formLogic: FormLogic<TrackDataEditableProps>
+  formLogic: FormLogic<TrackEditableProps>
   textClassName?: string
 }
 

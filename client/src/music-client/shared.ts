@@ -13,10 +13,7 @@ export interface TrackViewModel extends Track {
   discogsSearchUrl: string
   youtubeVideoUrl: string
   isSelected: boolean
-  editableProps: {
-    year: number
-    tags: string[]
-  }
+  editableProps: TrackEditableProps
   canFetchRecommendations: boolean
   canEdit: boolean
   canPlay: boolean
@@ -31,4 +28,9 @@ export interface SaveTrackModel {
 export interface Range<T> {
   lowerBound: T
   upperBound: T
+}
+
+export interface TrackEditableProps {
+  year: number
+  tags: string[]
 }
