@@ -72,29 +72,14 @@ export const HomeUI = (p: HomeProps) => {
 
   return (
       <div className={clsx(classes.root, p.className)}>
-        {/* <div className={classes.querySide}>            
-          <Tabs 
-            indicatorColor='primary'
-            className={classes.queryTabs}
-            value={p.logic.querySelection} 
-            onChange={(_, v) => p.logic.setQuerySelection(v)}
-          >
-            <Tab label="Normal query" className={classes.tab} />
-            <Tab label="YT query" className={classes.tab} />
-          </Tabs>
-          {p.logic.querySelection === QueryTypeSelection.TrackData &&
-            <TrackQueryInteractiveForm 
-              input={p.logic.trackDataFormState}
-              className={classes.form} 
-              onChange={p.logic.trackDataFormChange} 
-            />
-          } 
-          {p.logic.querySelection === QueryTypeSelection.YTTrackData && 
-            <YoutubeTrackQueryForm input={p.logic.youtubeTrackForm} onChange={p.logic.setyoutubeTrackForm} />
-          }
-          <UserKeyInput className={classes.setAdminKeyButton} />
+        <div className={classes.querySide}>
+          <TrackQueryInteractiveForm 
+            input={tracklistLogic.queryForm}
+            className={classes.form} 
+            onChange={() => {}} 
+          />
         </div>
-        <div className={classes.results}>  
+        {/* <div className={classes.results}>  
           <Tabs 
             indicatorColor='primary'
             className={classes.resultsTabs}

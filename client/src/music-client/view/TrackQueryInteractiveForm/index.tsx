@@ -4,19 +4,17 @@ import { InlineRangeElement } from "./InlineRangeElement";
 import AddIcon from "@material-ui/icons/Add";
 import { Menu, MenuItem, Fab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import clsx from "clsx";
 import { ems, percent } from "../../../utils/css";
-import { TrackDataForm, useRootLogic, Field } from "./rootLogic";
+import { TrackQueryForm } from "../../shared";
 const { bindTrigger, bindMenu } = require("material-ui-popup-state/hooks");
 
 export interface TrackQueryFromProps {
   className?: string;
-  input: TrackDataForm;
-  onChange: (i: TrackDataForm) => void;
+  input: TrackQueryForm;
+  onChange: (i: TrackQueryForm) => void;
 }
 
 const useStyles = makeStyles(() => ({
-  root: {},
   year: {
     width: percent(100)
   },
@@ -32,7 +30,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const mapFieldValueToName = (field: Field) => {
+const mapFieldValueToName = (field: string) => {
   switch (field) {
     case "channel":
       return "Channel";
@@ -48,14 +46,6 @@ const mapFieldValueToName = (field: Field) => {
 };
 
 export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
-  const {
-    availableTags,
-    popupState,
-    inactiveFields,
-    setFieldActive,
-    setFieldInactive,
-    isFieldActive
-  } = useRootLogic(p);
 
   const classes = useStyles();
 
@@ -76,7 +66,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
   //   );
 
   return (
-    <div className={clsx(p.className, classes.root)}>
+    <div className={p.className}>
       {/* {maybeRenderChipListElement(
         "mustContainAllTags",
         "Must have all tags",
@@ -97,7 +87,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
           onChange={onPropChange("yearSpan")}
           onRemove={() => setFieldInactive("yearSpan")}
         />
-      )}
+      )} */}
       <Fab    
         className={classes.addPropertyButton}
         size='small'
@@ -113,7 +103,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
             {mapFieldValueToName(f)}
           </MenuItem>
         ))}
-      </Menu> */}
+      </Menu>
     </div>
   );
 };
