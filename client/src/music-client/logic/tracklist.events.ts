@@ -1,7 +1,6 @@
 import { createEvent } from "../../utils/es/events"
-import { TrackQueryForm, MusicDbTrackQueryForm } from "./trackQueryForm"
 import { ArrayWithTotalCount, Identifable } from "../../utils/types"
-import { Track } from "../shared"
+import { Track, TrackQueryForm, MusicDbTrackQueryForm } from "../shared"
 
 export const updatedQueryTrackForm = createEvent(
   "updatedQueryTrackForm",
