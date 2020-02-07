@@ -2,7 +2,7 @@ import { makeStyles, List, ListItem, Typography } from "@material-ui/core"
 import React from 'react'
 import { TrackUI, TrackUIClasses } from "./TrackUI"
 import { ems } from "../../../utils/css";
-import { createOnScrollListener } from "../../../utils/components";
+import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
 import { TrackViewModel, TrackEditableProps } from "../../shared";
 

@@ -3,7 +3,7 @@ import React, { Fragment } from 'react'
 import clsx from 'clsx'
 import { Formik } from "formik";
 import { ems, percent } from "../../utils/css";
-import ChipInput from "../../utils/components/ChipInput";
+import ChipInput from "../../utils/view/ChipInput";
 import { useFormLogic } from "../../utils";
 
 const useTrackQueryFromStyles = makeStyles(() => ({

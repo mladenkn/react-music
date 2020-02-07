@@ -2,7 +2,7 @@ import { percent, ems } from "../../../utils/css";
 import clsx from "clsx";
 import { makeStyles, TextField } from "@material-ui/core";
 import React from 'react'
-import ChipInput from "../../../utils/components/ChipInput";
+import ChipInput from "../../../utils/view/ChipInput";
 import { FormLogic } from "../../../utils";
 import { TrackEditableProps } from "../../shared";
 

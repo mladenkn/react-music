@@ -2,8 +2,8 @@ import { makeStyles, Typography, Grid, InputLabel } from "@material-ui/core"
 import React from 'react'
 import clsx from 'clsx'
 import { Formik } from "formik";
-import { TextField } from "../../utils/components/formikEnhancedComponents"
-import { ChipListEditor } from "../../utils/components/ChipListEditor";
+import { TextField } from "../../utils/view/formikEnhancedComponents"
+import { ChipListEditor } from "../../utils/view/ChipListEditor";
 import { ems, percent } from "../../utils/css";
 
 interface TrackData {

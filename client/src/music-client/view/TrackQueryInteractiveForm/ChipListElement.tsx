@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
 import { colors, InputLabel } from "@material-ui/core";
-import { ChipList } from "../../../utils/components/ChipList";
+import { ChipList } from "../../../utils/view/ChipList";
 import { ElementBase } from "./ElementBase";
 
 const useStyles = makeStyles(() => ({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { ButtonBase } from "@material-ui/core";
 import { useUserKeyLogic } from "../logic/userKey";
-import { TextInputDialog } from "../../utils/components/TextInputDialog";
+import { TextInputDialog } from "../../utils/view/TextInputDialog";
 import { useState } from "react";
 
 export const UserKeyInput = (p: {className: string}) => {

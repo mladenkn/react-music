@@ -9,15 +9,14 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import DescriptionIcon from "@material-ui/icons/Description"
 import PlayCircleOutlinedIcon from "@material-ui/icons/PlayCircleOutlineOutlined"
 import { TrackEditablePropsReadonlyUI } from "./TrackEditablePropsReadonly";
-import { TrackDataEditableProps } from "../../logic/homeView";
 import { useFormLogicWithState } from "../../../utils";
 import discogsIconUrl from '../icons/discogs.png'
 import youtubeIconUrl from '../icons/youtube.png'
 import recommendationUrl from '../icons/recommendation2.png'
-import { Link } from "../../../utils/components";
+import { Link } from "../../../utils/view";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
-import { TrackViewModel } from "../../shared";
+import { TrackViewModel, TrackEditableProps } from "../../shared";
 
 const styles = createStyles({
   paper: {
@@ -82,7 +81,7 @@ type ItemProps = {
   className?: string
   track: TrackViewModel
   onPlay: () => void
-  onSave: (t: TrackDataEditableProps) => void
+  onSave: (t: TrackEditableProps) => void
   fetchRecommendationsOf: (trackId: string) => void
   onClick: () => void
   isFocused: boolean
@@ -90,7 +89,7 @@ type ItemProps = {
 
 export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 
-const useLogic = (onFinsihEdit: (t: TrackDataEditableProps) => void, trackInitial: TrackViewModel) => {
+const useLogic = (onFinsihEdit: (t: TrackEditableProps) => void, trackInitial: TrackViewModel) => {
   const [isEdit, setIsEdit] = useState(false)
   const [descriptionModalOpen, setDescriptionModalOpen] = useState(false)
   const form = useFormLogicWithState(trackInitial.editableProps)
