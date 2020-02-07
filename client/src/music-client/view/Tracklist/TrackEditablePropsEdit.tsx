@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { makeStyles, TextField } from "@material-ui/core";
 import React from 'react'
 import ChipInput from "../../../utils/view/ChipInput";
-import { FormLogic } from "../../../utils";
 import { TrackEditableProps } from "../../shared";
 
 const useItemEditablePropsEditStyles = makeStyles(() => ({
@@ -25,16 +24,15 @@ const useItemEditablePropsEditStyles = makeStyles(() => ({
 
 interface Props {
 	className?: string
-  formLogic: FormLogic<TrackEditableProps>
   textClassName?: string
 }
 
 export const TrackEditablePropsEditUI = (p: Props) => {
   const classes = useItemEditablePropsEditStyles()
-  const { input, onPropChange } = p.formLogic
+  // const { input, onPropChange } = p.formLogic
 	return (
 		<div className={clsx(classes.root, p.className)}>
-      <ChipInput
+      {/* <ChipInput
         className={clsx(classes.chipList, classes.tags)}
         classes={{
           chip: classes.chipListPropChip,
@@ -49,7 +47,7 @@ export const TrackEditablePropsEditUI = (p: Props) => {
         type='number' 
         value={input.year} 
         onChange={onPropChange('year')} 
-      />
+      /> */}
 		</div>
 	)
 }

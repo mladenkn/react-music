@@ -9,7 +9,6 @@ import CancelIcon from "@material-ui/icons/Cancel"
 import DescriptionIcon from "@material-ui/icons/Description"
 import PlayCircleOutlinedIcon from "@material-ui/icons/PlayCircleOutlineOutlined"
 import { TrackEditablePropsReadonlyUI } from "./TrackEditablePropsReadonly";
-import { useFormLogicWithState } from "../../../utils";
 import discogsIconUrl from '../icons/discogs.png'
 import youtubeIconUrl from '../icons/youtube.png'
 import recommendationUrl from '../icons/recommendation2.png'
@@ -92,17 +91,17 @@ export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 const useLogic = (onFinsihEdit: (t: TrackEditableProps) => void, trackInitial: TrackViewModel) => {
   const [isEdit, setIsEdit] = useState(false)
   const [descriptionModalOpen, setDescriptionModalOpen] = useState(false)
-  const form = useFormLogicWithState(trackInitial.editableProps)
+  // const form = useFormLogicWithState(trackInitial.editableProps)
   const triggerEdit = () => setIsEdit(true)
   const finishEdit = () => {
-    onFinsihEdit(form.input)
-    setIsEdit(false) // !!!!
+    // onFinsihEdit(form.input)
+    // setIsEdit(false) // !!!!
   }
   const cancelEdit = () => {
     setIsEdit(false)
   }
   const toogleDescriptionModalOpen = () => setDescriptionModalOpen(!descriptionModalOpen)
-  return { isEdit, triggerEdit, finishEdit, cancelEdit, form, descriptionModalOpen, toogleDescriptionModalOpen }
+  return { isEdit, triggerEdit, finishEdit, cancelEdit, descriptionModalOpen, toogleDescriptionModalOpen }
 }
  
 const TrackUI_ = (p: ItemProps) => {
@@ -122,8 +121,7 @@ const TrackUI_ = (p: ItemProps) => {
               <div className={p.classes.props}>              
                 <Typography className={p.classes.normalFontSize}>{p.track.youtubeChannelTitle}</Typography>
                 {logic.isEdit ?
-                  <TrackEditablePropsEditUI 
-                    formLogic={logic.form} 
+                  <TrackEditablePropsEditUI
                     className={p.classes.propsEdit} 
                     textClassName={p.classes.normalFontSize}
                   /> : 
