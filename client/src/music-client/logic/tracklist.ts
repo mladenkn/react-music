@@ -12,11 +12,11 @@ import {
   fetchedTracksFromYouTube,
   fetchedTracksNextPage,
   fetchTracksNextPageFailed
-} from "./trackPlaylist.events";
+} from "./tracklist.events";
 import { useRequestIdGenerator } from "./requestIdGenerator";
-import { tryExtractMusicDbPlaylistState, tryExtractYoutubePlaylistState, getLastMusicDbFetchId, getNumberOfTracksFetched } from "./trackPlaylist.selectors";
+import { tryExtractMusicDbTracklistState, tryExtractYoutubeTracklistState, getLastMusicDbFetchId, getNumberOfTracksFetched } from "./tracklist.selectors";
 
-export interface TrackPlaylist {
+export interface Tracklist {
   queryForm: TrackQueryForm;
   fromMusicDb?: {
     list?: ArrayWithTotalCount<Track>;
@@ -33,7 +33,7 @@ export interface TrackPlaylist {
 
 const pageSize = 20;
 
-export const useTrackPlaylist = (): TrackPlaylist => {
+export const useTracklist = (): Tracklist => {
   const history = useHistory();
 
   const updatedQueryTrackFormEvents = history.whereType(updatedQueryTrackForm);
@@ -62,15 +62,15 @@ export const useTrackPlaylist = (): TrackPlaylist => {
 
   }, [updatedQueryTrackFormEvents.length]);
 
-  let fromMusicDb: TrackPlaylist['fromMusicDb'];
-  let fromYouTube: TrackPlaylist['fromYouTube'];
+  let fromMusicDb: Tracklist['fromMusicDb'];
+  let fromYouTube: Tracklist['fromYouTube'];
 
   const queryForm = history.latestWhereType(updatedQueryTrackForm)!.payload;
 
   if(queryForm.dataSource === 'MusicDb')
-    fromMusicDb = tryExtractMusicDbPlaylistState(history)
+    fromMusicDb = tryExtractMusicDbTracklistState(history)
   else 
-    fromYouTube = tryExtractYoutubePlaylistState(history)
+    fromYouTube = tryExtractYoutubeTracklistState(history)
 
   const setQueryForm = (form: TrackQueryForm) => history.save(updatedQueryTrackForm(form));
   const saveTrack = (t: Track) => tracksApi.save(t);

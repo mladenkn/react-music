@@ -5,10 +5,10 @@ import {
   fetchTracksFailed,
   initiatedTracksFetch,
   fetchedTracksNextPage
-} from "./trackPlaylist.events";
+} from "./tracklist.events";
 import { AsyncOperationStatus } from "../../utils/types";
 
-export const tryExtractMusicDbPlaylistState = (history: History) => {
+export const tryExtractMusicDbTracklistState = (history: History) => {
   const lastRequest = history.latestWhereType(initiatedTracksFetch)!;
 
   if (lastRequest.payload.data.dataSource !== "MusicDb") return undefined;
@@ -30,7 +30,7 @@ export const tryExtractMusicDbPlaylistState = (history: History) => {
   );
 };
 
-export const tryExtractYoutubePlaylistState = (history: History) => {
+export const tryExtractYoutubeTracklistState = (history: History) => {
   const lastRequest = history.latestWhereType(initiatedTracksFetch)!;
 
   if (lastRequest.payload.data.dataSource !== "YouTube") return undefined;
