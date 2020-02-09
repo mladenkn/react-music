@@ -4,6 +4,7 @@ import { Select, MenuItem, FormControl, Typography, TextField, makeStyles, creat
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
+import { ems } from '../../utils/css'
 
 interface TrackQueryFormUiProps {
 	className?: string
@@ -16,6 +17,9 @@ const useStyles = makeStyles(
 		root: {
 			display: 'flex',
 			flexDirection: 'column'
+		},
+		searchQueryField: {
+			marginTop: ems(1)
 		}
 	})
 )
@@ -67,9 +71,10 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 					input={form.values.fields!}
 					onChange={value => form.setFieldValue('fields', value)}
 				/>
-			}
+			} 
 			{form.values.dataSource === 'YouTube' &&
 				<TextField
+					className={styles.searchQueryField}
 					label='Search Query'
 					value={form.values.searchQuery!}
 					onChange={e => form.setFieldValue('searchQuery', e.target.value)}

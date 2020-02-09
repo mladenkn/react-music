@@ -6,7 +6,6 @@ import { ems, percent } from '../../utils/css';
 import { Button, Dialog, MenuItem, Select } from '@material-ui/core';
 import { TrackPlayerUI } from './TrackPlayer';
 import { YoutubeTrackQueryForm } from './YoutubeTrackQueryForm';
-import { QueryTypeSelection } from '../logic/homeView';
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm';
 
 const useNarrowHomeUIStyles = makeStyles({

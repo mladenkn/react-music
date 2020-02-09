@@ -5,7 +5,6 @@ import clsx from 'clsx'
 import { TrackPlayerUI } from "./TrackPlayer";
 import { ems, percent } from "../../utils/css";
 import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
-import { QueryTypeSelection } from "../logic/homeView";
 import { useTracklistLogic } from "../logic/tracklist.decorated";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { createInitialTrackQueryForm } from "../shared";
