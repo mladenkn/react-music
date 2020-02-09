@@ -6,8 +6,9 @@ import { TrackPlayerUI } from "./TrackPlayer";
 import { ems, percent } from "../../utils/css";
 import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
 import { QueryTypeSelection } from "../logic/homeView";
-import { TrackQueryInteractiveForm } from "./TrackQueryInteractiveForm";
 import { useTracklistLogic } from "../logic/tracklist.decorated";
+import { TrackQueryFormUi } from "./TrackQueryForm";
+import { createInitialTrackQueryForm } from "../shared";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -67,14 +68,12 @@ export interface HomeProps {
 
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
-
-  const tracklistLogic = useTracklistLogic()
-
+  const form = createInitialTrackQueryForm()
   return (
       <div className={clsx(classes.root, p.className)}>
         <div className={classes.querySide}>
-          <TrackQueryInteractiveForm 
-            input={tracklistLogic.queryForm}
+          <TrackQueryFormUi
+            form={form}
             className={classes.form} 
             onChange={() => {}} 
           />

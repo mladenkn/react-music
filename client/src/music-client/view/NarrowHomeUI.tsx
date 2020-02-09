@@ -7,7 +7,7 @@ import { Button, Dialog, MenuItem, Select } from '@material-ui/core';
 import { TrackPlayerUI } from './TrackPlayer';
 import { YoutubeTrackQueryForm } from './YoutubeTrackQueryForm';
 import { QueryTypeSelection } from '../logic/homeView';
-import { TrackQueryInteractiveForm } from './TrackQueryInteractiveForm';
+import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm';
 
 const useNarrowHomeUIStyles = makeStyles({
   root: {

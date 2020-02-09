@@ -8,7 +8,7 @@ import { ems, percent } from "../../../utils/css";
 import { TrackQueryForm } from "../../shared";
 const { bindTrigger, bindMenu } = require("material-ui-popup-state/hooks");
 
-export interface TrackQueryFromProps {
+export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
   input: TrackQueryForm;
   onChange: (i: TrackQueryForm) => void;
@@ -45,7 +45,7 @@ const mapFieldValueToName = (field: string) => {
   }
 };
 
-export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
+export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractiveFormProps) => {
 
   const classes = useStyles();
 
@@ -88,7 +88,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
           onRemove={() => setFieldInactive("yearSpan")}
         />
       )} */}
-      <Fab    
+      {/* <Fab    
         className={classes.addPropertyButton}
         size='small'
         color="primary"
@@ -103,7 +103,7 @@ export const TrackQueryInteractiveForm = (p: TrackQueryFromProps) => {
             {mapFieldValueToName(f)}
           </MenuItem>
         ))}
-      </Menu>
+      </Menu> */}
     </div>
   );
 };

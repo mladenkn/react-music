@@ -1,58 +1,47 @@
-import { TrackQueryFromProps } from ".";
+import { MusicDbTrackQueryInteractiveFormProps } from ".";
 import { useImmer } from "use-immer";
 import { difference } from "lodash";
+import { MusicDbTrackQueryForm } from "../../shared";
 
 const { usePopupState } = require("material-ui-popup-state/hooks");
 
-export interface TrackDataForm {
-  titleMatch: string | undefined;
-  channel: string | undefined;
-  mustContainAllTags: string[];
-  mustContainSomeTags: string[];
-  yearSpan?: {
-    from?: number;
-    to?: number;
-  };
-}
-
-export type Field = keyof TrackDataForm;
+export type Field = keyof MusicDbTrackQueryForm;
 
 interface State {
   activeFields: Field[];
 }
 
-const nullableFields: Field[] = ["titleMatch", "channel"];
+const nullableFields: Field[] = ["titleContains"];
 const arrayFields: Field[] = [
-  "mustContainAllTags",
-  "mustContainSomeTags"
+  "mustHaveEveryTag",
+  "mustHaveAnyTag"
 ];
 
 const avaiableFields: Field[] = [
-  //"channel",
-  "mustContainAllTags",
-  // "mustContainSomeTags",
-  //"titleMatch",
-  "yearSpan"
+  "mustHaveEveryTag",
+  "mustHaveAnyTag",
+  "titleContains",
+  'yearRange'
 ];
 
 const getDefaultFieldValue = (field: Field) => {
   if (nullableFields.includes(field)) return undefined;
   else if (arrayFields.includes(field)) return [];
-  else if (field === 'yearSpan') return {};
+  else if (field === 'yearRange') return {};
 };
 
-export const useRootLogic = (p: TrackQueryFromProps) => {
+export const useRootLogic = (p: MusicDbTrackQueryInteractiveFormProps) => {
   const [state, updateState] = useImmer<State>({
     activeFields: []
   });
 
-  const mapInput = (yearSpanTo: "incr" | "decr") => (i: TrackDataForm) => {
+  const mapInput = (yearSpanTo: "incr" | "decr") => (i: MusicDbTrackQueryForm): MusicDbTrackQueryForm => {
     const num = yearSpanTo === "incr" ? 1 : -1;
-    const mappedYearSpan = i.yearSpan && {
-      from: i.yearSpan.from,
-      to: i.yearSpan!.to && i.yearSpan!.to + num
+    const mappedYearSpan = i.yearRange && {
+      lowerBound: i.yearRange.lowerBound,
+      upperBound: i.yearRange!.upperBound && i.yearRange!.upperBound + num
     };
-    return { ...i, yearSpan: mappedYearSpan };
+    return { ...i, yearRange: mappedYearSpan };
   };
 
   // const formLogic = useFormLogic(
