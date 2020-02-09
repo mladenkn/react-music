@@ -1,4 +1,4 @@
-import { Track, TrackQueryForm } from "../shared"
+import { Track, TrackQueryForm, createInitialTrackQueryForm } from "../shared"
 import { tracksApi } from "../apiClient"
 import { useEffect } from "react"
 import { ArrayWithTotalCount, AsyncOperationStatus } from "../../utils/types"
@@ -19,7 +19,8 @@ import {
   tryExtractYoutubeTracklistState,
   getLastMusicDbFetchId,
   getNumberOfTracksFetched,
-  getSelectedTrackYoutubeId
+  getSelectedTrackYoutubeId,
+  getLatestQueryForm
 } from "./tracklist.selectors"
 
 export interface Tracklist {
@@ -37,6 +38,10 @@ export interface Tracklist {
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: Track): Promise<void>
   onTrackClick(trackYoutubeId: string): void
+}
+
+const fallbacks = {
+  queryForm: createInitialTrackQueryForm(),  
 }
 
 const pageSize = 20
@@ -81,7 +86,7 @@ export const useTracklistLogic = (): Tracklist => {
   let fromMusicDb: Tracklist["fromMusicDb"]
   let fromYouTube: Tracklist["fromYouTube"]
 
-  const queryForm = history.latestWhereType(updatedQueryTrackForm)!.payload
+  const queryForm = getLatestQueryForm(history) || fallbacks.queryForm
 
   if (queryForm.dataSource === "MusicDb")
     fromMusicDb = tryExtractMusicDbTracklistState(history)

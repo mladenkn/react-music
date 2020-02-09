@@ -7,7 +7,7 @@ import { ems, percent } from "../../utils/css";
 import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
 import { useTracklistLogic } from "../logic/tracklist.decorated";
 import { TrackQueryFormUi } from "./TrackQueryForm";
-import { createInitialTrackQueryForm } from "../shared";
+import { useHomeLogic } from "../logic/home";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -64,11 +64,11 @@ export interface HomeProps {
 
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
-  const form = createInitialTrackQueryForm()
+  const logic = useHomeLogic()
   return (
       <div className={clsx(classes.root, p.className)}>
         <TrackQueryFormUi
-          form={form}
+          form={logic.tracklist.queryForm}
           className={classes.form} 
           onChange={() => {}} 
         />
