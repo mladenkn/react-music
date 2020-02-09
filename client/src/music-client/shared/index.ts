@@ -45,13 +45,13 @@ export interface TrackQueryForm {
 export const createInitialTrackQueryForm = (): TrackQueryForm => ({
   dataSource: 'MusicDb',
   fields: {
-      titleContains: '',
-      youtubeChannelId: '',
-      mustHaveAnyTag: [],
-      mustHaveEveryTag: [],
-      yearRange: {
-          
-      }
+    titleContains: '',
+    youtubeChannelId: '',
+    mustHaveAnyTag: [],
+    mustHaveEveryTag: [],
+    yearRange: {
+        
+    }
   }
 })
 

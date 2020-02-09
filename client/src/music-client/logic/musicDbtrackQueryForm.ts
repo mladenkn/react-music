@@ -21,13 +21,13 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
     const form = useFormik({
         enableReinitialize: true,
         initialValues: props.values,
-        onSubmit: () => {}
+        onSubmit: () => { }
     })
 
     useEffect(() => {
         props.onChange(form.values)
     }, [form.values])
-    
+
     const isFieldActive = (fieldName: Field) => {
         return true
     }
@@ -39,11 +39,11 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
     }
 
     const setFieldInactive = (fieldName: Field) => {
-        
+
     }
 
     const setFieldActive = (fieldName: Field) => {
-        
+
     }
 
     return { values: form.values, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
