@@ -22,6 +22,9 @@ const useStyles = makeStyles(() => ({
   year: {
     width: percent(100)
   },
+  titleContainsField: {
+    padding: ems(0.5 , 0.6)
+  },
   addPropertyButton: {
     float: "right",
     clear: "both",
@@ -34,21 +37,10 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const testInitialValues: MusicDbTrackQueryForm = {
-  mustHaveAnyTag: ['trance', 'techno'],
-  mustHaveEveryTag: ['house', 'acid'],
-  titleContains: 'mate i jure',
-  youtubeChannelId: undefined,
-  yearRange: {
-    lowerBound: 1990,
-    upperBound: 1998
-  }
-}
-
 export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractiveFormProps) => {
 
   const styles = useStyles();
-  const { values, isFieldActive, onFieldChange, setFieldInactive } = useMusicDbTrackQueryFormLogic(testInitialValues)
+  const { values, isFieldActive, onFieldChange, setFieldInactive } = useMusicDbTrackQueryFormLogic(p.input)
   const availableTags = ['trance', 'techno', 'house', 'acid']
 
   return (
@@ -85,7 +77,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
       )}
 
       {isFieldActive('titleContains') &&
-        <ElementBase onRemove={() => setFieldInactive('titleContains')}>
+        <ElementBase className={styles.titleContainsField} onRemove={() => setFieldInactive('titleContains')}>
           <TextField 
             label='Title contains'
             value={values.titleContains}

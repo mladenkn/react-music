@@ -15,10 +15,6 @@ const useHomeStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  querySide: {
-    maxWidth: ems(24),
-    position: 'relative',
-  },
   queryTabs: {
   },
   results: {
@@ -39,6 +35,7 @@ const useHomeStyles = makeStyles(() => ({
     padding: ems(0, 0.5)
   },
   form: {
+    maxWidth: ems(24),
     fontSize: ems(1.1),
     padding: ems(1.5, 0.5, 0),
   },
@@ -71,13 +68,11 @@ export const HomeUI = (p: HomeProps) => {
   const form = createInitialTrackQueryForm()
   return (
       <div className={clsx(classes.root, p.className)}>
-        <div className={classes.querySide}>
-          <TrackQueryFormUi
-            form={form}
-            className={classes.form} 
-            onChange={() => {}} 
-          />
-        </div>
+        <TrackQueryFormUi
+          form={form}
+          className={classes.form} 
+          onChange={() => {}} 
+        />
         {/* <div className={classes.results}>  
           <Tabs 
             indicatorColor='primary'
