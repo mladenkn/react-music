@@ -40,7 +40,10 @@ const useStyles = makeStyles(() => ({
 export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractiveFormProps) => {
 
   const styles = useStyles();
-  const { values, isFieldActive, onFieldChange, setFieldInactive } = useMusicDbTrackQueryFormLogic(p.input)
+  const { values, isFieldActive, onFieldChange, setFieldInactive } = useMusicDbTrackQueryFormLogic({
+    values: p.input,
+    onChange: p.onChange
+  })
   const availableTags = ['trance', 'techno', 'house', 'acid']
 
   return (

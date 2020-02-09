@@ -1,4 +1,6 @@
 import { MusicDbTrackQueryForm } from "../shared";
+import { useFormik } from "formik";
+import { useEffect } from "react";
 
 type Field = keyof MusicDbTrackQueryForm
 
@@ -8,11 +10,23 @@ interface MusicDbTrackQueryFormLogic {
     setFieldInactive(fieldName: Field): void
     values: MusicDbTrackQueryForm
     onFieldChange(fieldName: Field): (value: any) => void
-    getFieldProps(fieldName: Field): object
 }
 
-export const useMusicDbTrackQueryFormLogic = (form: MusicDbTrackQueryForm) => {
-    const values = form
+interface MusicDbTrackQueryFormLogicProps {
+    values: MusicDbTrackQueryForm
+    onChange: (values: MusicDbTrackQueryForm) => void
+}
+
+export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicProps): MusicDbTrackQueryFormLogic => {
+    const form = useFormik({
+        enableReinitialize: true,
+        initialValues: props.values,
+        onSubmit: () => {}
+    })
+
+    useEffect(() => {
+        props.onChange(form.values)
+    }, [form.values])
     
     const isFieldActive = (fieldName: Field) => {
         return true
@@ -20,7 +34,7 @@ export const useMusicDbTrackQueryFormLogic = (form: MusicDbTrackQueryForm) => {
 
     const onFieldChange = (fieldName: Field) => {
         return (value: any) => {
-
+            form.setFieldValue(fieldName, value)
         }
     }
 
@@ -28,5 +42,9 @@ export const useMusicDbTrackQueryFormLogic = (form: MusicDbTrackQueryForm) => {
         
     }
 
-    return { values, isFieldActive, onFieldChange, setFieldInactive }
+    const setFieldActive = (fieldName: Field) => {
+        
+    }
+
+    return { values: form.values, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
 }
