@@ -10,6 +10,10 @@ import {
 } from "./tracklist.events"
 import { AsyncOperationStatus } from "../../utils/types"
 
+export const didRequest = (history: History) => {
+  return !!history.latestWhereType(initiatedTracksFetch)
+}
+
 export const tryExtractMusicDbTracklistState = (history: History) => {
   const lastRequest = history.latestWhereType(initiatedTracksFetch)!
 

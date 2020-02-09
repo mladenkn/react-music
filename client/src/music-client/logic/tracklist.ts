@@ -20,7 +20,8 @@ import {
   getLastMusicDbFetchId,
   getNumberOfTracksFetched,
   getSelectedTrackYoutubeId,
-  getLatestQueryForm
+  getLatestQueryForm,
+  didRequest
 } from "./tracklist.selectors"
 
 export interface Tracklist {
@@ -34,6 +35,7 @@ export interface Tracklist {
     status: AsyncOperationStatus
   }
   selectedTrackId?: string
+  didRequest: boolean
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: Track): Promise<void>
@@ -53,20 +55,20 @@ export const useTracklistLogic = (): Tracklist => {
   const nextRequestId = useRequestIdGenerator()
 
   useEffect(() => {
-    const lastUpdatedQueryTrackForm =
-      updatedQueryTrackFormEvents[updatedQueryTrackFormEvents.length - 1]
+    const lastUpdatedQueryTrackForm = didRequest(history) ?
+      updatedQueryTrackFormEvents[updatedQueryTrackFormEvents.length - 1].payload : 
+      fallbacks.queryForm
     const requestId = nextRequestId()
     history.save(
       initiatedTracksFetch({
-        data: lastUpdatedQueryTrackForm.payload,
+        data: lastUpdatedQueryTrackForm,
         id: requestId
       })
     )
-
-    if (lastUpdatedQueryTrackForm.payload.dataSource === "MusicDb")
+    if (lastUpdatedQueryTrackForm.dataSource === "MusicDb")
       tracksApi
         .fetchFromMusicDb({
-          ...lastUpdatedQueryTrackForm.payload.fields!,
+          ...lastUpdatedQueryTrackForm.fields!,
           take: pageSize,
           skip: 0
         })
@@ -76,7 +78,7 @@ export const useTracklistLogic = (): Tracklist => {
         .catch(() => history.save(fetchTracksFailed(requestId)))
     else
       tracksApi
-        .fetchFromYouTube(lastUpdatedQueryTrackForm.payload.searchQuery!)
+        .fetchFromYouTube(lastUpdatedQueryTrackForm.searchQuery!)
         .then(r =>
           history.save(fetchedTracksFromYouTube({ data: r.data, requestId }))
         )
@@ -88,9 +90,11 @@ export const useTracklistLogic = (): Tracklist => {
 
   const queryForm = getLatestQueryForm(history) || fallbacks.queryForm
 
-  if (queryForm.dataSource === "MusicDb")
-    fromMusicDb = tryExtractMusicDbTracklistState(history)
-  else fromYouTube = tryExtractYoutubeTracklistState(history)
+  if(didRequest(history)){
+    if (queryForm.dataSource === "MusicDb")
+      fromMusicDb = tryExtractMusicDbTracklistState(history)
+    else fromYouTube = tryExtractYoutubeTracklistState(history)
+  }  
 
   const setQueryForm = (form: TrackQueryForm) =>
     history.save(updatedQueryTrackForm(form))
@@ -119,6 +123,7 @@ export const useTracklistLogic = (): Tracklist => {
   }
 
   return {
+    didRequest: didRequest(history),
     queryForm,
     fromMusicDb,
     fromYouTube,

@@ -65,38 +65,50 @@ export interface HomeProps {
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
   const logic = useHomeLogic()
-  return (
-      <div className={clsx(classes.root, p.className)}>
-        <TrackQueryFormUi
-          form={logic.tracklist.queryForm}
-          className={classes.form} 
-          onChange={() => {}} 
-        />
-        {/* <div className={classes.results}>  
-          <Tabs 
-            indicatorColor='primary'
-            className={classes.resultsTabs}
-            value={p.logic.resultSelection} 
-            onChange={(_, v) => p.logic.setResultSelection(v)}
-          >
-            <Tab label="Query results" className={classes.tab} />
-            <Tab label="Recomendations" className={classes.tab} />
-          </Tabs>
+
+  const TrackList = () => {
+    debugger
+    if(logic.isLoaded){
+      const tracks = logic.didRequest && logic.queryForm.dataSource === 'MusicDb' ?
+        logic.fromMusicDb!.list!.data :
+        logic.fromYouTube!.list!    
+
+      const tracksTotalCount = logic.queryForm.dataSource === 'MusicDb' ? 
+        logic.fromMusicDb!.list!.totalCount : 
+        undefined
+      
+        return (
+        <div className={classes.results}>  
           <TrackListUI                     
             className={classes.trackListRoot} 
             listClassName={classes.trackListList}
-            tracks={p.logic.displayedTracks} 
-            tracksTotalCount={p.logic.tracksTotalCount}
-            onPlayTrack={p.logic.playTrack}
-            onSaveTrack={p.logic.onSaveTrack}
-            onItemClick={p.logic.onItemClick}
-            fetchRecommendationsOf={p.logic.fetchRecommendationsOf} 
-            selectedItemId={p.logic.selectedItemId}
-            onScrollToBottom={p.logic.onTracksScrollToBottom}
-            displayTrackCount={p.logic.resultSelection !== QueryResultSelection.Recommedations}
+            tracks={tracks} 
+            tracksTotalCount={tracksTotalCount}
+            onPlayTrack={() => {}}
+            onSaveTrack={() => {}}
+            onItemClick={logic.onTrackClick}
+            fetchRecommendationsOf={() => {}} 
+            selectedItemId={logic.selectedTrackId}
+            onScrollToBottom={logic.fetchTracksNextPage}
           />
         </div> 
-        <TrackPlayerUI 
+      )
+    }
+    else if(logic.isError)
+      return <div>Error</div>
+    else
+      return <div>Loading</div>
+  }
+
+  return (
+      <div className={clsx(classes.root, p.className)}>
+        <TrackQueryFormUi
+          form={logic.queryForm}
+          className={classes.form} 
+          onChange={() => {}} 
+        />
+        <TrackList />
+        {/* <TrackPlayerUI 
           width={380}
           height={215}
           playImmediately={p.logic.playingTrackPlaysImmediately} 

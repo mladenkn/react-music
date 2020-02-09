@@ -15,11 +15,12 @@ export const useHistory = (): History => {
   const [state, updateState] = useState<EventHistoryState>({})
 
   const save = (event: Event) => {
-    const eventsOfType = [event, ...state[event.type]!]
+    const curEventsOfType = state[event.type] || []
+    const eventsOfType = [event, ...curEventsOfType]
     updateState({ ...state, [event.type]: eventsOfType })
   }
-
-  const whereType = <TEventArgs extends any[], TEventPayload>(eventCreator: EventCreator<TEventArgs, TEventPayload>) => {
+ 
+  const whereType = <TEventArgs extends any[], TEventPayload> (eventCreator: EventCreator<TEventArgs, TEventPayload>) => {
     const eventsOfType = state[eventCreator.type]
     if (!eventsOfType)
       return []

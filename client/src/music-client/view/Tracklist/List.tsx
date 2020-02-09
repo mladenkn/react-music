@@ -11,14 +11,13 @@ interface TrackListProps {
   trackClasses?: TrackUIClasses
   listClassName: string
   tracks: TrackViewModel[]
-  tracksTotalCount: number
+  tracksTotalCount?: number
   onPlayTrack: (trackId: string) => void
   onSaveTrack: (t: TrackEditableProps & {id: string}) => void
   onItemClick: (trackId: string) => void
   fetchRecommendationsOf: (trackId: string) => void
   onScrollToBottom: () => void
   selectedItemId: string | undefined
-  displayTrackCount?: boolean
 }
 
 const useTrackListStyles = makeStyles(() => ({
@@ -37,7 +36,7 @@ export const TrackListUI = (p: TrackListProps) => {
   const onScroll = createOnScrollListener({onBottom: p.onScrollToBottom})
   return (
     <div className={p.className}>
-      {p.displayTrackCount && <Typography className={classes.trackCount}>Showing {p.tracks.length} of {p.tracksTotalCount}</Typography>      }
+      {p.tracksTotalCount && <Typography className={classes.trackCount}>Showing {p.tracks.length} of {p.tracksTotalCount}</Typography>      }
       <List className={clsx(classes.list, p.listClassName)} onScroll={onScroll} disablePadding>
         {p.tracks.map(t => (
           <ListItem disableGutters key={t.youtubeVideoId}>
