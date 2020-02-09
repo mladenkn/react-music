@@ -4,6 +4,7 @@ import { ems } from "../../../utils/css";
 import { colors, InputLabel, Input } from "@material-ui/core";
 import { ElementBase } from "./ElementBase";
 import clsx from "clsx";
+import { Range } from '../../shared'
 
 const useStyles = makeStyles(() => ({
   base: {
@@ -32,23 +33,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface Value {
-  from?: number;
-  to?: number;
-}
-
 interface Props {
   className?: string;
   label: string;
-  value?: Value;
-  onChange: (value: Value) => void;
+  value?: Partial<Range<number>>;
+  onChange: (value: Partial<Range<number>>) => void;
   onRemove: () => void
 }
 
 export const InlineRangeElement = (props: Props) => {
   const classes = useStyles();
   
-  const onPropChange = (name: "from" | "to") => (event: {target: {value: string}}) => {
+  const onPropChange = (name: keyof Range<number>) => (event: {target: {value: string}}) => {
     const value = parseInt(event.target.value)
     const newValue = { ...props.value, [name]: value };
     props.onChange(newValue);
@@ -64,8 +60,8 @@ export const InlineRangeElement = (props: Props) => {
             input: classes.input
           }}
           type="number"
-          value={props.value && props.value.from!}
-          onChange={onPropChange("from")}
+          value={props.value && props.value.lowerBound!}
+          onChange={onPropChange("lowerBound")}
         />
         --
         <Input        
@@ -74,8 +70,8 @@ export const InlineRangeElement = (props: Props) => {
             input: classes.input
           }}
           type="number"
-          value={props.value && props.value.to!}
-          onChange={onPropChange("to")}
+          value={props.value && props.value.upperBound!}
+          onChange={onPropChange("upperBound")}
         />
       </>
     </ElementBase>

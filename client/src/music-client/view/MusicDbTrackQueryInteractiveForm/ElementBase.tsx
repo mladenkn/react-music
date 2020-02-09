@@ -4,8 +4,15 @@ import { ems } from "../../../utils/css";
 import { Paper, FormGroup, IconButton } from "@material-ui/core";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { useImmer } from "use-immer";
+import clsx from "clsx";
 
 const useStyles = makeStyles(() => ({
+  root: {
+    marginTop: ems(1),
+  },
+  paper: {
+    position: 'relative',
+  },
   removeButton: {
     padding: ems(0.2),
     position: "absolute",
@@ -39,18 +46,18 @@ const useLogic = () => {
 };
 
 export const ElementBase = (props: Props) => {
-  const classes = useStyles();
+  const styles = useStyles();
   const logic = useLogic();
 
   return (
-    <FormGroup row>
+    <FormGroup row className={styles.root}>
       <Paper
         onMouseEnter={logic.onHover}
         onMouseLeave={logic.onHoverEnd}
-        className={props.className}
+        className={clsx(props.className, styles.paper)}
       >
         {logic.isHovered && (
-          <IconButton onClick={props.onRemove} className={classes.removeButton}>
+          <IconButton onClick={props.onRemove} className={styles.removeButton}>
             <HighlightOffIcon />
           </IconButton>
         )}

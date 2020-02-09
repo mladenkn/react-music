@@ -2,17 +2,21 @@ import React from "react";
 import { ChipListElement } from "./ChipListElement";
 import { InlineRangeElement } from "./InlineRangeElement";
 import AddIcon from "@material-ui/icons/Add";
-import { Menu, MenuItem, Fab } from "@material-ui/core";
+import { Menu, MenuItem, Fab, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
-import { TrackQueryForm } from "../../shared";
+import { MusicDbTrackQueryForm } from "../../shared";
+import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm";
+import { ElementBase } from "./ElementBase";
 const { bindTrigger, bindMenu } = require("material-ui-popup-state/hooks");
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
-  input: TrackQueryForm;
-  onChange: (i: TrackQueryForm) => void;
+  input: MusicDbTrackQueryForm;
+  onChange: (i: MusicDbTrackQueryForm) => void;
 }
+
+type Field = keyof MusicDbTrackQueryForm
 
 const useStyles = makeStyles(() => ({
   year: {
@@ -30,64 +34,66 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const mapFieldValueToName = (field: string) => {
-  switch (field) {
-    case "channel":
-      return "Channel";
-    case "mustContainAllTags":
-      return "Must have all tags";
-    case "mustContainSomeTags":
-      return "Must have some tags";
-    case "titleMatch":
-      return "Title";
-    case "yearSpan":
-      return "Year";
+const testInitialValues: MusicDbTrackQueryForm = {
+  mustHaveAnyTag: ['trance', 'techno'],
+  mustHaveEveryTag: ['house', 'acid'],
+  titleContains: 'mate i jure',
+  youtubeChannelId: undefined,
+  yearRange: {
+    lowerBound: 1990,
+    upperBound: 1998
   }
-};
+}
 
 export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractiveFormProps) => {
 
-  const classes = useStyles();
-
-  // const maybeRenderChipListElement = (
-  //   name: Field,
-  //   label: string,
-  //   availableOptions: string[],
-  //   selectedOptions: string[]
-  // ) =>
-  //   isFieldActive(name) && (
-  //     <ChipListElement
-  //       label={label}
-  //       availableOptions={availableOptions}
-  //       value={selectedOptions}
-  //       onChange={onPropChange(name)}
-  //       onRemove={() => setFieldInactive(name)}
-  //     />
-  //   );
+  const styles = useStyles();
+  const { values, isFieldActive, onFieldChange, setFieldInactive } = useMusicDbTrackQueryFormLogic(testInitialValues)
+  const availableTags = ['trance', 'techno', 'house', 'acid']
 
   return (
     <div className={p.className}>
-      {/* {maybeRenderChipListElement(
-        "mustContainAllTags",
-        "Must have all tags",
-        availableTags,
-        input.mustContainAllTags
-      )}
-      {maybeRenderChipListElement(
-        "mustContainSomeTags",
-        "Must have some tags",
-        availableTags,
-        input.mustContainSomeTags
-      )}
-      {isFieldActive("yearSpan") && (
-        <InlineRangeElement
-          className={classes.year}
-          label={"Year"}
-          value={input.yearSpan}
-          onChange={onPropChange("yearSpan")}
-          onRemove={() => setFieldInactive("yearSpan")}
+
+      {isFieldActive('mustHaveEveryTag') && (
+        <ChipListElement
+          label='Must have all tags'
+          availableOptions={availableTags}
+          value={values.mustHaveEveryTag}
+          onChange={onFieldChange('mustHaveEveryTag')}
+          onRemove={() => setFieldInactive('mustHaveEveryTag')}
         />
-      )} */}
+      )}
+
+      {isFieldActive('mustHaveAnyTag') && (
+        <ChipListElement
+          label='Must have some tags'
+          availableOptions={availableTags}
+          value={values.mustHaveAnyTag}
+          onChange={onFieldChange('mustHaveAnyTag')}
+          onRemove={() => setFieldInactive('mustHaveAnyTag')}
+        />
+      )}
+
+      {isFieldActive("yearRange") && (
+        <InlineRangeElement
+          className={styles.year}
+          label='Year'
+          value={values.yearRange!}
+          onChange={onFieldChange("yearRange")}
+          onRemove={() => setFieldInactive("yearRange")}
+        />
+      )}
+
+      {isFieldActive('titleContains') &&
+        <ElementBase onRemove={() => setFieldInactive('titleContains')}>
+          <TextField 
+            label='Title contains'
+            value={values.titleContains}
+            onChange={onFieldChange("titleContains")}          
+          />
+        </ElementBase>
+      }
+
       {/* <Fab    
         className={classes.addPropertyButton}
         size='small'

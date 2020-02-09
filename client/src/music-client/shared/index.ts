@@ -57,7 +57,7 @@ export const createInitialTrackQueryForm = (): TrackQueryForm => ({
 
 export interface MusicDbTrackQueryForm {
   titleContains: string
-  youtubeChannelId: string
+  youtubeChannelId?: string
   mustHaveEveryTag: string[]
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>

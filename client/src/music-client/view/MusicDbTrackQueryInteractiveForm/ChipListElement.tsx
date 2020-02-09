@@ -7,7 +7,6 @@ import { ElementBase } from "./ElementBase";
 
 const useStyles = makeStyles(() => ({
   base: {
-    marginBottom: ems(1),
     width: percent(100),
     padding: ems(0.7, 0.7, 0.4),
     position: "relative"
