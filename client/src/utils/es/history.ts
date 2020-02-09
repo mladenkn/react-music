@@ -12,12 +12,16 @@ interface EventHistoryState {
 }
 
 export const useHistory = (): History => {
-  const [state, updateState] = useState<EventHistoryState>({})
+  const [state, setState] = useState<EventHistoryState>({})
+  
+  console.log(state)
 
   const save = (event: Event) => {
+    console.log(state)
     const curEventsOfType = state[event.type] || []
     const eventsOfType = [event, ...curEventsOfType]
-    updateState({ ...state, [event.type]: eventsOfType })
+    const newState = { ...state, [event.type]: eventsOfType }
+    setState(newState)
   }
  
   const whereType = <TEventArgs extends any[], TEventPayload> (eventCreator: EventCreator<TEventArgs, TEventPayload>) => {

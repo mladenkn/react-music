@@ -1,26 +1,33 @@
 import { useTracklistLogic as useTracklistLogic_, Tracklist } from "./tracklist"
 import { Track, TrackViewModel } from "../shared"
+import { AsyncOperationStatus } from "../../utils/types"
 
 export const useTracklistLogic = () => {
   const wrapped = useTracklistLogic_()
 
-  const isLoading = 
-    (wrapped.fromMusicDb && wrapped.fromMusicDb.status === 'PROCESSING') ||
-    (wrapped.fromYouTube && wrapped.fromYouTube.status === 'PROCESSING')
-
-  const isError = 
-    (wrapped.fromMusicDb && wrapped.fromMusicDb.status === 'ERROR') ||
-    (wrapped.fromYouTube && wrapped.fromYouTube.status === 'ERROR')
-
-  const isLoaded = 
-    (wrapped.queryForm.dataSource === 'MusicDb' && wrapped.fromMusicDb && wrapped.fromMusicDb!.status === 'PROCESSED') ||
-    (wrapped.queryForm.dataSource === 'YouTube' && wrapped.fromYouTube && wrapped.fromYouTube!.status === 'PROCESSED')
+  const tracksStatus = ((): AsyncOperationStatus | 'NOT_INITIALIZED' => {
+    if(
+      (wrapped.fromMusicDb && wrapped.fromMusicDb.status === 'PROCESSING') ||
+      (wrapped.fromYouTube && wrapped.fromYouTube.status === 'PROCESSING')
+    )
+      return 'PROCESSING'    
+    else if (
+      (wrapped.fromMusicDb && wrapped.fromMusicDb.status === 'ERROR') ||
+      (wrapped.fromYouTube && wrapped.fromYouTube.status === 'ERROR')
+    )
+      return 'ERROR'
+    else if (
+      (wrapped.queryForm.dataSource === 'MusicDb' && wrapped.fromMusicDb && wrapped.fromMusicDb!.status === 'PROCESSED') ||
+      (wrapped.queryForm.dataSource === 'YouTube' && wrapped.fromYouTube && wrapped.fromYouTube!.status === 'PROCESSED')
+    )
+      return 'PROCESSED'
+    else
+      return 'NOT_INITIALIZED'
+  })()
 
   return {
     ...wrapped,
-    isLoaded,
-    isLoading,
-    isError,
+    tracksStatus,
     fromMusicDb: mapTracksFromMusicDb(wrapped.fromMusicDb, wrapped.selectedTrackId),
     fromYouTube: mapTracksFromYouTube(wrapped.fromYouTube, wrapped.selectedTrackId)
   }

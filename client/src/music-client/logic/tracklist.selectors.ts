@@ -66,10 +66,12 @@ const tryExtractErrorStateForRequest = (
     .whereType(fetchTracksFailed)
     .find(e => e.payload.requestId === requestId)
   return (
-    failedEvent && {
-      list: undefined,
-      status: "ERROR" as AsyncOperationStatus
-    }
+    failedEvent ?
+      {
+        list: undefined,
+        status: "ERROR" as AsyncOperationStatus
+      } : 
+      undefined
   )
 }
 
