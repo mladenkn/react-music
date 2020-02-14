@@ -1,4 +1,4 @@
-import { useTracklistLogic } from "./tracklist-new/tracklist"
+import { useTracklistLogic } from "./tracklist"
 
 export const useHomeLogic = () => {
   const tracklist = useTracklistLogic();

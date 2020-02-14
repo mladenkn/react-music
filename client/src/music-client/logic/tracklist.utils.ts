@@ -1,4 +1,4 @@
-import { TrackViewModel, Track } from "../../shared";
+import { TrackViewModel, Track } from "../shared";
 
 export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
   discogsSearchUrl: '',

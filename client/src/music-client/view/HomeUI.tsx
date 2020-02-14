@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { ems, percent } from "../../utils/css";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
-import { mapToTrackViewModel } from "../logic/tracklist-new/tracklist.utils";
+import { mapToTrackViewModel } from "../logic/tracklist.utils";
 import { TrackPlayerUI } from "./TrackPlayer";
  
 const useHomeStyles = makeStyles(() => ({
