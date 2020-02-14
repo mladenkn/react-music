@@ -6,6 +6,7 @@ import { ems, percent } from "../../utils/css";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
 import { mapToTrackViewModel } from "../logic/tracklist-new/tracklist.utils";
+import { TrackPlayerUI } from "./TrackPlayer";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -64,6 +65,8 @@ export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
   const logic = useHomeLogic()
 
+  console.log(logic)
+
   const TrackList = () => {
 
     if(logic.fromMusicDb || logic.fromYouTube){
@@ -83,7 +86,7 @@ export const HomeUI = (p: HomeProps) => {
             listClassName={classes.trackListList}
             tracks={tracks} 
             tracksTotalCount={tracksTotalCount}
-            onPlayTrack={() => {}}
+            onPlayTrack={logic.setCurrentTrack}
             onSaveTrack={() => {}}
             onItemClick={logic.onTrackClick}
             fetchRecommendationsOf={() => {}} 
@@ -105,12 +108,12 @@ export const HomeUI = (p: HomeProps) => {
           onChange={() => {}} 
         />
         <TrackList />
-        {/* <TrackPlayerUI 
+        <TrackPlayerUI 
           width={380}
           height={215}
-          playImmediately={p.logic.playingTrackPlaysImmediately} 
-          videoId={p.logic.playingTrackId} 
-        /> */}
+          playImmediately={true} 
+          videoId={logic.currentTrackYoutubeId || ''} 
+        />
       </div>
   )
 }

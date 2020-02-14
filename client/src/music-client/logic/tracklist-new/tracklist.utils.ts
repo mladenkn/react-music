@@ -2,7 +2,7 @@ import { TrackViewModel, Track } from "../../shared";
 
 export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
   discogsSearchUrl: '',
-  youtubeVideoUrl: '',
+  youtubeVideoUrl: t.youtubeVideoId,
   canEdit: true,
   canFetchRecommendations: true,
   canPlay: true,

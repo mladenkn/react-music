@@ -21,18 +21,17 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ArrayWithTotalCount<dynamic>> Get([FromQuery]QueryTracksRequest req)
+        public async Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]QueryTracksRequest req)
         {
             var r = await Resolve<QueryTracksExecutor>().Execute(req);
-            var data = r.Data.Select(TrackModelToClientModel).ToArray();
-            return new ArrayWithTotalCount<dynamic>(data, r.TotalCount);
+            return r;
         }
 
         [HttpGet("yt")]
-        public async Task<IEnumerable<dynamic>> QueryTracksViaYoutube([FromQuery]string searchQuery)
+        public async Task<IEnumerable<TrackModel>> QueryTracksViaYoutube([FromQuery]string searchQuery)
         {
             var r = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
-            return r.Select(TrackModelToClientModel);
+            return r;
         }
 
         [HttpPost]

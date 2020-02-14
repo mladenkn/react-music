@@ -9,11 +9,12 @@ export interface Tracklist {
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
-  didRequest: boolean
+  currentTrackYoutubeId?: string
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: Track): Promise<void>
   onTrackClick(trackYoutubeId: string): void
+  setCurrentTrack(trackYoutubeId: string): void
 }
 
 interface State {
@@ -21,7 +22,7 @@ interface State {
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
-  didRequest: boolean
+  currentTrackYoutubeId?: string
 }
 
 const pageSize = 30;
@@ -30,7 +31,6 @@ export const useTracklistLogic = (): Tracklist => {
 
   const [state, updateState] = useImmer<State>({
     queryForm: createInitialTrackQueryForm(),
-    didRequest: false
   })
 
   useEffect(() => {
@@ -79,5 +79,11 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  return { ...state, fetchTracksNextPage, setQueryForm, saveTrack, onTrackClick }
+  function setCurrentTrack(trackYoutubeId: string){
+    updateState(draft => {
+      draft.currentTrackYoutubeId = trackYoutubeId
+    })
+  }
+
+  return { ...state, fetchTracksNextPage, setQueryForm, saveTrack, onTrackClick, setCurrentTrack }
 }
