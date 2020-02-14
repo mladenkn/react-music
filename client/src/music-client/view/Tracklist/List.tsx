@@ -17,7 +17,6 @@ interface TrackListProps {
   onItemClick: (trackId: string) => void
   fetchRecommendationsOf: (trackId: string) => void
   onScrollToBottom: () => void
-  selectedItemId: string | undefined
 }
 
 const useTrackListStyles = makeStyles(() => ({
@@ -30,13 +29,17 @@ const useTrackListStyles = makeStyles(() => ({
     fontSize: ems(1.25),
   },
 }), {name: 'TrackList'})
- 
+
 export const TrackListUI = (p: TrackListProps) => {
   const classes = useTrackListStyles()
   const onScroll = createOnScrollListener({onBottom: p.onScrollToBottom})
   return (
     <div className={p.className}>
-      {p.tracksTotalCount && <Typography className={classes.trackCount}>Showing {p.tracks.length} of {p.tracksTotalCount}</Typography>      }
+      {p.tracksTotalCount && 
+        <Typography className={classes.trackCount}>
+          Showing {p.tracks.length} of {p.tracksTotalCount}
+        </Typography>
+      }
       <List className={clsx(classes.list, p.listClassName)} onScroll={onScroll} disablePadding>
         {p.tracks.map(t => (
           <ListItem disableGutters key={t.youtubeVideoId}>
@@ -46,7 +49,7 @@ export const TrackListUI = (p: TrackListProps) => {
               onPlay={() => p.onPlayTrack(t.youtubeVideoId)} 
               onSave={editedProps => p.onSaveTrack({...editedProps, id: t.youtubeVideoId})} 
               onClick={() => p.onItemClick(t.youtubeVideoId)}
-              isFocused={p.selectedItemId === t.youtubeVideoId}
+              isFocused={t.isSelected}
               classes={p.trackClasses}
             />
           </ListItem>

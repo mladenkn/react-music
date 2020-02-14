@@ -1,20 +1,54 @@
 import { MusicDbTrackQueryForm } from "../shared";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { difference } from 'lodash'
 
 type Field = keyof MusicDbTrackQueryForm
 
 interface MusicDbTrackQueryFormLogic {
+	values: MusicDbTrackQueryForm
+	inactiveFields: (keyof MusicDbTrackQueryForm)[]
+	availableTags: string[]
 	isFieldActive(fieldName: Field): boolean
 	setFieldActive(fieldName: Field): void
 	setFieldInactive(fieldName: Field): void
-	values: MusicDbTrackQueryForm
 	onFieldChange(fieldName: Field): (value: any) => void
 }
 
 interface MusicDbTrackQueryFormLogicProps {
 	values: MusicDbTrackQueryForm
 	onChange: (values: MusicDbTrackQueryForm) => void
+}
+
+const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange']
+
+// const getInitialActiveFields = (fields: MusicDbTrackQueryForm) => {
+// 	const result: Field[] = []
+// 	if(!fields.mustHaveAnyTag && fields.mustHaveAnyTag !== [])
+// 		result.push('mustHaveAnyTag')	
+// 	if(!fields.mustHaveEveryTag && fields.mustHaveEveryTag !== [])
+// 		result.push('mustHaveEveryTag')	
+// 	if(!fields.titleContains && fields.titleContains !== '')
+// 		result.push('titleContains')
+// 	if(!fields.yearRange && fields.yearRange !== '')
+// 		result.push('titleContains')
+	
+// 	return result;
+// }
+
+const getFieldDefaultValue = (field: Field) => {
+	switch (field) {
+    case "youtubeChannelId":
+      return undefined;
+    case "mustHaveEveryTag":
+      return [];
+    case "mustHaveAnyTag":
+      return [];
+    case "titleContains":
+      return '';
+    case "yearRange":
+      return {};
+  }
 }
 
 export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicProps): MusicDbTrackQueryFormLogic => {
@@ -24,12 +58,14 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 		onSubmit: () => { }
 	})
 
+	const [activeFields, setActiveFields] = useState<(keyof MusicDbTrackQueryForm)[]>([])
+
 	useEffect(() => {
 		props.onChange(form.values)
 	}, [form.values])
 
 	const isFieldActive = (fieldName: Field) => {
-		return true
+		return activeFields.includes(fieldName)
 	}
 
 	const onFieldChange = (fieldName: Field) => {
@@ -39,12 +75,19 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	}
 
 	const setFieldInactive = (fieldName: Field) => {
-
+		onFieldChange(fieldName)(getFieldDefaultValue(fieldName))
+		setActiveFields(activeFields.filter(f => f !== fieldName))
 	}
 
 	const setFieldActive = (fieldName: Field) => {
-
+		setActiveFields([...activeFields, fieldName])
 	}
 
-	return { values: form.values, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
+	const inactiveFields = difference(allFields, activeFields)
+	
+  const availableTags = ['trance', 'techno', 'house', 'acid']
+
+	console.log({inactiveFields})
+
+	return { values: form.values, availableTags, inactiveFields, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
 }

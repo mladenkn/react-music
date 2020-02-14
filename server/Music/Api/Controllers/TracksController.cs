@@ -37,22 +37,5 @@ namespace Music.Api.Controllers
         [HttpPost]
         public Task Save([FromBody]SaveTrackModel trackProps) => 
             Resolve<SaveTrackYoutubeExecutor>().Execute(trackProps);
-
-        private dynamic TrackModelToClientModel(TrackModel track) =>
-            new
-            {
-                YtId = track.YoutubeVideoId,
-                track.Title,
-                track.Description,
-                track.Image,
-                track.Year,
-                Genres = new string[0],
-                track.Tags,
-                Channel = new
-                {
-                    Id = track.YoutubeChannelId,
-                    Title = track.YoutubeChannelTitle,
-                }
-            };
     }
 }

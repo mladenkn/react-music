@@ -89,8 +89,7 @@ export const HomeUI = (p: HomeProps) => {
             onPlayTrack={logic.setCurrentTrack}
             onSaveTrack={() => {}}
             onItemClick={logic.onTrackClick}
-            fetchRecommendationsOf={() => {}} 
-            selectedItemId={logic.selectedTrackId}
+            fetchRecommendationsOf={() => {}}
             onScrollToBottom={logic.fetchTracksNextPage}
           />
         </div> 
@@ -105,7 +104,7 @@ export const HomeUI = (p: HomeProps) => {
         <TrackQueryFormUi
           form={logic.queryForm}
           className={classes.form} 
-          onChange={() => {}} 
+          onChange={logic.setQueryForm} 
         />
         <TrackList />
         <TrackPlayerUI 
