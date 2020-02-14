@@ -11,15 +11,15 @@ else if (process.env.NODE_ENV === "production")
 else throw new Error();
 
 export const fetchFromYouTube = async (searchQuery: string) => {
-  const r = await axios.get<Track[]>(`${baseUrl}tracks`, {
-    params: { youTubeSearchQuery: searchQuery }
+  const r = await axios.get<Track[]>(`${baseUrl}tracks/yt`, {
+    params: { searchQuery }
   });
   return r;
 };
 
 export const fetchFromMusicDb = async (query: MusicDbTrackQueryForm & Paging) => {
   const r = await axios.get<ArrayWithTotalCount<Track>>(
-    `${baseUrl}tracks`, { params: {dbSourceParams: query}  }
+    `${baseUrl}tracks`, { params: query }
   );
   return r;
 };

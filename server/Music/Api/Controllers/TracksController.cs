@@ -21,21 +21,18 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<object> Get([FromQuery] string youTubeSearchQuery = null, [FromQuery]QueryTracksRequest dbSourceParams = null)
+        public async Task<ArrayWithTotalCount<dynamic>> Get([FromQuery]QueryTracksRequest req)
         {
-            if (youTubeSearchQuery != null)
-            {
-                var r = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(youTubeSearchQuery);
-                return r.Select(TrackModelToClientModel);
-            }
-            else if (dbSourceParams != null)
-            {
-                var r = await Resolve<QueryTracksExecutor>().Execute(dbSourceParams);
-                var data = r.Data.Select(TrackModelToClientModel).ToArray();
-                return new ArrayWithTotalCount<dynamic>(data, r.TotalCount);
-            }
-            else
-                throw new Exception();
+            var r = await Resolve<QueryTracksExecutor>().Execute(req);
+            var data = r.Data.Select(TrackModelToClientModel).ToArray();
+            return new ArrayWithTotalCount<dynamic>(data, r.TotalCount);
+        }
+
+        [HttpGet("yt")]
+        public async Task<IEnumerable<dynamic>> QueryTracksViaYoutube([FromQuery]string searchQuery)
+        {
+            var r = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
+            return r.Select(TrackModelToClientModel);
         }
 
         [HttpPost]
