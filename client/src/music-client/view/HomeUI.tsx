@@ -1,11 +1,8 @@
-import { makeStyles, Tabs, Tab, Typography } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core"
 import React from 'react'
 import { TrackListUI } from "./Tracklist";
 import clsx from 'clsx'
-import { TrackPlayerUI } from "./TrackPlayer";
 import { ems, percent } from "../../utils/css";
-import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
-import { useTracklistLogic } from "../logic/tracklist.decorated";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
 import { mapToTrackViewModel } from "../logic/tracklist-new/tracklist.utils";
@@ -69,33 +66,35 @@ export const HomeUI = (p: HomeProps) => {
 
   const TrackList = () => {
 
-    const tracks = (
-      logic.fromMusicDb ? 
-        logic.fromMusicDb.data : 
-        logic.fromYouTube!
-      )
-      .map(track => {
-        const isSelected = track.youtubeChannelId === logic.selectedTrackId
-        return mapToTrackViewModel(track)
-      })
-    const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
+    if(logic.fromMusicDb || logic.fromYouTube){
+      const tracks = (
+        logic.fromMusicDb ? 
+          logic.fromMusicDb.data : 
+          logic.fromYouTube!
+        )
+        .map(track => mapToTrackViewModel(track, logic.selectedTrackId))
 
-    return (
-      <div className={classes.results}>  
-        <TrackListUI                     
-          className={classes.trackListRoot} 
-          listClassName={classes.trackListList}
-          tracks={tracks} 
-          tracksTotalCount={tracksTotalCount}
-          onPlayTrack={() => {}}
-          onSaveTrack={() => {}}
-          onItemClick={logic.onTrackClick}
-          fetchRecommendationsOf={() => {}} 
-          selectedItemId={logic.selectedTrackId}
-          onScrollToBottom={logic.fetchTracksNextPage}
-        />
-      </div> 
+      const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
+
+      return (
+        <div className={classes.results}>  
+          <TrackListUI                     
+            className={classes.trackListRoot} 
+            listClassName={classes.trackListList}
+            tracks={tracks} 
+            tracksTotalCount={tracksTotalCount}
+            onPlayTrack={() => {}}
+            onSaveTrack={() => {}}
+            onItemClick={logic.onTrackClick}
+            fetchRecommendationsOf={() => {}} 
+            selectedItemId={logic.selectedTrackId}
+            onScrollToBottom={logic.fetchTracksNextPage}
+          />
+        </div> 
       )
+    }
+    else
+      return <div>Loading...</div>
   }
 
   return (
