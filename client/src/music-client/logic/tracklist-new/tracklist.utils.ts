@@ -1,6 +1,6 @@
 import { TrackViewModel, Track } from "../../shared";
 
-export const mapTrack = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
+export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
   discogsSearchUrl: '',
   youtubeVideoUrl: '',
   canEdit: true,

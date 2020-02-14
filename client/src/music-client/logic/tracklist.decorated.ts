@@ -17,8 +17,8 @@ export const useTracklistLogic = () => {
     )
       return 'ERROR'
     else if (
-      (wrapped.queryForm.dataSource === 'MusicDb' && wrapped.fromMusicDb && wrapped.fromMusicDb!.status === 'PROCESSED') ||
-      (wrapped.queryForm.dataSource === 'YouTube' && wrapped.fromYouTube && wrapped.fromYouTube!.status === 'PROCESSED')
+      (wrapped.fromMusicDb && wrapped.fromMusicDb!.status === 'PROCESSED') ||
+      (wrapped.fromYouTube && wrapped.fromYouTube!.status === 'PROCESSED')
     )
       return 'PROCESSED'
     else

@@ -24,7 +24,7 @@ const useStyles = makeStyles(
 	})
 )
 
-const testInitialValues: TrackQueryForm = {
+const testInitialValues: TrackQueryForm & { dataSource: 'MusicDb' | 'YouTube' } = {
 	dataSource: 'MusicDb',
 	fields: {
 		mustHaveAnyTag: ['trance', 'techno'],
@@ -49,7 +49,6 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 	useEffect(() => {
 		const { dataSource, fields, searchQuery } = form.values
 		const mapped = {
-			dataSource: dataSource,
 			fields: dataSource === 'MusicDb' ? fields : undefined,
 			searchQuery: dataSource === 'MusicDb' ? searchQuery : undefined,
 		}
@@ -66,7 +65,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
-			{form.values.dataSource === 'MusicDb' &&
+			{form.values.fields &&
 				<MusicDbTrackQueryInteractiveForm
 					input={form.values.fields!}
 					onChange={value => form.setFieldValue('fields', value)}

@@ -41,12 +41,14 @@ export const useTracklistLogic = (): Tracklist => {
     if(form.fields){
       const { data } = await tracksApi.fetchFromMusicDb({ ...form.fields, skip: 0, take: pageSize })
       updateState(draft => {
+        draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     }
     else if(form.searchQuery){
       const { data } = await tracksApi.fetchFromYouTube(form.searchQuery)
       updateState(draft => {
+        draft.fromMusicDb = undefined
         draft.fromYouTube = data
       })
     }

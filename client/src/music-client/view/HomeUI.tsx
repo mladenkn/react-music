@@ -8,6 +8,7 @@ import { YoutubeTrackQueryForm } from "./YoutubeTrackQueryForm";
 import { useTracklistLogic } from "../logic/tracklist.decorated";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
+import { mapToTrackViewModel } from "../logic/tracklist-new/tracklist.utils";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -67,39 +68,34 @@ export const HomeUI = (p: HomeProps) => {
   const logic = useHomeLogic()
 
   const TrackList = () => {
-    switch(logic.tracksStatus){
-      case 'ERROR':
-        return <Typography>Error</Typography>
-      case 'NOT_INITIALIZED':
-        return <Typography>Loading</Typography>
-      case 'PROCESSING':
-        return <Typography>Loading</Typography>
-      case 'PROCESSED':
-        const tracks = logic.queryForm.dataSource === 'MusicDb' ?
-          logic.fromMusicDb!.list!.data :
-          logic.fromYouTube!.list!    
 
-        const tracksTotalCount = logic.queryForm.dataSource === 'MusicDb' ? 
-          logic.fromMusicDb!.list!.totalCount : 
-          undefined
-      
-        return (
-          <div className={classes.results}>  
-            <TrackListUI                     
-              className={classes.trackListRoot} 
-              listClassName={classes.trackListList}
-              tracks={tracks} 
-              tracksTotalCount={tracksTotalCount}
-              onPlayTrack={() => {}}
-              onSaveTrack={() => {}}
-              onItemClick={logic.onTrackClick}
-              fetchRecommendationsOf={() => {}} 
-              selectedItemId={logic.selectedTrackId}
-              onScrollToBottom={logic.fetchTracksNextPage}
-            />
-          </div> 
-        )
-    }
+    const tracks = (
+      logic.fromMusicDb ? 
+        logic.fromMusicDb.data : 
+        logic.fromYouTube!
+      )
+      .map(track => {
+        const isSelected = track.youtubeChannelId === logic.selectedTrackId
+        return mapToTrackViewModel(track)
+      })
+    const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
+
+    return (
+      <div className={classes.results}>  
+        <TrackListUI                     
+          className={classes.trackListRoot} 
+          listClassName={classes.trackListList}
+          tracks={tracks} 
+          tracksTotalCount={tracksTotalCount}
+          onPlayTrack={() => {}}
+          onSaveTrack={() => {}}
+          onItemClick={logic.onTrackClick}
+          fetchRecommendationsOf={() => {}} 
+          selectedItemId={logic.selectedTrackId}
+          onScrollToBottom={logic.fetchTracksNextPage}
+        />
+      </div> 
+      )
   }
 
   return (

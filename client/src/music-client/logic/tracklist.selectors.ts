@@ -17,7 +17,7 @@ export const didRequest = (history: History) => {
 export const tryExtractMusicDbTracklistState = (history: History) => {
   const lastRequest = history.latestWhereType(initiatedTracksFetch)!
 
-  if (lastRequest.payload.data.dataSource !== "MusicDb") return undefined
+  if (lastRequest.payload.data.searchQuery) return undefined
 
   const lastRequestId = lastRequest.payload.id
   const fetchedEvent = history
@@ -39,7 +39,7 @@ export const tryExtractMusicDbTracklistState = (history: History) => {
 export const tryExtractYoutubeTracklistState = (history: History) => {
   const lastRequest = history.latestWhereType(initiatedTracksFetch)!
 
-  if (lastRequest.payload.data.dataSource !== "YouTube") return undefined
+  if (lastRequest.payload.data.fields) return undefined
 
   const lastRequestId = lastRequest.payload.id
   const fetchedEvent = history

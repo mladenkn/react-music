@@ -65,7 +65,7 @@ export const useTracklistLogic = (): Tracklist => {
         id: requestId
       })
     )
-    if (lastUpdatedQueryTrackForm.dataSource === "MusicDb")
+    if (lastUpdatedQueryTrackForm.fields)
       tracksApi
         .fetchFromMusicDb({
           ...lastUpdatedQueryTrackForm.fields!,
@@ -91,7 +91,7 @@ export const useTracklistLogic = (): Tracklist => {
   const queryForm = getLatestQueryForm(history) || fallbacks.queryForm
 
   if(didRequest(history)){
-    if (queryForm.dataSource === "MusicDb")
+    if (queryForm.fields)
       fromMusicDb = tryExtractMusicDbTracklistState(history)
     else fromYouTube = tryExtractYoutubeTracklistState(history)
   }  

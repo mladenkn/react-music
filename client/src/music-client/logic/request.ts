@@ -20,7 +20,7 @@ export const useRequestLogic = <TParameters = undefined, TData = undefined>(
 	doRequestActual: (params: TParameters) => Promise<AxiosResponse<TData>>)
 	: RequestLogic<TParameters, TData> => {
 	const [state, updateState] = useImmer<State>({
-	})
+	}) 
 
 	const initiate = async (params: TParameters) => {
 		updateState(draft => {
