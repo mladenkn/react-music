@@ -37,13 +37,11 @@ export interface TrackEditableProps {
 
 
 export interface TrackQueryForm {
-  dataSource: 'MusicDb' | 'YouTube'
   fields?: MusicDbTrackQueryForm
   searchQuery?: string
 }
 
 export const createInitialTrackQueryForm = (): TrackQueryForm => ({
-  dataSource: 'MusicDb',
   fields: {
     titleContains: '',
     youtubeChannelId: '',
