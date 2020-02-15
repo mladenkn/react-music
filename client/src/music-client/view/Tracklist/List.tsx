@@ -32,7 +32,10 @@ const useTrackListStyles = makeStyles(() => ({
 
 export const TrackListUI = (p: TrackListProps) => {
   const classes = useTrackListStyles()
-  const onScroll = createOnScrollListener({onBottom: p.onScrollToBottom})
+  const onScroll = createOnScrollListener(({isOnBottom}) => {
+    if(isOnBottom)
+      p.onScrollToBottom()
+  })
   return (
     <div className={p.className}>
       {p.tracksTotalCount ?
