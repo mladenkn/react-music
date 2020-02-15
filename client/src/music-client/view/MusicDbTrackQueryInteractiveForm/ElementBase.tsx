@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginTop: ems(1),
+    marginBottom: ems(1),
   },
   paper: {
     position: 'relative',

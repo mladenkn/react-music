@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { TrackQueryForm, MusicDbTrackQueryForm } from "../shared"
-import { Select, MenuItem, FormControl, Typography, TextField, makeStyles, createStyles } from "@material-ui/core"
+import { TrackQueryForm } from "../shared"
+import { Select, MenuItem, TextField, makeStyles, createStyles } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
-import { ems } from '../../utils/css'
+import { ems, percent } from '../../utils/css'
 
 interface TrackQueryFormUiProps {
 	className?: string
@@ -18,10 +18,16 @@ const useStyles = makeStyles(
 			display: 'flex',
 			flexDirection: 'column'
 		},
+		dataSource: {
+			maxWidth: percent(83),
+		},
+		fields: {
+			marginTop: ems(1),
+		},
 		searchQueryField: {
 			marginTop: ems(1)
-		}
-	})
+		},
+	}), {name: 'TrackQueryFormUi'}
 )
 
 const testInitialValues: TrackQueryForm & { dataSource: 'MusicDb' | 'YouTube' } = {
@@ -58,6 +64,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 	return (
 		<div className={clsx(props.className, styles.root)}>
 			<Select
+				className={styles.dataSource}
 				label='Data source'
 				value={form.values.dataSource}
 				onChange={e => form.setFieldValue('dataSource', e.target.value)}
@@ -65,8 +72,9 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
-			{form.values.fields &&
+			{form.values.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
+					className={styles.fields}
 					input={form.values.fields!}
 					onChange={value => form.setFieldValue('fields', value)}
 				/>

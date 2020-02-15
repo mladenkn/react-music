@@ -8,9 +8,8 @@ import { ems, percent } from "../../../utils/css";
 import { MusicDbTrackQueryForm } from "../../shared";
 import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm";
 import { ElementBase } from "./ElementBase";
-import classes from "*.module.css";
 import clsx from "clsx";
-const { bindTrigger, bindMenu, usePopupState } = require("material-ui-popup-state/hooks");
+import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
@@ -22,6 +21,10 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex'
   },
+  left: {
+    width: percent(83),
+    marginRight: percent(5)
+  },
   year: {
     width: percent(100)
   },
@@ -29,8 +32,6 @@ const useStyles = makeStyles(() => ({
     padding: ems(0.5 , 0.6)
   },
   addPropertyButton: {
-    float: "right",
-    clear: "both",
     marginTop: ems(0.3),
     marginRight: ems(-0.5)
   },
@@ -76,7 +77,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
 
   return (
     <div className={clsx(p.className, styles.root)}>
-      <div>      
+      <div className={styles.left}>      
         {isFieldActive('mustHaveEveryTag') && (
             <ChipListElement
               label='Must have all tags'

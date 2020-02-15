@@ -35,10 +35,11 @@ export const TrackListUI = (p: TrackListProps) => {
   const onScroll = createOnScrollListener({onBottom: p.onScrollToBottom})
   return (
     <div className={p.className}>
-      {p.tracksTotalCount && 
+      {p.tracksTotalCount ?
         <Typography className={classes.trackCount}>
           Showing {p.tracks.length} of {p.tracksTotalCount}
-        </Typography>
+        </Typography> :
+        ''
       }
       <List className={clsx(classes.list, p.listClassName)} onScroll={onScroll} disablePadding>
         {p.tracks.map(t => (

@@ -33,7 +33,7 @@ const useHomeStyles = makeStyles(() => ({
     padding: ems(0, 0.5)
   },
   form: {
-    maxWidth: ems(24),
+    width: ems(24),
     fontSize: ems(1.1),
     padding: ems(1.5, 0.5, 0),
   },
