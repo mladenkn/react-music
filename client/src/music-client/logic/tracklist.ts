@@ -3,7 +3,7 @@ import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
-import { TrackQueryForm, TrackQueryFormDataSource } from "../shared/trackQueryForm";
+import { TrackQueryForm, TrackQueryFormDataSource, createInitialTrackQueryForm } from "../shared/trackQueryForm";
 import { useDebouncedCallback } from 'use-debounce';
 
 export interface Tracklist {
@@ -29,26 +29,10 @@ interface State {
 
 const pageSize = 30;
 
-const trackQueryFormTestInitialValues: TrackQueryForm = {
-	dataSource: TrackQueryFormDataSource.MusicDb,
-	musicDbParams: {
-		mustHaveAnyTag: ['trance', 'techno'],
-		mustHaveEveryTag: ['house', 'acid'],
-		titleContains: '',
-		youtubeChannelId: undefined,
-		yearRange: {
-			lowerBound: 1990,
-			upperBound: 1998
-		}
-	},
-	searchQuery: 'mate i frane',
-	autoRefresh: true,
-}
-
 export const useTracklistLogic = (): Tracklist => {
 
   const [state, updateState] = useImmer<State>({
-    queryForm: trackQueryFormTestInitialValues,
+    queryForm: createInitialTrackQueryForm(),
   })
 
   useEffect(() => {
