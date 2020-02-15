@@ -7,6 +7,7 @@ import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { mapToTrackViewModel } from "../shared/track";
+import { TrackQueryFormDataSource } from "../shared/trackQueryForm";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -79,6 +80,11 @@ export const HomeUI = (p: HomeProps) => {
 
       const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
 
+      const onScrollToBottom = () => {
+        if(logic.queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
+          logic.fetchTracksNextPage()
+      }
+
       return (
         <div className={classes.results}>  
           <TrackListUI                     
@@ -90,7 +96,7 @@ export const HomeUI = (p: HomeProps) => {
             onSaveTrack={() => {}}
             onItemClick={logic.onTrackClick}
             fetchRecommendationsOf={() => {}}
-            onScrollToBottom={logic.fetchTracksNextPage}
+            onScrollToBottom={onScrollToBottom}
           />
         </div> 
       )
