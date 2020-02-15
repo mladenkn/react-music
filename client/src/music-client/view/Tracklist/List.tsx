@@ -4,7 +4,7 @@ import { TrackUI, TrackUIClasses } from "./TrackUI"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
-import { TrackViewModel, TrackEditableProps } from "../../shared";
+import { TrackViewModel, TrackEditableProps } from "../../shared/track";
 
 interface TrackListProps {
   className?: string

@@ -1,7 +1,8 @@
 import axios from "axios";
-import { Track, Paging } from "./shared";
+import { Paging } from "./shared";
 import { ArrayWithTotalCount } from "../utils/types";
 import { MusicDbTrackQueryParamas } from "./shared/trackQueryForm";
+import { Track } from "./shared/track";
 
 let baseUrl: string;
 

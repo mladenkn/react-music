@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { makeStyles, TextField } from "@material-ui/core";
 import React from 'react'
 import ChipInput from "../../../utils/view/ChipInput";
-import { TrackEditableProps } from "../../shared";
+import { TrackEditableProps } from "../../shared/track";
 
 const useItemEditablePropsEditStyles = makeStyles(() => ({
 	root: {

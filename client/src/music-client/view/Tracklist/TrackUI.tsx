@@ -15,7 +15,7 @@ import recommendationUrl from '../icons/recommendation2.png'
 import { Link } from "../../../utils/view";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
-import { TrackViewModel, TrackEditableProps } from "../../shared";
+import { TrackViewModel, TrackEditableProps } from "../../shared/track";
 
 const styles = createStyles({
   paper: {

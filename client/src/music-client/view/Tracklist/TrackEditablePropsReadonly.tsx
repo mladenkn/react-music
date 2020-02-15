@@ -3,7 +3,7 @@ import { ems } from "../../../utils/css"
 import clsx from "clsx"
 import { Chip, Typography } from "@material-ui/core";
 import React from 'react'
-import { TrackEditableProps } from "../../shared";
+import { TrackEditableProps } from "../../shared/track";
 
 const useItemEditablePropsReadonlyStyles = makeStyles(() => ({
 	root: {

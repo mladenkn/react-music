@@ -1,4 +1,4 @@
-import { Track } from "../shared";
+import { Track } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
