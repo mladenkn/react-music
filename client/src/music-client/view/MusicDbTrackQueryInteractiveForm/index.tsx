@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Menu, MenuItem, Fab, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
-import { MusicDbTrackQueryForm } from "../../shared";
+import { MusicDbTrackQueryParamas } from "../../shared/trackQueryForm";
 import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm";
 import { ElementBase } from "./ElementBase";
 import clsx from "clsx";
@@ -13,8 +13,8 @@ import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/ho
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
-  input: MusicDbTrackQueryForm;
-  onChange: (i: MusicDbTrackQueryForm) => void;
+  input: MusicDbTrackQueryParamas;
+  onChange: (i: MusicDbTrackQueryParamas) => void;
 }
 
 const useStyles = makeStyles(() => ({
@@ -41,7 +41,7 @@ const useStyles = makeStyles(() => ({
   }
 }), {name: 'MusicDbTrackQueryInteractiveForm'});
 
-type Field = keyof MusicDbTrackQueryForm
+type Field = keyof MusicDbTrackQueryParamas
 
 const mapFieldValueToName = (field: Field) => {
   switch (field) {

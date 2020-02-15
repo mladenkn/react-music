@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { TrackQueryForm } from "../shared"
+import { TrackQueryForm } from "../shared/trackQueryForm"
 import { Select, MenuItem, TextField, makeStyles, createStyles } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
@@ -8,7 +8,7 @@ import { ems, percent } from '../../utils/css'
 
 interface TrackQueryFormUiProps {
 	className?: string
-	form: TrackQueryForm
+	values: TrackQueryForm
 	onChange: (f: TrackQueryForm) => void
 }
 
@@ -30,35 +30,16 @@ const useStyles = makeStyles(
 	}), {name: 'TrackQueryFormUi'}
 )
 
-const testInitialValues: TrackQueryForm & { dataSource: 'MusicDb' | 'YouTube' } = {
-	dataSource: 'MusicDb',
-	fields: {
-		mustHaveAnyTag: ['trance', 'techno'],
-		mustHaveEveryTag: ['house', 'acid'],
-		titleContains: 'mate i jure',
-		youtubeChannelId: undefined,
-		yearRange: {
-			lowerBound: 1990,
-			upperBound: 1998
-		}
-	},
-	searchQuery: 'mate i frane'
-}
-
 export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 
 	const styles = useStyles()
 	const form = useFormik({
-		initialValues: testInitialValues,
+		enableReinitialize: true,
+		initialValues: props.values,
 		onSubmit: () => { }
 	})
 	useEffect(() => {
-		const { dataSource, fields, searchQuery } = form.values
-		const mapped = {
-			fields: dataSource === 'MusicDb' ? fields : undefined,
-			searchQuery: dataSource === 'MusicDb' ? searchQuery : undefined,
-		}
-		props.onChange(mapped)
+		props.onChange(form.values)
 	}, [form.values])
 
 	return (
@@ -75,7 +56,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 			{form.values.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.fields!}
+					input={form.values.musicDbParams!}
 					onChange={value => form.setFieldValue('fields', value)}
 				/>
 			} 

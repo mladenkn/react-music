@@ -102,7 +102,7 @@ export const HomeUI = (p: HomeProps) => {
   return (
       <div className={clsx(classes.root, p.className)}>
         <TrackQueryFormUi
-          form={logic.queryForm}
+          values={logic.queryForm}
           className={classes.form} 
           onChange={logic.setQueryForm} 
         />
