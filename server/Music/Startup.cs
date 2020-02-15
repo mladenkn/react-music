@@ -7,7 +7,6 @@ using Google.Apis.YouTube.v3;
 using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,7 +48,7 @@ namespace Music
                 return database;
             });
 
-            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=localhost;Initial Catalog=Music;Integrated Security=True"));
+            services.AddDbContext<MusicDbContext>(MusicDbContext.Configure);
             services.AddTransient<DataPersistor>();
 
             services.AddSwaggerGen(c =>

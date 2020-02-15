@@ -12,9 +12,12 @@ namespace Music.DataAccess
 
         public DbSet<TrackUserPropsTag> TrackTags { get; set; }
 
-        public MusicDbContext(DbContextOptions<MusicDbContext> o) : base(o)
+        public static void Configure(DbContextOptionsBuilder options)
         {
-            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            options
+                .UseSqlServer("Data Source=localhost;Initial Catalog=Music;Integrated Security=True")
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                ;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
