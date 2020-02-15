@@ -22,7 +22,7 @@ namespace Music.Domain.QueryTracksViaYoutube
         {
             var searchYoutubeVideosIds = Resolve<SearchYoutubeVideosIds>();
             var wantedTracksYtIds = (await searchYoutubeVideosIds(searchQuery)).ToArray();
-            await Resolve<PersistYouTubeVideosExecutor>().Execute(wantedTracksYtIds);
+            await Resolve<TryPersistYouTubeVideosExecutor>().Execute(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;
         }

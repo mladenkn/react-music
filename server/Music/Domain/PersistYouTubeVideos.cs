@@ -12,16 +12,16 @@ using Utilities;
 
 namespace Music.Domain
 {
-    public class PersistYouTubeVideosExecutor : ServiceResolverAware<MusicDbContext>
+    public class TryPersistYouTubeVideosExecutor : ServiceResolverAware<MusicDbContext>
     {
-        public PersistYouTubeVideosExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
+        public TryPersistYouTubeVideosExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task Execute(IEnumerable<string> wantedVideosIds)
+        public async Task<IEnumerable<string>> Execute(IEnumerable<string> wantedVideosIds)
         {
-            var notFoundVideosIds = await FilterToUnknownVideosIds(wantedVideosIds);
-            var videosFromYt = await GetVideosFromYoutube(notFoundVideosIds.ToArray());
+            var unknownVideosIds = await FilterToUnknownVideosIds(wantedVideosIds);
+            var videosFromYt = await GetVideosFromYoutube(unknownVideosIds.ToArray());
 
             foreach (var videoFromYt in videosFromYt)
             {
@@ -39,6 +39,9 @@ namespace Music.Domain
 
             var dataPersistor = Resolve<DataPersistor>();
             await dataPersistor.InsertYoutubeVideos(videosFromYtMapped);
+
+            var notFoundVideosIds = wantedVideosIds.Except(videosFromYt.Select(v => v.Id));
+            return notFoundVideosIds;
         }
 
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)

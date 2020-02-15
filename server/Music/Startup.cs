@@ -72,7 +72,7 @@ namespace Music
             services.AddTransient<QueryTracksExecutor>();
             services.AddTransient<QueryTracksViaYoutubeExecutor>();
             services.AddTransient<SaveTrackYoutubeExecutor>();
-            services.AddTransient<PersistYouTubeVideosExecutor>();
+            services.AddTransient<TryPersistYouTubeVideosExecutor>();
 
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
 

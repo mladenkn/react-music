@@ -193,7 +193,7 @@ namespace Music.Domain
                 },
                 new SaveTrackModel
                 {
-                    TrackYtId = "https://www.discogs.com/Drexciya-Drexciya-2-Bubble-Metropolis/master/588",
+                    TrackYtId = "https://www.youtube.com/watch?v=5k6wmU8kTg4",
                     Tags = new[] { "electro" },
                     Year = 2019
                 },
@@ -205,7 +205,7 @@ namespace Music.Domain
                 },
                 new SaveTrackModel
                 {
-                    TrackYtId = "https://www.discogs.com/YS-Perfumed-Garden/release/161187",
+                    TrackYtId = "https://www.youtube.com/watch?v=Olo6QhMSnqo&t=562s",
                     Tags = new[] { "techno", "downtempo", "ambient" },
                     Year = 1994
                 },
@@ -217,13 +217,13 @@ namespace Music.Domain
                 },
                 new SaveTrackModel
                 {
-                    TrackYtId = "https://www.discogs.com/Sven-V%C3%A4th-Dein-Schweiss/master/37243",
+                    TrackYtId = "https://www.youtube.com/watch?v=9ra0Bgf04FE",
                     Tags = new[] { "techno", },
                     Year = 1999
                 },
                 new SaveTrackModel
                 {
-                    TrackYtId = "https://www.discogs.com/Niels-Van-Gogh-Pulverturm/master/83697",
+                    TrackYtId = "https://www.youtube.com/watch?v=PcIJ58chDdA",
                     Tags = new[] { "trance", },
                     Year = 1998
                 },
@@ -331,7 +331,7 @@ namespace Music.Domain
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.TrackYtId);
-            await serviceProvider.GetRequiredService<PersistYouTubeVideosExecutor>().Execute(trackYouTubeVideoIds);
+            var notFoundVideos = await serviceProvider.GetRequiredService<TryPersistYouTubeVideosExecutor>().Execute(trackYouTubeVideoIds);
 
             foreach (var track in tracks)
             {
