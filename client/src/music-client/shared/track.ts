@@ -31,8 +31,8 @@ export interface TrackEditableProps {
 }
 
 export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
-  discogsSearchUrl: '',
-  youtubeVideoUrl: t.youtubeVideoId,
+  discogsSearchUrl: `https://www.discogs.com/search/?q=${t.title}&type=all`,
+  youtubeVideoUrl: `https://www.youtube.com/watch?v=${t.youtubeVideoId}`,
   canEdit: true,
   canFetchRecommendations: true,
   canPlay: true,

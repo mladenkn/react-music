@@ -1,8 +1,8 @@
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
+const { app, BrowserWindow, shell } = require('electron')
 
 let mainWindow
+
+console.log('music-electron')
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -12,7 +12,7 @@ function createWindow() {
       nodeIntegration: true,
     },
     icon: __dirname + '/music.png'
-})
+  })
 
   const appUrl = 'http://localhost:3000';
 
@@ -21,6 +21,14 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  function handleLinkClick(event, url){
+    event.preventDefault()
+    shell.openExternal(url)
+  }
+
+  mainWindow.webContents.on('will-navigate', handleLinkClick)
+  mainWindow.webContents.on('new-window', handleLinkClick)
 }
 
 app.on('ready', createWindow)
