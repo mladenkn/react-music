@@ -20,9 +20,9 @@ namespace Music.Domain
 
         public string YoutubeChannelId { get; set; }
 
-        public IEnumerable<string> MustHaveEveryTag { get; set; }
+        public IReadOnlyCollection<string> MustHaveEveryTag { get; set; }
 
-        public IEnumerable<string> MustHaveAnyTag { get; set; }
+        public IReadOnlyCollection<string> MustHaveAnyTag { get; set; }
 
         public Range<int> YearRange { get; set; }
     }
@@ -39,21 +39,25 @@ namespace Music.Domain
 
             var query = Db.TrackUserProps.Where(t => t.UserId == userId);
 
-            if (req.TitleContains != null)
+            if (!string.IsNullOrEmpty(req.TitleContains))
                 query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));
 
-            if(req.YoutubeChannelId != null)
+            if(!string.IsNullOrEmpty(req.YoutubeChannelId))
                 query = query.Where(t => t.YoutubeVideo.YoutubeChannelId == req.YoutubeChannelId);
 
-            if (req.MustHaveAnyTag != null)
+            if (req.MustHaveAnyTag != null && req.MustHaveAnyTag.Count > 0)
                 query = query.Where(t => t.TrackTags.Any(trackTag => req.MustHaveAnyTag.Contains(trackTag.Value)));
 
-            if (req.MustHaveEveryTag != null)
+            if (req.MustHaveEveryTag != null && req.MustHaveEveryTag.Count > 0)
                 query = query.Where(t => t.TrackTags.All(trackTag => req.MustHaveEveryTag.Contains(trackTag.Value)));
 
             if (req.YearRange != null)
-                query = query.Where(t => t.Year >= req.YearRange.LowerBound &&
-                                             t.Year < req.YearRange.UpperBound);
+            {
+                if (req.YearRange.LowerBound > 0)
+                    query = query.Where(t => t.Year >= req.YearRange.LowerBound);
+                if (req.YearRange.UpperBound != 0)
+                    query = query.Where(t => t.Year < req.YearRange.UpperBound);
+            }
 
             var result = await query
                 .Select(TrackModel.FromTrackUserProps)

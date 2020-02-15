@@ -46,10 +46,10 @@ export const InlineRangeElement = (props: Props) => {
   
   const onPropChange = (name: keyof Range<number>) => (event: {target: {value: string}}) => {
     const value = parseInt(event.target.value)
-    const newValue = { ...props.value, [name]: value };
+    const newValue = { ...props.value, [name]: value || undefined };
     props.onChange(newValue);
   };
-
+ 
   return (
     <ElementBase className={clsx(classes.base, props.className)} onRemove={props.onRemove}>
       <>

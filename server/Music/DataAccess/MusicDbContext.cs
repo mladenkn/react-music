@@ -12,6 +12,10 @@ namespace Music.DataAccess
 
         public DbSet<TrackUserPropsTag> TrackTags { get; set; }
 
+        public MusicDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         public static void Configure(DbContextOptionsBuilder options)
         {
             options
@@ -19,7 +23,6 @@ namespace Music.DataAccess
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
                 ;
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<YoutubeVideo>()

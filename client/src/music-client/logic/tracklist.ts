@@ -3,7 +3,8 @@ import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
-import { TrackQueryForm, createInitialTrackQueryForm, TrackQueryFormDataSource } from "../shared/trackQueryForm";
+import { TrackQueryForm, TrackQueryFormDataSource } from "../shared/trackQueryForm";
+import { useDebouncedCallback } from 'use-debounce';
 
 export interface Tracklist {
   queryForm: TrackQueryForm
@@ -51,8 +52,13 @@ export const useTracklistLogic = (): Tracklist => {
   })
 
   useEffect(() => {
-    fetch(state.queryForm)
+    refetchOnChange()
   }, [state.queryForm])
+
+  const [refetchOnChange] = useDebouncedCallback(
+    () => fetch(state.queryForm),
+    700
+  )
 
   async function fetch(form: TrackQueryForm){
     if(form.dataSource === TrackQueryFormDataSource.MusicDb){
