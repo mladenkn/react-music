@@ -25,7 +25,8 @@ const useStyles = makeStyles(
 			marginTop: ems(1),
 		},
 		searchQueryField: {
-			marginTop: ems(1)
+			marginTop: ems(1),
+			maxWidth: percent(83),
 		},
 	}), {name: 'TrackQueryFormUi'}
 )
