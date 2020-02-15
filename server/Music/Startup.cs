@@ -49,7 +49,7 @@ namespace Music
                 return database;
             });
 
-            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"));
+            services.AddDbContext<MusicDbContext>(o => o.UseSqlServer($"Data Source=localhost;Initial Catalog=Music;Integrated Security=True"));
             services.AddTransient<DataPersistor>();
 
             services.AddSwaggerGen(c =>
@@ -58,7 +58,7 @@ namespace Music
             });
             services.AddAutoMapper(typeof(YoutubeVideoMapperProfile).Assembly);
             services.AddTransient<HttpClient>();
-            services.AddTransient<IBrowsingContext>(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
+            services.AddTransient(sp => BrowsingContext.New(AngleSharp.Configuration.Default));
 
             services.AddTransient<YouTubeService>(_ => new YouTubeService(new BaseClientService.Initializer
                 {

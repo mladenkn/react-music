@@ -25,7 +25,7 @@ namespace Music.DataAccess
                 ;
 
             modelBuilder.Entity<TrackUserPropsTag>()
-                .HasKey(trackUserPropsTags => trackUserPropsTags.Value)
+                .HasKey(trackUserPropsTags => new { trackUserPropsTags.TrackUserPropsId, trackUserPropsTags.Value })
                 ;
 
             modelBuilder.Entity<User>()

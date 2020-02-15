@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music.DataAccess;
 using Music.DataAccess.Models;
+using Music.Domain;
 
 namespace Music
 {
@@ -15,14 +16,10 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var db = serviceScope.ServiceProvider.GetRequiredService<MusicDbContext>();
 
-            //db.Database.EnsureDeleted();
+            db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            db.Add(new User
-            {
-                Email = "mladen.knezovic.1993@gmail.com",
-            });
-            db.SaveChanges();
+            Initializer.Initialize(serviceScope.ServiceProvider).Wait();
 
             host.Run();
         }
