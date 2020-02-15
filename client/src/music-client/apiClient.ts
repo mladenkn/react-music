@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Paging } from "./shared";
 import { ArrayWithTotalCount } from "../utils/types";
-import { MusicDbTrackQueryParamas } from "./shared/trackQueryForm";
+import { MusicDbTrackQueryParams } from "./shared/trackQueryForm";
 import { Track } from "./shared/track";
 
 let baseUrl: string;
@@ -19,7 +19,7 @@ export const fetchFromYouTube = async (searchQuery: string) => {
   return r;
 };
 
-export const fetchFromMusicDb = async (query: MusicDbTrackQueryParamas & Paging) => {
+export const fetchFromMusicDb = async (query: MusicDbTrackQueryParams & Paging) => {
   const r = await axios.get<ArrayWithTotalCount<Track>>(
     `${baseUrl}tracks`, { params: query }
   );

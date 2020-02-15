@@ -7,7 +7,7 @@ export enum TrackQueryFormDataSource {
 
 export interface TrackQueryForm {
   dataSource: TrackQueryFormDataSource
-  musicDbParams?: MusicDbTrackQueryParamas
+  musicDbParams?: MusicDbTrackQueryParams
   searchQuery?: string
   autoRefresh: boolean
 }
@@ -25,7 +25,7 @@ export const createInitialTrackQueryForm = (): TrackQueryForm => ({
   autoRefresh: true,
 })
 
-export interface MusicDbTrackQueryParamas {
+export interface MusicDbTrackQueryParams {
   titleContains: string
   youtubeChannelId?: string
   mustHaveEveryTag: string[]

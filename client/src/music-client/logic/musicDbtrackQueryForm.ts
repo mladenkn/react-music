@@ -1,12 +1,12 @@
-import { MusicDbTrackQueryParamas } from "../shared/trackQueryForm";
+import { MusicDbTrackQueryParams } from "../shared/trackQueryForm";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { difference } from 'lodash'
 
-type Field = keyof MusicDbTrackQueryParamas
+type Field = keyof MusicDbTrackQueryParams
 
 interface MusicDbTrackQueryFormLogic {
-	values: MusicDbTrackQueryParamas
+	values: MusicDbTrackQueryParams
 	inactiveFields: Field[]
 	availableTags: string[]
 	isFieldActive(fieldName: Field): boolean
@@ -16,13 +16,13 @@ interface MusicDbTrackQueryFormLogic {
 }
 
 interface MusicDbTrackQueryFormLogicProps {
-	values: MusicDbTrackQueryParamas
-	onChange: (values: MusicDbTrackQueryParamas) => void
+	values: MusicDbTrackQueryParams
+	onChange: (values: MusicDbTrackQueryParams) => void
 }
 
 const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange']
 
-const getInitialActiveFields = (params: MusicDbTrackQueryParamas) => {
+const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 	const result: Field[] = []
 
 	if(params.mustHaveAnyTag && params.mustHaveAnyTag.length > 0)
