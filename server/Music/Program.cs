@@ -1,8 +1,9 @@
+using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music.DataAccess;
-using Music.DataAccess.Models;
 using Music.Domain;
 
 namespace Music
@@ -12,16 +13,19 @@ namespace Music
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            //Initialize(host).Wait();
+            host.Run();
+        }
 
+        public static async Task Initialize(IHost host)
+        {
             using var serviceScope = host.Services.CreateScope();
             var db = serviceScope.ServiceProvider.GetRequiredService<MusicDbContext>();
 
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
+            await db.Database.EnsureDeletedAsync();
+            await db.Database.EnsureCreatedAsync();
 
-            Initializer.Initialize(serviceScope.ServiceProvider).Wait();
-
-            host.Run();
+            await Initializer.Initialize(serviceScope.ServiceProvider);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
