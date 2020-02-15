@@ -21,14 +21,6 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
-
-  function handleLinkClick(event, url){
-    event.preventDefault()
-    shell.openExternal(url)
-  }
-
-  mainWindow.webContents.on('will-navigate', handleLinkClick)
-  mainWindow.webContents.on('new-window', handleLinkClick)
 }
 
 app.on('ready', createWindow)
@@ -44,3 +36,12 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+app.on('web-contents-created', (e, webContents) => {
+  webContents.on('will-navigate', (event, url) => {
+    if(url.startsWith('http')){
+      event.preventDefault()
+      shell.openExternal(url)
+    }    
+  })
+});
