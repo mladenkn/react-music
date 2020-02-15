@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     color: colors.grey[800],
     fontSize: ems(1.2),
     marginLeft: percent(12),
-    marginBottom: ems(0.8)
+    marginBottom: ems(0.3)
   },
   field: {
     width: percent(100)
