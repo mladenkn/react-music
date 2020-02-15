@@ -2,7 +2,7 @@ import React from "react";
 import { ChipListElement } from "./ChipListElement";
 import { InlineRangeElement } from "./InlineRangeElement";
 import AddIcon from "@material-ui/icons/Add";
-import { Menu, MenuItem, Fab, TextField } from "@material-ui/core";
+import { Menu, MenuItem, Fab } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
 import { MusicDbTrackQueryParamas } from "../../shared/trackQueryForm";
@@ -10,6 +10,7 @@ import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm
 import { ElementBase } from "./ElementBase";
 import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
+import { TextField } from "./TextField";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
@@ -108,14 +109,13 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
           />
         )}
 
-        {isFieldActive('titleContains') &&
-          <ElementBase className={styles.titleContainsField} onRemove={() => setFieldInactive('titleContains')}>
-            <TextField 
-              label='Title contains'
-              value={values.titleContains}
-              onChange={onFieldChange("titleContains")}          
-            />
-          </ElementBase>
+        {isFieldActive('titleContains') &&          
+          <TextField 
+            onRemove={() => setFieldInactive('titleContains')}
+            label='Title contains'
+            value={values.titleContains}
+            onChange={onFieldChange("titleContains")}
+          />
         }
       </div>
       <Fab 
