@@ -58,7 +58,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
 					input={form.values.musicDbParams!}
-					onChange={value => form.setFieldValue('fields', value)}
+					onChange={value => form.setFieldValue('musicDbParams', value)}
 				/>
 			} 
 			{form.values.dataSource === 'YouTube' &&

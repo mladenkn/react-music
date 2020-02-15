@@ -33,7 +33,7 @@ const trackQueryFormTestInitialValues: TrackQueryForm = {
 	musicDbParams: {
 		mustHaveAnyTag: ['trance', 'techno'],
 		mustHaveEveryTag: ['house', 'acid'],
-		titleContains: 'mate i jure',
+		titleContains: '',
 		youtubeChannelId: undefined,
 		yearRange: {
 			lowerBound: 1990,
