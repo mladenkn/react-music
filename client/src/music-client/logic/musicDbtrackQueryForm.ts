@@ -22,19 +22,22 @@ interface MusicDbTrackQueryFormLogicProps {
 
 const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange']
 
-// const getInitialActiveFields = (fields: MusicDbTrackQueryForm) => {
-// 	const result: Field[] = []
-// 	if(!fields.mustHaveAnyTag && fields.mustHaveAnyTag !== [])
-// 		result.push('mustHaveAnyTag')	
-// 	if(!fields.mustHaveEveryTag && fields.mustHaveEveryTag !== [])
-// 		result.push('mustHaveEveryTag')	
-// 	if(!fields.titleContains && fields.titleContains !== '')
-// 		result.push('titleContains')
-// 	if(!fields.yearRange && fields.yearRange !== '')
-// 		result.push('titleContains')
+const getInitialActiveFields = (params: MusicDbTrackQueryParamas) => {
+	const result: Field[] = []
+
+	if(params.mustHaveAnyTag && params.mustHaveAnyTag.length > 0)
+		result.push('mustHaveAnyTag')	
+	if(params.mustHaveEveryTag && params.mustHaveEveryTag.length > 0)
+		result.push('mustHaveEveryTag')	
+	if(params.titleContains && params.titleContains !== '')
+		result.push('titleContains')
+	if(params.yearRange && Object.entries(params.yearRange).length > 0)
+		result.push('yearRange')
+	if(params.youtubeChannelId)
+		result.push('youtubeChannelId')
 	
-// 	return result;
-// }
+	return result;
+}
 
 const getFieldDefaultValue = (field: Field) => {
 	switch (field) {
@@ -58,7 +61,7 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 		onSubmit: () => { }
 	})
 
-	const [activeFields, setActiveFields] = useState<Field[]>([])
+	const [activeFields, setActiveFields] = useState<Field[]>(getInitialActiveFields(props.values))
 
 	useEffect(() => {
 		props.onChange(form.values)
@@ -86,8 +89,6 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	const inactiveFields = difference(allFields, activeFields)
 	
   const availableTags = ['trance', 'techno', 'house', 'acid']
-
-	console.log({inactiveFields})
 
 	return { values: form.values, availableTags, inactiveFields, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
 }
