@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Kernel;
+using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Utilities;
 
@@ -25,17 +26,7 @@ namespace Music.DataAccess
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<YoutubeVideo>()
-                .HasMany(v => v.TrackUserProps)
-                .WithOne(t => t.YoutubeVideo)
-                ;
-
-            modelBuilder.Entity<TrackUserPropsTag>()
-                .HasKey(trackUserPropsTags => new { trackUserPropsTags.TrackUserPropsId, trackUserPropsTags.Value })
-                ;
-
-            modelBuilder.Entity<User>()
-                ;
+            modelBuilder.ConfigureEntities(typeof(YoutubeVideo).Assembly);
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {

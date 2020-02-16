@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Kernel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Music.DataAccess.Models
 {
+    [DatabaseEntity]
     public class YoutubeVideo
     {
         [Required]
@@ -39,6 +42,14 @@ namespace Music.DataAccess.Models
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
 
         public IReadOnlyCollection<TrackUserProps> TrackUserProps { get; set; }
+
+        public static void Configure(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<YoutubeVideo>()
+                .HasMany(v => v.TrackUserProps)
+                .WithOne(t => t.YoutubeVideo)
+                ;
+        }
     }
 
     public class YoutubeChannel

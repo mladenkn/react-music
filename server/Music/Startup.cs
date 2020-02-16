@@ -15,7 +15,6 @@ using Music.Api;
 using Music.DataAccess;
 using Music.Domain;
 using Music.Domain.PersistYoutubeVideos;
-using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
@@ -79,8 +78,8 @@ namespace Music
                         var parameters = m.GetParameters();
                         return m.Name == "Configure" &&
                                m.IsStatic &&
-                               parameters.Length == 1 && 
-                               parameters.Single().ParameterType != typeof(IServiceCollection);
+                               parameters.Length == 1 &&
+                               parameters.Single().ParameterType.IsAssignableFrom(typeof(IServiceCollection));
                     });
                     if (configureMethod != null)
                         configureMethod.Invoke(null, new object[]{ services });

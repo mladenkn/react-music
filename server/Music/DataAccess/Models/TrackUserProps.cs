@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Kernel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Music.DataAccess.Models
 {
+    [DatabaseEntity]
     public class TrackUserProps
     {
         [Required]
@@ -23,6 +26,7 @@ namespace Music.DataAccess.Models
         public IReadOnlyCollection<TrackUserPropsTag> TrackTags { get; set; }
     }
 
+    [DatabaseEntity]
     public class TrackUserPropsTag
     {
         [Required]
@@ -30,5 +34,12 @@ namespace Music.DataAccess.Models
 
         [Required]
         public string Value { get; set; }
+
+        public static void Configure(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TrackUserPropsTag>()
+                .HasKey(trackUserPropsTags => new { trackUserPropsTags.TrackUserPropsId, trackUserPropsTags.Value })
+                ;
+        }
     }
 }
