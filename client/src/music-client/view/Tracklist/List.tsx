@@ -30,31 +30,33 @@ const useTrackListStyles = makeStyles(() => ({
   },
 }), {name: 'TrackList'})
 
-export const TrackListUI = (p: TrackListProps) => {
-  const classes = useTrackListStyles()
-  const onScroll = createOnScrollListener(({isOnBottom}) => {
+export const TrackListUI = (props: TrackListProps) => {
+  const classes = useTrackListStyles()  
+  
+  const onScroll = createOnScrollListener(({isOnBottom, scrollTop}) => {
     if(isOnBottom)
-      p.onScrollToBottom()
+      props.onScrollToBottom()
   })
+
   return (
-    <div className={p.className}>
-      {p.tracksTotalCount ?
+    <div className={props.className}>
+      {props.tracksTotalCount ?
         <Typography className={classes.trackCount}>
-          Showing {p.tracks.length} of {p.tracksTotalCount}
+          Showing {props.tracks.length} of {props.tracksTotalCount}
         </Typography> :
         ''
       }
-      <List className={clsx(classes.list, p.listClassName)} onScroll={onScroll} disablePadding>
-        {p.tracks.map(t => (
+      <List className={clsx(classes.list, props.listClassName)} onScroll={onScroll} disablePadding>
+        {props.tracks.map(t => (
           <ListItem disableGutters key={t.youtubeVideoId}>
             <TrackUI 
-              fetchRecommendationsOf={p.fetchRecommendationsOf} 
+              fetchRecommendationsOf={props.fetchRecommendationsOf} 
               track={t} 
-              onPlay={() => p.onPlayTrack(t.youtubeVideoId)} 
-              onSave={editedProps => p.onSaveTrack({...editedProps, id: t.youtubeVideoId})} 
-              onClick={() => p.onItemClick(t.youtubeVideoId)}
+              onPlay={() => props.onPlayTrack(t.youtubeVideoId)} 
+              onSave={editedProps => props.onSaveTrack({...editedProps, id: t.youtubeVideoId})} 
+              onClick={() => props.onItemClick(t.youtubeVideoId)}
               isFocused={t.isSelected}
-              classes={p.trackClasses}
+              classes={props.trackClasses}
             />
           </ListItem>
         ))}

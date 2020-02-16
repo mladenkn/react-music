@@ -45,6 +45,10 @@ export const useTracklistLogic = (): Tracklist => {
   )
 
   async function fetch(form: TrackQueryForm){
+    updateState(draft => {
+      draft.fromYouTube = undefined
+      draft.fromMusicDb = undefined
+    })
     if(form.dataSource === TrackQueryFormDataSource.MusicDb){
       const { data } = await tracksApi.fetchFromMusicDb({ ...form.musicDbParams!, skip: 0, take: pageSize })
       updateState(draft => {

@@ -68,41 +68,15 @@ export const HomeUI = (p: HomeProps) => {
 
   console.log(logic)
 
-  const TrackList = () => {
+  function getTracks(){
+    const beforeMap = logic.fromMusicDb ? logic.fromMusicDb.data : logic.fromYouTube!
+    return beforeMap.map(track => mapToTrackViewModel(track, logic.selectedTrackId))
+  }
+  const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
 
-    if(logic.fromMusicDb || logic.fromYouTube){
-      const tracks = (
-        logic.fromMusicDb ? 
-          logic.fromMusicDb.data : 
-          logic.fromYouTube!
-        )
-        .map(track => mapToTrackViewModel(track, logic.selectedTrackId))
-
-      const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
-
-      const onScrollToBottom = () => {
-        if(logic.queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
-          logic.fetchTracksNextPage()
-      }
-
-      return (
-        <div className={classes.results}>  
-          <TrackListUI                     
-            className={classes.trackListRoot} 
-            listClassName={classes.trackListList}
-            tracks={tracks} 
-            tracksTotalCount={tracksTotalCount}
-            onPlayTrack={logic.setCurrentTrack}
-            onSaveTrack={() => {}}
-            onItemClick={logic.onTrackClick}
-            fetchRecommendationsOf={() => {}}
-            onScrollToBottom={onScrollToBottom}
-          />
-        </div> 
-      )
-    }
-    else
-      return <div>Loading...</div>
+  const onScrollToBottom = () => {
+    if(logic.queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
+      logic.fetchTracksNextPage()
   }
 
   return (
@@ -112,7 +86,21 @@ export const HomeUI = (p: HomeProps) => {
           className={classes.form} 
           onChange={logic.setQueryForm} 
         />
-        <TrackList />
+        {(logic.fromMusicDb || logic.fromYouTube) && (
+          <div className={classes.results}>  
+            <TrackListUI                     
+              className={classes.trackListRoot} 
+              listClassName={classes.trackListList}
+              tracks={getTracks()} 
+              tracksTotalCount={tracksTotalCount}
+              onPlayTrack={logic.setCurrentTrack}
+              onSaveTrack={() => {}}
+              onItemClick={logic.onTrackClick}
+              fetchRecommendationsOf={() => {}}
+              onScrollToBottom={onScrollToBottom}
+            />
+          </div> 
+        )}
         <TrackPlayerUI 
           width={380}
           height={215}
