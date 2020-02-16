@@ -41,15 +41,7 @@ namespace Music
 
             services.AddControllers(o => o.Filters.Add(new ExceptionToHttpResponseMapper()));
 
-            services.AddSingleton<IMongoDatabase>(_ =>
-            {
-                var client = new MongoClient("mongodb://localhost:27017");
-                var database = client.GetDatabase("music");
-                return database;
-            });
-
             services.AddDbContext<MusicDbContext>(MusicDbContext.Configure);
-            services.AddTransient<DataPersistor>();
 
             services.AddSwaggerGen(c =>
             {
@@ -64,20 +56,25 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-            services.AddTransient<QueryTracksViaYoutubeServices>();
             services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
             services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
-
-            services.AddTransient<QueryTracksExecutor>();
-            services.AddTransient<QueryTracksViaYoutubeExecutor>();
-            services.AddTransient<SaveTrackYoutubeExecutor>();
-            services.AddTransient<TryPersistYouTubeVideosExecutor>();
-
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
+            AddServiceResolverAwares(services);
 
             services.AddElmah();
 
             _reconfigureServices?.Invoke(services);
+        }
+
+        public void AddServiceResolverAwares(IServiceCollection services)
+        {
+            var assembly = typeof(QueryTracksExecutor).Assembly;
+
+            foreach (var type in assembly.GetTypes())
+            {
+                if (type.IsSubclassOf(typeof(ServiceResolverAware)))
+                    services.AddTransient(type);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

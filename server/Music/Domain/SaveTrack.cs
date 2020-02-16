@@ -17,7 +17,7 @@ namespace Music.Domain
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class SaveTrackYoutubeExecutor : RequestExecutor
+    public class SaveTrackYoutubeExecutor : ServiceResolverAware
     {
         public SaveTrackYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +8,11 @@ using Utilities;
 
 namespace Music.DataAccess
 {
-    public class DataPersistor
+    public class DataPersistor : ServiceResolverAware
     {
         private readonly MusicDbContext _db;
 
-        public DataPersistor(MusicDbContext db)
+        public DataPersistor(MusicDbContext db, IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _db = db;
         }

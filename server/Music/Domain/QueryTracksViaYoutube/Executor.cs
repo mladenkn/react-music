@@ -7,7 +7,7 @@ using Music.Domain.Shared;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class QueryTracksViaYoutubeExecutor : RequestExecutor
+    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
     {
         public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

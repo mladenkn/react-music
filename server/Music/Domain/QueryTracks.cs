@@ -25,7 +25,7 @@ namespace Music.Domain
         public Range<int> YearRange { get; set; }
     }
 
-    public class QueryTracksExecutor : RequestExecutor
+    public class QueryTracksExecutor : ServiceResolverAware
     {
         public QueryTracksExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

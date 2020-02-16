@@ -11,7 +11,7 @@ using Utilities;
 
 namespace Music.Domain
 {
-    public class TryPersistYouTubeVideosExecutor : RequestExecutor
+    public class TryPersistYouTubeVideosExecutor : ServiceResolverAware
     {
         public TryPersistYouTubeVideosExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
