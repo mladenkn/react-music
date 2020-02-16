@@ -77,9 +77,10 @@ namespace Music
                     var configureMethod = type.GetMethods().FirstOrDefault(m =>
                     {
                         var parameters = m.GetParameters();
-                        if (!(m.Name == "Configure" && parameters.Length == 1 && m.IsStatic))
-                            return false;
-                        return parameters.Single().ParameterType == typeof(IServiceCollection);
+                        return m.Name == "Configure" &&
+                               m.IsStatic &&
+                               parameters.Length == 1 && 
+                               parameters.Single().ParameterType != typeof(IServiceCollection);
                     });
                     if (configureMethod != null)
                         configureMethod.Invoke(null, new object[]{ services });
