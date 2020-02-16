@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net.Http;
 using AngleSharp;
 using AutoMapper;
@@ -10,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MongoDB.Driver;
 using Music.Api;
 using Music.DataAccess;
 using Music.Domain;
@@ -57,8 +57,6 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-            services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
-            services.AddDelegateTransient<ListYoutubeVideos, PersistYoutubeVideosServices>(s => s.ListYoutubeVideos);
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
             AddServiceResolverAwares(services);
 
@@ -70,11 +68,22 @@ namespace Music
         public void AddServiceResolverAwares(IServiceCollection services)
         {
             var assembly = typeof(QueryTracksExecutor).Assembly;
-
+            
             foreach (var type in assembly.GetTypes())
             {
                 if (type.IsSubclassOf(typeof(ServiceResolverAware)))
+                {
                     services.AddTransient(type);
+                    var configureMethod = type.GetMethods().FirstOrDefault(m =>
+                    {
+                        var parameters = m.GetParameters();
+                        if (!(m.Name == "Configure" && parameters.Length == 1 && m.IsStatic))
+                            return false;
+                        return parameters.Single().ParameterType == typeof(IServiceCollection);
+                    });
+                    if (configureMethod != null)
+                        configureMethod.Invoke(null, new object[]{ services });
+                }
             }
         }
 

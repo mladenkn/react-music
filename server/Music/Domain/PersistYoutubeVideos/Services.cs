@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Music.Domain.PersistYoutubeVideos
 {
@@ -24,6 +26,11 @@ namespace Music.Domain.PersistYoutubeVideos
             request.Id = idsAsOneString;
             var result = await request.ExecuteAsync();
             return result.Items.ToList();
+        }
+
+        public static void Configure(IServiceCollection services)
+        {
+            services.AddDelegateTransient<ListYoutubeVideos, PersistYoutubeVideosServices>(s => s.ListYoutubeVideos);
         }
     }
 }

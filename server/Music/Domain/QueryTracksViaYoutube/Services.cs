@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp;
+using Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
@@ -34,6 +36,11 @@ namespace Music.Domain.QueryTracksViaYoutube
                 .Select(url => url.Substring(beforeIdUrlContent.Length));
 
             return urls;
+        }
+
+        public static void Configure(IServiceCollection services)
+        {
+            services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
         }
     }
 }
