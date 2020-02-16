@@ -1,15 +1,15 @@
-﻿using Google.Apis.YouTube.v3.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Google.Apis.YouTube.v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess;
 using Music.DataAccess.Models;
 using Music.Domain.QueryTracksViaYoutube;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Utilities;
 
-namespace Music.Domain
+namespace Music.Domain.PersistYoutubeVideos
 {
     public class PersistYouTubeVideosIfFoundExecutor : ServiceResolverAware
     {

@@ -4,7 +4,7 @@ using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
 using Music.DataAccess.Models;
 
-namespace Music.Domain.QueryTracksViaYoutube
+namespace Music.Domain.PersistYoutubeVideos
 {
     public class YoutubeVideoMapperProfile : Profile
     {

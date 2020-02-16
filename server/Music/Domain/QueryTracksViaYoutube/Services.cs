@@ -4,13 +4,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AngleSharp;
-using Google.Apis.YouTube.v3;
-using Google.Apis.YouTube.v3.Data;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
     public delegate Task<IEnumerable<string>> SearchYoutubeVideosIds(string searchQuery);
-    public delegate Task<IReadOnlyCollection<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids);
 
     public class QueryTracksViaYoutubeServices : ServiceResolverAware
     {
@@ -37,17 +34,6 @@ namespace Music.Domain.QueryTracksViaYoutube
                 .Select(url => url.Substring(beforeIdUrlContent.Length));
 
             return urls;
-        }
-
-        public async Task<IReadOnlyCollection<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids)
-        {
-            var partsAsOneString = string.Join(",", parts);
-            var idsAsOneString = string.Join(",", ids);
-            var ytService = Resolve<YouTubeService>();
-            var request = ytService.Videos.List(partsAsOneString);
-            request.Id = idsAsOneString;
-            var result = await request.ExecuteAsync();
-            return result.Items.ToList();
         }
     }
 }

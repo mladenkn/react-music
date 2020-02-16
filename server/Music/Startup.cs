@@ -14,6 +14,7 @@ using MongoDB.Driver;
 using Music.Api;
 using Music.DataAccess;
 using Music.Domain;
+using Music.Domain.PersistYoutubeVideos;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -57,7 +58,7 @@ namespace Music
                 }
             ));
             services.AddDelegateTransient<SearchYoutubeVideosIds, QueryTracksViaYoutubeServices>(s => s.SearchYoutubeVideosIds);
-            services.AddDelegateTransient<ListYoutubeVideos, QueryTracksViaYoutubeServices>(s => s.ListYoutubeVideos);
+            services.AddDelegateTransient<ListYoutubeVideos, PersistYoutubeVideosServices>(s => s.ListYoutubeVideos);
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
             AddServiceResolverAwares(services);
 
