@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Kernel;
 using Microsoft.AspNetCore.Mvc;
-using Music.DataAccess;
 using Music.Domain;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
@@ -13,7 +11,7 @@ namespace Music.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TracksController : ServiceResolverAware<MusicDbContext>
+    public class TracksController : ServiceResolverAware
     {
         public TracksController(IServiceProvider serviceProvider) : base(serviceProvider)
         {

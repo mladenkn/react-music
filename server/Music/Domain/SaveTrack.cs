@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Kernel;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
 
@@ -19,7 +17,7 @@ namespace Music.Domain
         public IReadOnlyCollection<string> Tags { get; set; }
     }
 
-    public class SaveTrackYoutubeExecutor : ServiceResolverAware<MusicDbContext>
+    public class SaveTrackYoutubeExecutor : RequestExecutor
     {
         public SaveTrackYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

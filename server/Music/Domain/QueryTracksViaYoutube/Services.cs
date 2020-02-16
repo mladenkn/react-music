@@ -14,7 +14,7 @@ namespace Music.Domain.QueryTracksViaYoutube
     public delegate Task<IEnumerable<string>> SearchYoutubeVideosIds(string searchQuery);
     public delegate Task<IReadOnlyCollection<Video>> ListYoutubeVideos(IEnumerable<string> parts, IEnumerable<string> ids);
 
-    public class QueryTracksViaYoutubeServices : ServiceResolverAware<MusicDbContext>
+    public class QueryTracksViaYoutubeServices : RequestExecutor
     {
         public QueryTracksViaYoutubeServices(IServiceProvider serviceProvider) : base(serviceProvider)
         {

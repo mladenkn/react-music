@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper.QueryableExtensions;
 using Kernel;
-using Microsoft.EntityFrameworkCore;
-using Music.DataAccess;
 using Music.Domain.Shared;
 using Utilities;
 
@@ -28,7 +25,7 @@ namespace Music.Domain
         public Range<int> YearRange { get; set; }
     }
 
-    public class QueryTracksExecutor : ServiceResolverAware<MusicDbContext>
+    public class QueryTracksExecutor : RequestExecutor
     {
         public QueryTracksExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

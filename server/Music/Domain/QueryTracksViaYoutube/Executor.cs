@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Google.Apis.YouTube.v3.Data;
-using Kernel;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess;
-using Music.DataAccess.Models;
 using Music.Domain.Shared;
-using Utilities;
 
 namespace Music.Domain.QueryTracksViaYoutube
 {
-    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware<MusicDbContext>
+    public class QueryTracksViaYoutubeExecutor : RequestExecutor
     {
         public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {

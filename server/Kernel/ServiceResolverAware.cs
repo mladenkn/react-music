@@ -23,4 +23,11 @@ namespace Kernel
 
         protected TService Resolve<TService>() => _serviceProvider.GetRequiredService<TService>();
     }
+
+    public abstract class RequestExecutor<TDbContext> : ServiceResolverAware<TDbContext> where TDbContext : DbContext
+    {
+        protected RequestExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+    }
 }

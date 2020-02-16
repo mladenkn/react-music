@@ -1,5 +1,4 @@
 ﻿using Google.Apis.YouTube.v3.Data;
-using Kernel;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess;
 using Music.DataAccess.Models;
@@ -12,7 +11,7 @@ using Utilities;
 
 namespace Music.Domain
 {
-    public class TryPersistYouTubeVideosExecutor : ServiceResolverAware<MusicDbContext>
+    public class TryPersistYouTubeVideosExecutor : RequestExecutor
     {
         public TryPersistYouTubeVideosExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
         {
