@@ -331,7 +331,7 @@ namespace Music.Domain
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.TrackYtId);
-            var notFoundVideos = await serviceProvider.GetRequiredService<TryPersistYouTubeVideosExecutor>().Execute(trackYouTubeVideoIds);
+            var notFoundVideos = await serviceProvider.GetRequiredService<PersistYouTubeVideosIfFoundExecutor>().Execute(trackYouTubeVideoIds);
 
             foreach (var track in tracks)
             {
