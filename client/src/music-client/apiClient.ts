@@ -2,7 +2,7 @@ import axios from "axios";
 import { Paging } from "./shared";
 import { ArrayWithTotalCount } from "../utils/types";
 import { MusicDbTrackQueryParams } from "./shared/trackQueryForm";
-import { Track } from "./shared/track";
+import { Track, SaveTrackModel } from "./shared/track";
 import qs from 'qs'
 
 let baseUrl: string;
@@ -37,8 +37,8 @@ export const fetchRelated = (
   throw new Error("fetchRelatedTracks not implemented");
 };
 
-export const save = async (data: Track) => {
-  await axios.post(`${baseUrl}tracks`, data);
+export const save = (data: SaveTrackModel, query: MusicDbTrackQueryParams & Paging) => {
+  return axios.post<ArrayWithTotalCount<Track>>(`${baseUrl}tracks`, { ...data, ...query });
 };
 
 export const tracksApi = {

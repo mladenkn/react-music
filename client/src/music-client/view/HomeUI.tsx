@@ -81,7 +81,7 @@ export const HomeUI = (p: HomeProps) => {
         />
         {logic.tracks && (
           <div className={classes.results}>  
-            <TrackListUI                     
+            <TrackListUI
               className={classes.trackListRoot} 
               listClassName={classes.trackListList}
               tracks={logic.tracks} 
@@ -91,6 +91,7 @@ export const HomeUI = (p: HomeProps) => {
               onItemClick={logic.onTrackClick}
               fetchRecommendationsOf={() => {}}
               onScrollToBottom={onScrollToBottom}
+              saveTrack={logic.saveTrack}
             />
           </div> 
         )}

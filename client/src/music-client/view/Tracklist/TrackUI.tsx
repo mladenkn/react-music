@@ -15,7 +15,7 @@ import recommendationUrl from '../icons/recommendation2.png'
 import { Link } from "../../../utils/view";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
-import { TrackViewModel, TrackEditableProps } from "../../shared/track";
+import { TrackViewModel, TrackEditableProps, Track } from "../../shared/track";
 
 const styles = createStyles({
   paper: {
@@ -84,6 +84,7 @@ type ItemProps = {
   fetchRecommendationsOf: (trackId: string) => void
   onClick: () => void
   isFocused: boolean
+  saveTrack(t: Track): Promise<void>
 } & WithStyles<typeof styles>
 
 export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>

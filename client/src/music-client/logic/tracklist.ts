@@ -81,7 +81,24 @@ export const useTracklistLogic = (): Tracklist => {
   }
 
   function saveTrack(t: Track) {
-    return tracksApi.save(t)
+    const query = { ...state.queryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
+    const saveModel = {
+      trackYtId: t.youtubeVideoId,
+      tags: t.tags,
+      year: t.year
+    }
+    return new Promise<void>((resolve, reject) => {
+      tracksApi.save(saveModel, query)
+        .then(response => {
+          resolve()
+          updateState(draft => {
+            draft.fromMusicDb = response.data
+          })
+        })
+        .catch(() => {
+          reject()
+        })
+    })    
   }
   
   function onTrackClick(trackYoutubeId: string) {

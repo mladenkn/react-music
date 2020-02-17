@@ -4,7 +4,7 @@ import { TrackUI, TrackUIClasses } from "./TrackUI"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
-import { TrackViewModel, TrackEditableProps } from "../../shared/track";
+import { TrackViewModel, TrackEditableProps, Track } from "../../shared/track";
 
 interface TrackListProps {
   className?: string
@@ -17,6 +17,7 @@ interface TrackListProps {
   onItemClick: (trackId: string) => void
   fetchRecommendationsOf: (trackId: string) => void
   onScrollToBottom: () => void
+  saveTrack(t: Track): Promise<void>
 }
 
 const useTrackListStyles = makeStyles(() => ({
@@ -57,6 +58,7 @@ export const TrackListUI = (props: TrackListProps) => {
               onClick={() => props.onItemClick(t.youtubeVideoId)}
               isFocused={t.isSelected}
               classes={props.trackClasses}
+              saveTrack={props.saveTrack}
             />
           </ListItem>
         ))}
