@@ -53,7 +53,7 @@ export const TrackEditablePropsEditUI = (p: Props) => {
         className={classes.year} 
         label='Year' 
         type='number' 
-        value={p.track.year} 
+        value={p.track.year || ''} 
         onChange={e => {
           p.onChange({ tags: p.track.tags, year: parseInt(e.target.value) })
         }}

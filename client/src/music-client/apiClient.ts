@@ -37,7 +37,7 @@ export const fetchRelated = (
   throw new Error("fetchRelatedTracks not implemented");
 };
 
-export const save = (data: SaveTrackModel, query: MusicDbTrackQueryParams & Paging) => {
+export const save = (data: SaveTrackModel, query?: MusicDbTrackQueryParams & Paging) => {
   return axios.post<ArrayWithTotalCount<Track>>(`${baseUrl}tracks`, { ...data, query });
 };
 

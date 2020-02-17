@@ -80,20 +80,38 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  function saveTrack(t: SaveTrackModel) {
-    const query = { ...state.queryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
-    return new Promise<void>((resolve, reject) => {
-      tracksApi.save(t, query)
-        .then(response => {
-          resolve()
-          updateState(draft => {
-            draft.fromMusicDb = response.data
+  function saveTrack(track: SaveTrackModel) { 
+    if(state.queryForm.dataSource === TrackQueryFormDataSource.MusicDb){
+      const query = { ...state.queryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
+      return new Promise<void>((resolve, reject) => {
+        tracksApi.save(track, query)
+          .then(response => {
+            resolve()
+            updateState(draft => {
+              draft.fromMusicDb = response.data
+            })
           })
-        })
-        .catch(() => {
-          reject()
-        })
-    })    
+          .catch(() => {
+            reject()
+          })
+      })
+    }
+    else {
+      return new Promise<void>((resolve, reject) => {
+        tracksApi.save(track)
+          .then(() => {
+            resolve()
+            updateState(draft => {
+              const track_ = draft.fromYouTube!.find(t => t.youtubeVideoId === track.trackYtId)!
+              track_.tags = track.tags
+              track_.year = track.year
+            })
+          })
+          .catch(() => {
+            reject()
+          })
+      })
+    }
   }
   
   function onTrackClick(trackYoutubeId: string) {
