@@ -1,4 +1,4 @@
-import { Track } from "../shared/track";
+import { Track, SaveTrackModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
@@ -14,7 +14,7 @@ export interface Tracklist {
   currentTrackYoutubeId?: string
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
-  saveTrack(t: Track): Promise<void>
+  saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   setCurrentTrack(trackYoutubeId: string): void
 }
@@ -80,15 +80,10 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  function saveTrack(t: Track) {
+  function saveTrack(t: SaveTrackModel) {
     const query = { ...state.queryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
-    const saveModel = {
-      trackYtId: t.youtubeVideoId,
-      tags: t.tags,
-      year: t.year
-    }
     return new Promise<void>((resolve, reject) => {
-      tracksApi.save(saveModel, query)
+      tracksApi.save(t, query)
         .then(response => {
           resolve()
           updateState(draft => {

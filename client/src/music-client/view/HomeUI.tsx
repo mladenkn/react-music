@@ -87,7 +87,6 @@ export const HomeUI = (p: HomeProps) => {
               tracks={logic.tracks} 
               tracksTotalCount={logic.tracksTotalCount}
               onPlayTrack={logic.setCurrentTrack}
-              onSaveTrack={() => {}}
               onItemClick={logic.onTrackClick}
               fetchRecommendationsOf={() => {}}
               onScrollToBottom={onScrollToBottom}

@@ -80,16 +80,15 @@ type ItemProps = {
   className?: string
   track: TrackViewModel
   onPlay: () => void
-  onSave: (t: TrackEditableProps) => void
   fetchRecommendationsOf: (trackId: string) => void
   onClick: () => void
   isFocused: boolean
-  saveTrack(t: Track): Promise<void>
+  saveTrack(t: TrackEditableProps): Promise<void>
 } & WithStyles<typeof styles>
 
 export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 
-const useLogic = (onFinsihEdit: (t: TrackEditableProps) => void, trackInitial: TrackViewModel) => {
+const useLogic = (onFinsihEdit: (t: TrackEditableProps) => Promise<void>, trackInitial: TrackViewModel) => {
   const [isEdit, setIsEdit] = useState(false)
   const [descriptionModalOpen, setDescriptionModalOpen] = useState(false)
   // const form = useFormLogicWithState(trackInitial.editableProps)
@@ -106,9 +105,7 @@ const useLogic = (onFinsihEdit: (t: TrackEditableProps) => void, trackInitial: T
 }
  
 const TrackUI_ = (p: ItemProps) => {
-  const logic = useLogic(p.onSave, p.track)
-  if(!p.track.youtubeChannelTitle)
-    console.log(p.track)
+  const logic = useLogic(p.saveTrack, p.track)
 	return (
     <Fragment>
       <Card className={p.classes.paper} onClick={p.onClick} raised={p.isFocused}>
