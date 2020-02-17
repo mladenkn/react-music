@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Kernel;
 using Music.Domain.Shared;
@@ -47,9 +48,15 @@ namespace Music.Domain
             //var mustHaveEveryTag = req.MustHaveEveryTag?.ToArray();
             //if (mustHaveEveryTag != null && mustHaveEveryTag.Length > 0)
             //    query = query.Where(t => mustHaveEveryTag.All(requiredTag => t.TrackTags.Any(tt => tt.Value == requiredTag)));
-            
+
             //if (req.MustHaveEveryTag != null && req.MustHaveEveryTag.Count > 0)
             //    query = query.Where(t => t.TrackTags.Any(tt => tt.Value == req.MustHaveEveryTag.First()));
+
+            if (req.MustHaveEveryTag != null)
+            {
+                foreach (var reqTag in req.MustHaveEveryTag)
+                    query = query.Where(t => t.TrackTags.Any(tt => tt.Value == reqTag));
+            }
 
             if (req.YearRange != null)
             {
@@ -68,16 +75,7 @@ namespace Music.Domain
                     .Take(req.Take)
                 );
 
-            if (req.MustHaveEveryTag != null && req.MustHaveEveryTag.Count > 0)
-            {
-                var refilteredInMemory = result.Data.Where(track =>
-                    req.MustHaveEveryTag.All(requestedTag => track.Tags.Contains(requestedTag))
-                ).ToArray();
-                var newTotalCount = result.TotalCount - result.Data.Length + refilteredInMemory.Length;
-                return new ArrayWithTotalCount<TrackModel>(refilteredInMemory, newTotalCount);
-            }
-            else
-                return result;
+            return result;
         }
     }
 }
