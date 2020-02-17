@@ -336,7 +336,7 @@ namespace Music.Domain
 
             foreach (var track in tracks)
             {
-                var executor = serviceProvider.GetRequiredService<SaveTrackYoutubeExecutor>();
+                var executor = serviceProvider.GetRequiredService<SaveTrackExecutor>();
                 await executor.Execute(track);
             }
         }

@@ -33,6 +33,6 @@ namespace Music.Api.Controllers
 
         [HttpPost]
         public Task Save([FromBody]SaveTrackModel trackProps) => 
-            Resolve<SaveTrackYoutubeExecutor>().Execute(trackProps);
+            Resolve<SaveTrackExecutor>().Execute(trackProps);
     }
 }
