@@ -32,7 +32,7 @@ namespace Music.Api.Controllers
         }
 
         [HttpPost]
-        public Task Save([FromBody]SaveTrackModel trackProps) => 
+        public Task<ArrayWithTotalCount<TrackModel>> Save([FromBody]SaveTrackRequest trackProps) => 
             Resolve<SaveTrackExecutor>().Execute(trackProps);
     }
 }

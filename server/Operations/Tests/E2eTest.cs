@@ -17,6 +17,7 @@ using Moq;
 using Music;
 using Music.DataAccess;
 using Music.DataAccess.Models;
+using Music.Domain.PersistYoutubeVideos;
 using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
 using Utilities;

@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
+using Utilities;
 
 namespace Music.Domain
 {
-    public class SaveTrackModel
+    public class SaveTrackRequest
     {
         public string TrackYtId { get; set; }
 
         public int? Year { get; set; }
 
         public IReadOnlyCollection<string> Tags { get; set; }
+
+        public QueryTracksRequest Query { get; set; }
     }
 
     public class SaveTrackExecutor : ServiceResolverAware
@@ -23,14 +26,14 @@ namespace Music.Domain
         {
         }
 
-        public async Task Execute(SaveTrackModel saveModel)
+        public async Task<ArrayWithTotalCount<TrackModel>> Execute(SaveTrackRequest req)
         {
             var track = await Db.TrackUserProps
-                .FirstOrDefaultAsync(t => t.YoutubeVideoId == saveModel.TrackYtId);
+                .FirstOrDefaultAsync(t => t.YoutubeVideoId == req.TrackYtId);
 
             var currentUserContext = Resolve<ICurrentUserContext>();
 
-            var newTags = saveModel.Tags
+            var newTags = req.Tags
                 .Select(t => new TrackUserPropsTag { TrackUserPropsId = track?.Id ?? 0, Value = t })
                 .ToArray();
 
@@ -39,7 +42,7 @@ namespace Music.Domain
                 if (currentUserContext.Id != track.UserId)
                     throw new ApplicationException("Trying to update other users track.");
 
-                track.Year = saveModel.Year;
+                track.Year = req.Year;
                 Db.TrackUserProps.Update(track);
 
                 var tagsToDelete = await Db.TrackTags.Where(t => t.TrackUserPropsId == track.Id).ToArrayAsync();
@@ -55,12 +58,17 @@ namespace Music.Domain
                 {
                     TrackTags = newTags,
                     UserId = currentUserContext.Id,
-                    Year = saveModel.Year,
-                    YoutubeVideoId = saveModel.TrackYtId,
+                    Year = req.Year,
+                    YoutubeVideoId = req.TrackYtId,
                 };
                 Db.Add(newTrack);
                 await Db.SaveChangesAsync();
             }
+
+            if (req.Query != null)
+                return await Resolve<QueryTracksExecutor>().Execute(req.Query);
+            else
+                return null;
         }
     }
 }

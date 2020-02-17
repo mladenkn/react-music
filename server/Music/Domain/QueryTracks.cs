@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kernel;
@@ -8,23 +7,6 @@ using Utilities;
 
 namespace Music.Domain
 {
-    public class QueryTracksRequest
-    {
-        public int Skip { get; set; }
-
-        public int Take { get; set; }
-
-        public string TitleContains { get; set; }
-
-        public string YoutubeChannelId { get; set; }
-
-        public IReadOnlyCollection<string> MustHaveEveryTag { get; set; }
-
-        public IReadOnlyCollection<string> MustHaveAnyTag { get; set; }
-
-        public Range<int> YearRange { get; set; }
-    }
-
     public class QueryTracksExecutor : ServiceResolverAware
     {
         public QueryTracksExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
