@@ -6,7 +6,6 @@ import { ems, percent } from "../../utils/css";
 import { TrackQueryFormUi } from "./TrackQueryForm";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
-import { mapToTrackViewModel } from "../shared/track";
 import { TrackQueryFormDataSource } from "../shared/trackQueryForm";
  
 const useHomeStyles = makeStyles(() => ({
@@ -68,12 +67,6 @@ export const HomeUI = (p: HomeProps) => {
 
   console.log(logic)
 
-  function getTracks(){
-    const beforeMap = logic.fromMusicDb ? logic.fromMusicDb.data : logic.fromYouTube!
-    return beforeMap.map(track => mapToTrackViewModel(track, logic.selectedTrackId))
-  }
-  const tracksTotalCount = logic.fromMusicDb && logic.fromMusicDb.totalCount
-
   const onScrollToBottom = () => {
     if(logic.queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
       logic.fetchTracksNextPage()
@@ -86,13 +79,13 @@ export const HomeUI = (p: HomeProps) => {
           className={classes.form} 
           onChange={logic.setQueryForm} 
         />
-        {(logic.fromMusicDb || logic.fromYouTube) && (
+        {logic.tracks && (
           <div className={classes.results}>  
             <TrackListUI                     
               className={classes.trackListRoot} 
               listClassName={classes.trackListList}
-              tracks={getTracks()} 
-              tracksTotalCount={tracksTotalCount}
+              tracks={logic.tracks} 
+              tracksTotalCount={logic.tracksTotalCount}
               onPlayTrack={logic.setCurrentTrack}
               onSaveTrack={() => {}}
               onItemClick={logic.onTrackClick}
