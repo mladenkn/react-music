@@ -61,6 +61,7 @@ namespace Music.Domain
             }
 
             var result = await query
+                .OrderByDescending(t => t.InsertedAt)
                 .Select(TrackModel.FromTrackUserProps)
                 .ToArrayWithTotalCount(q => q
                     .Skip(req.Skip)

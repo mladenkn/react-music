@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,8 @@ namespace Music.DataAccess.Models
         public int? Year { get; set; }
 
         public IReadOnlyCollection<TrackUserPropsTag> TrackTags { get; set; }
+
+        [Required] public DateTime InsertedAt { get; set; }
     }
 
     [DatabaseEntity]

@@ -60,6 +60,7 @@ namespace Music.Domain
                     UserId = currentUserContext.Id,
                     Year = req.Year,
                     YoutubeVideoId = req.TrackYtId,
+                    InsertedAt = DateTime.Now
                 };
                 Db.Add(newTrack);
                 await Db.SaveChangesAsync();
