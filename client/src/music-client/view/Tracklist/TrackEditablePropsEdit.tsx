@@ -25,29 +25,39 @@ const useItemEditablePropsEditStyles = makeStyles(() => ({
 interface Props {
 	className?: string
   textClassName?: string
+  track: TrackEditableProps
+  onChange(track: TrackEditableProps): void
 }
 
 export const TrackEditablePropsEditUI = (p: Props) => {
   const classes = useItemEditablePropsEditStyles()
-  // const { input, onPropChange } = p.formLogic
+
+  function onPropChange(key: keyof TrackEditableProps){
+    p.onChange({...p.track})
+  }
+
 	return (
 		<div className={clsx(classes.root, p.className)}>
-      {/* <ChipInput
+      <ChipInput
         className={clsx(classes.chipList, classes.tags)}
         classes={{
           chip: classes.chipListPropChip,
         }}
         label='Tags'
-        value={input.tags} 
-        onChange={onPropChange('tags')}
+        value={p.track.tags} 
+        onChange={tags => {
+          p.onChange({ tags, year: p.track.year })
+        }}
       />
       <TextField 
         className={classes.year} 
         label='Year' 
         type='number' 
-        value={input.year} 
-        onChange={onPropChange('year')} 
-      /> */}
+        value={p.track.year} 
+        onChange={e => {
+          p.onChange({ tags: p.track.tags, year: parseInt(e.target.value) })
+        }}
+      />
 		</div>
 	)
 }

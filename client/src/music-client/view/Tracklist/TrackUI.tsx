@@ -16,6 +16,7 @@ import { Link } from "../../../utils/view";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
 import { TrackViewModel, TrackEditableProps, Track } from "../../shared/track";
+import { useImmer } from "use-immer";
 
 const styles = createStyles({
   paper: {
@@ -88,24 +89,49 @@ type ItemProps = {
 
 export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 
-const useLogic = (onFinsihEdit: (t: TrackEditableProps) => Promise<void>, trackInitial: TrackViewModel) => {
-  const [isEdit, setIsEdit] = useState(false)
-  const [descriptionModalOpen, setDescriptionModalOpen] = useState(false)
-  // const form = useFormLogicWithState(trackInitial.editableProps)
-  const triggerEdit = () => setIsEdit(true)
-  const finishEdit = () => {
-    // onFinsihEdit(form.input)
-    // setIsEdit(false) // !!!!
+const useLogic = (onFinsihEdit: (t: TrackEditableProps) => Promise<void>, initial: TrackEditableProps) => {
+  const [state, updateState] = useImmer({
+    isEdit: false,
+    descriptionModalOpen: false,
+    editedProps: initial
+  })
+
+  const triggerEdit = () => updateState(draft => {
+    draft.isEdit = true
+  });  
+  const cancelEdit = () => updateState(draft => {
+    draft.isEdit = false
+  });
+
+  const finishEdit = async () => {
+    await onFinsihEdit(state.editedProps!);
+    updateState(draft => {
+      draft.isEdit = false
+    })
   }
-  const cancelEdit = () => {
-    setIsEdit(false)
+  const setEditedProps = (editedProps: TrackEditableProps) => updateState(draft => {
+    draft.editedProps = editedProps
+  });
+
+  const toogleDescriptionModalOpen = () => updateState(draft => {
+    draft.descriptionModalOpen = !draft.descriptionModalOpen  
+  });
+
+  return { 
+    editedProps: state.editedProps,
+    isEdit: state.isEdit, 
+    setEditedProps, 
+    triggerEdit, 
+    finishEdit, 
+    cancelEdit, 
+    descriptionModalOpen: state.descriptionModalOpen, 
+    toogleDescriptionModalOpen 
   }
-  const toogleDescriptionModalOpen = () => setDescriptionModalOpen(!descriptionModalOpen)
-  return { isEdit, triggerEdit, finishEdit, cancelEdit, descriptionModalOpen, toogleDescriptionModalOpen }
 }
  
 const TrackUI_ = (p: ItemProps) => {
   const logic = useLogic(p.saveTrack, p.track)
+
 	return (
     <Fragment>
       <Card className={p.classes.paper} onClick={p.onClick} raised={p.isFocused}>
@@ -120,6 +146,8 @@ const TrackUI_ = (p: ItemProps) => {
                 <Typography className={p.classes.normalFontSize}>{p.track.youtubeChannelTitle}</Typography>
                 {logic.isEdit ?
                   <TrackEditablePropsEditUI
+                    onChange={logic.setEditedProps}
+                    track={logic.editedProps!}
                     className={p.classes.propsEdit} 
                     textClassName={p.classes.normalFontSize}
                   /> : 

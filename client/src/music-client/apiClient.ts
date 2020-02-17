@@ -38,7 +38,7 @@ export const fetchRelated = (
 };
 
 export const save = (data: SaveTrackModel, query: MusicDbTrackQueryParams & Paging) => {
-  return axios.post<ArrayWithTotalCount<Track>>(`${baseUrl}tracks`, { ...data, ...query });
+  return axios.post<ArrayWithTotalCount<Track>>(`${baseUrl}tracks`, { ...data, query });
 };
 
 export const tracksApi = {
