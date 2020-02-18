@@ -59,11 +59,6 @@ namespace Utilities
             return Batch(source, size, x => x);
         }
 
-        public static IEnumerable<TElement> Randomize<TElement>(this IEnumerable<TElement> enumerable)
-        {
-
-        }
-
         public static IEnumerable<TResult> Batch<TSource, TResult>(this IEnumerable<TSource> source, int size,
             Func<IEnumerable<TSource>, TResult> resultSelector)
         {

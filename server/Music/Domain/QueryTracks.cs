@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Kernel;
-using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
 using Music.Domain.Shared;
 using Utilities;
@@ -22,29 +20,25 @@ namespace Music.Domain
 
             if (req.Randomize)
             {
-                var allIds = await query.Select(t => t.YoutubeVideoId).ToArrayAsync();
-                var chosenIds = allIds.Randomize().Take(req.Take);
-                var newQuery = Db.TrackUserProps.Where(t => chosenIds.Contains(t.YoutubeVideoId));
-                var result = await ExecuteQuery(newQuery, req);
+                var result = await query
+                    .OrderBy(t => Guid.NewGuid())
+                    .Select(TrackModel.FromTrackUserProps)
+                    .ToArrayWithTotalCount(q =>
+                        q.Take(req.Take)
+                    );
                 return result;
             }
             else
             {
-                var result = await ExecuteQuery(query, req);
+                var result = await query
+                    .OrderByDescending(t => t.InsertedAt)
+                    .Select(TrackModel.FromTrackUserProps)
+                    .ToArrayWithTotalCount(q => q
+                        .Skip(req.Skip)
+                        .Take(req.Take)
+                    );
                 return result;
             }
-        }
-
-        private async Task<ArrayWithTotalCount<TrackModel>> ExecuteQuery(IQueryable<TrackUserProps> query, QueryTracksRequest req)
-        {
-            var result = await query
-                .OrderByDescending(t => t.InsertedAt)
-                .Select(TrackModel.FromTrackUserProps)
-                .ToArrayWithTotalCount(q => q
-                    .Skip(req.Skip)
-                    .Take(req.Take)
-                );
-            return result;
         }
 
         private IQueryable<TrackUserProps> BuildFilter(QueryTracksRequest req)
