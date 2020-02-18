@@ -42,7 +42,7 @@ const useStyles = makeStyles(() => ({
   },
   randomize: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 }), {name: 'MusicDbTrackQueryInteractiveForm'});
 
@@ -82,7 +82,16 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
 
   return (
     <div className={clsx(p.className, styles.root)}>
-      <div className={styles.left}>      
+      <div className={styles.left}>        
+        <div className={styles.randomize}>
+          <InputLabel>Randomize:</InputLabel>
+          <Checkbox
+            checked={values.randomize}
+            color='primary'
+            onChange={e => onFieldChange('randomize')(e.target.checked)}
+          />
+        </div>
+
         {isFieldActive('mustHaveEveryTag') && (
             <ChipListElement
               label='Must have all tags'
@@ -121,17 +130,6 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             onChange={onFieldChange("titleContains")}
           />
         }
-        
-        <div className={styles.randomize}>
-          <InputLabel>Randomize:</InputLabel>
-          <Checkbox
-            checked={values.randomize}
-            color='primary'
-            onChange={e => {
-              onFieldChange('randomize')(e.target.checked);
-            }}
-          />
-        </div>
       </div>
       <Fab 
         className={styles.addPropertyButton}

@@ -78,6 +78,7 @@ export const HomeUI = (p: HomeProps) => {
           values={logic.queryForm}
           className={classes.form} 
           onChange={logic.setQueryForm} 
+          onSearch={logic.fetchTracks}
         />
         {logic.tracks && (
           <div className={classes.results}>  

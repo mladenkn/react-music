@@ -17,6 +17,7 @@ export interface Tracklist {
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   setCurrentTrack(trackYoutubeId: string): void
+  fetchTracks(): void
 }
 
 interface State {
@@ -36,15 +37,17 @@ export const useTracklistLogic = (): Tracklist => {
   })
 
   useEffect(() => {
-    refetchOnChange()
+    if(state.queryForm.autoRefresh)
+      refetchOnChange()
   }, [state.queryForm])
 
   const [refetchOnChange] = useDebouncedCallback(
-    () => fetch(state.queryForm),
+    () => fetch(),
     700
   )
 
-  async function fetch(form: TrackQueryForm){
+  async function fetch(){
+    const form = state.queryForm
     updateState(draft => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
@@ -126,5 +129,13 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  return { ...state, fetchTracksNextPage, setQueryForm, saveTrack, onTrackClick, setCurrentTrack }
+  return { 
+    ...state, 
+    fetchTracks: fetch, 
+    fetchTracksNextPage, 
+    setQueryForm, 
+    saveTrack, 
+    onTrackClick, 
+    setCurrentTrack 
+  }
 }

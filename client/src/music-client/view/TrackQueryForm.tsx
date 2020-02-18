@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { TrackQueryForm } from "../shared/trackQueryForm"
-import { Select, MenuItem, TextField, makeStyles, createStyles } from "@material-ui/core"
+import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
@@ -10,24 +10,37 @@ interface TrackQueryFormUiProps {
 	className?: string
 	values: TrackQueryForm
 	onChange: (f: TrackQueryForm) => void
+	onSearch: () => void
 }
 
 const useStyles = makeStyles(
 	() => createStyles({
 		root: {
 			display: 'flex',
-			flexDirection: 'column'
+			flexDirection: 'column',
+			height: 'fit-content',
 		},
 		dataSource: {
 			maxWidth: percent(83),
 		},
 		fields: {
-			marginTop: ems(1),
+			marginTop: ems(0.7),
 		},
 		searchQueryField: {
 			marginTop: ems(1),
 			maxWidth: percent(83),
 		},
+		autoRefresh: {
+			display: 'flex',
+			alignItems: 'center',
+			marginTop: '1.5em',
+		},
+		searchButton: {			
+			width: '7em',
+			alignSelf: 'flex-end',
+			marginTop: '1em',
+			marginRight: '3em',
+		}
 	}), {name: 'TrackQueryFormUi'}
 )
 
@@ -37,7 +50,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 	const form = useFormik({
 		enableReinitialize: true,
 		initialValues: props.values,
-		onSubmit: () => { }
+		onSubmit: () => {}
 	})
 	useEffect(() => {
 		props.onChange(form.values)
@@ -54,6 +67,16 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
+			
+			<div className={styles.autoRefresh}>
+				<InputLabel>Auto refresh:</InputLabel>
+				<Switch 
+					checked={form.values.autoRefresh} 
+					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
+					color='primary'
+				/>
+			</div>
+
 			{form.values.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
@@ -61,6 +84,7 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 					onChange={value => form.setFieldValue('musicDbParams', value)}
 				/>
 			} 
+
 			{form.values.dataSource === 'YouTube' &&
 				<TextField
 					className={styles.searchQueryField}
@@ -69,6 +93,8 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 					onChange={e => form.setFieldValue('searchQuery', e.target.value)}
 				/>
 			}
+
+			<Button className={styles.searchButton} color="primary" onClick={props.onSearch}>Search</Button>
 		</div>
 	)
 }
