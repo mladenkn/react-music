@@ -19,12 +19,14 @@ type TrackPlayerProps = {
   className?: string
   videoId: string
   playImmediately: boolean
+  onTrackEnd(): void
 } & StyleProps
 
 export const TrackPlayerUI = (p: TrackPlayerProps) => {
 	const classes = useTrackPlayerStyles(p)
 	return (
     <YouTube 
+      onEnd={p.onTrackEnd}
       videoId={p.videoId} 
       opts={{
         width: (typeof p.width === 'number' ?  p.width.toString() : p.width),
