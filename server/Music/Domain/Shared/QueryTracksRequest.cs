@@ -18,5 +18,7 @@ namespace Music.Domain.Shared
         public IReadOnlyCollection<string> MustHaveAnyTag { get; set; }
 
         public Range<int> YearRange { get; set; }
+
+        public bool Randomize { get; set; }
     }
 }
