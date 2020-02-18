@@ -23,7 +23,7 @@ const useStyles = makeStyles(
 		dataSource: {
 		},
 		fields: {
-			marginTop: ems(0.7),
+			marginTop: ems(1),
 		},
 		searchQueryField: {
 			marginTop: ems(1),
@@ -34,10 +34,8 @@ const useStyles = makeStyles(
 			alignItems: 'center',
 		},
 		searchButton: {			
-			width: '7em',
+			width: ems(5.5),
 			alignSelf: 'flex-end',
-			marginTop: '1em',
-			marginRight: '3em',
 		}
 	}), {name: 'TrackQueryFormUi'}
 )
