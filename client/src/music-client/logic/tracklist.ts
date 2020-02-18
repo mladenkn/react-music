@@ -1,4 +1,4 @@
-import { Track, SaveTrackModel } from "../shared/track";
+import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
@@ -12,12 +12,15 @@ export interface Tracklist {
   fromYouTube?: Track[]
   selectedTrackId?: string
   currentTrackYoutubeId?: string
+  tracks: TrackViewModel[] | undefined
+  tracksTotalCount?: number
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   setCurrentTrack(trackYoutubeId: string): void
   fetchTracks(): void
+  playNextTrack(): void
 }
 
 interface State {
@@ -129,13 +132,34 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
+  let tracks: TrackViewModel[] | undefined
+  if(state.fromMusicDb || state.fromYouTube){
+    const beforeMap = state.fromMusicDb ? state.fromMusicDb.data : state.fromYouTube!
+    tracks = beforeMap.map(track => mapToTrackViewModel(track, state.selectedTrackId))
+  }
+  else
+    tracks = undefined  
+
+  const tracksTotalCount = state.fromMusicDb && state.fromMusicDb.totalCount
+
+  function playNextTrack(){
+    const curTrackIndex = tracks!.findIndex(t => t.youtubeVideoId === state.currentTrackYoutubeId!)
+    const nextTrackId = tracks![curTrackIndex + 1].youtubeVideoId
+    updateState(draft => {
+      draft.currentTrackYoutubeId = nextTrackId
+    })
+  }
+
   return { 
     ...state, 
+    tracks,
+    tracksTotalCount,    
     fetchTracks: fetch, 
     fetchTracksNextPage, 
     setQueryForm, 
     saveTrack, 
     onTrackClick, 
-    setCurrentTrack 
+    setCurrentTrack,
+    playNextTrack
   }
 }

@@ -100,7 +100,7 @@ export const HomeUI = (p: HomeProps) => {
           height={215}
           playImmediately={true} 
           videoId={logic.currentTrackYoutubeId || ''} 
-          onTrackEnd={() => {}}
+          onTrackEnd={logic.playNextTrack}
         />
       </div>
   )
