@@ -33,7 +33,6 @@ const useStyles = makeStyles(
 		autoRefresh: {
 			display: 'flex',
 			alignItems: 'center',
-			marginTop: '1.5em',
 		},
 		searchButton: {			
 			width: '7em',
@@ -67,15 +66,6 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
-			
-			<div className={styles.autoRefresh}>
-				<InputLabel>Auto refresh:</InputLabel>
-				<Switch 
-					checked={form.values.autoRefresh} 
-					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
-					color='primary'
-				/>
-			</div>
 
 			{form.values.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
@@ -93,6 +83,15 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 					onChange={e => form.setFieldValue('searchQuery', e.target.value)}
 				/>
 			}
+			
+			<div className={styles.autoRefresh}>
+				<InputLabel>Auto refresh:</InputLabel>
+				<Switch 
+					checked={form.values.autoRefresh} 
+					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
+					color='primary'
+				/>
+			</div>
 
 			<Button className={styles.searchButton} color="primary" onClick={props.onSearch}>Search</Button>
 		</div>
