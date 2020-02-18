@@ -20,10 +20,10 @@ interface MusicDbTrackQueryFormLogicProps {
 	onChange: (values: MusicDbTrackQueryParams) => void
 }
 
-const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange']
+const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
 
 const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
-	const result: Field[] = []
+	const result: Field[] = ['randomize']
 
 	if(params.mustHaveAnyTag && params.mustHaveAnyTag.length > 0)
 		result.push('mustHaveAnyTag')	
@@ -49,8 +49,10 @@ const getFieldDefaultValue = (field: Field) => {
       return [];
     case "titleContains":
       return '';
-    case "yearRange":
-      return {};
+    case "randomize":
+      return true;
+		case "yearRange":
+			return {};
   }
 }
 

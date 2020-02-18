@@ -2,12 +2,12 @@ import React from "react";
 import { ChipListElement } from "./ChipListElement";
 import { InlineRangeElement } from "./InlineRangeElement";
 import AddIcon from "@material-ui/icons/Add";
-import { Menu, MenuItem, Fab } from "@material-ui/core";
+import { Menu, MenuItem, Fab, InputLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
 import { MusicDbTrackQueryParams } from "../../shared/trackQueryForm";
 import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm";
-import { ElementBase } from "./ElementBase";
+import { Checkbox } from '@material-ui/core';
 import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 import { TextField } from "./TextField";
@@ -39,7 +39,11 @@ const useStyles = makeStyles(() => ({
   addPropertyButtonIcon: {
     width: ems(1.2),
     height: ems(1.2)
-  }
+  },
+  randomize: {
+    display: 'flex',
+    alignItems: 'center'
+  },
 }), {name: 'MusicDbTrackQueryInteractiveForm'});
 
 type Field = keyof MusicDbTrackQueryParams
@@ -117,6 +121,17 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             onChange={onFieldChange("titleContains")}
           />
         }
+        
+        <div className={styles.randomize}>
+          <InputLabel>Randomize:</InputLabel>
+          <Checkbox
+            checked={values.randomize}
+            color='primary'
+            onChange={e => {
+              onFieldChange('randomize')(e.target.checked);
+            }}
+          />
+        </div>
       </div>
       <Fab 
         className={styles.addPropertyButton}

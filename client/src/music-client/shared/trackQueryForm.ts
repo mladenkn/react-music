@@ -20,7 +20,8 @@ export const createInitialTrackQueryForm = (): TrackQueryForm => ({
     mustHaveAnyTag: [],
     mustHaveEveryTag: [],
     yearRange: {        
-    }
+    },
+    randomize: true
   },
   autoRefresh: true,
 })
@@ -31,4 +32,5 @@ export interface MusicDbTrackQueryParams {
   mustHaveEveryTag: string[]
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>
+  randomize: boolean
 }
