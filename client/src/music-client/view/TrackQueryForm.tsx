@@ -21,7 +21,6 @@ const useStyles = makeStyles(
 			height: 'fit-content',
 		},
 		dataSource: {
-			maxWidth: percent(83),
 		},
 		fields: {
 			marginTop: ems(0.7),
