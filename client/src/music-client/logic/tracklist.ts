@@ -137,14 +137,13 @@ export const useTracklistLogic = (): Tracklist => {
     const beforeMap = state.fromMusicDb ? state.fromMusicDb.data : state.fromYouTube!
     tracks = beforeMap.map(track => mapToTrackViewModel(track, state.selectedTrackId))
   }
-  else
-    tracks = undefined  
 
   const tracksTotalCount = state.fromMusicDb && state.fromMusicDb.totalCount
 
   function playNextTrack(){
     const curTrackIndex = tracks!.findIndex(t => t.youtubeVideoId === state.currentTrackYoutubeId!)
-    const nextTrackId = tracks![curTrackIndex + 1].youtubeVideoId
+    const maybeNextTrack = tracks![curTrackIndex + 1]
+    const nextTrackId = maybeNextTrack ? maybeNextTrack.youtubeVideoId : tracks![0].youtubeVideoId
     updateState(draft => {
       draft.currentTrackYoutubeId = nextTrackId
     })
