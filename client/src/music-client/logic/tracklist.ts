@@ -45,21 +45,22 @@ export const useTracklistLogic = (): Tracklist => {
     700
   )
 
+  const { tracksQueryForm } = state.options
+
   async function fetch(){
-    const { tracksQueryForm: form } = state.options
     updateState(draft => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(form.dataSource === TrackQueryFormDataSource.MusicDb){
-      const { data } = await tracksApi.fetchFromMusicDb({ ...form.musicDbParams!, skip: 0, take: pageSize })
+    if(tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb){
+      const { data } = await tracksApi.fetchFromMusicDb({ ...tracksQueryForm.musicDbParams!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     }
-    else if(form.dataSource === TrackQueryFormDataSource.YouTube){
-      const { data } = await tracksApi.fetchFromYouTube(form.searchQuery!)
+    else if(tracksQueryForm.dataSource === TrackQueryFormDataSource.YouTube){
+      const { data } = await tracksApi.fetchFromYouTube(tracksQueryForm.searchQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
         draft.fromYouTube = data
@@ -69,7 +70,7 @@ export const useTracklistLogic = (): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
-    const response = await tracksApi.fetchFromMusicDb({ ...state.options.tracksQueryForm.musicDbParams!, skip, take: pageSize })
+    const response = await tracksApi.fetchFromMusicDb({ ...tracksQueryForm.musicDbParams!, skip, take: pageSize })
     updateState(draft => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
@@ -82,38 +83,21 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  function saveTrack(track: SaveTrackModel) { 
-    if(state.options.tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb){
-      const query = { ...state.options.tracksQueryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
-      return new Promise<void>((resolve, reject) => {
-        tracksApi.save(track, query)
-          .then(response => {
-            resolve()
-            updateState(draft => {
-              draft.fromMusicDb = response.data
-            })
+  function saveTrack(track: SaveTrackModel) {
+    return new Promise<void>((resolve, reject) => {
+      tracksApi.save(track)
+        .then(() => {
+          resolve()
+          updateState(draft => {
+            const track_ = (draft.fromYouTube || draft.fromMusicDb!.data).find(t => t.youtubeVideoId === track.trackYtId)!
+            track_.tags = track.tags
+            track_.year = track.year
           })
-          .catch(() => {
-            reject()
-          })
-      })
-    }
-    else {
-      return new Promise<void>((resolve, reject) => {
-        tracksApi.save(track)
-          .then(() => {
-            resolve()
-            updateState(draft => {
-              const track_ = draft.fromYouTube!.find(t => t.youtubeVideoId === track.trackYtId)!
-              track_.tags = track.tags
-              track_.year = track.year
-            })
-          })
-          .catch(() => {
-            reject()
-          })
-      })
-    }
+        })
+        .catch(() => {
+          reject()
+        })
+    })
   }
   
   function onTrackClick(trackYoutubeId: string) {
