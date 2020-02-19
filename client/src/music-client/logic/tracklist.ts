@@ -83,15 +83,47 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  function saveTrack(track: SaveTrackModel) {
+  function doesPassCurrentFilter(track: { tags: string[], year: number }){
+    if(tracksQueryForm.dataSource === TrackQueryFormDataSource.YouTube)
+      return true
+    else {
+      const filter = tracksQueryForm.musicDbParams!
+      if(filter.mustHaveAnyTag && filter.mustHaveAnyTag.length > 0){
+        const hasAny = track.tags.some(t => filter.mustHaveAnyTag.includes(t))
+        if(!hasAny)
+          return false
+      }
+      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){
+        debugger
+        const hasAll = track.tags.every(t => filter.mustHaveEveryTag.includes(t))
+        if(!hasAll)
+          return false
+      }
+      if(filter.yearRange){
+        if(filter.yearRange.lowerBound)
+          if(track.year < filter.yearRange.lowerBound)
+            return false
+        if(filter.yearRange.upperBound)
+          if(track.year > filter.yearRange.upperBound)
+            return false
+      }
+      return true
+    }
+  }
+
+  function saveTrack(editedTrackFromUser: SaveTrackModel) {
     return new Promise<void>((resolve, reject) => {
-      tracksApi.save(track)
+      tracksApi.save(editedTrackFromUser)
         .then(() => {
           resolve()
           updateState(draft => {
-            const track_ = (draft.fromYouTube || draft.fromMusicDb!.data).find(t => t.youtubeVideoId === track.trackYtId)!
-            track_.tags = track.tags
-            track_.year = track.year
+            if(doesPassCurrentFilter(editedTrackFromUser)){
+              const track_ = (draft.fromYouTube || draft.fromMusicDb!.data).find(t => t.youtubeVideoId === editedTrackFromUser.trackYtId)!
+              track_.tags = editedTrackFromUser.tags
+              track_.year = editedTrackFromUser.year
+            }
+            else
+              draft.fromMusicDb!.data = draft.fromMusicDb!.data.filter(t => t.youtubeVideoId !== editedTrackFromUser.trackYtId)
           })
         })
         .catch(() => {
