@@ -26,13 +26,16 @@ const useStyles = makeStyles(
 			marginTop: ems(1),
 		},
 		searchQueryField: {
-			marginTop: ems(1),
+			marginTop: ems(0.5),
 			maxWidth: percent(83),
 		},
 		switchInput: {
 			display: 'flex',
 			alignItems: 'center',
-		},
+    },
+    autoRefreshInput: {
+      marginTop: ems(1),
+    },
 		searchButton: {			
 			width: ems(5.5),
 			alignSelf: 'flex-end',
@@ -81,7 +84,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				/>
 			}
 			
-			<div className={styles.switchInput}>
+			<div className={clsx(styles.switchInput, styles.autoRefreshInput)}>
 				<InputLabel>Auto refresh:</InputLabel>
 				<Switch 
 					checked={form.values.autoRefresh} 
