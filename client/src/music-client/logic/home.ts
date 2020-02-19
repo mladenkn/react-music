@@ -15,6 +15,8 @@ export const useHomeLogic = () => {
   }
 
   function onCurrentTrackFinish(){
+    if(!tracklist.options.autoPlay)
+      return
     const curTrackIndex = tracklist.tracks!.findIndex(t => t.youtubeVideoId === state.currentTrackYoutubeId!)
     const maybeNextTrack = tracklist.tracks![curTrackIndex + 1]
     const nextTrackId = maybeNextTrack ? maybeNextTrack.youtubeVideoId : tracklist.tracks![0].youtubeVideoId

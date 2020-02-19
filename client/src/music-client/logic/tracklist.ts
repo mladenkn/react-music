@@ -3,25 +3,25 @@ import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
-import { TrackQueryForm, TrackQueryFormDataSource, createInitialTrackQueryForm } from "../shared/trackQueryForm";
+import { HomeSectionOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/trackQueryForm";
 import { useDebouncedCallback } from 'use-debounce';
 
 export interface Tracklist {
-  queryForm: TrackQueryForm
+  options: HomeSectionOptions
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
   tracks: TrackViewModel[] | undefined
   tracksTotalCount?: number
   fetchTracksNextPage(): void
-  setQueryForm(form: TrackQueryForm): void
+  setQueryForm(form: HomeSectionOptions): void
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   fetchTracks(): void
 }
 
 interface State {
-  queryForm: TrackQueryForm
+  options: HomeSectionOptions
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
@@ -32,13 +32,13 @@ const pageSize = 30;
 export const useTracklistLogic = (): Tracklist => {
 
   const [state, updateState] = useImmer<State>({
-    queryForm: createInitialTrackQueryForm(),
+    options: createInitialHomeSectionOptions(),
   })
 
   useEffect(() => {
-    if(state.queryForm.autoRefresh)
+    if(state.options.autoRefresh)
       refetchOnChange()
-  }, [state.queryForm])
+  }, [state.options])
 
   const [refetchOnChange] = useDebouncedCallback(
     () => fetch(),
@@ -46,20 +46,20 @@ export const useTracklistLogic = (): Tracklist => {
   )
 
   async function fetch(){
-    const form = state.queryForm
+    const options = state.options
     updateState(draft => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(form.dataSource === TrackQueryFormDataSource.MusicDb){
-      const { data } = await tracksApi.fetchFromMusicDb({ ...form.musicDbParams!, skip: 0, take: pageSize })
+    if(options.dataSource === TrackQueryFormDataSource.MusicDb){
+      const { data } = await tracksApi.fetchFromMusicDb({ ...options.musicDbParams!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     }
-    else if(form.dataSource === TrackQueryFormDataSource.YouTube){
-      const { data } = await tracksApi.fetchFromYouTube(form.searchQuery!)
+    else if(options.dataSource === TrackQueryFormDataSource.YouTube){
+      const { data } = await tracksApi.fetchFromYouTube(options.searchQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
         draft.fromYouTube = data
@@ -69,22 +69,22 @@ export const useTracklistLogic = (): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
-    const response = await tracksApi.fetchFromMusicDb({ ...state.queryForm.musicDbParams!, skip, take: pageSize })
+    const response = await tracksApi.fetchFromMusicDb({ ...state.options.musicDbParams!, skip, take: pageSize })
     updateState(draft => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
     })
   }
   
-  function setQueryForm(form: TrackQueryForm) {
+  function setQueryForm(form: HomeSectionOptions) {
     updateState(draft => {
-      draft.queryForm = form
+      draft.options = form
     })
   }
 
   function saveTrack(track: SaveTrackModel) { 
-    if(state.queryForm.dataSource === TrackQueryFormDataSource.MusicDb){
-      const query = { ...state.queryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
+    if(state.options.dataSource === TrackQueryFormDataSource.MusicDb){
+      const query = { ...state.options.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
       return new Promise<void>((resolve, reject) => {
         tracksApi.save(track, query)
           .then(response => {

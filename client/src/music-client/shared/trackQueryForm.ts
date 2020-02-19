@@ -5,14 +5,15 @@ export enum TrackQueryFormDataSource {
   YouTube = 'YouTube'
 }
 
-export interface TrackQueryForm {
+export interface HomeSectionOptions {
   dataSource: TrackQueryFormDataSource
   musicDbParams?: MusicDbTrackQueryParams
   searchQuery?: string
   autoRefresh: boolean
+  autoPlay: boolean
 }
 
-export const createInitialTrackQueryForm = (): TrackQueryForm => ({
+export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
   dataSource: TrackQueryFormDataSource.MusicDb,
   musicDbParams: {
     titleContains: '',
@@ -24,6 +25,7 @@ export const createInitialTrackQueryForm = (): TrackQueryForm => ({
     randomize: true
   },
   autoRefresh: true,
+  autoPlay: true
 })
 
 export interface MusicDbTrackQueryParams {

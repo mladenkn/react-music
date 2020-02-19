@@ -3,7 +3,7 @@ import React from 'react'
 import { TrackListUI } from "./Tracklist";
 import clsx from 'clsx'
 import { ems, percent } from "../../utils/css";
-import { TrackQueryFormUi } from "./TrackQueryForm";
+import { HomeSectionOptionsUI } from "./HomeSectionOptions";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { TrackQueryFormDataSource } from "../shared/trackQueryForm";
@@ -68,14 +68,14 @@ export const HomeUI = (p: HomeProps) => {
   console.log(logic)
 
   const onScrollToBottom = () => {
-    if(logic.queryForm.dataSource === TrackQueryFormDataSource.MusicDb && !logic.queryForm.musicDbParams!.randomize)
+    if(logic.options.dataSource === TrackQueryFormDataSource.MusicDb && !logic.options.musicDbParams!.randomize)
       logic.fetchTracksNextPage()
   }
 
   return (
       <div className={clsx(classes.root, p.className)}>
-        <TrackQueryFormUi
-          values={logic.queryForm}
+        <HomeSectionOptionsUI
+          values={logic.options}
           className={classes.form} 
           onChange={logic.setQueryForm} 
           onSearch={logic.fetchTracks}

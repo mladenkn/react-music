@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
-import { TrackQueryForm } from "../shared/trackQueryForm"
+import { HomeSectionOptions } from "../shared/trackQueryForm"
 import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
 import { ems, percent } from '../../utils/css'
 
-interface TrackQueryFormUiProps {
+interface HomeSectionOptionsUIProps {
 	className?: string
-	values: TrackQueryForm
-	onChange: (f: TrackQueryForm) => void
+	values: HomeSectionOptions
+	onChange: (f: HomeSectionOptions) => void
 	onSearch: () => void
 }
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
 			marginTop: ems(1),
 			maxWidth: percent(83),
 		},
-		autoRefresh: {
+		switchInput: {
 			display: 'flex',
 			alignItems: 'center',
 		},
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
 	}), {name: 'TrackQueryFormUi'}
 )
 
-export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
+export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 
 	const styles = useStyles()
 	const form = useFormik({
@@ -81,11 +81,20 @@ export const TrackQueryFormUi = (props: TrackQueryFormUiProps) => {
 				/>
 			}
 			
-			<div className={styles.autoRefresh}>
+			<div className={styles.switchInput}>
 				<InputLabel>Auto refresh:</InputLabel>
 				<Switch 
 					checked={form.values.autoRefresh} 
 					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
+					color='primary'
+				/>
+			</div>
+			
+			<div className={styles.switchInput}>
+				<InputLabel>Auto play:</InputLabel>
+				<Switch 
+					checked={form.values.autoPlay} 
+					onChange={e => form.setFieldValue('autoPlay', e.target.checked)}
 					color='primary'
 				/>
 			</div>
