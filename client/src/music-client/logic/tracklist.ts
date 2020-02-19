@@ -3,7 +3,7 @@ import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
-import { HomeSectionOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/trackQueryForm";
+import { HomeSectionOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 
 export interface Tracklist {
@@ -38,7 +38,7 @@ export const useTracklistLogic = (): Tracklist => {
   useEffect(() => {
     if(state.options.autoRefresh)
       refetchOnChange()
-  }, [state.options])
+  }, [state.options.tracksQueryForm])
 
   const [refetchOnChange] = useDebouncedCallback(
     () => fetch(),
@@ -46,20 +46,20 @@ export const useTracklistLogic = (): Tracklist => {
   )
 
   async function fetch(){
-    const options = state.options
+    const { tracksQueryForm: form } = state.options
     updateState(draft => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(options.dataSource === TrackQueryFormDataSource.MusicDb){
-      const { data } = await tracksApi.fetchFromMusicDb({ ...options.musicDbParams!, skip: 0, take: pageSize })
+    if(form.dataSource === TrackQueryFormDataSource.MusicDb){
+      const { data } = await tracksApi.fetchFromMusicDb({ ...form.musicDbParams!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     }
-    else if(options.dataSource === TrackQueryFormDataSource.YouTube){
-      const { data } = await tracksApi.fetchFromYouTube(options.searchQuery!)
+    else if(form.dataSource === TrackQueryFormDataSource.YouTube){
+      const { data } = await tracksApi.fetchFromYouTube(form.searchQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
         draft.fromYouTube = data
@@ -69,7 +69,7 @@ export const useTracklistLogic = (): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
-    const response = await tracksApi.fetchFromMusicDb({ ...state.options.musicDbParams!, skip, take: pageSize })
+    const response = await tracksApi.fetchFromMusicDb({ ...state.options.tracksQueryForm.musicDbParams!, skip, take: pageSize })
     updateState(draft => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
@@ -83,8 +83,8 @@ export const useTracklistLogic = (): Tracklist => {
   }
 
   function saveTrack(track: SaveTrackModel) { 
-    if(state.options.dataSource === TrackQueryFormDataSource.MusicDb){
-      const query = { ...state.options.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
+    if(state.options.tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb){
+      const query = { ...state.options.tracksQueryForm.musicDbParams!, skip: 0, take: state.fromMusicDb!.data.length }
       return new Promise<void>((resolve, reject) => {
         tracksApi.save(track, query)
           .then(response => {

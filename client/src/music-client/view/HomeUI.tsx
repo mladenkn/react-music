@@ -6,7 +6,7 @@ import { ems, percent } from "../../utils/css";
 import { HomeSectionOptionsUI } from "./HomeSectionOptions";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
-import { TrackQueryFormDataSource } from "../shared/trackQueryForm";
+import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
  
 const useHomeStyles = makeStyles(() => ({
   root: {
@@ -64,18 +64,19 @@ export interface HomeProps {
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
   const logic = useHomeLogic()
+  const { options } = logic
 
   console.log(logic)
 
   const onScrollToBottom = () => {
-    if(logic.options.dataSource === TrackQueryFormDataSource.MusicDb && !logic.options.musicDbParams!.randomize)
+    if(options.tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb && !options.tracksQueryForm.musicDbParams!.randomize)
       logic.fetchTracksNextPage()
   }
 
   return (
       <div className={clsx(classes.root, p.className)}>
         <HomeSectionOptionsUI
-          values={logic.options}
+          values={options}
           className={classes.form} 
           onChange={logic.setQueryForm} 
           onSearch={logic.fetchTracks}

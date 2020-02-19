@@ -5,7 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { Menu, MenuItem, Fab, InputLabel } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
-import { MusicDbTrackQueryParams } from "../../shared/trackQueryForm";
+import { MusicDbTrackQueryParams } from "../../shared/homeSectionOptions";
 import { useMusicDbTrackQueryFormLogic } from "../../logic/musicDbtrackQueryForm";
 import { Checkbox } from '@material-ui/core';
 import clsx from "clsx";

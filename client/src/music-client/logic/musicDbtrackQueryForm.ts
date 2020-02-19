@@ -1,4 +1,4 @@
-import { MusicDbTrackQueryParams } from "../shared/trackQueryForm";
+import { MusicDbTrackQueryParams } from "../shared/homeSectionOptions";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { difference } from 'lodash'

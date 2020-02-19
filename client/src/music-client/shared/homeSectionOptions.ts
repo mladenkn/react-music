@@ -6,23 +6,27 @@ export enum TrackQueryFormDataSource {
 }
 
 export interface HomeSectionOptions {
-  dataSource: TrackQueryFormDataSource
-  musicDbParams?: MusicDbTrackQueryParams
-  searchQuery?: string
+  tracksQueryForm: {
+    dataSource: TrackQueryFormDataSource
+    musicDbParams?: MusicDbTrackQueryParams
+    searchQuery?: string
+  }
   autoRefresh: boolean
   autoPlay: boolean
 }
 
 export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
-  dataSource: TrackQueryFormDataSource.MusicDb,
-  musicDbParams: {
-    titleContains: '',
-    youtubeChannelId: '',
-    mustHaveAnyTag: [],
-    mustHaveEveryTag: [],
-    yearRange: {        
+  tracksQueryForm: {
+    dataSource: TrackQueryFormDataSource.MusicDb,
+    musicDbParams: {
+      titleContains: '',
+      youtubeChannelId: '',
+      mustHaveAnyTag: [],
+      mustHaveEveryTag: [],
+      yearRange: {        
+      },
+      randomize: true
     },
-    randomize: true
   },
   autoRefresh: true,
   autoPlay: true
