@@ -11,16 +11,13 @@ export interface Tracklist {
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
-  currentTrackYoutubeId?: string
   tracks: TrackViewModel[] | undefined
   tracksTotalCount?: number
   fetchTracksNextPage(): void
   setQueryForm(form: TrackQueryForm): void
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
-  setCurrentTrack(trackYoutubeId: string): void
   fetchTracks(): void
-  playNextTrack(): void
 }
 
 interface State {
@@ -28,7 +25,6 @@ interface State {
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
-  currentTrackYoutubeId?: string
 }
 
 const pageSize = 30;
@@ -126,12 +122,6 @@ export const useTracklistLogic = (): Tracklist => {
     })
   }
 
-  function setCurrentTrack(trackYoutubeId: string){
-    updateState(draft => {
-      draft.currentTrackYoutubeId = trackYoutubeId
-    })
-  }
-
   let tracks: TrackViewModel[] | undefined
   if(state.fromMusicDb || state.fromYouTube){
     const beforeMap = state.fromMusicDb ? state.fromMusicDb.data : state.fromYouTube!
@@ -139,15 +129,6 @@ export const useTracklistLogic = (): Tracklist => {
   }
 
   const tracksTotalCount = state.fromMusicDb && state.fromMusicDb.totalCount
-
-  function playNextTrack(){
-    const curTrackIndex = tracks!.findIndex(t => t.youtubeVideoId === state.currentTrackYoutubeId!)
-    const maybeNextTrack = tracks![curTrackIndex + 1]
-    const nextTrackId = maybeNextTrack ? maybeNextTrack.youtubeVideoId : tracks![0].youtubeVideoId
-    updateState(draft => {
-      draft.currentTrackYoutubeId = nextTrackId
-    })
-  }
 
   return { 
     ...state, 
@@ -157,8 +138,6 @@ export const useTracklistLogic = (): Tracklist => {
     fetchTracksNextPage, 
     setQueryForm, 
     saveTrack, 
-    onTrackClick, 
-    setCurrentTrack,
-    playNextTrack
+    onTrackClick,
   }
 }
