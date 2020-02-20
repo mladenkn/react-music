@@ -1,12 +1,21 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
+import { createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 
 export const useHomeLogic = () => {
-  const tracklist = useTracklistLogic();
-
   const [state, updateState] = useImmer({
-    currentTrackYoutubeId: undefined as string | undefined
+    currentTrackYoutubeId: undefined as string | undefined,
+    options: createInitialHomeSectionOptions()
   })
+
+  const tracklist = useTracklistLogic({
+    options: state.options.tracklist,
+    onOptionsChange: tracklistOptions => {
+      updateState(draft => {
+        draft.options.tracklist = tracklistOptions
+      })
+    }
+  });
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {

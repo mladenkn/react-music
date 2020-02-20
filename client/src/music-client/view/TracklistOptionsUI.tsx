@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { HomeSectionOptions } from "../shared/homeSectionOptions"
+import { TracklistOptions } from "../shared/homeSectionOptions"
 import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
@@ -8,8 +8,8 @@ import { ems, percent } from '../../utils/css'
 
 interface HomeSectionOptionsUIProps {
 	className?: string
-	values: HomeSectionOptions
-	onChange: (f: HomeSectionOptions) => void
+	values: TracklistOptions
+	onChange: (f: TracklistOptions) => void
 	onSearch: () => void
 }
 
@@ -43,7 +43,7 @@ const useStyles = makeStyles(
 	}), {name: 'TrackQueryFormUi'}
 )
 
-export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
+export const TracklistOptionsUI = (props: HomeSectionOptionsUIProps) => {
 
 	const styles = useStyles()
 	const form = useFormik({
@@ -60,27 +60,27 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 			<Select
 				className={styles.dataSource}
 				label='Data source'
-				value={form.values.tracksQueryForm.dataSource}
-				onChange={e => form.setFieldValue('tracksQueryForm.dataSource', e.target.value)}
+				value={form.values.queryForm.dataSource}
+				onChange={e => form.setFieldValue('queryForm.dataSource', e.target.value)}
 			>
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
 
-			{form.values.tracksQueryForm.dataSource === 'MusicDb' &&
+			{form.values.queryForm.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.tracksQueryForm.musicDbParams!}
-					onChange={value => form.setFieldValue('tracksQueryForm.musicDbParams', value)}
+					input={form.values.queryForm.musicDbParams!}
+					onChange={value => form.setFieldValue('queryForm.musicDbParams', value)}
 				/>
 			} 
 
-			{form.values.tracksQueryForm.dataSource === 'YouTube' &&
+			{form.values.queryForm.dataSource === 'YouTube' &&
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'
-					value={form.values.tracksQueryForm.searchQuery!}
-					onChange={e => form.setFieldValue('tracksQueryForm.searchQuery', e.target.value)}
+					value={form.values.queryForm.searchQuery!}
+					onChange={e => form.setFieldValue('queryForm.searchQuery', e.target.value)}
 				/>
 			}
 			

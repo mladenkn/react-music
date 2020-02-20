@@ -3,7 +3,7 @@ import React from 'react'
 import { TrackListUI } from "./Tracklist";
 import clsx from 'clsx'
 import { ems, percent } from "../../utils/css";
-import { HomeSectionOptionsUI } from "./HomeSectionOptions";
+import { TracklistOptionsUI } from "./TracklistOptionsUI";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
@@ -72,43 +72,44 @@ export const HomeUI = (p: HomeProps) => {
   console.log(logic)
 
   const onScrollToBottom = () => {
-    if(options.tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb && !options.tracksQueryForm.musicDbParams!.randomize)
+    const { queryForm } = options.tracklist
+    if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb && !queryForm.musicDbParams!.randomize)
       logic.fetchTracksNextPage()
   }
 
   return (
-      <div className={clsx(classes.root, p.className)}>
-        <HomeSectionOptionsUI
-          values={options}
-          className={classes.form} 
-          onChange={logic.setQueryForm} 
-          onSearch={logic.fetchTracks}
-        />
-        {logic.tracks && (
-          <div className={classes.tracklistAndHidButton}>
-            <TrackListUI
-              className={classes.trackListRoot} 
-              listClassName={classes.trackListList}
-              tracks={logic.tracks} 
-              tracksTotalCount={logic.tracksTotalCount}
-              onPlayTrack={logic.setCurrentTrack}
-              onItemClick={logic.onTrackClick}
-              fetchRecommendationsOf={() => {}}
-              onScrollToBottom={onScrollToBottom}
-              saveTrack={logic.saveTrack}
-            />
-            <IconButton className={classes.hideTracklistButton}>              
-              <ArrorLeftIcon/>
-            </IconButton>
-          </div> 
-        )}
-        <TrackPlayerUI 
-          width={380}
-          height={215}
-          playImmediately
-          videoId={logic.currentTrackYoutubeId || ''} 
-          onTrackEnd={logic.onCurrentTrackFinish}
-        />
-      </div>
+    <div className={clsx(classes.root, p.className)}>
+      <TracklistOptionsUI
+        values={options.tracklist}
+        className={classes.form} 
+        onChange={logic.setOptions} 
+        onSearch={logic.fetchTracks}
+      />
+      {logic.tracks && (
+        <div className={classes.tracklistAndHidButton}>
+          <TrackListUI
+            className={classes.trackListRoot} 
+            listClassName={classes.trackListList}
+            tracks={logic.tracks} 
+            tracksTotalCount={logic.tracksTotalCount}
+            onPlayTrack={logic.setCurrentTrack}
+            onItemClick={logic.onTrackClick}
+            fetchRecommendationsOf={() => {}}
+            onScrollToBottom={onScrollToBottom}
+            saveTrack={logic.saveTrack}
+          />
+          <IconButton className={classes.hideTracklistButton}>              
+            <ArrorLeftIcon/>
+          </IconButton>
+        </div> 
+      )}
+      <TrackPlayerUI 
+        width={380}
+        height={215}
+        playImmediately
+        videoId={logic.currentTrackYoutubeId || ''} 
+        onTrackEnd={logic.onCurrentTrackFinish}
+      />
+    </div>
   )
 }

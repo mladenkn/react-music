@@ -3,64 +3,63 @@ import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
 import { tracksApi } from "../apiClient";
 import { useEffect } from "react";
-import { HomeSectionOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
+import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 
 export interface Tracklist {
-  options: HomeSectionOptions
+  options: TracklistOptions
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
   tracks: TrackViewModel[] | undefined
   tracksTotalCount?: number
   fetchTracksNextPage(): void
-  setQueryForm(form: HomeSectionOptions): void
+  setOptions(form: TracklistOptions): void
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   fetchTracks(): void
 }
 
 interface State {
-  options: HomeSectionOptions
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
   selectedTrackId?: string
 }
 
+interface TracklistProps {
+  options: TracklistOptions
+  onOptionsChange: (o: TracklistOptions) => void
+}
+
 const pageSize = 30;
 
-export const useTracklistLogic = (): Tracklist => {
+export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
-  const [state, updateState] = useImmer<State>({
-    options: createInitialHomeSectionOptions(),
-  })
+  const [state, updateState] = useImmer<State>({})
 
   useEffect(() => {
-    if(state.options.autoRefresh)
+    if(props.options.autoRefresh)
       refetchOnChange()
-  }, [state.options.tracksQueryForm])
+  }, [props.options.queryForm])
 
-  const [refetchOnChange] = useDebouncedCallback(
-    () => fetch(),
-    700
-  )
+  const [refetchOnChange] = useDebouncedCallback(() => fetch(), 700)
 
-  const { tracksQueryForm } = state.options
+  const { queryForm } = props.options
 
   async function fetch(){
     updateState(draft => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(tracksQueryForm.dataSource === TrackQueryFormDataSource.MusicDb){
-      const { data } = await tracksApi.fetchFromMusicDb({ ...tracksQueryForm.musicDbParams!, skip: 0, take: pageSize })
+    if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb){
+      const { data } = await tracksApi.fetchFromMusicDb({ ...queryForm.musicDbParams!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     }
-    else if(tracksQueryForm.dataSource === TrackQueryFormDataSource.YouTube){
-      const { data } = await tracksApi.fetchFromYouTube(tracksQueryForm.searchQuery!)
+    else if(queryForm.dataSource === TrackQueryFormDataSource.YouTube){
+      const { data } = await tracksApi.fetchFromYouTube(queryForm.searchQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
         draft.fromYouTube = data
@@ -70,24 +69,22 @@ export const useTracklistLogic = (): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
-    const response = await tracksApi.fetchFromMusicDb({ ...tracksQueryForm.musicDbParams!, skip, take: pageSize })
+    const response = await tracksApi.fetchFromMusicDb({ ...queryForm.musicDbParams!, skip, take: pageSize })
     updateState(draft => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
     })
   }
   
-  function setQueryForm(form: HomeSectionOptions) {
-    updateState(draft => {
-      draft.options = form
-    })
+  function setQueryForm(o: TracklistOptions) {
+    props.onOptionsChange(o)
   }
 
   function doesPassCurrentFilter(track: { tags: string[], year: number }){
-    if(tracksQueryForm.dataSource === TrackQueryFormDataSource.YouTube)
+    if(queryForm.dataSource === TrackQueryFormDataSource.YouTube)
       return true
     else {
-      const filter = tracksQueryForm.musicDbParams!
+      const filter = queryForm.musicDbParams!
       if(filter.mustHaveAnyTag && filter.mustHaveAnyTag.length > 0){
         const hasAny = track.tags.some(t => filter.mustHaveAnyTag.includes(t))
         if(!hasAny)
@@ -148,11 +145,12 @@ export const useTracklistLogic = (): Tracklist => {
 
   return { 
     ...state, 
+    options: props.options,
     tracks,
     tracksTotalCount,    
     fetchTracks: fetch, 
     fetchTracksNextPage, 
-    setQueryForm, 
+    setOptions: setQueryForm, 
     saveTrack, 
     onTrackClick,
   }
