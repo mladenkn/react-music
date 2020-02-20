@@ -7,9 +7,10 @@ import { TracklistOptionsUI } from "./TracklistOptionsUI";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
-import ArrorLeftIcon from "@material-ui/icons/ArrowLeft"
+import ArrowLeftIcon from "@material-ui/icons/ArrowLeft"
+import ArrowRightIcon from "@material-ui/icons/ArrowRight"
  
-const useHomeStyles = makeStyles(() => ({
+const useHomeStyles = makeStyles({
   root: {
     display: 'flex',
     maxWidth: ems(110),
@@ -20,7 +21,7 @@ const useHomeStyles = makeStyles(() => ({
   resultsTabs: {
     marginBottom: ems(1)    
   },
-  tracklistAndHidButton: {
+  tracklistAndHideButton: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -29,6 +30,9 @@ const useHomeStyles = makeStyles(() => ({
     fontSize: ems(1),
   },
   hideTracklistButton: {
+    height: ems(2),
+  },
+  showTracklistButton: {
     height: ems(2),
   },
   trackListList: {
@@ -58,7 +62,7 @@ const useHomeStyles = makeStyles(() => ({
     position: 'absolute',
     bottom: 0,
   },
-}), {name: 'Home'})
+}, {name: 'Home'})
  
 export interface HomeProps {
   className?: string
@@ -86,22 +90,29 @@ export const HomeUI = (p: HomeProps) => {
         onSearch={logic.fetchTracks}
       />
       {logic.tracks && (
-        <div className={classes.tracklistAndHidButton}>
-          <TrackListUI
-            className={classes.trackListRoot} 
-            listClassName={classes.trackListList}
-            tracks={logic.tracks} 
-            tracksTotalCount={logic.tracksTotalCount}
-            onPlayTrack={logic.setCurrentTrack}
-            onItemClick={logic.onTrackClick}
-            fetchRecommendationsOf={() => {}}
-            onScrollToBottom={onScrollToBottom}
-            saveTrack={logic.saveTrack}
-          />
-          <IconButton className={classes.hideTracklistButton}>              
-            <ArrorLeftIcon/>
-          </IconButton>
-        </div> 
+        <>
+          {logic.options.tracklistShown ?
+            <div className={classes.tracklistAndHideButton}>
+              <TrackListUI
+                className={classes.trackListRoot}
+                listClassName={classes.trackListList}
+                tracks={logic.tracks}
+                tracksTotalCount={logic.tracksTotalCount}
+                onPlayTrack={logic.setCurrentTrack}
+                onItemClick={logic.onTrackClick}
+                fetchRecommendationsOf={() => {}}
+                onScrollToBottom={onScrollToBottom}
+                saveTrack={logic.saveTrack}
+              />
+              <IconButton onClick={logic.toggleTracklistShown} className={classes.hideTracklistButton}>              
+                <ArrowLeftIcon/>
+              </IconButton>
+            </div> :
+            <IconButton onClick={logic.toggleTracklistShown} className={classes.showTracklistButton}>
+              <ArrowRightIcon/>
+            </IconButton>
+          }
+        </>
       )}
       <TrackPlayerUI 
         width={380}

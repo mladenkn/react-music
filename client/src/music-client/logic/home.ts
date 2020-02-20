@@ -23,6 +23,12 @@ export const useHomeLogic = () => {
     })
   }
 
+  function toggleTracklistShown(){
+    updateState(draft => {
+      draft.options.tracklistShown = !draft.options.tracklistShown
+    })
+  }
+
   function onCurrentTrackFinish(){
     if(!tracklist.options.autoPlay)
       return
@@ -34,5 +40,5 @@ export const useHomeLogic = () => {
     })
   }
 
-  return { ...tracklist, ...state, setCurrentTrack, onCurrentTrackFinish }
+  return { ...tracklist, ...state, setCurrentTrack, onCurrentTrackFinish, toggleTracklistShown }
 }
