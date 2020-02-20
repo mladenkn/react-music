@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles, IconButton } from "@material-ui/core"
 import React from 'react'
 import { TrackListUI } from "./Tracklist";
 import clsx from 'clsx'
@@ -7,26 +7,29 @@ import { HomeSectionOptionsUI } from "./HomeSectionOptions";
 import { useHomeLogic } from "../logic/home";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
+import ArrorLeftIcon from "@material-ui/icons/ArrowLeft"
  
 const useHomeStyles = makeStyles(() => ({
   root: {
     display: 'flex',
+    maxWidth: ems(110),
     justifyContent: 'space-between',
   },
   queryTabs: {
   },
-  results: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   resultsTabs: {
     marginBottom: ems(1)    
+  },
+  tracklistAndHidButton: {
+    display: 'flex',
+    alignItems: 'center',
   },
   trackListRoot: { 
     width: ems(40),
     fontSize: ems(1),
-    padding: ems(0, 1),
+  },
+  hideTracklistButton: {
+    height: ems(2),
   },
   trackListList: {
     height: '88vh',
@@ -82,7 +85,7 @@ export const HomeUI = (p: HomeProps) => {
           onSearch={logic.fetchTracks}
         />
         {logic.tracks && (
-          <div className={classes.results}>  
+          <div className={classes.tracklistAndHidButton}>
             <TrackListUI
               className={classes.trackListRoot} 
               listClassName={classes.trackListList}
@@ -94,6 +97,9 @@ export const HomeUI = (p: HomeProps) => {
               onScrollToBottom={onScrollToBottom}
               saveTrack={logic.saveTrack}
             />
+            <IconButton className={classes.hideTracklistButton}>              
+              <ArrorLeftIcon/>
+            </IconButton>
           </div> 
         )}
         <TrackPlayerUI 
