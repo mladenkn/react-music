@@ -1,7 +1,7 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { tracksApi } from "../apiClient";
+import { tracksApi } from "./tracksApi";
 import { useEffect } from "react";
 import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
@@ -55,7 +55,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
-    }
+    } 
     else if(queryForm.dataSource === TrackQueryFormDataSource.YouTube){
       const { data } = await tracksApi.fetchFromYouTube(queryForm.searchQuery!)
       updateState(draft => {
