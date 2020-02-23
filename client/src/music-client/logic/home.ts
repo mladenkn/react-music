@@ -1,6 +1,8 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
 import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
+import { useHomeSectionApi } from "../api/homeSection";
+import { useEffect } from "react";
 
 export const useHomeLogic = () => {
   const [state, updateState] = useImmer({
@@ -11,6 +13,12 @@ export const useHomeLogic = () => {
   const tracklist = useTracklistLogic({
     options: state.options.tracklist
   });
+
+  const api = useHomeSectionApi()
+
+  useEffect(() => {
+    api.saveOptions(state.options)
+  }, [state.options])
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {
