@@ -20,10 +20,9 @@ const useHomeStyles = makeStyles({
     marginBottom: ems(1)    
   },
   tracklistWrapper: {
-    width: ems(40),
+    width: ems(38),
   },
   trackListRoot: { 
-    width: ems(40),
     fontSize: ems(1),
   },
   hideTracklistButton: {
@@ -39,7 +38,6 @@ const useHomeStyles = makeStyles({
   form: {
     width: ems(24),
     fontSize: ems(1.1),
-    padding: ems(1.5, 0.5, 0),
   },
   ytForm: {
     marginTop: ems(2),
