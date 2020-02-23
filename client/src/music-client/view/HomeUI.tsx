@@ -12,12 +12,15 @@ const useHomeStyles = makeStyles({
   root: {
     display: 'flex',
     maxWidth: ems(110),
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
   },
   queryTabs: {
   },
   resultsTabs: {
     marginBottom: ems(1)    
+  },
+  tracklistWrapper: {
+    width: ems(40),
   },
   trackListRoot: { 
     width: ems(40),
@@ -83,18 +86,22 @@ export const HomeUI = (p: HomeProps) => {
         onChange={logic.setOptions} 
         onSearch={logic.fetchTracks}
       />
-      {logic.tracks && logic.options.tracklistShown && (
-        <TrackListUI
-          className={classes.trackListRoot}
-          listClassName={classes.trackListList}
-          tracks={logic.tracks}
-          tracksTotalCount={logic.tracksTotalCount}
-          onPlayTrack={logic.setCurrentTrack}
-          onItemClick={logic.onTrackClick}
-          fetchRecommendationsOf={() => {}}
-          onScrollToBottom={onScrollToBottom}
-          saveTrack={logic.saveTrack}
-        />
+      {logic.options.tracklistShown && (
+        <div className={classes.tracklistWrapper}>
+          {logic.tracks && (
+            <TrackListUI
+              className={classes.trackListRoot}
+              listClassName={classes.trackListList}
+              tracks={logic.tracks}
+              tracksTotalCount={logic.tracksTotalCount}
+              onPlayTrack={logic.setCurrentTrack}
+              onItemClick={logic.onTrackClick}
+              fetchRecommendationsOf={() => {}}
+              onScrollToBottom={onScrollToBottom}
+              saveTrack={logic.saveTrack}
+            />
+          )}
+        </div>          
       )}
       <TrackPlayerUI 
         width={380}
