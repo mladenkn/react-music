@@ -61,7 +61,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				className={styles.dataSource}
 				label='Data source'
 				value={form.values.tracklist.queryForm.dataSource}
-				onChange={e => form.setFieldValue('queryForm.dataSource', e.target.value)}
+				onChange={e => form.setFieldValue('tracklist.queryForm.dataSource', e.target.value)}
 			>
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
@@ -71,7 +71,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
 					input={form.values.tracklist.queryForm.musicDbParams!}
-					onChange={value => form.setFieldValue('queryForm.musicDbParams', value)}
+					onChange={value => form.setFieldValue('tracklist.queryForm.musicDbParams', value)}
 				/>
 			} 
 
@@ -80,7 +80,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 					className={styles.searchQueryField}
 					label='Search Query'
 					value={form.values.tracklist.queryForm.searchQuery!}
-					onChange={e => form.setFieldValue('queryForm.searchQuery', e.target.value)}
+					onChange={e => form.setFieldValue('tracklist.queryForm.searchQuery', e.target.value)}
 				/>
 			}
 			
@@ -88,7 +88,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				<InputLabel>Auto refresh:</InputLabel>
 				<Switch 
 					checked={form.values.tracklist.autoRefresh} 
-					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
+					onChange={e => form.setFieldValue('tracklist.autoRefresh', e.target.checked)}
 					color='primary'
 				/>
 			</div>
@@ -97,7 +97,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				<InputLabel>Auto play:</InputLabel>
 				<Switch 
 					checked={form.values.tracklist.autoPlay} 
-					onChange={e => form.setFieldValue('autoPlay', e.target.checked)}
+					onChange={e => form.setFieldValue('tracklist.autoPlay', e.target.checked)}
 					color='primary'
 				/>
 			</div>
