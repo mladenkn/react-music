@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { ems } from "../../utils/css";
 import MediaQuery from 'react-responsive'
 import { NarrowHomeUI } from "./NarrowHomeUI";
+import { AxiosProvider } from "../api/axios";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -45,9 +46,11 @@ export const Root = (p: AppRootProps) => {
   const classes = useAppRootStyles()
   return (
     <ThemeProvider theme={theme}>
-      <div className={clsx(classes.root, p.className)}>
-        <HomeUI className={classes.home} />
-      </div>
+      <AxiosProvider>
+        <div className={clsx(classes.root, p.className)}>
+          <HomeUI className={classes.home} />
+        </div>
+      </AxiosProvider>
     </ThemeProvider>
   )
 }
