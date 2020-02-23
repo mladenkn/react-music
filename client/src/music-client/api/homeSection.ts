@@ -41,7 +41,7 @@ export const save = (data: SaveTrackModel, query?: MusicDbTrackQueryParams & Pag
   return axios.post<ArrayWithTotalCount<Track>>(`${baseUrl}tracks`, { ...data, query });
 };
 
-export const tracksApi = {
+export const homeSectionApi = {
   fetchFromYouTube,
   fetchFromMusicDb,
   fetchRelated,
