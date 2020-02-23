@@ -1,6 +1,6 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
-import { createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
+import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
 
 export const useHomeLogic = () => {
   const [state, updateState] = useImmer({
@@ -9,12 +9,7 @@ export const useHomeLogic = () => {
   })
 
   const tracklist = useTracklistLogic({
-    options: state.options.tracklist,
-    onOptionsChange: tracklistOptions => {
-      updateState(draft => {
-        draft.options.tracklist = tracklistOptions
-      })
-    }
+    options: state.options.tracklist
   });
 
   function setCurrentTrack(trackYoutubeId: string){
@@ -40,5 +35,11 @@ export const useHomeLogic = () => {
     })
   }
 
-  return { ...tracklist, ...state, setCurrentTrack, onCurrentTrackFinish, toggleTracklistShown }
+  function setOptions(opt: HomeSectionOptions){
+    updateState(draft => {
+      draft.options = opt
+    })
+  }
+
+  return { ...tracklist, ...state, setCurrentTrack, onCurrentTrackFinish, toggleTracklistShown, setOptions }
 }

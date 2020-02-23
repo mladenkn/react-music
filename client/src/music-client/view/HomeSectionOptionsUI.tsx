@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { TracklistOptions } from "../shared/homeSectionOptions"
-import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button } from "@material-ui/core"
+import { TracklistOptions, HomeSectionOptions } from "../shared/homeSectionOptions"
+import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button, Checkbox } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
@@ -8,8 +8,8 @@ import { ems, percent } from '../../utils/css'
 
 interface HomeSectionOptionsUIProps {
 	className?: string
-	values: TracklistOptions
-	onChange: (f: TracklistOptions) => void
+	values: HomeSectionOptions
+	onChange: (f: HomeSectionOptions) => void
 	onSearch: () => void
 }
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
 			marginTop: ems(0.5),
 			maxWidth: percent(83),
 		},
-		switchInput: {
+		input: {
 			display: 'flex',
 			alignItems: 'center',
     },
@@ -43,7 +43,7 @@ const useStyles = makeStyles(
 	}), {name: 'TrackQueryFormUi'}
 )
 
-export const TracklistOptionsUI = (props: HomeSectionOptionsUIProps) => {
+export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 
 	const styles = useStyles()
 	const form = useFormik({
@@ -60,45 +60,54 @@ export const TracklistOptionsUI = (props: HomeSectionOptionsUIProps) => {
 			<Select
 				className={styles.dataSource}
 				label='Data source'
-				value={form.values.queryForm.dataSource}
+				value={form.values.tracklist.queryForm.dataSource}
 				onChange={e => form.setFieldValue('queryForm.dataSource', e.target.value)}
 			>
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
 
-			{form.values.queryForm.dataSource === 'MusicDb' &&
+			{form.values.tracklist.queryForm.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.queryForm.musicDbParams!}
+					input={form.values.tracklist.queryForm.musicDbParams!}
 					onChange={value => form.setFieldValue('queryForm.musicDbParams', value)}
 				/>
 			} 
 
-			{form.values.queryForm.dataSource === 'YouTube' &&
+			{form.values.tracklist.queryForm.dataSource === 'YouTube' &&
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'
-					value={form.values.queryForm.searchQuery!}
+					value={form.values.tracklist.queryForm.searchQuery!}
 					onChange={e => form.setFieldValue('queryForm.searchQuery', e.target.value)}
 				/>
 			}
 			
-			<div className={clsx(styles.switchInput, styles.autoRefreshInput)}>
+			<div className={clsx(styles.input, styles.autoRefreshInput)}>
 				<InputLabel>Auto refresh:</InputLabel>
 				<Switch 
-					checked={form.values.autoRefresh} 
+					checked={form.values.tracklist.autoRefresh} 
 					onChange={e => form.setFieldValue('autoRefresh', e.target.checked)}
 					color='primary'
 				/>
 			</div>
 			
-			<div className={styles.switchInput}>
+			<div className={styles.input}>
 				<InputLabel>Auto play:</InputLabel>
 				<Switch 
-					checked={form.values.autoPlay} 
+					checked={form.values.tracklist.autoPlay} 
 					onChange={e => form.setFieldValue('autoPlay', e.target.checked)}
 					color='primary'
+				/>
+			</div>
+			
+			<div className={styles.input}>
+				<InputLabel>Tracklist shown:</InputLabel>
+				<Checkbox
+					checked={form.values.tracklistShown}
+					color='primary'
+					onChange={e => form.setFieldValue('tracklistShown', e.target.checked)}
 				/>
 			</div>
 

@@ -14,7 +14,6 @@ export interface Tracklist {
   tracks: TrackViewModel[] | undefined
   tracksTotalCount?: number
   fetchTracksNextPage(): void
-  setOptions(form: TracklistOptions): void
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackYoutubeId: string): void
   fetchTracks(): void
@@ -28,7 +27,6 @@ interface State {
 
 interface TracklistProps {
   options: TracklistOptions
-  onOptionsChange: (o: TracklistOptions) => void
 }
 
 const pageSize = 30;
@@ -74,10 +72,6 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
     })
-  }
-  
-  function setQueryForm(o: TracklistOptions) {
-    props.onOptionsChange(o)
   }
 
   function doesPassCurrentFilter(track: { tags: string[], year: number }){
@@ -150,7 +144,6 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     tracksTotalCount,    
     fetchTracks: fetch, 
     fetchTracksNextPage, 
-    setOptions: setQueryForm, 
     saveTrack, 
     onTrackClick,
   }
