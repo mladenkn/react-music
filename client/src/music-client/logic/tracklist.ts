@@ -4,7 +4,7 @@ import { useImmer } from "use-immer";
 import { useEffect } from "react";
 import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
-import { useHomeSectionApi } from "../api/homeSection";
+import { useTracksApi } from "../api/tracks";
 
 export interface Tracklist {
   options: TracklistOptions
@@ -35,7 +35,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   const [state, updateState] = useImmer<State>({})
 
-  const api = useHomeSectionApi()
+  const api = useTracksApi()
 
   useEffect(() => {
     if(props.options.autoRefresh)

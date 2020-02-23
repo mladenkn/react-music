@@ -5,7 +5,7 @@ import { Track, SaveTrackModel } from "../shared/track";
 import qs from 'qs'
 import { useAxios } from "./axios";
 
-export const useHomeSectionApi = () => {
+export const useTracksApi = () => {
 
   const { get, post } = useAxios()
 
