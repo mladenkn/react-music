@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 import { createContext, ReactNode } from 'react';
 import React from 'react';
 
-export const createAxiosInstance = () => {
+const createInstance = () => {
   let baseURL: string;
 
   if (process.env.NODE_ENV === "development")
@@ -18,11 +18,11 @@ export const createAxiosInstance = () => {
 const AxiosContext = createContext<AxiosInstance | undefined>(undefined)
 
 export const AxiosProvider = (p: { children: ReactNode }) =>
-  React.createElement(AxiosContext.Provider, { value: createAxiosInstance() as any, children: p.children })
+  React.createElement(AxiosContext.Provider, { value: createInstance() as any, children: p.children })
 
 export const useAxios = () => {
   const instance = React.useContext(AxiosContext)
   if(!instance)
-    throw new Error()
+    throw new Error("Axios instance not provided")
   return instance
 } 
