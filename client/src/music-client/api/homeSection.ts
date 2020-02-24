@@ -5,7 +5,7 @@ import { Track, SaveTrackModel } from "../shared/track";
 import qs from 'qs'
 import { useAxios } from "./axios";
 
-export const useHomeSectionApi = () => {
+export const useTracksApi = () => {
 
   const { get, post } = useAxios()
 
@@ -29,9 +29,5 @@ export const useHomeSectionApi = () => {
     return post<ArrayWithTotalCount<Track>>('tracks', data);
   };
 
-  const saveOptions = (opt: HomeSectionOptions) => {
-    return post('/homeSection', opt)
-  }
-
-  return { fetchFromYouTube, fetchFromMusicDb, save, saveOptions }
+  return { fetchFromYouTube, fetchFromMusicDb, save }
 }

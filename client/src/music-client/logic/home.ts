@@ -3,7 +3,7 @@ import { useImmer } from "use-immer";
 import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-import { useHomeSectionApi } from "../api/homeSection";
+import { useHomeSectionApi } from "../api/useHomeSectionApi";
 
 export const useHomeLogic = () => {
   const [state, updateState] = useImmer({
@@ -19,7 +19,7 @@ export const useHomeLogic = () => {
 
   const [saveOptionsDebounced] = useDebouncedCallback(() => {
     api.saveOptions(state.options)
-  }, 1000)
+  }, 2000)
 
   useEffect(saveOptionsDebounced, [state.options])
 
