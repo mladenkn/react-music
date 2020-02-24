@@ -32,7 +32,8 @@ const useHomeStyles = makeStyles({
     height: ems(2),
   },
   trackListList: {
-    height: '88vh',
+    maxHeight: '95vh',
+    overflowY: 'auto',
     padding: ems(0, 0.5)
   },
   form: {
