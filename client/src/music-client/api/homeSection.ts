@@ -1,33 +1,20 @@
-import { Paging } from "../shared";
-import { ArrayWithTotalCount } from "../../utils/types";
-import { MusicDbTrackQueryParams, HomeSectionOptions } from "../shared/homeSectionOptions";
-import { Track, SaveTrackModel } from "../shared/track";
-import qs from 'qs'
-import { useAxios } from "./axios";
+import { useAxios } from "./axios"
+import { HomeSectionOptions } from "../shared/homeSectionOptions"
+import { produce } from 'immer'
 
-export const useTracksApi = () => {
+export const useHomeSectionApi = () => {
 
-  const { get, post } = useAxios()
+  const { post } = useAxios()  
 
-  const fetchFromYouTube = async (searchQuery: string) => {
-    const r = await get<Track[]>('tracks/yt', { params: { searchQuery } });
-    return r;
-  };
-  
-  const fetchFromMusicDb = async (params: MusicDbTrackQueryParams & Paging) => {
-    const r = await get<ArrayWithTotalCount<Track>>(
-      'tracks',
-      { 
-        params, 
-        paramsSerializer: params => qs.stringify(params, { allowDots: true }) 
-      }
-    );
-    return r;
-  };
-  
-  const save = (data: SaveTrackModel) => {
-    return post<ArrayWithTotalCount<Track>>('tracks', data);
-  };
+  const saveOptions = (opt: HomeSectionOptions) => {
+    const mapped = produce(opt, draft => {
+      if(draft.tracklist.queryForm.dataSource === "MusicDb")
+        draft.tracklist.queryForm.youTubeQuery = undefined
+      else
+        draft.tracklist.queryForm.musicDbQuery = undefined
+    });
+    return post('/homeSection', mapped)
+  }
 
-  return { fetchFromYouTube, fetchFromMusicDb, save }
+  return { saveOptions }
 }

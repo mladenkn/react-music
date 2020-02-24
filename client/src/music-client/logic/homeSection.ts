@@ -3,7 +3,7 @@ import { useImmer } from "use-immer";
 import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
-import { useHomeSectionApi } from "../api/useHomeSectionApi";
+import { useHomeSectionApi } from "../api/homeSection";
 
 export const useHomeLogic = () => {
   const [state, updateState] = useImmer({

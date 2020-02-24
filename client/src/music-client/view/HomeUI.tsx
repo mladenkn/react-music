@@ -4,7 +4,7 @@ import { TrackListUI } from "./Tracklist";
 import clsx from 'clsx'
 import { ems, percent } from "../../utils/css";
 import { HomeSectionOptionsUI } from "./HomeSectionOptionsUI";
-import { useHomeLogic } from "../logic/home";
+import { useHomeLogic } from "../logic/homeSection";
 import { TrackPlayerUI } from "./TrackPlayer";
 import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
  

@@ -4,7 +4,7 @@ import { useImmer } from "use-immer";
 import { useEffect } from "react";
 import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
-import { useTracksApi } from "../api/homeSection";
+import { useTracksApi } from "../api/tracks";
 
 export interface Tracklist {
   options: TracklistOptions
