@@ -18,7 +18,7 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]QueryTracksRequest req) => 
+        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]TracksQuery req) => 
             Resolve<QueryTracksExecutor>().Execute(req);
 
         [HttpGet("yt")]

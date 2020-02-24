@@ -3,7 +3,7 @@ using Utilities;
 
 namespace Music.Domain.Shared
 {
-    public class QueryTracksRequest
+    public class TracksQuery
     {
         public int Skip { get; set; }
 

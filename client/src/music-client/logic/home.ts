@@ -1,6 +1,9 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
 import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
+import { useEffect } from "react";
+import { useDebouncedCallback } from "use-debounce/lib";
+import { useHomeSectionApi } from "../api/homeSection";
 
 export const useHomeLogic = () => {
   const [state, updateState] = useImmer({
@@ -11,6 +14,14 @@ export const useHomeLogic = () => {
   const tracklist = useTracklistLogic({
     options: state.options.tracklist
   });
+
+  const api = useHomeSectionApi();
+
+  const [saveOptionsDebounced] = useDebouncedCallback(() => {
+    api.saveOptions(state.options)
+  }, 1000)
+
+  useEffect(saveOptionsDebounced, [state.options])
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {

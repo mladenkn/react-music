@@ -14,7 +14,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackModel>> Execute(QueryTracksRequest req)
+        public async Task<ArrayWithTotalCount<TrackModel>> Execute(TracksQuery req)
         {
             var query = BuildFilter(req);
 
@@ -41,7 +41,7 @@ namespace Music.Domain
             }
         }
 
-        private IQueryable<TrackUserProps> BuildFilter(QueryTracksRequest req)
+        private IQueryable<TrackUserProps> BuildFilter(TracksQuery req)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 

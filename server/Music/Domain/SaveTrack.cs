@@ -17,7 +17,7 @@ namespace Music.Domain
 
         public IReadOnlyCollection<string> Tags { get; set; }
 
-        public QueryTracksRequest Query { get; set; }
+        public TracksQuery Query { get; set; }
     }
 
     public class SaveTrackExecutor : ServiceResolverAware
