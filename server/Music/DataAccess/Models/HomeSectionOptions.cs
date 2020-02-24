@@ -8,9 +8,9 @@ namespace Music.DataAccess.Models
         {
             public class QueryForm_
             {
-                public TracksQuery MusicDbParams { get; set; }
+                public TracksQuery MusicDbQuery { get; set; }
 
-                public string SearchQuery { get; set; }
+                public string YoutubeQuery { get; set; }
             }
 
             public QueryForm_ QueryForm { get; set; }

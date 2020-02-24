@@ -70,8 +70,8 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 			{form.values.tracklist.queryForm.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.tracklist.queryForm.musicDbParams!}
-					onChange={value => form.setFieldValue('tracklist.queryForm.musicDbParams', value)}
+					input={form.values.tracklist.queryForm.musicDbQuery!}
+					onChange={value => form.setFieldValue('tracklist.queryForm.musicDbQuery', value)}
 				/>
 			} 
 
@@ -79,8 +79,8 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'
-					value={form.values.tracklist.queryForm.searchQuery!}
-					onChange={e => form.setFieldValue('tracklist.queryForm.searchQuery', e.target.value)}
+					value={form.values.tracklist.queryForm.youTubeQuery!}
+					onChange={e => form.setFieldValue('tracklist.queryForm.youTubeQuery', e.target.value)}
 				/>
 			}
 			

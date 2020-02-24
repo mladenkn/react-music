@@ -15,6 +15,6 @@ namespace Music.Api.Controllers
         }
 
         [HttpPost]
-        public Task SaveOptions(HomeSectionOptions opt) =>Resolve<HomeSectionOptionsRequests>().Save(opt);
+        public Task SaveOptions(HomeSectionOptions opt) => Resolve<HomeSectionOptionsRequests>().Save(opt);
     }
 }

@@ -8,8 +8,8 @@ export enum TrackQueryFormDataSource {
 export interface TracklistOptions {
   queryForm: {
     dataSource: TrackQueryFormDataSource
-    musicDbParams?: MusicDbTrackQueryParams
-    searchQuery?: string
+    musicDbQuery?: MusicDbTrackQueryParams
+    youTubeQuery?: string
   }
   autoRefresh: boolean
   autoPlay: boolean
@@ -24,7 +24,7 @@ export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
   tracklist: {
     queryForm: {
       dataSource: TrackQueryFormDataSource.MusicDb,
-      musicDbParams: {
+      musicDbQuery: {
         titleContains: '',
         youtubeChannelId: '',
         mustHaveAnyTag: [],
