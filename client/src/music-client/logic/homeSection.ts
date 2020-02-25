@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [state, updateState] = useImmer({
-    currentTrackYoutubeId: props.currentTrackYoutubeId,
+    currentTrackYoutubeId: undefined as undefined | string,
     options: props.options
   })
   
@@ -20,15 +20,15 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
 
   const api = useHomeSectionApi();
 
-  const [saveOptionsDebounced] = useDebouncedCallback(() => {
-    api.saveOptions({ 
+  const [saveState] = useDebouncedCallback(() => {
+    api.saveState({ 
       options: state.options, 
       currentTrackYoutubeId: state.currentTrackYoutubeId, 
       selectedTrackYoutubeId: tracklist.selectedTrackId 
     })
   }, 2000)
 
-  useEffect(saveOptionsDebounced, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
+  useEffect(saveState, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {

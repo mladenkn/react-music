@@ -5,7 +5,7 @@ export const useHomeSectionApi = () => {
 
   const { get, post } = useAxios()  
 
-  const saveOptions = (opt: HomeSectionPersistableState) => {
+  const saveState = (opt: HomeSectionPersistableState) => {
     return post('/homeSection', opt)
   }
 
@@ -13,5 +13,5 @@ export const useHomeSectionApi = () => {
     return get<HomeSectionPropsFromApi>('/homeSection/props')
   }
 
-  return { saveOptions, getProps }
+  return { saveState, getProps }
 }
