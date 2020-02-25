@@ -1,10 +1,10 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { useEffect, useRef } from "react";
 import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
+import { useEffect } from "../../utils/useEffect";
 
 export interface Tracklist {
   options: TracklistOptions
@@ -36,16 +36,14 @@ const pageSize = 30;
 
 export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
-  const [state, updateState] = useImmer<State>({})
+  const [state, updateState] = useImmer<State>({
+    fromMusicDb: props.tracksFromMusicDb,
+    fromYouTube: props.tracksFromYouTube
+  })
 
   const api = useTracksApi()
 
-  const isFirstRun = useRef(true)
   useEffect(() => {
-    if(isFirstRun.current){      
-      isFirstRun.current = false
-      return;
-    }
     if(props.options.autoRefresh)
       refetchOnChange()
   }, [props.options.queryForm])
