@@ -1,7 +1,7 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
@@ -37,7 +37,12 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   const api = useTracksApi()
 
+  const isFirstRun = useRef(true)
   useEffect(() => {
+    if(isFirstRun.current){      
+      isFirstRun.current = false
+      return;
+    }
     if(props.options.autoRefresh)
       refetchOnChange()
   }, [props.options.queryForm])
