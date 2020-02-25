@@ -18,10 +18,14 @@ export const useHomeLogic = () => {
   const api = useHomeSectionApi();
 
   const [saveOptionsDebounced] = useDebouncedCallback(() => {
-    api.saveOptions(state.options)
+    api.saveOptions({ 
+      options: state.options, 
+      currentTrackYoutubeId: state.currentTrackYoutubeId, 
+      selectedTrackYoutubeId: tracklist.selectedTrackId 
+    })
   }, 2000)
 
-  useEffect(saveOptionsDebounced, [state.options])
+  useEffect(saveOptionsDebounced, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {

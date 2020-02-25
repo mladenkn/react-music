@@ -20,6 +20,12 @@ export interface HomeSectionOptions {
   tracklistShown: boolean
 }
 
+export interface HomeSectionPersistableState {
+  options: HomeSectionOptions
+  selectedTrackYoutubeId?: string
+  currentTrackYoutubeId?: string
+}
+
 export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
   tracklist: {
     queryForm: {

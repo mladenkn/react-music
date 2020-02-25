@@ -13,16 +13,11 @@ namespace Music.Domain
         {
         }
 
-        public async Task<HomeSectionOptions> Get()
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task Save(HomeSectionOptions opt)
+        public async Task Save(HomeSectionPersistableState opt)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Db.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            user.HomeSectionOptionsJson = JsonConvert.SerializeObject(opt);
+            user.HomeSectionStateJson = JsonConvert.SerializeObject(opt);
             Db.Users.Update(user);
             await Db.SaveChangesAsync();
         }
