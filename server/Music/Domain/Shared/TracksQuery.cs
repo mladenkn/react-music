@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Utilities;
 
 namespace Music.Domain.Shared
 {
@@ -17,8 +16,15 @@ namespace Music.Domain.Shared
 
         public IReadOnlyCollection<string> MustHaveAnyTag { get; set; }
 
-        public Range<int> YearRange { get; set; }
+        public YearRange_ YearRange { get; set; }
 
         public bool Randomize { get; set; }
+
+        public class YearRange_
+        {
+            public int? LowerBound { get; set; }
+
+            public int? UpperBound { get; set; }
+        }
     }
 }

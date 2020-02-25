@@ -13,6 +13,8 @@ namespace Music.DataAccess
 
         public DbSet<TrackUserPropsTag> TrackTags { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         public MusicDbContext(DbContextOptions options) : base(options)
         {
         }

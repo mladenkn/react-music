@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Music.DataAccess.Models;
+using Music.Domain.Shared;
+using Newtonsoft.Json;
 
 namespace Music.Domain
 {
@@ -17,7 +20,11 @@ namespace Music.Domain
 
         public async Task Save(HomeSectionOptions opt)
         {
-
+            var userId = Resolve<ICurrentUserContext>().Id;
+            var user = await Db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            user.HomeSectionOptionsJson = JsonConvert.SerializeObject(opt);
+            Db.Users.Update(user);
+            await Db.SaveChangesAsync();
         }
     }
 }

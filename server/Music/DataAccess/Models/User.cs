@@ -9,5 +9,7 @@ namespace Music.DataAccess.Models
 
         [Required]
         public string Email { get; set; }
+
+        public string HomeSectionOptionsJson { get; set; }
     }
 }
