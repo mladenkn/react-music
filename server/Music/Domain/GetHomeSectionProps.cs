@@ -32,6 +32,18 @@ namespace Music.Domain
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (string.IsNullOrEmpty(user.HomeSectionStateJson))
+            {
+                var options = HomeSectionOptionsModel.CreateInitial();
+                var tracks = await Resolve<QueryTracksExecutor>().Execute(options.Tracklist.QueryForm.MusicDbQuery);
+                return new HomeSectionProps
+                {
+                    Options = options,
+                    TracksFromMusicDb = tracks,
+                };
+            }
+
             var homeSectionPersistableState = JsonConvert.DeserializeObject<HomeSectionPersistableStateModel>(user.HomeSectionStateJson);
 
             var props = new HomeSectionProps

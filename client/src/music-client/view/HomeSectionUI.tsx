@@ -6,7 +6,7 @@ import { ems, percent } from "../../utils/css";
 import { HomeSectionOptionsUI } from "./HomeSectionOptionsUI";
 import { useHomeLogic } from "../logic/homeSection";
 import { TrackPlayerUI } from "./TrackPlayer";
-import { TrackQueryFormDataSource } from "../shared/homeSectionOptions";
+import { TrackQueryFormDataSource, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
  
 const useHomeStyles = makeStyles({
   root: {
@@ -60,13 +60,13 @@ const useHomeStyles = makeStyles({
   },
 }, {name: 'Home'})
  
-export interface HomeProps {
+export interface HomeProps extends HomeSectionPropsFromApi {
   className?: string
 }
 
 export const HomeUI = (p: HomeProps) => {
   const classes = useHomeStyles()
-  const logic = useHomeLogic()
+  const logic = useHomeLogic(p)
   const { options } = logic
 
   console.log(logic)

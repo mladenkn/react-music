@@ -1,18 +1,21 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
-import { createInitialHomeSectionOptions, HomeSectionOptions } from "../shared/homeSectionOptions";
+import { HomeSectionOptions, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useHomeSectionApi } from "../api/homeSection";
 
-export const useHomeLogic = () => {
+export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [state, updateState] = useImmer({
-    currentTrackYoutubeId: undefined as string | undefined,
-    options: createInitialHomeSectionOptions()
+    currentTrackYoutubeId: props.currentTrackYoutubeId,
+    options: props.options
   })
 
   const tracklist = useTracklistLogic({
-    options: state.options.tracklist
+    options: state.options.tracklist,
+    tracksFromMusicDb: props.tracksFromMusicDb,
+    tracksFromYouTube: props.tracksFromYouTube,
+    selectedTrackId: props.selectedTrackYoutubeId
   });
 
   const api = useHomeSectionApi();

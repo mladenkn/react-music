@@ -1,5 +1,5 @@
 import { useAxios } from "./axios"
-import { HomeSectionPersistableState, HomeSectionPropsFromApi } from "../shared/homeSectionOptions"
+import { HomeSectionPersistableState, HomeSectionPropsFromApi, TrackQueryFormDataSource } from "../shared/homeSectionOptions"
 import { produce } from 'immer'
 
 export const useHomeSectionApi = () => {
@@ -16,8 +16,14 @@ export const useHomeSectionApi = () => {
     return post('/homeSection', mapped)
   }
 
-  const getProps = () => {
-    return get<HomeSectionPropsFromApi>('/homeSection/props')
+  const getProps = async () => {
+    const response = await get<HomeSectionPropsFromApi>('/homeSection/props')
+    return produce(response, draft => {
+      response.data.options.tracklist.queryForm.dataSource = 
+        response.data.options.tracklist.queryForm.musicDbQuery == null ?
+          TrackQueryFormDataSource.YouTube :
+          TrackQueryFormDataSource.MusicDb
+    })
   }
 
   return { saveOptions, getProps }

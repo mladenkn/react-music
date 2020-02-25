@@ -27,6 +27,9 @@ interface State {
 
 interface TracklistProps {
   options: TracklistOptions
+  tracksFromMusicDb?: ArrayWithTotalCount<Track>
+  tracksFromYouTube?: Track[]
+  selectedTrackId?: string
 }
 
 const pageSize = 30;

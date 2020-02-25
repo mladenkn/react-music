@@ -1,12 +1,13 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from '@material-ui/styles'
 import React, { Fragment } from 'react'
-import { HomeUI as WideHomeUI, HomeProps } from "./HomeUI";
+import { HomeUI as WideHomeUI, HomeProps } from "./HomeSectionUI";
 import clsx from 'clsx'
 import { ems } from "../../utils/css";
 import MediaQuery from 'react-responsive'
 import { NarrowHomeUI } from "./NarrowHomeUI";
 import { AxiosProvider } from "../api/axios";
+import { HomeSectionRoot } from "./HomeSectionRoot";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -48,7 +49,7 @@ export const Root = (p: AppRootProps) => {
     <ThemeProvider theme={theme}>
       <AxiosProvider>
         <div className={clsx(classes.root, p.className)}>
-          <HomeUI className={classes.home} />
+          <HomeSectionRoot className={classes.home} />
         </div>
       </AxiosProvider>
     </ThemeProvider>
