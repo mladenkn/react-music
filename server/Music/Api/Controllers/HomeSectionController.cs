@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Music.DataAccess.Models;
 using Music.Domain;
 using Music.Domain.Shared;
 
@@ -17,5 +16,8 @@ namespace Music.Api.Controllers
 
         [HttpPost]
         public Task SaveOptions(HomeSectionPersistableStateModel opt) => Resolve<HomeSectionOptionsRequests>().Save(opt);
+
+        [HttpGet("props")]
+        public Task<HomeSectionProps> GetProps() => Resolve<GetHomeSectionProps>().Execute();
     }
 }

@@ -1,10 +1,10 @@
 import { useAxios } from "./axios"
-import { HomeSectionPersistableState } from "../shared/homeSectionOptions"
+import { HomeSectionPersistableState, HomeSectionPropsFromApi } from "../shared/homeSectionOptions"
 import { produce } from 'immer'
 
 export const useHomeSectionApi = () => {
 
-  const { post } = useAxios()  
+  const { get, post } = useAxios()  
 
   const saveOptions = (opt: HomeSectionPersistableState) => {
     const mapped = produce(opt, draft => {
@@ -16,5 +16,9 @@ export const useHomeSectionApi = () => {
     return post('/homeSection', mapped)
   }
 
-  return { saveOptions }
+  const getProps = () => {
+    return get<HomeSectionPropsFromApi>('/homeSection/props')
+  }
+
+  return { saveOptions, getProps }
 }
