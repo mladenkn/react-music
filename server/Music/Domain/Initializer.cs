@@ -30,42 +30,12 @@ namespace Music.Domain
                     Tags = new[] {"trance"},
                     Year = 1994
                 },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=-LpsjHNMtIc",
-                    Tags = new[] {"trance", "house", "ambient"},
-                    Year = 1992
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=faFioXZRMXQ",
-                    Tags = new[] {"trance", "techno"},
-                    Year = 1995
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=Bx3hoqQlzTc",
-                    Tags = new[] {"trance"},
-                    Year = 1996
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=zGIRoyKshYI",
-                    Tags = new[] {"trance"},
-                    Year = 1994
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=WU_zlSLyFxY&list=LL6Eg23nrpQwIHDUwivSw-iA&index=8&t=0s",
-                    Tags = new[] {"trance", "goa"},
-                    Year = 1996
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=09W1OG4cIaQ&list=LL6Eg23nrpQwIHDUwivSw-iA&index=9&t=0s",
-                    Tags = new[] {"trance", "acid"},
-                    Year = 1996
-                },
+                //new SaveTrackRequest
+                //{
+                //    TrackYtId = "https://www.youtube.com/watch?v=zGIRoyKshYI",
+                //    Tags = new[] {"trance"},
+                //    Year = 1994
+                //},
                 new SaveTrackRequest
                 {
                     TrackYtId = "https://www.youtube.com/watch?v=y_zQWx6EIfw&list=LL6Eg23nrpQwIHDUwivSw-iA&index=10&t=0s",
@@ -239,12 +209,6 @@ namespace Music.Domain
                     TrackYtId = "https://www.youtube.com/watch?v=dwC35znyyBY&list=LL6Eg23nrpQwIHDUwivSw-iA&index=131",
                     Tags = new[] { "techno", "industrial", "acid" },
                     Year = 2017
-                },
-                new SaveTrackRequest
-                {
-                    TrackYtId = "https://www.youtube.com/watch?v=FTRApuqh8wo&t=216s",
-                    Tags = new[] { "techno", "acid", "trance" },
-                    Year = 1994
                 },
                 new SaveTrackRequest
                 {
