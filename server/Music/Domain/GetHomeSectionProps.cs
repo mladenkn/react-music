@@ -55,10 +55,10 @@ namespace Music.Domain
 
             var queryForm = homeSectionPersistableState.Options.Tracklist.QueryForm;
 
-            if (queryForm.MusicDbQuery != null)
+            if (queryForm.DataSource == "MusicDb")
                 props.TracksFromMusicDb = await Resolve<QueryTracksExecutor>().Execute(queryForm.MusicDbQuery);
             else
-                props.TracksFromYouTube = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(queryForm.YoutubeQuery);
+                props.TracksFromYouTube = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(queryForm.YouTubeQuery);
 
             return props;
         }

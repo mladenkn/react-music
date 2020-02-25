@@ -17,13 +17,13 @@ export const HomeSectionRoot = (props: Props) => {
   useEffect(() => {
     (async () => {
       const propsFromApi = await api.getProps()
+      
       if(propsFromApi.status >= 200 ||  propsFromApi.status < 300 )
         setPropsFromApi(propsFromApi.data)
     })()
   }, [])
 
-  if(propsFromApi)
-    return <HomeUI className={props.className} {...propsFromApi}  />
-  else
-    return <div>Loading...</div>
+  return propsFromApi ?
+    <HomeUI className={props.className} {...propsFromApi} /> :
+    <div>Loading...</div>
 }
