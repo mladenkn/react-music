@@ -13,7 +13,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task Save(HomeSectionPersistableState opt)
+        public async Task Save(HomeSectionPersistableStateModel opt)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Db.Users.FirstOrDefaultAsync(u => u.Id == userId);
