@@ -50,10 +50,10 @@ namespace Music.Domain
             if (!string.IsNullOrEmpty(req.TitleContains))
                 query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));
 
-            if (!string.IsNullOrEmpty(req.YoutubeChannelId))
-                query = query.Where(t => t.YoutubeVideo.YoutubeChannelId == req.YoutubeChannelId);
+            if (req.SupportedYoutubeChannelsIds != null && req.SupportedYoutubeChannelsIds.Any())
+                query = query.Where(t => req.SupportedYoutubeChannelsIds.Contains(t.YoutubeVideo.YoutubeChannelId));
 
-            if (req.MustHaveAnyTag != null && req.MustHaveAnyTag.Count > 0)
+            if (req.MustHaveAnyTag != null && req.MustHaveAnyTag.Any())
                 query = query.Where(t => t.TrackTags.Any(tt => req.MustHaveAnyTag.Contains(tt.Value)));
 
             //var mustHaveEveryTag = req.MustHaveEveryTag?.ToArray();

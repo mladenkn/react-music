@@ -1,7 +1,7 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
+import { TracklistOptions, TrackQueryFormDataSource } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
 import { useEffect } from "../../utils/useEffect";

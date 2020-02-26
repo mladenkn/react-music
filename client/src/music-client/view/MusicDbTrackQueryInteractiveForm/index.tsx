@@ -53,8 +53,8 @@ type Field = keyof MusicDbTrackQueryParams
 
 const mapFieldValueToName = (field: Field) => {
   switch (field) {
-    case "youtubeChannelId":
-      return "Channel";
+    case "supportedYouTubeChannelsIds":
+      return "Supported channels";
     case "mustHaveEveryTag":
       return "Must have all tags";
     case "mustHaveAnyTag":

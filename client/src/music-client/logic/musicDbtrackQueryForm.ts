@@ -24,7 +24,7 @@ interface MusicDbTrackQueryFormLogicProps {
   availableYouTubeChannels: IdWithName[]
 }
 
-const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
+const allFields: Field[] = ['titleContains', 'supportedYouTubeChannelsIds', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
 
 const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 	const result: Field[] = ['randomize']
@@ -37,15 +37,15 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 		result.push('titleContains')
 	if(params.yearRange && Object.values(params.yearRange).filter(v => v).length > 0)
 		result.push('yearRange')
-	if(params.youtubeChannelId)
-		result.push('youtubeChannelId')
+	if(params.supportedYouTubeChannelsIds && params.supportedYouTubeChannelsIds.length > 0)
+		result.push('supportedYouTubeChannelsIds')
 		
 	return result;
 }
 
 const getFieldDefaultValue = (field: Field) => {
 	switch (field) {
-    case "youtubeChannelId":
+    case "supportedYouTubeChannelsIds":
       return undefined;
     case "mustHaveEveryTag":
       return [];

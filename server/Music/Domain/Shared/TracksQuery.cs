@@ -10,7 +10,7 @@ namespace Music.Domain.Shared
 
         public string TitleContains { get; set; }
 
-        public string YoutubeChannelId { get; set; }
+        public IEnumerable<string> SupportedYoutubeChannelsIds { get; set; }
 
         public IReadOnlyCollection<string> MustHaveEveryTag { get; set; }
 

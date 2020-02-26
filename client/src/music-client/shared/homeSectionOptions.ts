@@ -38,29 +38,9 @@ export interface HomeSectionPropsFromApi {
   tags: string[]
 }
 
-export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
-  tracklist: {
-    queryForm: {
-      dataSource: TrackQueryFormDataSource.MusicDb,
-      musicDbQuery: {
-        titleContains: '',
-        youtubeChannelId: '',
-        mustHaveAnyTag: [],
-        mustHaveEveryTag: [],
-        yearRange: {
-        },
-        randomize: true
-      },
-    },
-    autoRefresh: true,
-    autoPlay: true
-  },
-  tracklistShown: true
-})
-
 export interface MusicDbTrackQueryParams {
   titleContains: string
-  youtubeChannelId?: string
+  supportedYouTubeChannelsIds: string[]
   mustHaveEveryTag: string[]
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>
