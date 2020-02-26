@@ -9,6 +9,8 @@ namespace Music.DataAccess
     {
         public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
+        public DbSet<YoutubeChannel> YouTubeChannels { get; set; }
+
         public DbSet<TrackUserProps> TrackUserProps { get; set; }
 
         public DbSet<TrackUserPropsTag> TrackTags { get; set; }

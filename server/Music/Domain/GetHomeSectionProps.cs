@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.Domain.QueryTracksViaYoutube;
@@ -20,6 +21,10 @@ namespace Music.Domain
         public ArrayWithTotalCount<TrackModel> TracksFromMusicDb { get; set; }
 
         public IEnumerable<TrackModel> TracksFromYouTube { get; set; }
+
+        public IEnumerable<string> Tags { get; set; }
+
+        public IEnumerable<IdWithName> YouTubeChannels { get; set; }
     }
 
     public class GetHomeSectionProps : ServiceResolverAware
@@ -50,7 +55,9 @@ namespace Music.Domain
             {
                 Options = homeSectionPersistableState.Options,
                 CurrentTrackYoutubeId = homeSectionPersistableState.CurrentTrackYoutubeId,
-                SelectedTrackYoutubeId = homeSectionPersistableState.SelectedTrackYoutubeId
+                SelectedTrackYoutubeId = homeSectionPersistableState.SelectedTrackYoutubeId,
+                Tags = await GetAllTags(),
+                YouTubeChannels = await GetAllChannels(),
             };
 
             var queryForm = homeSectionPersistableState.Options.Tracklist.QueryForm;
@@ -61,6 +68,18 @@ namespace Music.Domain
                 props.TracksFromYouTube = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(queryForm.YoutubeQuery);
 
             return props;
+        }
+
+        private async Task<IEnumerable<string>> GetAllTags()
+        {
+            var tags = await Db.TrackUserProps.SelectMany(tp => tp.TrackTags.Select(tt => tt.Value)).Distinct().ToArrayAsync();
+            return tags;
+        }
+
+        private async Task<IEnumerable<IdWithName>> GetAllChannels()
+        {
+            var channels = await Db.YouTubeChannels.Select(c => new IdWithName {Id = c.Id, Name = c.Title}).ToArrayAsync();
+            return channels;
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Range } from './index'
-import { ArrayWithTotalCount } from '../../utils/types'
+import { ArrayWithTotalCount, IdWithName } from '../../utils/types'
 import { Track } from './track'
 
 export enum TrackQueryFormDataSource {
@@ -34,6 +34,8 @@ export interface HomeSectionPropsFromApi {
   currentTrackYoutubeId?: string
   tracksFromMusicDb?: ArrayWithTotalCount<Track>
   tracksFromYouTube?: Track[]
+  youTubeChannels: IdWithName[]
+  tags: string[]
 }
 
 export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
