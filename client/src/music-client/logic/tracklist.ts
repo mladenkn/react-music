@@ -92,8 +92,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
         if(!hasAny)
           return false
       }
-      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){
-        debugger
+      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){        
         const hasAll = track.tags.every(t => filter.mustHaveEveryTag.includes(t))
         if(!hasAll)
           return false

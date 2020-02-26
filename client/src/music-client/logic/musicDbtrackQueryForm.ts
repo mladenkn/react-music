@@ -93,13 +93,11 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	}
 
 	const inactiveFields = difference(allFields, activeFields)
-	
-  const availableTags = ['trance', 'techno', 'house', 'acid']
 
 	return { 
     values: form.values, 
     availableYouTubeChannels: props.availableYouTubeChannels, 
-    availableTags, 
+    availableTags: props.availableTags, 
     inactiveFields, 
     isFieldActive, 
     onFieldChange, 

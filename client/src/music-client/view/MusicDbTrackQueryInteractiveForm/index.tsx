@@ -85,8 +85,6 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
 
-  debugger
-
   return (
     <div className={clsx(p.className, styles.root)}>
       <div className={styles.left}>        
