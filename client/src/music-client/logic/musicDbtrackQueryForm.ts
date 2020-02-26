@@ -2,6 +2,7 @@ import { MusicDbTrackQueryParams } from "../shared/homeSectionOptions";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { difference } from 'lodash'
+import { IdWithName } from "../../utils/types";
 
 type Field = keyof MusicDbTrackQueryParams
 
@@ -13,11 +14,14 @@ interface MusicDbTrackQueryFormLogic {
 	setFieldActive(fieldName: Field): void
 	setFieldInactive(fieldName: Field): void
 	onFieldChange(fieldName: Field): (value: any) => void
+  availableYouTubeChannels: IdWithName[]
 }
 
 interface MusicDbTrackQueryFormLogicProps {
 	values: MusicDbTrackQueryParams
 	onChange: (values: MusicDbTrackQueryParams) => void
+  availableTags: string[]
+  availableYouTubeChannels: IdWithName[]
 }
 
 const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
@@ -92,5 +96,14 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	
   const availableTags = ['trance', 'techno', 'house', 'acid']
 
-	return { values: form.values, availableTags, inactiveFields, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
+	return { 
+    values: form.values, 
+    availableYouTubeChannels: props.availableYouTubeChannels, 
+    availableTags, 
+    inactiveFields, 
+    isFieldActive, 
+    onFieldChange, 
+    setFieldInactive, 
+    setFieldActive 
+  }
 }

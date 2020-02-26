@@ -5,12 +5,15 @@ import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractive
 import { useFormik } from 'formik'
 import clsx from 'clsx'
 import { ems, percent } from '../../utils/css'
+import { IdWithName } from '../../utils/types'
 
 interface HomeSectionOptionsUIProps {
 	className?: string
 	values: HomeSectionOptions
 	onChange: (f: HomeSectionOptions) => void
-	onSearch: () => void
+  onSearch: () => void
+  tags: string[]
+  youTubeChannels: IdWithName[]
 }
 
 const useStyles = makeStyles(
@@ -71,7 +74,9 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
 					input={form.values.tracklist.queryForm.musicDbQuery!}
-					onChange={value => form.setFieldValue('tracklist.queryForm.musicDbQuery', value)}
+          onChange={value => form.setFieldValue('tracklist.queryForm.musicDbQuery', value)}
+          availableTags={props.tags}
+          availableYouTubeChannels={props.youTubeChannels}
 				/>
 			} 
 

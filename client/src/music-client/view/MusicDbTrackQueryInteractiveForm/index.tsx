@@ -11,11 +11,14 @@ import { Checkbox } from '@material-ui/core';
 import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 import { TextField } from "./TextField";
+import { IdWithName } from "../../../utils/types";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
   input: MusicDbTrackQueryParams;
   onChange: (i: MusicDbTrackQueryParams) => void;
+  availableTags: string[]
+  availableYouTubeChannels: IdWithName[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -76,9 +79,13 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     setFieldInactive 
   } = useMusicDbTrackQueryFormLogic({
     values: p.input,
-    onChange: p.onChange
+    onChange: p.onChange,
+    availableTags: p.availableTags,
+    availableYouTubeChannels: p.availableYouTubeChannels
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
+
+  debugger
 
   return (
     <div className={clsx(p.className, styles.root)}>

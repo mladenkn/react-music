@@ -84,6 +84,8 @@ export const HomeUI = (p: HomeProps) => {
         className={classes.form} 
         onChange={logic.setOptions} 
         onSearch={logic.fetchTracks}
+        tags={p.tags}
+        youTubeChannels={p.youTubeChannels}
       />
       {logic.options.tracklistShown && (
         <div className={classes.tracklistWrapper}>
