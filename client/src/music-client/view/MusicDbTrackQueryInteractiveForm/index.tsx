@@ -71,7 +71,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
   const styles = useStyles();
   const { 
     values, 
-    availableTags, 
+    availableTags,
     inactiveFields, 
     isFieldActive, 
     onFieldChange, 
@@ -84,6 +84,8 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     availableYouTubeChannels: p.availableYouTubeChannels
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
+
+  const availableTagsSorted = availableTags.sort()
 
   return (
     <div className={clsx(p.className, styles.root)}>
@@ -100,7 +102,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         {isFieldActive('mustHaveEveryTag') && (
             <ChipListElement
               label='Must have all tags'
-              availableOptions={availableTags}
+              availableOptions={availableTagsSorted}
               value={values.mustHaveEveryTag}
               onChange={onFieldChange('mustHaveEveryTag')}
               onRemove={() => setFieldInactive('mustHaveEveryTag')}
@@ -110,7 +112,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         {isFieldActive('mustHaveAnyTag') && (
           <ChipListElement
             label='Must have some tags'
-            availableOptions={availableTags}
+            availableOptions={availableTagsSorted}
             value={values.mustHaveAnyTag}
             onChange={onFieldChange('mustHaveAnyTag')}
             onRemove={() => setFieldInactive('mustHaveAnyTag')}
