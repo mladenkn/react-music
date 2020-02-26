@@ -28,6 +28,10 @@ const useStyles = makeStyles(() => ({
   },
   channelChip: {
     margin: ems(0.3, 0.3)
+  },
+  picker: {
+    width: percent(95),
+    margin: '0.3em auto 0.3em'
   }
 }));
 
@@ -59,6 +63,7 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
         ))}
       </div>
       <Autocomplete 
+        className={styles.picker}
         options={unpickedChannels} 
         getOptionLabel={o => o.name} 
         renderInput={params => <TextField {...params} />}
