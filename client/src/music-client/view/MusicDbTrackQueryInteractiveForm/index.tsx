@@ -12,6 +12,7 @@ import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 import { TextField } from "./TextField";
 import { IdWithName } from "../../../utils/types";
+import { SupportedChannelsBuilderElement } from "./SupportedChannelsBuilderElement";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
@@ -71,6 +72,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
   const styles = useStyles();
   const { 
     values, 
+    availableYouTubeChannels,
     availableTags,
     inactiveFields, 
     isFieldActive, 
@@ -135,6 +137,16 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             label='Title contains'
             value={values.titleContains}
             onChange={onFieldChange("titleContains")}
+          />
+        }
+
+        {isFieldActive('supportedYouTubeChannelsIds') &&          
+          <SupportedChannelsBuilderElement 
+            onRemove={() => setFieldInactive('supportedYouTubeChannelsIds')}
+            label='Allowed YouTube channels'
+            availableChannels={availableYouTubeChannels}
+            value={values.supportedYouTubeChannelsIds}
+            onChange={onFieldChange("supportedYouTubeChannelsIds")}
           />
         }
       </div>
