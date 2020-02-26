@@ -46,7 +46,7 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 const getFieldDefaultValue = (field: Field) => {
 	switch (field) {
     case "supportedYouTubeChannelsIds":
-      return undefined;
+      return [];
     case "mustHaveEveryTag":
       return [];
     case "mustHaveAnyTag":

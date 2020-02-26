@@ -36,6 +36,7 @@
                     DataSource = "MusicDb",
                     MusicDbQuery = new TracksQuery
                     {
+                        SupportedYouTubeChannelsIds = new string[0],
                         MustHaveEveryTag = new string[0],
                         MustHaveAnyTag = new string[0],
                         Randomize = true,

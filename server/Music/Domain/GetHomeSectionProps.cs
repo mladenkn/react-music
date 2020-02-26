@@ -46,6 +46,8 @@ namespace Music.Domain
                 {
                     Options = options,
                     TracksFromMusicDb = tracks,
+                    Tags = await GetAllTags(),
+                    YouTubeChannels = await GetAllChannels(),
                 };
             }
 

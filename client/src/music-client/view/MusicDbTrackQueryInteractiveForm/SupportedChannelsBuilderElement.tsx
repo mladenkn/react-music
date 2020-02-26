@@ -1,15 +1,16 @@
 import { IdWithName } from "../../../utils/types";
 import { ElementBase } from "./ElementBase";
-import { InputLabel, colors, makeStyles, TextField } from "@material-ui/core";
+import { InputLabel, colors, makeStyles, TextField, Chip } from "@material-ui/core";
 import { ems, percent } from "../../../utils/css";
 import React from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { difference } from 'lodash'
 
 interface Props {
   label: string;
   availableChannels: IdWithName[]
   value: string[]
-  onChange(value: IdWithName[]): void
+  onChange(value: string[]): void
   onRemove: () => void
 }
 
@@ -25,27 +26,43 @@ const useStyles = makeStyles(() => ({
     marginLeft: percent(12),
     marginBottom: ems(0.8)
   },
-  removeButton: {
-    padding: ems(0.2),
-    position: "absolute",
-    right: 0,
-    top: 0
-  },
-  value: {
-    marginTop: ems(0.5)
+  channelChip: {
+    margin: ems(0.3, 0.3)
   }
 }));
 
 export const SupportedChannelsBuilderElement = (props: Props) => {  
-  const classes = useStyles();
+  const styles = useStyles();
+
+  const nameOf = (channelId: string) => props.availableChannels.find(c => c.id === channelId)!.name
+
+  const unpickedChannels = difference(props.availableChannels.map(c => c.id), props.value)
+    .map(cId => props.availableChannels.find(c => c.id == cId)!)
+
+  const handlePickerChange = (channelId: string | null) => {
+    if(channelId){
+      props.onChange([ ...props.value, channelId ])
+    }
+  }
+
+  const removeChannel = (channelId: string) => {
+    const withoutIt = props.value.filter(cId => cId != channelId)
+    props.onChange(withoutIt)
+  }
+  
   return (
-    <ElementBase onRemove={props.onRemove} className={classes.base}>
-      <InputLabel className={classes.label}>{props.label}</InputLabel>
+    <ElementBase onRemove={props.onRemove} className={styles.base}>
+      <InputLabel className={styles.label}>{props.label}</InputLabel>
+      <div>
+        {props.value.map(channelId => (
+          <Chip className={styles.channelChip} size='small' label={nameOf(channelId)} onDelete={() => removeChannel(channelId)} />
+        ))}
+      </div>
       <Autocomplete 
-        options={props.availableChannels} 
+        options={unpickedChannels} 
         getOptionLabel={o => o.name} 
         renderInput={params => <TextField {...params} />}
-        onChange={(event: any, value: IdWithName | null) => console.log(`picked new channel ${value && value.id}`)}
+        onChange={(event: any, value: IdWithName | null) => handlePickerChange(value && value.id)}
       />
     </ElementBase>
   );
