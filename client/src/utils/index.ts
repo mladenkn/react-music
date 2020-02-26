@@ -47,3 +47,7 @@ export const capitalize = (str: string) => {
 	const withoutFirst = str.slice(1, str.length - 1);
 	return firstUpper + withoutFirst;
 }
+
+export function snapshot(v: unknown){
+	return JSON.parse(JSON.stringify(v))
+}

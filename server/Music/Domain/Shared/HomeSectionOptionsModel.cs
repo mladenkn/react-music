@@ -6,9 +6,11 @@
         {
             public class QueryForm_
             {
+                public string DataSource { get; set; }
+
                 public TracksQuery MusicDbQuery { get; set; }
 
-                public string YoutubeQuery { get; set; }
+                public string YouTubeQuery { get; set; }
             }
 
             public QueryForm_ QueryForm { get; set; }
@@ -31,6 +33,7 @@
                 AutoRefresh = true,
                 QueryForm = new TracklistOptions.QueryForm_
                 {
+                    DataSource = "MusicDb",
                     MusicDbQuery = new TracksQuery
                     {
                         MustHaveEveryTag = new string[0],

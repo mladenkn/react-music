@@ -5,6 +5,7 @@ import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractive
 import { useFormik } from 'formik'
 import clsx from 'clsx'
 import { ems, percent } from '../../utils/css'
+import { snapshot } from '../../utils'
 import { IdWithName } from '../../utils/types'
 
 interface HomeSectionOptionsUIProps {
@@ -57,6 +58,8 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 	useEffect(() => {
 		props.onChange(form.values)
 	}, [form.values])
+	
+	console.log(form.values.tracklist.queryForm.youTubeQuery!, snapshot(form.values), snapshot(props.values))
 
 	return (
 		<div className={clsx(props.className, styles.root)}>

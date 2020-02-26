@@ -1,16 +1,16 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
 import { HomeSectionOptions, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
-import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useHomeSectionApi } from "../api/homeSection";
+import { useEffect } from "react";
 
 export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [state, updateState] = useImmer({
-    currentTrackYoutubeId: props.currentTrackYoutubeId,
+    currentTrackYoutubeId: undefined as undefined | string,
     options: props.options
   })
-
+  
   const tracklist = useTracklistLogic({
     options: state.options.tracklist,
     tracksFromMusicDb: props.tracksFromMusicDb,
@@ -20,15 +20,15 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
 
   const api = useHomeSectionApi();
 
-  const [saveOptionsDebounced] = useDebouncedCallback(() => {
-    api.saveOptions({ 
+  const [saveState] = useDebouncedCallback(() => {
+    api.saveState({ 
       options: state.options, 
       currentTrackYoutubeId: state.currentTrackYoutubeId, 
       selectedTrackYoutubeId: tracklist.selectedTrackId 
     })
   }, 2000)
 
-  useEffect(saveOptionsDebounced, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
+  useEffect(saveState, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
 
   function setCurrentTrack(trackYoutubeId: string){
     updateState(draft => {
