@@ -21,14 +21,9 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var sp = serviceScope.ServiceProvider;
 
-            var initDb = new InitDb(sp);
-            await initDb.Execute();
-
-            var initializer = new SaveTracks(sp);
-            await initializer.Execute();
-
-            var persistAllChannelsVideosToFile = new PersistAllChannelsVideosToFile(sp);
-            await persistAllChannelsVideosToFile.Execute();
+            await new InitDb(sp).Execute();
+            await new SaveTracks(sp).Execute();
+            await new PersistAllChannelsVideosToFile(sp).Execute();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
