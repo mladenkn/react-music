@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Music.App.DbModels;
 
 namespace Music.App.Models
 {

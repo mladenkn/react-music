@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Kernel;
+using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 

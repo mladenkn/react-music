@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AngleSharp;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 

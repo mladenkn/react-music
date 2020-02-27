@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
-using Music.App.DbModels;
 
-namespace Music.App.Models
+namespace Music.App.DbModels
 {
     [DatabaseEntity]
     public class TrackUserProps
@@ -17,11 +16,6 @@ namespace Music.App.Models
         public int UserId { get; set; }
 
         public User User { get; set; }
-
-        [Required]
-        public string YoutubeVideoId { get; set; }
-
-        public YoutubeVideo YoutubeVideo { get; set; }
 
         public int? Year { get; set; }
 
