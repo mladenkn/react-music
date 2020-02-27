@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.Domain.PersistYoutubeVideos;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
+using Music.Domain.YouTubeVideos;
 
-namespace Music.Domain.QueryTracksViaYoutube
+namespace Music.Domain
 {
     public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
     {
@@ -14,10 +15,9 @@ namespace Music.Domain.QueryTracksViaYoutube
         {
         }
 
-        public async Task<IEnumerable<TrackModel>> Execute(string searchQuery)
+        public async Task<IEnumerable<TrackModel>> Execute(string query)
         {
-            var searchYoutubeVideosIds = Resolve<SearchYoutubeVideosIds>();
-            var wantedTracksYtIds = (await searchYoutubeVideosIds(searchQuery)).ToArray();
+            var wantedTracksYtIds = await Resolve<YouTubeVideoService>().SearchIds(query);
             await Resolve<PersistYouTubeVideosIfFoundExecutor>().Execute(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;

@@ -1,12 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Music.DataAccess;
-using Music.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Music.Domain.PersistYoutubeVideos;
+using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 
 namespace Music.Domain
 {

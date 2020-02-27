@@ -1,4 +1,4 @@
-﻿namespace Music.Domain.Shared
+﻿namespace Music.Domain.Shared.Models
 {
     public class HomeSectionOptionsModel
     {
@@ -8,7 +8,7 @@
             {
                 public string DataSource { get; set; }
 
-                public TracksQuery MusicDbQuery { get; set; }
+                public TracksQueryModel MusicDbQuery { get; set; }
 
                 public string YouTubeQuery { get; set; }
             }
@@ -34,7 +34,7 @@
                 QueryForm = new TracklistOptions.QueryForm_
                 {
                     DataSource = "MusicDb",
-                    MusicDbQuery = new TracksQuery
+                    MusicDbQuery = new TracksQueryModel
                     {
                         SupportedYouTubeChannelsIds = new string[0],
                         MustHaveEveryTag = new string[0],
@@ -42,7 +42,7 @@
                         Randomize = true,
                         Skip = 0,
                         Take = 30,
-                        YearRange = new TracksQuery.YearRange_(),
+                        YearRange = new TracksQueryModel.YearRange_(),
                     }
                 }
             }

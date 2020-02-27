@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Music.Domain.Shared
+namespace Music.Domain.Shared.Models
 {
-    public class TracksQuery
+    public class TracksQueryModel
     {
         public int Skip { get; set; }
 

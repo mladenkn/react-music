@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 using Newtonsoft.Json;
 using Utilities;
 

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Domain;
-using Music.Domain.QueryTracksViaYoutube;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 using Utilities;
 
 namespace Music.Api.Controllers
@@ -18,7 +18,7 @@ namespace Music.Api.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]TracksQuery req) => 
+        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]TracksQueryModel req) => 
             Resolve<QueryTracksExecutor>().Execute(req);
 
         [HttpGet("yt")]

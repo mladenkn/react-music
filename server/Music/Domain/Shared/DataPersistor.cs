@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess.Models;
+using Music.Domain.Shared.Models;
 using Utilities;
 
-namespace Music.DataAccess
+namespace Music.Domain.Shared
 {
     public class DataPersistor : ServiceResolverAware
     {

@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Kernel;
-using Music.DataAccess.Models;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 using Utilities;
 
 namespace Music.Domain
@@ -14,7 +14,7 @@ namespace Music.Domain
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackModel>> Execute(TracksQuery req)
+        public async Task<ArrayWithTotalCount<TrackModel>> Execute(TracksQueryModel req)
         {
             var query = BuildFilter(req);
 
@@ -41,7 +41,7 @@ namespace Music.Domain
             }
         }
 
-        private IQueryable<TrackUserProps> BuildFilter(TracksQuery req)
+        private IQueryable<TrackUserProps> BuildFilter(TracksQueryModel req)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 

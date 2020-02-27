@@ -1,9 +1,9 @@
 ﻿using Kernel;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess.Models;
+using Music.Domain.Shared.Models;
 using Utilities;
 
-namespace Music.DataAccess
+namespace Music.Domain.Shared
 {
     public sealed class MusicDbContext : DbContext
     {

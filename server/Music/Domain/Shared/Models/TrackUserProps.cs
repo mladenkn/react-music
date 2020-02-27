@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Music.DataAccess.Models
+namespace Music.Domain.Shared.Models
 {
     [DatabaseEntity]
     public class TrackUserProps

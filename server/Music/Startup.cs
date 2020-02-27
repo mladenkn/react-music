@@ -12,10 +12,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music.Api;
-using Music.DataAccess;
 using Music.Domain;
-using Music.Domain.PersistYoutubeVideos;
 using Music.Domain.Shared;
+using Music.Domain.YouTubeVideos;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music

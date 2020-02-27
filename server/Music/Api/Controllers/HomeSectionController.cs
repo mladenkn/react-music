@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Domain;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 
 namespace Music.Api.Controllers
 {

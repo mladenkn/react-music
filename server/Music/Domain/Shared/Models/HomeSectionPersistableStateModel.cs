@@ -1,4 +1,4 @@
-﻿namespace Music.Domain.Shared
+﻿namespace Music.Domain.Shared.Models
 {
     public class HomeSectionPersistableStateModel
     {

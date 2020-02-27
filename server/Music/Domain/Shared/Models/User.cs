@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Music.DataAccess.Models
+namespace Music.Domain.Shared.Models
 {
     public class User
     {

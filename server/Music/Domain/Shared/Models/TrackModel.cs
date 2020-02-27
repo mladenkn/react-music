@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Music.DataAccess.Models;
 
-namespace Music.Domain.Shared
+namespace Music.Domain.Shared.Models
 {
     public class TrackModel
     {

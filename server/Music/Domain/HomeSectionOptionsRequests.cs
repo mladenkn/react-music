@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess.Models;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 using Newtonsoft.Json;
 
 namespace Music.Domain

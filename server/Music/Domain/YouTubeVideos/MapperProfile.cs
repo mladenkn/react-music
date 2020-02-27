@@ -2,9 +2,9 @@
 using System.Xml;
 using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
-using Music.DataAccess.Models;
+using Music.Domain.Shared.Models;
 
-namespace Music.Domain.PersistYoutubeVideos
+namespace Music.Domain.YouTubeVideos
 {
     public class YoutubeVideoMapperProfile : Profile
     {

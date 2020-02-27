@@ -1,6 +1,6 @@
 ﻿using System;
 using Kernel;
-using Music.DataAccess;
+using Music.Domain.Shared;
 
 namespace Music
 {

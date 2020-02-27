@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.DataAccess.Models;
 using Music.Domain.Shared;
+using Music.Domain.Shared.Models;
 using Utilities;
 
 namespace Music.Domain
@@ -17,7 +17,7 @@ namespace Music.Domain
 
         public IReadOnlyCollection<string> Tags { get; set; }
 
-        public TracksQuery Query { get; set; }
+        public TracksQueryModel Query { get; set; }
     }
 
     public class SaveTrackExecutor : ServiceResolverAware

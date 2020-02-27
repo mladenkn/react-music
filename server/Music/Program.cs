@@ -2,8 +2,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Music.DataAccess;
 using Music.Domain;
+using Music.Domain.Shared;
 
 namespace Music
 {
