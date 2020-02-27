@@ -4,7 +4,7 @@ import { TrackUI, TrackUIClasses } from "./TrackUI"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
-import { TrackViewModel, TrackEditableProps, Track, SaveTrackModel } from "../../shared/track";
+import { TrackViewModel, SaveTrackModel } from "../../shared/track";
 
 interface TrackListProps {
   className?: string
@@ -12,9 +12,9 @@ interface TrackListProps {
   listClassName: string
   tracks: TrackViewModel[]
   tracksTotalCount?: number
-  onPlayTrack: (trackId: string) => void
-  onItemClick: (trackId: string) => void
-  fetchRecommendationsOf: (trackId: string) => void
+  onPlayTrack: (trackId: number) => void
+  onItemClick: (trackId: number) => void
+  fetchRecommendationsOf: (trackId: number) => void
   onScrollToBottom: () => void
   saveTrack(t: SaveTrackModel): Promise<void>
 }
@@ -47,15 +47,15 @@ export const TrackListUI = (props: TrackListProps) => {
       }
       <List className={clsx(classes.list, props.listClassName)} onScroll={onScroll} disablePadding>
         {props.tracks.map(t => (
-          <ListItem disableGutters key={t.youtubeVideoId}>
+          <ListItem disableGutters key={t.id}>
             <TrackUI 
               fetchRecommendationsOf={props.fetchRecommendationsOf} 
               track={t} 
-              onPlay={() => props.onPlayTrack(t.youtubeVideoId)}
-              onClick={() => props.onItemClick(t.youtubeVideoId)}
+              onPlay={() => props.onPlayTrack(t.id)}
+              onClick={() => props.onItemClick(t.id)}
               isFocused={t.isSelected}
               classes={props.trackClasses}
-              saveTrack={editedProps => props.saveTrack({...editedProps, trackYtId: t.youtubeVideoId})}
+              saveTrack={editedProps => props.saveTrack({...editedProps, trackId: t.id})}
             />
           </ListItem>
         ))}

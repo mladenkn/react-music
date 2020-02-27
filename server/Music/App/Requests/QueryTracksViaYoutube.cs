@@ -16,8 +16,8 @@ namespace Music.App.Requests
 
         public async Task<IEnumerable<TrackModel>> Execute(string query)
         {
-            var wantedTracksYtIds = await Resolve<YouTubeVideoService>().SearchIds(query);
-            await Resolve<PersistYouTubeVideosIfFoundExecutor>().Execute(wantedTracksYtIds);
+            var wantedTracksYtIds = (await Resolve<YouTubeVideoService>().SearchIds(query)).ToArray();
+            await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;
         }
@@ -25,10 +25,11 @@ namespace Music.App.Requests
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
-            var tracks = await Db.YoutubeVideos
-                .Where(v => wantedTracksYtIds.Contains(v.Id))
-                .Select(TrackModel.FromYoutubeVideo(curUserId))
-                .ToListAsync();
+            var tracks = await Db.TrackUserProps
+                .Where(trackUserProps => trackUserProps.UserId == curUserId &&
+                                         wantedTracksYtIds.Contains(trackUserProps.YoutubeVideoId))
+                .Select(TrackModel.FromTrackUserProps)
+                .ToArrayAsync();
             return tracks;
         }
     }

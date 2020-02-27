@@ -10,12 +10,20 @@ namespace Music.App.DbModels
     public class TrackUserProps
     {
         [Required]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
         public User User { get; set; }
+
+        public long TrackId { get; set; }
+
+        public Track Track { get; set; }
+
+        public string YoutubeVideoId { get; set; }
+
+        public YoutubeVideo YoutubeVideo { get; set; }
 
         public int? Year { get; set; }
 
@@ -28,7 +36,7 @@ namespace Music.App.DbModels
     public class TrackUserPropsTag
     {
         [Required]
-        public int TrackUserPropsId { get; set; }
+        public long TrackUserPropsId { get; set; }
 
         [Required]
         public string Value { get; set; }

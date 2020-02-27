@@ -9,9 +9,9 @@ using Utilities;
 
 namespace Music.App.Requests
 {
-    public class SaveTrackRequest
+    public class SaveTrackModel
     {
-        public string TrackYtId { get; set; }
+        public long TrackId { get; set; }
 
         public int? Year { get; set; }
 
@@ -26,26 +26,26 @@ namespace Music.App.Requests
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackModel>> Execute(SaveTrackRequest req)
+        public async Task<ArrayWithTotalCount<TrackModel>> Execute(SaveTrackModel req)
         {
-            var track = await Db.TrackUserProps
-                .FirstOrDefaultAsync(t => t.YoutubeVideoId == req.TrackYtId);
+            var currentUserId = Resolve<ICurrentUserContext>().Id;
 
-            var currentUserContext = Resolve<ICurrentUserContext>();
+            var trackUserProps = await Db.TrackUserProps
+                .FirstOrDefaultAsync(t => t.TrackId == req.TrackId && t.UserId == currentUserId);
 
             var newTags = req.Tags
-                .Select(t => new TrackUserPropsTag { TrackUserPropsId = track?.Id ?? 0, Value = t })
+                .Select(t => new TrackUserPropsTag { TrackUserPropsId = trackUserProps?.Id ?? 0, Value = t })
                 .ToArray();
 
-            if (track != null)
+            if (trackUserProps != null)
             {
-                if (currentUserContext.Id != track.UserId)
+                if (currentUserId != trackUserProps.UserId)
                     throw new ApplicationException("Trying to update other users track.");
 
-                track.Year = req.Year;
-                Db.TrackUserProps.Update(track);
+                trackUserProps.Year = req.Year;
+                Db.TrackUserProps.Update(trackUserProps);
 
-                var tagsToDelete = await Db.TrackTags.Where(t => t.TrackUserPropsId == track.Id).ToArrayAsync();
+                var tagsToDelete = await Db.TrackTags.Where(t => t.TrackUserPropsId == trackUserProps.Id).ToArrayAsync();
                 Db.TrackTags.RemoveRange(tagsToDelete);
 
                 Db.TrackTags.AddRange(newTags);
@@ -54,15 +54,24 @@ namespace Music.App.Requests
             }
             else
             {
-                var newTrack = new TrackUserProps
+                var track = await Db.Tracks
+                    .Include(t => t.YoutubeVideos)
+                    .FirstOrDefaultAsync(t => t.Id == req.TrackId);
+
+                if(track == null)
+                    throw new ApplicationException("Track not found.");
+
+                var newTrackProps = new TrackUserProps
                 {
                     TrackTags = newTags,
-                    UserId = currentUserContext.Id,
+                    UserId = currentUserId,
+                    TrackId = req.TrackId,
                     Year = req.Year,
-                    YoutubeVideoId = req.TrackYtId,
-                    InsertedAt = DateTime.Now
+                    InsertedAt = DateTime.Now,
+                    YoutubeVideoId = track.YoutubeVideos.First().Id
                 };
-                Db.Add(newTrack);
+
+                Db.Add(newTrackProps);
                 await Db.SaveChangesAsync();
             }
 

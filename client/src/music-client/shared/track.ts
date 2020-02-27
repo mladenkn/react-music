@@ -1,5 +1,6 @@
 export interface Track {
-  youtubeVideoId: string
+  id: number
+  youTubeVideoId: string
   title: string
   image: string
   description: string
@@ -20,7 +21,7 @@ export interface TrackViewModel extends Track {
 }
 
 export interface SaveTrackModel {
-  trackYtId: string
+  trackId: number
   tags: string[]
   year: number
 }
@@ -30,9 +31,9 @@ export interface TrackEditableProps {
   tags: string[]
 }
 
-export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): TrackViewModel => ({
+export const mapToTrackViewModel = (t: Track, selectedTrackId?: number): TrackViewModel => ({
   discogsSearchUrl: `https://www.discogs.com/search/?q=${t.title}&type=all`,
-  youtubeVideoUrl: `https://www.youtube.com/watch?v=${t.youtubeVideoId}`,
+  youtubeVideoUrl: `https://www.youtube.com/watch?v=${t.youTubeVideoId}`,
   canEdit: true,
   canFetchRecommendations: true,
   canPlay: true,
@@ -41,5 +42,5 @@ export const mapToTrackViewModel = (t: Track, selectedTrackYoutubeId?: string): 
     year: t.year,
     tags: t.tags
   },
-  isSelected: t.youtubeVideoId == selectedTrackYoutubeId
+  isSelected: t.id == selectedTrackId
 })

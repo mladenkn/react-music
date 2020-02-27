@@ -20,6 +20,10 @@ namespace Music.App.DbModels
         [Required]
         public string YoutubeChannelId { get; set; }
 
+        public long TrackId { get; set; }
+
+        public Track Track { get; set; }
+
         public YouTubeChannel YouTubeChannel { get; set; }
 
         public DateTime? PublishedAt { get; set; }
