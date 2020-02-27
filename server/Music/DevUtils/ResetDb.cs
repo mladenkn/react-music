@@ -8,9 +8,9 @@ using Music.App.Models;
 
 namespace Music.DevUtils
 {
-    public class InitDb : ServiceResolverAware
+    public class ResetDb : ServiceResolverAware
     {
-        public InitDb(IServiceProvider serviceProvider) : base(serviceProvider)
+        public ResetDb(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

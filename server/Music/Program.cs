@@ -12,7 +12,7 @@ namespace Music
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            DoTasks(host).Wait();
+            //DoTasks(host).Wait();
             host.Run();
         }
 
@@ -21,7 +21,7 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var sp = serviceScope.ServiceProvider;
 
-            await new InitDb(sp).Execute();
+            await new ResetDb(sp).Execute();
             await new SaveTracks(sp).Execute();
             await new PersistAllChannelsVideosToFile(sp).Execute();
         }
