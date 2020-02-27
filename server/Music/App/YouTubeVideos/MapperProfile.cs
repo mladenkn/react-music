@@ -12,7 +12,7 @@ namespace Music.App.YouTubeVideos
         {
             CreateMap<Video, YoutubeVideo>()
                 .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
-                .ForMember(dst => dst.YoutubeChannel, o => o.MapFrom(src => new YoutubeChannel
+                .ForMember(dst => dst.YouTubeChannel, o => o.MapFrom(src => new YouTubeChannel
                 {
                     Id = src.Snippet.ChannelId,
                     Title = src.Snippet.ChannelTitle,

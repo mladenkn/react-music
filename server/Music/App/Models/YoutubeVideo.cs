@@ -21,7 +21,7 @@ namespace Music.App.Models
         [Required]
         public string YoutubeChannelId { get; set; }
 
-        public YoutubeChannel YoutubeChannel { get; set; }
+        public YouTubeChannel YouTubeChannel { get; set; }
 
         public DateTime? PublishedAt { get; set; }
 
@@ -50,15 +50,6 @@ namespace Music.App.Models
                 .WithOne(t => t.YoutubeVideo)
                 ;
         }
-    }
-
-    public class YoutubeChannel
-    {
-        [Required]
-        public string Id { get; set; }
-
-        [Required]
-        public string Title { get; set; }
     }
 
     public class YoutubeVideoStatistics

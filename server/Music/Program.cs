@@ -11,7 +11,7 @@ namespace Music
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            //Initialize(host).Wait();
+            Initialize(host).Wait();
             host.Run();
         }
 

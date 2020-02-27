@@ -31,7 +31,7 @@ namespace Music.App.Models
                 Description = ytVideo.Description,
                 Image = ytVideo.Thumbnails.First(t => t.Name == "Default__").Url,
                 YoutubeChannelId = ytVideo.YoutubeChannelId,
-                YoutubeChannelTitle = ytVideo.YoutubeChannel.Title,
+                YoutubeChannelTitle = ytVideo.YouTubeChannel.Title,
                 Year = ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId) == null ?
                     null :
                     ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId).Year,
@@ -50,7 +50,7 @@ namespace Music.App.Models
                 Description = trackUserProps.YoutubeVideo.Description,
                 Image = trackUserProps.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url,
                 YoutubeChannelId = trackUserProps.YoutubeVideo.YoutubeChannelId,
-                YoutubeChannelTitle = trackUserProps.YoutubeVideo.YoutubeChannel.Title,
+                YoutubeChannelTitle = trackUserProps.YoutubeVideo.YouTubeChannel.Title,
                 Year = trackUserProps.Year,
                 Tags = trackUserProps.TrackTags.Select(t => t.Value).ToArray(),
             };

@@ -48,7 +48,12 @@ namespace Music.App.YouTubeVideos
                 videosFromYt.AddRange(allVideosFromYt);
             }
 
-            foreach (var videoFromYt in videosFromYt)
+            return await PostRead(videosFromYt.ToArray());
+        }
+
+        private async Task<YoutubeVideo[]> PostRead(IReadOnlyCollection<Video> vids)
+        {
+            foreach (var videoFromYt in vids)
             {
                 if (videoFromYt.ContentDetails == null)
                     throw new Exception("Video from YouTube API missing ContentDetails part");
@@ -59,12 +64,13 @@ namespace Music.App.YouTubeVideos
                 if (videoFromYt.Statistics == null)
                     throw new Exception("Video from YouTube API missing Snippet part");
             }
-
-            var videosFromYtMapped = videosFromYt.Select(v => Mapper.Map<YoutubeVideo>(v));
+            
+            var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
+            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel));
             return videosFromYtMapped;
         }
 
-        public async Task<List<Video>> GetBase(IEnumerable<string> parts, IEnumerable<string> ids = null)
+        private async Task<List<Video>> GetBase(IEnumerable<string> parts, IEnumerable<string> ids = null)
         {
             var partsAsOneString = string.Join(",", parts);
             var idsAsOneString = string.Join(",", ids);
@@ -73,6 +79,25 @@ namespace Music.App.YouTubeVideos
             request.Id = idsAsOneString;
             var result = await request.ExecuteAsync();
             return result.Items.ToList();
+        }
+
+        private async Task FetchChannelsAdditionalData(IEnumerable<YouTubeChannel> channels)
+        {
+            var ytService = Resolve<YouTubeService>();
+            var request = ytService.Channels.List("contentDetails");
+            request.Id = string.Join(",", channels.Select(c => c.Id));
+            var channelsFromApi = await request.ExecuteAsync();
+            
+            foreach (var channel in channels)
+            {
+                var channelFromApi = channelsFromApi.Items.Single(c => c.Id == channel.Id);
+                var channelPlaylists = channelFromApi.ContentDetails.RelatedPlaylists;
+                channel.FavoritesPlaylistId = channelPlaylists.Favorites;
+                channel.LikesPlaylistId = channelPlaylists.Likes;
+                channel.UploadsPlaylistId= channelPlaylists.Uploads;
+                channel.WatchHistoryPlaylistId = channelPlaylists.WatchHistory;
+                channel.WatchLaterPlaylistId = channelPlaylists.WatchLater;
+            }
         }
     }
 }

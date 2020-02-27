@@ -22,12 +22,12 @@ namespace Music.App
             var videosReadyToInsert = videos.Select(v =>
             {
                 var copy = ReflectionUtils.ShallowCopy(v);
-                copy.YoutubeChannel = null;
+                copy.YouTubeChannel = null;
                 return copy;
             });
 
-            var allChannels = videos.Select(v => v.YoutubeChannel).DistinctBy(c => c.Id);
-            var allChannelsIdsFromDb = await _db.Set<YoutubeChannel>().Select(c => c.Id).ToArrayAsync();
+            var allChannels = videos.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id);
+            var allChannelsIdsFromDb = await _db.Set<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
             var channelsReadyToInsert = allChannels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
 
             _db.AddRange(videosReadyToInsert);

@@ -9,7 +9,7 @@ namespace Music.App
     {
         public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
 
-        public DbSet<YoutubeChannel> YouTubeChannels { get; set; }
+        public DbSet<YouTubeChannel> YouTubeChannels { get; set; }
 
         public DbSet<TrackUserProps> TrackUserProps { get; set; }
 
