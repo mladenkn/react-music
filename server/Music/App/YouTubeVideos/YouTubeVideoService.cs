@@ -54,14 +54,21 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylists(IReadOnlyCollection<string> playlistsIds)
+        public async Task<IEnumerable<YoutubeVideo>> GetAllVideosFromPlaylists(IReadOnlyCollection<string> playlistsIds)
         {
-            var tasks = playlistsIds.Select(GetAllVideosIdsFromPlaylist);
+            var ids = await GetAllVideosIdsFromPlaylists(playlistsIds);
+            var videos = await GetByIds(ids.ToArray());
+            return videos;
+        }
+
+        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylists(IEnumerable<string> playlistsIds)
+        {
+            var tasks = playlistsIds.Select(GetAllVideosIdsFromPlaylist).ToArray();
             await Task.WhenAll(tasks);
             return tasks.SelectMany(task => task.Result);
         }
 
-        public async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId)
+        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId)
         {
             var ytService = Resolve<YouTubeService>();
             var r = new List<string>();
@@ -69,12 +76,12 @@ namespace Music.App.YouTubeVideos
             string nextPageToken = null;
             do
             {
-                var request = ytService.PlaylistItems.List("id");
+                var request = ytService.PlaylistItems.List("contentDetails");
                 request.PageToken = nextPageToken;
                 request.PlaylistId = playlistId;
                 request.MaxResults = 50;
                 var response = await request.ExecuteAsync();
-                r.AddRange(response.Items.Select(i => i.Id));
+                r.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
                 nextPageToken = response.NextPageToken;
             }
             while (nextPageToken != null);

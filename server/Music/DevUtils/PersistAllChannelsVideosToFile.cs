@@ -15,10 +15,10 @@ namespace Music.DevUtils
 
         public async Task Execute()
         {
-            var allChannels = await Db.YouTubeChannels.Take(4).ToArrayAsync();
+            var allChannels = await Db.YouTubeChannels.Skip(0).Take(1).ToArrayAsync();
             var playlistsIds = allChannels.Select(c => c.UploadsPlaylistId).ToArray();
             var ytService = Resolve<YouTubeVideoService>();
-            var playlistsVideos = await ytService.GetAllVideosIdsFromPlaylists(playlistsIds);
+            var playlistsVideos = await ytService.GetAllVideosFromPlaylists(playlistsIds);
         }
     }
 }
