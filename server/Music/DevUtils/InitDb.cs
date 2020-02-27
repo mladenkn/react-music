@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Music.App;
+using Music.App.DbModels;
 using Music.App.Models;
 
 namespace Music.DevUtils

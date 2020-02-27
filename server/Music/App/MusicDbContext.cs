@@ -1,5 +1,6 @@
 ﻿using Kernel;
 using Microsoft.EntityFrameworkCore;
+using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 

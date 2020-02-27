@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
+using Music.App.DbModels;
 
 namespace Music.App.Models
 {
