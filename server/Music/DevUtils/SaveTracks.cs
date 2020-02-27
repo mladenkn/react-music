@@ -3,24 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Microsoft.Extensions.DependencyInjection;
-using Music.App.Models;
+using Music.App;
 using Music.App.Requests;
 
-namespace Music.App
+namespace Music.DevUtils
 {
-    public static class Initializer
+    public class SaveTracks : ServiceResolverAware
     {
-        public static async Task Initialize(IServiceProvider serviceProvider)
+        public SaveTracks(IServiceProvider serviceProvider) : base(serviceProvider)
         {
-            var db = serviceProvider.GetRequiredService<MusicDbContext>();
-            
-            db.Add(new User
-            {
-                Email = "mladen.knezovic.1993@gmail.com",
-            });
-            db.SaveChanges();
+        }
 
+        public async Task Execute()
+        {
             var tracks = new[]
             {
                 new SaveTrackRequest
@@ -288,23 +283,20 @@ namespace Music.App
                 },
             };
 
-            await PersistTracks(serviceProvider, tracks);
+            await PersistTracks(tracks);
         }
 
-        public static async Task PersistTracks(IServiceProvider serviceProvider, IEnumerable<SaveTrackRequest> tracks)
+        public async Task PersistTracks(IReadOnlyCollection<SaveTrackRequest> tracks)
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.TrackYtId);
-            var notFoundVideos = await serviceProvider.GetRequiredService<PersistYouTubeVideosIfFoundExecutor>().Execute(trackYouTubeVideoIds);
+            await Resolve<PersistYouTubeVideosIfFoundExecutor>().Execute(trackYouTubeVideoIds);
 
-            foreach (var track in tracks)
-            {
-                var executor = serviceProvider.GetRequiredService<SaveTrackExecutor>();
-                await executor.Execute(track);
-            }
+            foreach (var track in tracks) 
+                await Resolve<SaveTrackExecutor>().Execute(track);
         }
 
-        public static void Normalize(IEnumerable<SaveTrackRequest> tracks)
+        public void Normalize(IEnumerable<SaveTrackRequest> tracks)
         {
             foreach (var track in tracks)
             {

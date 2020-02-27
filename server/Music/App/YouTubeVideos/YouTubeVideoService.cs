@@ -17,6 +17,8 @@ namespace Music.App.YouTubeVideos
         {
         }
 
+        private readonly string[] _videoParts = { "snippet", "contentDetails", "statistics", "topicDetails" };
+
         public async Task<IEnumerable<string>> SearchIds(string query)
         {
             var httpClient = Resolve<HttpClient>();
@@ -44,11 +46,35 @@ namespace Music.App.YouTubeVideos
 
             foreach (var idsChunk in ids.Batch(50))
             {
-                var allVideosFromYt = await GetBase(new[] { "snippet", "contentDetails", "statistics", "topicDetails" }, idsChunk);
+                var idsAsOneString = string.Join(",", idsChunk);
+                var allVideosFromYt = await GetBase(req => req.Id = idsAsOneString);
                 videosFromYt.AddRange(allVideosFromYt);
             }
 
             return await PostRead(videosFromYt.ToArray());
+        }
+
+        public async Task<IEnumerable<YoutubeVideo>> GetAllFromPlaylist(string playlistId)
+        {
+            var ytService = Resolve<YouTubeService>();
+
+            var vids = new List<YoutubeVideo>();
+
+            var hasMore = true;
+            while (hasMore)
+            {
+                var request = ytService.PlaylistItems.List("snippet, contentDetails");
+                request.PlaylistId = playlistId;
+                request.MaxResults = 50;
+                var response = await request.ExecuteAsync();
+                foreach (var playlistItem in response.Items)
+                {
+                    
+                }
+                hasMore = response.NextPageToken != null;
+            }
+
+            return vids;
         }
 
         private async Task<YoutubeVideo[]> PostRead(IReadOnlyCollection<Video> vids)
@@ -70,13 +96,12 @@ namespace Music.App.YouTubeVideos
             return videosFromYtMapped;
         }
 
-        private async Task<List<Video>> GetBase(IEnumerable<string> parts, IEnumerable<string> ids = null)
+        private async Task<List<Video>> GetBase(Action<VideosResource.ListRequest> consumeRequest)
         {
-            var partsAsOneString = string.Join(",", parts);
-            var idsAsOneString = string.Join(",", ids);
             var ytService = Resolve<YouTubeService>();
+            var partsAsOneString = string.Join(",", _videoParts);
             var request = ytService.Videos.List(partsAsOneString);
-            request.Id = idsAsOneString;
+            consumeRequest(request);
             var result = await request.ExecuteAsync();
             return result.Items.ToList();
         }
