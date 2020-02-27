@@ -54,24 +54,15 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetAllFromPlaylist(string playlistId)
+        public async Task<IEnumerable<YoutubeVideo>> GetAllVideosIdsFromPlaylists(IEnumerable<string> playlistId)
         {
             var ytService = Resolve<YouTubeService>();
-
             var vids = new List<YoutubeVideo>();
 
             var hasMore = true;
             while (hasMore)
             {
                 var request = ytService.PlaylistItems.List("snippet, contentDetails");
-                request.PlaylistId = playlistId;
-                request.MaxResults = 50;
-                var response = await request.ExecuteAsync();
-                foreach (var playlistItem in response.Items)
-                {
-                    
-                }
-                hasMore = response.NextPageToken != null;
             }
 
             return vids;
@@ -92,7 +83,7 @@ namespace Music.App.YouTubeVideos
             }
             
             var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
-            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel));
+            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel).ToArray());
             return videosFromYtMapped;
         }
 
@@ -106,16 +97,19 @@ namespace Music.App.YouTubeVideos
             return result.Items.ToList();
         }
 
-        private async Task FetchChannelsAdditionalData(IEnumerable<YouTubeChannel> channels)
+        private async Task FetchChannelsAdditionalData(IReadOnlyCollection<YouTubeChannel> channels)
         {
             var ytService = Resolve<YouTubeService>();
             var request = ytService.Channels.List("contentDetails");
             request.Id = string.Join(",", channels.Select(c => c.Id));
-            var channelsFromApi = await request.ExecuteAsync();
+            var response = await request.ExecuteAsync();
+
+            if(response.Items.Count != channels.Count())
+                throw new Exception();
             
             foreach (var channel in channels)
             {
-                var channelFromApi = channelsFromApi.Items.Single(c => c.Id == channel.Id);
+                var channelFromApi = response.Items.Single(c => c.Id == channel.Id);
                 var channelPlaylists = channelFromApi.ContentDetails.RelatedPlaylists;
                 channel.FavoritesPlaylistId = channelPlaylists.Favorites;
                 channel.LikesPlaylistId = channelPlaylists.Likes;

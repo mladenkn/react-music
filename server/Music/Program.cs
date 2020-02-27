@@ -24,11 +24,11 @@ namespace Music
             var initDb = new InitDb(sp);
             await initDb.Execute();
 
-            var persistAllChannelsVideosToFile = new PersistAllChannelsVideosToFile(sp);
-            await persistAllChannelsVideosToFile.Execute();
-
             var initializer = new SaveTracks(sp);
             await initializer.Execute();
+
+            var persistAllChannelsVideosToFile = new PersistAllChannelsVideosToFile(sp);
+            await persistAllChannelsVideosToFile.Execute();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -17,7 +17,8 @@ namespace Music.DevUtils
         {
             var allChannels = await Db.YouTubeChannels.ToArrayAsync();
             var playlistsIds = allChannels.Select(c => c.UploadsPlaylistId);
-            var playlistsVideos = await Resolve<YouTubeVideoService>().GetAllFromPlaylist(playlistsIds.First());
+            var ytService = Resolve<YouTubeVideoService>();
+            var playlistsVideos = await ytService.GetAllVideosIdsFromPlaylists(playlistsIds);
         }
     }
 }
