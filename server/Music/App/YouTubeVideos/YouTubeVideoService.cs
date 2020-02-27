@@ -54,18 +54,32 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetAllVideosIdsFromPlaylists(IEnumerable<string> playlistId)
+        public async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylists(IReadOnlyCollection<string> playlistsIds)
+        {
+            var tasks = playlistsIds.Select(GetAllVideosIdsFromPlaylist);
+            await Task.WhenAll(tasks);
+            return tasks.SelectMany(task => task.Result);
+        }
+
+        public async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId)
         {
             var ytService = Resolve<YouTubeService>();
-            var vids = new List<YoutubeVideo>();
+            var r = new List<string>();
 
-            var hasMore = true;
-            while (hasMore)
+            string nextPageToken = null;
+            do
             {
-                var request = ytService.PlaylistItems.List("snippet, contentDetails");
+                var request = ytService.PlaylistItems.List("id");
+                request.PageToken = nextPageToken;
+                request.PlaylistId = playlistId;
+                request.MaxResults = 50;
+                var response = await request.ExecuteAsync();
+                r.AddRange(response.Items.Select(i => i.Id));
+                nextPageToken = response.NextPageToken;
             }
+            while (nextPageToken != null);
 
-            return vids;
+            return r;
         }
 
         private async Task<YoutubeVideo[]> PostRead(IReadOnlyCollection<Video> vids)
@@ -83,7 +97,7 @@ namespace Music.App.YouTubeVideos
             }
             
             var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
-            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel).ToArray());
+            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray());
             return videosFromYtMapped;
         }
 
@@ -104,7 +118,7 @@ namespace Music.App.YouTubeVideos
             request.Id = string.Join(",", channels.Select(c => c.Id));
             var response = await request.ExecuteAsync();
 
-            if(response.Items.Count != channels.Count())
+            if(response.Items.Count != channels.Count)
                 throw new Exception();
             
             foreach (var channel in channels)

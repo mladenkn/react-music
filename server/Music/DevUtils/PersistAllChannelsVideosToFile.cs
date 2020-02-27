@@ -15,8 +15,8 @@ namespace Music.DevUtils
 
         public async Task Execute()
         {
-            var allChannels = await Db.YouTubeChannels.ToArrayAsync();
-            var playlistsIds = allChannels.Select(c => c.UploadsPlaylistId);
+            var allChannels = await Db.YouTubeChannels.Take(4).ToArrayAsync();
+            var playlistsIds = allChannels.Select(c => c.UploadsPlaylistId).ToArray();
             var ytService = Resolve<YouTubeVideoService>();
             var playlistsVideos = await ytService.GetAllVideosIdsFromPlaylists(playlistsIds);
         }
