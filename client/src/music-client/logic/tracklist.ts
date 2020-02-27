@@ -1,10 +1,10 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { useEffect } from "react";
-import { TracklistOptions, TrackQueryFormDataSource, createInitialHomeSectionOptions } from "../shared/homeSectionOptions";
+import { TracklistOptions, TrackQueryFormDataSource } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
+import { useEffect } from "../../utils/useEffect";
 
 export interface Tracklist {
   options: TracklistOptions
@@ -27,13 +27,19 @@ interface State {
 
 interface TracklistProps {
   options: TracklistOptions
+  tracksFromMusicDb?: ArrayWithTotalCount<Track>
+  tracksFromYouTube?: Track[]
+  selectedTrackId?: string
 }
 
 const pageSize = 30;
 
 export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
-  const [state, updateState] = useImmer<State>({})
+  const [state, updateState] = useImmer<State>({
+    fromMusicDb: props.tracksFromMusicDb,
+    fromYouTube: props.tracksFromYouTube
+  })
 
   const api = useTracksApi()
 
@@ -52,14 +58,14 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       draft.fromMusicDb = undefined
     })
     if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb){
-      const { data } = await api.fetchFromMusicDb({ ...queryForm.musicDbParams!, skip: 0, take: pageSize })
+      const { data } = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     } 
     else if(queryForm.dataSource === TrackQueryFormDataSource.YouTube){
-      const { data } = await api.fetchFromYouTube(queryForm.searchQuery!)
+      const { data } = await api.fetchFromYouTube(queryForm.youTubeQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
         draft.fromYouTube = data
@@ -69,7 +75,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
-    const response = await api.fetchFromMusicDb({ ...queryForm.musicDbParams!, skip, take: pageSize })
+    const response = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip, take: pageSize })
     updateState(draft => {
       draft.fromMusicDb!.totalCount = response.data.totalCount
       draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
@@ -80,14 +86,13 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     if(queryForm.dataSource === TrackQueryFormDataSource.YouTube)
       return true
     else {
-      const filter = queryForm.musicDbParams!
+      const filter = queryForm.musicDbQuery!
       if(filter.mustHaveAnyTag && filter.mustHaveAnyTag.length > 0){
         const hasAny = track.tags.some(t => filter.mustHaveAnyTag.includes(t))
         if(!hasAny)
           return false
       }
-      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){
-        debugger
+      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){        
         const hasAll = track.tags.every(t => filter.mustHaveEveryTag.includes(t))
         if(!hasAll)
           return false

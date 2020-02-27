@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HomeProps } from "./HomeUI";
+import { HomeProps } from "./HomeSectionUI";
 import { makeStyles } from '@material-ui/styles';
 import { TrackListUI } from './Tracklist';
 import { ems, percent } from '../../utils/css';

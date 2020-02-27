@@ -17,12 +17,6 @@ const useStyles = makeStyles(() => ({
     marginLeft: percent(12),
     marginBottom: ems(0.8)
   },
-  removeButton: {
-    padding: ems(0.2),
-    position: "absolute",
-    right: 0,
-    top: 0
-  },
   value: {
     marginTop: ems(0.5)
   }

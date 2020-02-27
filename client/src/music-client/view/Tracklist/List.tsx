@@ -21,7 +21,6 @@ interface TrackListProps {
 
 const useTrackListStyles = makeStyles(() => ({
   list: {
-    overflowY: 'scroll',
   },
   trackCount: {
     display: 'flex',

@@ -14,3 +14,8 @@ export interface BelongsToRequest<TData = {}> {
   requestId: number
   data: TData
 }
+
+export interface IdWithName {
+  id: string
+  name: string
+}

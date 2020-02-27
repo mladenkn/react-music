@@ -11,11 +11,15 @@ import { Checkbox } from '@material-ui/core';
 import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 import { TextField } from "./TextField";
+import { IdWithName } from "../../../utils/types";
+import { SupportedChannelsBuilderElement } from "./SupportedChannelsBuilderElement";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
   input: MusicDbTrackQueryParams;
   onChange: (i: MusicDbTrackQueryParams) => void;
+  availableTags: string[]
+  availableYouTubeChannels: IdWithName[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -50,8 +54,8 @@ type Field = keyof MusicDbTrackQueryParams
 
 const mapFieldValueToName = (field: Field) => {
   switch (field) {
-    case "youtubeChannelId":
-      return "Channel";
+    case "supportedYouTubeChannelsIds":
+      return "Supported channels";
     case "mustHaveEveryTag":
       return "Must have all tags";
     case "mustHaveAnyTag":
@@ -68,7 +72,8 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
   const styles = useStyles();
   const { 
     values, 
-    availableTags, 
+    availableYouTubeChannels,
+    availableTags,
     inactiveFields, 
     isFieldActive, 
     onFieldChange, 
@@ -76,10 +81,14 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     setFieldInactive 
   } = useMusicDbTrackQueryFormLogic({
     values: p.input,
-    onChange: p.onChange
+    onChange: p.onChange,
+    availableTags: p.availableTags,
+    availableYouTubeChannels: p.availableYouTubeChannels
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
 
+  const availableTagsSorted = availableTags.sort()
+  
   return (
     <div className={clsx(p.className, styles.root)}>
       <div className={styles.left}>        
@@ -95,7 +104,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         {isFieldActive('mustHaveEveryTag') && (
             <ChipListElement
               label='Must have all tags'
-              availableOptions={availableTags}
+              availableOptions={availableTagsSorted}
               value={values.mustHaveEveryTag}
               onChange={onFieldChange('mustHaveEveryTag')}
               onRemove={() => setFieldInactive('mustHaveEveryTag')}
@@ -105,7 +114,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         {isFieldActive('mustHaveAnyTag') && (
           <ChipListElement
             label='Must have some tags'
-            availableOptions={availableTags}
+            availableOptions={availableTagsSorted}
             value={values.mustHaveAnyTag}
             onChange={onFieldChange('mustHaveAnyTag')}
             onRemove={() => setFieldInactive('mustHaveAnyTag')}
@@ -128,6 +137,16 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             label='Title contains'
             value={values.titleContains}
             onChange={onFieldChange("titleContains")}
+          />
+        }
+
+        {isFieldActive('supportedYouTubeChannelsIds') &&          
+          <SupportedChannelsBuilderElement 
+            onRemove={() => setFieldInactive('supportedYouTubeChannelsIds')}
+            label='Allowed YouTube channels'
+            availableChannels={availableYouTubeChannels}
+            value={values.supportedYouTubeChannelsIds}
+            onChange={onFieldChange("supportedYouTubeChannelsIds")}
           />
         }
       </div>

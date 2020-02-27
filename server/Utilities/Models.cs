@@ -19,4 +19,11 @@
 
         public T UpperBound { get; set; }
     }
+
+    public class IdWithName
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+    }
 }

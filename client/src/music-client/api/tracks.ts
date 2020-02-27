@@ -1,6 +1,6 @@
 import { Paging } from "../shared";
 import { ArrayWithTotalCount } from "../../utils/types";
-import { MusicDbTrackQueryParams } from "../shared/homeSectionOptions";
+import { MusicDbTrackQueryParams, HomeSectionOptions } from "../shared/homeSectionOptions";
 import { Track, SaveTrackModel } from "../shared/track";
 import qs from 'qs'
 import { useAxios } from "./axios";

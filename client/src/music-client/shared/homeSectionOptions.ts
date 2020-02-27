@@ -1,4 +1,6 @@
 import { Range } from './index'
+import { ArrayWithTotalCount, IdWithName } from '../../utils/types'
+import { Track } from './track'
 
 export enum TrackQueryFormDataSource {
   MusicDb = 'MusicDb',
@@ -8,8 +10,8 @@ export enum TrackQueryFormDataSource {
 export interface TracklistOptions {
   queryForm: {
     dataSource: TrackQueryFormDataSource
-    musicDbParams?: MusicDbTrackQueryParams
-    searchQuery?: string
+    musicDbQuery?: MusicDbTrackQueryParams
+    youTubeQuery?: string
   }
   autoRefresh: boolean
   autoPlay: boolean
@@ -20,29 +22,25 @@ export interface HomeSectionOptions {
   tracklistShown: boolean
 }
 
-export const createInitialHomeSectionOptions = (): HomeSectionOptions => ({
-  tracklist: {
-    queryForm: {
-      dataSource: TrackQueryFormDataSource.MusicDb,
-      musicDbParams: {
-        titleContains: '',
-        youtubeChannelId: '',
-        mustHaveAnyTag: [],
-        mustHaveEveryTag: [],
-        yearRange: {
-        },
-        randomize: true
-      },
-    },
-    autoRefresh: true,
-    autoPlay: true
-  },
-  tracklistShown: true
-})
+export interface HomeSectionPersistableState {
+  options: HomeSectionOptions
+  selectedTrackYoutubeId?: string
+  currentTrackYoutubeId?: string
+}
+
+export interface HomeSectionPropsFromApi {
+  options: HomeSectionOptions
+  selectedTrackYoutubeId?: string
+  currentTrackYoutubeId?: string
+  tracksFromMusicDb?: ArrayWithTotalCount<Track>
+  tracksFromYouTube?: Track[]
+  youTubeChannels: IdWithName[]
+  tags: string[]
+}
 
 export interface MusicDbTrackQueryParams {
   titleContains: string
-  youtubeChannelId?: string
+  supportedYouTubeChannelsIds: string[]
   mustHaveEveryTag: string[]
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>

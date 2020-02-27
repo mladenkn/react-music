@@ -2,6 +2,7 @@ import { MusicDbTrackQueryParams } from "../shared/homeSectionOptions";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { difference } from 'lodash'
+import { IdWithName } from "../../utils/types";
 
 type Field = keyof MusicDbTrackQueryParams
 
@@ -13,14 +14,17 @@ interface MusicDbTrackQueryFormLogic {
 	setFieldActive(fieldName: Field): void
 	setFieldInactive(fieldName: Field): void
 	onFieldChange(fieldName: Field): (value: any) => void
+  availableYouTubeChannels: IdWithName[]
 }
 
 interface MusicDbTrackQueryFormLogicProps {
 	values: MusicDbTrackQueryParams
 	onChange: (values: MusicDbTrackQueryParams) => void
+  availableTags: string[]
+  availableYouTubeChannels: IdWithName[]
 }
 
-const allFields: Field[] = ['titleContains', 'youtubeChannelId', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
+const allFields: Field[] = ['titleContains', 'supportedYouTubeChannelsIds', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize']
 
 const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 	const result: Field[] = ['randomize']
@@ -31,18 +35,18 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 		result.push('mustHaveEveryTag')	
 	if(params.titleContains && params.titleContains !== '')
 		result.push('titleContains')
-	if(params.yearRange && Object.entries(params.yearRange).length > 0)
+	if(params.yearRange && Object.values(params.yearRange).filter(v => v).length > 0)
 		result.push('yearRange')
-	if(params.youtubeChannelId)
-		result.push('youtubeChannelId')
-	
+	if(params.supportedYouTubeChannelsIds && params.supportedYouTubeChannelsIds.length > 0)
+		result.push('supportedYouTubeChannelsIds')
+		
 	return result;
 }
 
 const getFieldDefaultValue = (field: Field) => {
 	switch (field) {
-    case "youtubeChannelId":
-      return undefined;
+    case "supportedYouTubeChannelsIds":
+      return [];
     case "mustHaveEveryTag":
       return [];
     case "mustHaveAnyTag":
@@ -89,8 +93,15 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	}
 
 	const inactiveFields = difference(allFields, activeFields)
-	
-  const availableTags = ['trance', 'techno', 'house', 'acid']
 
-	return { values: form.values, availableTags, inactiveFields, isFieldActive, onFieldChange, setFieldInactive, setFieldActive }
+	return { 
+    values: form.values, 
+    availableYouTubeChannels: props.availableYouTubeChannels, 
+    availableTags: props.availableTags, 
+    inactiveFields, 
+    isFieldActive, 
+    onFieldChange, 
+    setFieldInactive, 
+    setFieldActive 
+  }
 }
