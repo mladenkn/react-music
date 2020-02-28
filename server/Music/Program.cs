@@ -1,4 +1,3 @@
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,11 +23,7 @@ namespace Music
 
             //await new ResetDb(sp).Execute();
             //await new SaveTracks(sp).Execute();
-
-            var env = sp.GetRequiredService<IWebHostEnvironment>();
-            var videoFilesFolder = Path.Combine(env.ContentRootPath, "..", "..", "data-files", "videos-by-channels");
-            Directory.CreateDirectory(videoFilesFolder);
-            await new PersistAllChannelsVideosToFile(sp).Execute(videoFilesFolder);
+            await new PersistAllChannelsVideosToFile(sp).Execute();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

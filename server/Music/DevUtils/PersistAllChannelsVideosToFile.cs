@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App;
 using Music.App.YouTubeVideos;
-using Newtonsoft.Json;
 
 namespace Music.DevUtils
 {
@@ -14,7 +12,7 @@ namespace Music.DevUtils
         {
         }
 
-        public async Task Execute(string folder)
+        public async Task Execute()
         {
             var allChannels = await Db.YouTubeChannels.ToArrayAsync();
             var ytService = Resolve<YouTubeVideoService>();
@@ -24,11 +22,8 @@ namespace Music.DevUtils
                 if(!doesExist)
                     Console.WriteLine("Channel not found.");
                 var channelWithVideos = await ytService.GetVideosOfChannel(youTubeChannel);
-
-                var filePath = Path.Combine(folder, $"{channelWithVideos.Title} - {channelWithVideos.Id}");
-                var channelJson = JsonConvert.SerializeObject(channelWithVideos, Formatting.Indented);
-                await using var writer = File.CreateText(filePath);
-                await writer.WriteAsync(channelJson);
+                var store = Resolve<ChannelVideosPersistantStore>();
+                await store.Store(channelWithVideos);
             }
         }
     }
