@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Utilities
+﻿namespace Utilities
 {
     public static class StringUtils
     {

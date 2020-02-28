@@ -1,6 +1,6 @@
 ﻿using Kernel;
 using Microsoft.EntityFrameworkCore;
-using Music.App.Models;
+using Music.App.DbModels;
 using Utilities;
 
 namespace Music.App
@@ -12,6 +12,8 @@ namespace Music.App
         public DbSet<YouTubeChannel> YouTubeChannels { get; set; }
 
         public DbSet<TrackUserProps> TrackUserProps { get; set; }
+
+        public DbSet<Track> Tracks { get; set; }
 
         public DbSet<TrackUserPropsTag> TrackTags { get; set; }
 

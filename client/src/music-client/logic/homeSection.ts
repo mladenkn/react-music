@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [state, updateState] = useImmer({
-    currentTrackYoutubeId: undefined as undefined | string,
+    currentTrackId: undefined as undefined | number,
     options: props.options
   })
   
@@ -15,7 +15,7 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
     options: state.options.tracklist,
     tracksFromMusicDb: props.tracksFromMusicDb,
     tracksFromYouTube: props.tracksFromYouTube,
-    selectedTrackId: props.selectedTrackYoutubeId
+    selectedTrackId: props.selectedTrackId
   });
 
   const api = useHomeSectionApi();
@@ -23,27 +23,27 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [saveState] = useDebouncedCallback(() => {
     api.saveState({ 
       options: state.options, 
-      currentTrackYoutubeId: state.currentTrackYoutubeId, 
-      selectedTrackYoutubeId: tracklist.selectedTrackId 
+      currentTrackId: state.currentTrackId, 
+      selectedTrackId: tracklist.selectedTrackId 
     })
   }, 2000)
 
-  useEffect(saveState, [state.options, state.currentTrackYoutubeId, tracklist.selectedTrackId])
+  useEffect(saveState, [state.options, state.currentTrackId, tracklist.selectedTrackId])
 
-  function setCurrentTrack(trackYoutubeId: string){
+  function setCurrentTrack(trackId: number){
     updateState(draft => {
-      draft.currentTrackYoutubeId = trackYoutubeId
+      draft.currentTrackId = trackId
     })
   }
 
   function onCurrentTrackFinish(){
     if(!tracklist.options.autoPlay)
       return
-    const curTrackIndex = tracklist.tracks!.findIndex(t => t.youtubeVideoId === state.currentTrackYoutubeId!)
+    const curTrackIndex = tracklist.tracks!.findIndex(t => t.id === state.currentTrackId!)
     const maybeNextTrack = tracklist.tracks![curTrackIndex + 1]
-    const nextTrackId = maybeNextTrack ? maybeNextTrack.youtubeVideoId : tracklist.tracks![0].youtubeVideoId
+    const nextTrackId = maybeNextTrack ? maybeNextTrack.id : tracklist.tracks![0].id
     updateState(draft => {
-      draft.currentTrackYoutubeId = nextTrackId
+      draft.currentTrackId = nextTrackId
     })
   }
 
@@ -53,5 +53,8 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
     })
   }
 
-  return { ...tracklist, ...state, setCurrentTrack, onCurrentTrackFinish, setOptions }
+  const currentTrack = tracklist.tracks && state.currentTrackId && tracklist.tracks!.find(t => t.id === state.currentTrackId)
+  const currentTrackYoutubeId = currentTrack && currentTrack!.youTubeVideoId
+
+  return { ...tracklist, ...state, currentTrackYoutubeId, setCurrentTrack, onCurrentTrackFinish, setOptions }
 }

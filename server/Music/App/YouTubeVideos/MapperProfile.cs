@@ -2,7 +2,7 @@
 using System.Xml;
 using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
-using Music.App.Models;
+using Music.App.DbModels;
 
 namespace Music.App.YouTubeVideos
 {
@@ -48,7 +48,6 @@ namespace Music.App.YouTubeVideos
                         });
                 }))
                 .ForMember(dst => dst.ThumbnailsEtag, o => o.MapFrom(src => src.Snippet.Thumbnails.ETag))
-                .ForMember(dst => dst.TrackUserProps, o => o.Ignore())
                 .ForMember(dst => dst.Tags, o => o.MapFrom(src => src.Snippet.Tags.Select(t => new YoutubeVideoTag
                 {
                     Value = t

@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kernel;
 
-namespace Music.App.Models
+namespace Music.App.DbModels
 {
+    [DatabaseEntity]
     public class User
     {
         [Required]

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AngleSharp;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
+using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 
@@ -40,7 +41,16 @@ namespace Music.App.YouTubeVideos
             return urls;
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
+        public async Task<bool> DoesChannelExist(string channelId)
+        {
+            var service = Resolve<YouTubeService>();
+            var req = service.Channels.List("id");
+            req.Id = channelId;
+            var result = await req.ExecuteAsync();
+            return result.Items.Single().Id == channelId;
+        }
+
+        public async Task<IReadOnlyList<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
         {
             var videosFromYt = new List<Video>(ids.Count);
 
@@ -54,21 +64,19 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetAllVideosFromPlaylists(IReadOnlyCollection<string> playlistsIds)
+        public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
         {
-            var ids = await GetAllVideosIdsFromPlaylists(playlistsIds);
-            var videos = await GetByIds(ids.ToArray());
-            return videos;
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
+            var videos = await GetByIds(allVideosIds.ToArray());
+            return new YouTubeChannelWithVideos
+            {
+                Id = channel.Id,
+                Title = channel.Title,
+                Videos = videos
+            };
         }
 
-        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylists(IEnumerable<string> playlistsIds)
-        {
-            var tasks = playlistsIds.Select(GetAllVideosIdsFromPlaylist).ToArray();
-            await Task.WhenAll(tasks);
-            return tasks.SelectMany(task => task.Result);
-        }
-
-        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId)
+        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
         {
             var ytService = Resolve<YouTubeService>();
             var r = new List<string>();
@@ -104,7 +112,8 @@ namespace Music.App.YouTubeVideos
             }
             
             var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
-            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray());
+            var channels = videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray();
+            await FetchChannelsAdditionalData(channels);
             return videosFromYtMapped;
         }
 

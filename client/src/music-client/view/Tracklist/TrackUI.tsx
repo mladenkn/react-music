@@ -81,7 +81,7 @@ type ItemProps = {
   className?: string
   track: TrackViewModel
   onPlay: () => void
-  fetchRecommendationsOf: (trackId: string) => void
+  fetchRecommendationsOf: (trackId: number) => void
   onClick: () => void
   isFocused: boolean
   saveTrack(t: TrackEditableProps): Promise<void>
@@ -161,7 +161,7 @@ const TrackUI_ = (p: ItemProps) => {
                   <DescriptionIcon className={p.classes.actionIcon} />
                 </IconButton>
                 {p.track.canFetchRecommendations && 
-                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={() => p.fetchRecommendationsOf(p.track.youtubeVideoId)}>
+                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={() => p.fetchRecommendationsOf(p.track.id)}>
                     <img src={recommendationUrl} className={p.classes.actionIcon} />
                   </IconButton>
                 }

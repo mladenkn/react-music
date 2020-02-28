@@ -102,7 +102,7 @@ export const HomeUI = (p: HomeProps) => {
               saveTrack={logic.saveTrack}
             />
           )}
-        </div>          
+        </div>
       )}
       <TrackPlayerUI 
         width={380}

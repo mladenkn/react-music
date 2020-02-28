@@ -10,19 +10,19 @@ export interface Tracklist {
   options: TracklistOptions
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
-  selectedTrackId?: string
+  selectedTrackId?: number
   tracks: TrackViewModel[] | undefined
   tracksTotalCount?: number
   fetchTracksNextPage(): void
   saveTrack(t: SaveTrackModel): Promise<void>
-  onTrackClick(trackYoutubeId: string): void
+  onTrackClick(trackId: number): void
   fetchTracks(): void
 }
 
 interface State {
   fromMusicDb?: ArrayWithTotalCount<Track>
   fromYouTube?: Track[]
-  selectedTrackId?: string
+  selectedTrackId?: number
 }
 
 interface TracklistProps {
@@ -116,12 +116,12 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
           resolve()
           updateState(draft => {
             if(doesPassCurrentFilter(editedTrackFromUser)){
-              const track_ = (draft.fromYouTube || draft.fromMusicDb!.data).find(t => t.youtubeVideoId === editedTrackFromUser.trackYtId)!
+              const track_ = (draft.fromYouTube || draft.fromMusicDb!.data).find(t => t.id === editedTrackFromUser.trackId)!
               track_.tags = editedTrackFromUser.tags
               track_.year = editedTrackFromUser.year
             }
             else
-              draft.fromMusicDb!.data = draft.fromMusicDb!.data.filter(t => t.youtubeVideoId !== editedTrackFromUser.trackYtId)
+              draft.fromMusicDb!.data = draft.fromMusicDb!.data.filter(t => t.id !== editedTrackFromUser.trackId)
           })
         })
         .catch(() => {
@@ -130,9 +130,9 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     })
   }
   
-  function onTrackClick(trackYoutubeId: string) {
+  function onTrackClick(trackId: number) {
     updateState(draft => {
-      draft.selectedTrackId = trackYoutubeId
+      draft.selectedTrackId = trackId
     })
   }
 

@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Music.App.DbModels;
 
 namespace Music.App.Models
 {
     public class TrackModel
     {
-        public string YoutubeVideoId { get; set; }
+        public long Id { get; set; }
+
+        public string YouTubeVideoId { get; set; }
 
         public string Title { get; set; }
 
@@ -23,29 +26,11 @@ namespace Music.App.Models
 
         public IReadOnlyCollection<string> Tags { get; set; }
 
-        public static Expression<Func<YoutubeVideo, TrackModel>> FromYoutubeVideo(int userId) => ytVideo =>
-            new TrackModel
-            {
-                YoutubeVideoId = ytVideo.Id,
-                Title = ytVideo.Title,
-                Description = ytVideo.Description,
-                Image = ytVideo.Thumbnails.First(t => t.Name == "Default__").Url,
-                YoutubeChannelId = ytVideo.YoutubeChannelId,
-                YoutubeChannelTitle = ytVideo.YouTubeChannel.Title,
-                Year = ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId) == null ?
-                    null :
-                    ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId).Year,
-                Tags = ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId) == null ?
-                    EmptyTagsArray :
-                    ytVideo.TrackUserProps.FirstOrDefault(t => t.UserId == userId).TrackTags
-                        .Select(t => t.Value)
-                        .ToArray(),
-            };
-
         public static Expression<Func<TrackUserProps, TrackModel>> FromTrackUserProps => trackUserProps =>
             new TrackModel
             {
-                YoutubeVideoId = trackUserProps.YoutubeVideoId,
+                Id = trackUserProps.TrackId,
+                YouTubeVideoId = trackUserProps.YoutubeVideoId,
                 Title = trackUserProps.YoutubeVideo.Title,
                 Description = trackUserProps.YoutubeVideo.Description,
                 Image = trackUserProps.YoutubeVideo.Thumbnails.First(t => t.Name == "Default__").Url,

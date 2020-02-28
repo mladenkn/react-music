@@ -25,7 +25,7 @@ namespace Music.App.Api.Controllers
             Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
 
         [HttpPost]
-        public Task<ArrayWithTotalCount<TrackModel>> Save([FromBody]SaveTrackRequest trackProps) => 
+        public Task<ArrayWithTotalCount<TrackModel>> Save([FromBody]SaveTrackModel trackProps) => 
             Resolve<SaveTrackExecutor>().Execute(trackProps);
     }
 }

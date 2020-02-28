@@ -4,20 +4,23 @@ using System.ComponentModel.DataAnnotations;
 using Kernel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Music.App.Models
+namespace Music.App.DbModels
 {
     [DatabaseEntity]
     public class TrackUserProps
     {
         [Required]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
         public User User { get; set; }
 
-        [Required]
+        public long TrackId { get; set; }
+
+        public Track Track { get; set; }
+
         public string YoutubeVideoId { get; set; }
 
         public YoutubeVideo YoutubeVideo { get; set; }
@@ -33,7 +36,7 @@ namespace Music.App.Models
     public class TrackUserPropsTag
     {
         [Required]
-        public int TrackUserPropsId { get; set; }
+        public long TrackUserPropsId { get; set; }
 
         [Required]
         public string Value { get; set; }

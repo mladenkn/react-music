@@ -24,14 +24,14 @@ export interface HomeSectionOptions {
 
 export interface HomeSectionPersistableState {
   options: HomeSectionOptions
-  selectedTrackYoutubeId?: string
-  currentTrackYoutubeId?: string
+  selectedTrackId?: number
+  currentTrackId?: number
 }
 
 export interface HomeSectionPropsFromApi {
   options: HomeSectionOptions
-  selectedTrackYoutubeId?: string
-  currentTrackYoutubeId?: string
+  selectedTrackId?: string
+  currentTrackId?: string
   tracksFromMusicDb?: ArrayWithTotalCount<Track>
   tracksFromYouTube?: Track[]
   youTubeChannels: IdWithName[]
