@@ -24,15 +24,11 @@ namespace Music.DevUtils
             {
                 var doesExist = await ytService.DoesChannelExist(youTubeChannel.Id);
                 if(!doesExist)
-                    throw new Exception();
-            }
-            var channelsWithVideos = await ytService.GetVideosOfChannels(allChannels);
-            var totalVideoCount = channelsWithVideos.Sum(c => c.Videos.Count);
+                    Console.WriteLine("Channel not found.");
+                var channelWithVideos = await ytService.GetVideosOfChannel(youTubeChannel);
 
-            foreach (var channelWithVids in channelsWithVideos)
-            {
-                var filePath = Path.Combine(folder, $"{channelWithVids.Title} - {channelWithVids.Id}");
-                var channelJson = JsonConvert.SerializeObject(channelWithVids, Formatting.Indented);
+                var filePath = Path.Combine(folder, $"{channelWithVideos.Title} - {channelWithVideos.Id}");
+                var channelJson = JsonConvert.SerializeObject(channelWithVideos, Formatting.Indented);
                 await using var writer = File.CreateText(filePath);
                 await writer.WriteAsync(channelJson);
             }

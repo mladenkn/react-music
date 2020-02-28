@@ -64,56 +64,16 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IReadOnlyList<YouTubeChannelWithVideos>> GetVideosOfChannels(IReadOnlyCollection<YouTubeChannel> channels)
+        public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
         {
-            var allVideosIdsByChannel = await GetAllVideosIdsOfChannels(channels);
-
-            var videosByChannels = new Dictionary<string, Task<IReadOnlyList<YoutubeVideo>>>();
-            
-            foreach (var keyValuePair in allVideosIdsByChannel)
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
+            var videos = await GetByIds(allVideosIds.ToArray());
+            return new YouTubeChannelWithVideos
             {
-                var (channelId, videosIds) = keyValuePair;
-                var videosTask = GetByIds(videosIds.ToArray());
-                videosByChannels[channelId] = videosTask;
-            }
-            await Task.WhenAll(videosByChannels.Values);
-            var result = videosByChannels
-                .Aggregate(new Dictionary<string, IEnumerable<YoutubeVideo>>(),
-                (accumulate, item) =>
-                {
-                    accumulate[item.Key] = item.Value.Result;
-                    return accumulate;
-                })
-                .Select(e =>
-                {
-                    var channel = channels.Single(c => c.Id == e.Key);
-                    return new YouTubeChannelWithVideos
-                    {
-                        Id = channel.Id,
-                        Title = channel.Title,
-                        Videos = e.Value.ToArray()
-                    };
-                })
-                .ToArray();
-            return result;
-        }
-
-        public async Task<IReadOnlyDictionary<string, IReadOnlyList<string>>> GetAllVideosIdsOfChannels(IEnumerable<YouTubeChannel> channels)
-        {
-            var videoIdsByChannelsTasks = new Dictionary<string, Task<IReadOnlyList<string>>>();
-            foreach (var channel in channels)
-            {
-                var task = GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
-                videoIdsByChannelsTasks[channel.Id] = task;
-            }
-            await Task.WhenAll(videoIdsByChannelsTasks.Values);
-            var r = videoIdsByChannelsTasks.Aggregate(new Dictionary<string, IReadOnlyList<string>>(),
-                (accumulate, item) =>
-                {
-                    accumulate[item.Key] = item.Value.Result;
-                    return accumulate;
-                });
-            return r;
+                Id = channel.Id,
+                Title = channel.Title,
+                Videos = videos
+            };
         }
 
         private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
