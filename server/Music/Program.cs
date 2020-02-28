@@ -22,12 +22,12 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var sp = serviceScope.ServiceProvider;
 
-            var env = sp.GetRequiredService<IWebHostEnvironment>();
-            var videoFilesFolder = Path.Combine(env.ContentRootPath, "..", "data-files", "videos-by-channels");
-            Directory.CreateDirectory(videoFilesFolder);
-
             //await new InitDb(sp).Execute();
             //await new SaveTracks(sp).Execute();
+
+            var env = sp.GetRequiredService<IWebHostEnvironment>();
+            var videoFilesFolder = Path.Combine(env.ContentRootPath, "..", "..", "data-files", "videos-by-channels");
+            Directory.CreateDirectory(videoFilesFolder);
             await new PersistAllChannelsVideosToFile(sp).Execute(videoFilesFolder);
         }
 
