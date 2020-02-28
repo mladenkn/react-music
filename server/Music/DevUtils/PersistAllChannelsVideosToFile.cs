@@ -32,7 +32,7 @@ namespace Music.DevUtils
             foreach (var channelWithVids in channelsWithVideos)
             {
                 var filePath = Path.Combine(folder, $"{channelWithVids.Title} - {channelWithVids.Id}");
-                var channelJson = JsonConvert.SerializeObject(channelWithVids);
+                var channelJson = JsonConvert.SerializeObject(channelWithVids, Formatting.Indented);
                 await using var writer = File.CreateText(filePath);
                 await writer.WriteAsync(channelJson);
             }
