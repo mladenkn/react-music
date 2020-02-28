@@ -3,7 +3,6 @@ using System.Xml;
 using AutoMapper;
 using Google.Apis.YouTube.v3.Data;
 using Music.App.DbModels;
-using Music.App.Models;
 
 namespace Music.App.YouTubeVideos
 {

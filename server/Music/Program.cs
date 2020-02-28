@@ -22,7 +22,7 @@ namespace Music
             using var serviceScope = host.Services.CreateScope();
             var sp = serviceScope.ServiceProvider;
 
-            //await new InitDb(sp).Execute();
+            //await new ResetDb(sp).Execute();
             //await new SaveTracks(sp).Execute();
 
             var env = sp.GetRequiredService<IWebHostEnvironment>();
