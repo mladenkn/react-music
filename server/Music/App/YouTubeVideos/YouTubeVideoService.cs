@@ -105,7 +105,8 @@ namespace Music.App.YouTubeVideos
             }
             
             var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
-            await FetchChannelsAdditionalData(videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray());
+            var channels = videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray();
+            await FetchChannelsAdditionalData(channels);
             return videosFromYtMapped;
         }
 

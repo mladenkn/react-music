@@ -296,7 +296,7 @@ namespace Music.DevUtils
 
             foreach (var newTrackDescriptor in tracks)
             {
-                var track = result.NewTracks.Single(t => t.YoutubeVideos.Single().Id == newTrackDescriptor.YouTubeVideoId);
+                var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
                 var saveTrackModel = new App.Requests.SaveTrackModel
                 {
                     TrackId = track.Id,
