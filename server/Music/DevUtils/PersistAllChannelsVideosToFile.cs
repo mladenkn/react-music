@@ -18,15 +18,15 @@ namespace Music.DevUtils
             var ytService = Resolve<YouTubeVideoService>();
             foreach (var youTubeChannel in allChannels)
             {
-                var doesExist = await ytService.DoesChannelExist(youTubeChannel.Id);
-                if (!doesExist)
+                try
                 {
-                    Console.WriteLine("Channel not found.");
-                    continue;
+                    var channelWithVideos = await ytService.GetVideosOfChannel(youTubeChannel);
+                    var store = Resolve<ChannelVideosPersistantStore>();
+                    await store.Store(channelWithVideos);
                 }
-                var channelWithVideos = await ytService.GetVideosOfChannel(youTubeChannel);
-                var store = Resolve<ChannelVideosPersistantStore>();
-                await store.Store(channelWithVideos);
+                catch (Exception e)
+                {
+                }
             }
         }
     }
