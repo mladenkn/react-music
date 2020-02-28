@@ -41,7 +41,16 @@ namespace Music.App.YouTubeVideos
             return urls;
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
+        public async Task<bool> DoesChannelExist(string channelId)
+        {
+            var service = Resolve<YouTubeService>();
+            var req = service.Channels.List("id");
+            req.Id = channelId;
+            var result = await req.ExecuteAsync();
+            return result.Items.Single().Id == channelId;
+        }
+
+        public async Task<IReadOnlyList<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
         {
             var videosFromYt = new List<Video>(ids.Count);
 
@@ -55,21 +64,59 @@ namespace Music.App.YouTubeVideos
             return await PostRead(videosFromYt.ToArray());
         }
 
-        public async Task<IEnumerable<YoutubeVideo>> GetAllVideosFromPlaylists(IReadOnlyCollection<string> playlistsIds)
+        public async Task<IReadOnlyList<YouTubeChannelWithVideos>> GetVideosOfChannels(IReadOnlyCollection<YouTubeChannel> channels)
         {
-            var ids = await GetAllVideosIdsFromPlaylists(playlistsIds);
-            var videos = await GetByIds(ids.ToArray());
-            return videos;
+            var allVideosIdsByChannel = await GetAllVideosIdsOfChannels(channels);
+
+            var videosByChannels = new Dictionary<string, Task<IReadOnlyList<YoutubeVideo>>>();
+            
+            foreach (var keyValuePair in allVideosIdsByChannel)
+            {
+                var (channelId, videosIds) = keyValuePair;
+                var videosTask = GetByIds(videosIds.ToArray());
+                videosByChannels[channelId] = videosTask;
+            }
+            await Task.WhenAll(videosByChannels.Values);
+            var result = videosByChannels
+                .Aggregate(new Dictionary<string, IEnumerable<YoutubeVideo>>(),
+                (accumulate, item) =>
+                {
+                    accumulate[item.Key] = item.Value.Result;
+                    return accumulate;
+                })
+                .Select(e =>
+                {
+                    var channel = channels.Single(c => c.Id == e.Key);
+                    return new YouTubeChannelWithVideos
+                    {
+                        Id = channel.Id,
+                        Title = channel.Title,
+                        Videos = e.Value.ToArray()
+                    };
+                })
+                .ToArray();
+            return result;
         }
 
-        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylists(IEnumerable<string> playlistsIds)
+        public async Task<IReadOnlyDictionary<string, IReadOnlyList<string>>> GetAllVideosIdsOfChannels(IEnumerable<YouTubeChannel> channels)
         {
-            var tasks = playlistsIds.Select(GetAllVideosIdsFromPlaylist).ToArray();
-            await Task.WhenAll(tasks);
-            return tasks.SelectMany(task => task.Result);
+            var videoIdsByChannelsTasks = new Dictionary<string, Task<IReadOnlyList<string>>>();
+            foreach (var channel in channels)
+            {
+                var task = GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
+                videoIdsByChannelsTasks[channel.Id] = task;
+            }
+            await Task.WhenAll(videoIdsByChannelsTasks.Values);
+            var r = videoIdsByChannelsTasks.Aggregate(new Dictionary<string, IReadOnlyList<string>>(),
+                (accumulate, item) =>
+                {
+                    accumulate[item.Key] = item.Value.Result;
+                    return accumulate;
+                });
+            return r;
         }
 
-        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId)
+        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
         {
             var ytService = Resolve<YouTubeService>();
             var r = new List<string>();
