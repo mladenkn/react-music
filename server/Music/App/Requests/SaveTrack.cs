@@ -43,14 +43,14 @@ namespace Music.App.Requests
                     throw new ApplicationException("Trying to update other users track.");
 
                 trackUserProps.Year = req.Year;
-                Db.TrackUserProps.Update(trackUserProps);
+                var tagsToDelete = await Db.TrackUserPropsTags.Where(t => t.TrackUserPropsId == trackUserProps.Id).ToArrayAsync();
 
-                var tagsToDelete = await Db.TrackTags.Where(t => t.TrackUserPropsId == trackUserProps.Id).ToArrayAsync();
-                Db.TrackTags.RemoveRange(tagsToDelete);
-
-                Db.TrackTags.AddRange(newTags);
-
-                await Db.SaveChangesAsync();
+                await Persist(ops =>
+                {
+                    ops.InsertTrackUserPropsTags(newTags);
+                    ops.DeleteTrackUserPropsTags(tagsToDelete);
+                    ops.UpdateTrackUserProps(new []{ trackUserProps });
+                });
             }
             else
             {
@@ -71,8 +71,7 @@ namespace Music.App.Requests
                     YoutubeVideoId = track.YoutubeVideos.First().Id
                 };
 
-                Db.Add(newTrackProps);
-                await Db.SaveChangesAsync();
+                await Persist(ops => { ops.InsertTrackUserProps(new []{ newTrackProps }); });
             }
 
             if (req.Query != null)

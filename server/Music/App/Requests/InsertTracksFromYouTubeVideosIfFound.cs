@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App.DbModels;
 using Music.App.YouTubeVideos;
+using Utilities;
 
 namespace Music.App.Requests
 {
@@ -21,15 +22,22 @@ namespace Music.App.Requests
             
             var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
 
-            var dataPersistor = Resolve<DataPersistor>();
-            await dataPersistor.InsertTracks(tracks);
+            var channelsToInsert = await FilterToNotPersistedChannels(
+                videosFromYt.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id)
+            );
+            await Persist(ops =>
+            {
+                ops.InsertYouTubeChannels(channelsToInsert);
+                ops.InsertTracks(tracks);
+                ops.InsertYouTubeVideos(videosFromYt);
+            });
 
             var notFoundVideosIds = wantedVideosIds.Except(videosFromYt.Select(v => v.Id));
 
             return new Result
             {
                 NotFoundVideoIds = notFoundVideosIds,
-                NewTracks = videosFromYt.Select(v => v.Track).ToArray(),
+                NewTracks = tracks,
                 NewYouTubeVideos = videosFromYt
             };
         }
@@ -44,6 +52,13 @@ namespace Music.App.Requests
             return notFoundIds;
         }
 
+        private async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
+            IEnumerable<YouTubeChannel> channels)
+        {
+            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
+            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
+            return filtered;
+        }
 
         public class Result
         {

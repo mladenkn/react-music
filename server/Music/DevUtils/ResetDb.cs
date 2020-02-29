@@ -18,12 +18,14 @@ namespace Music.DevUtils
             await db.Database.EnsureDeletedAsync();
             await db.Database.EnsureCreatedAsync();
 
-            db.Add(new User
+            await Persist(ops =>
             {
-                Email = "mladen.knezovic.1993@gmail.com",
+                var user = new User
+                {
+                    Email = "mladen.knezovic.1993@gmail.com",
+                };
+                ops.InsertUser(new []{user});
             });
-            
-            await db.SaveChangesAsync();
         }
     }
 }

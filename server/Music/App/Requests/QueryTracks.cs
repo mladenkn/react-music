@@ -58,7 +58,7 @@ namespace Music.App.Requests
 
             //var mustHaveEveryTag = req.MustHaveEveryTag?.ToArray();
             //if (mustHaveEveryTag != null && mustHaveEveryTag.Length > 0)
-            //    query = query.Where(t => t.TrackTags
+            //    query = query.Where(t => t.TrackUserPropsTags
             //                                 .Select(tt => tt.Value)
             //                                 .Except(mustHaveEveryTag)
             //                                 .Count() == mustHaveEveryTag.Length
@@ -66,7 +66,7 @@ namespace Music.App.Requests
 
             //var mustHaveEveryTag = req.MustHaveEveryTag?.ToArray();
             //if (mustHaveEveryTag != null && mustHaveEveryTag.Length > 0)
-            //    query = query.Where(t => mustHaveEveryTag.All(requiredTag => t.TrackTags.Any(tt => tt.Value == requiredTag)));
+            //    query = query.Where(t => mustHaveEveryTag.All(requiredTag => t.TrackUserPropsTags.Any(tt => tt.Value == requiredTag)));
 
             if (req.MustHaveEveryTag != null)
             {

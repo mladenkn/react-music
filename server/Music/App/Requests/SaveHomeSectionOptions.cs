@@ -18,8 +18,7 @@ namespace Music.App.Requests
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Query<User>().FirstOrDefaultAsync(u => u.Id == userId);
             user.HomeSectionStateJson = JsonConvert.SerializeObject(opt);
-            Db.Users.Update(user);
-            await Db.SaveChangesAsync();
+            await Persist(ops => ops.UpdateUsers(new []{ user }));
         }
     }
 }

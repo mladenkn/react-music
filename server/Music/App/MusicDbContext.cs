@@ -15,7 +15,7 @@ namespace Music.App
 
         public DbSet<Track> Tracks { get; set; }
 
-        public DbSet<TrackUserPropsTag> TrackTags { get; set; }
+        public DbSet<TrackUserPropsTag> TrackUserPropsTags { get; set; }
 
         public DbSet<User> Users { get; set; }
 

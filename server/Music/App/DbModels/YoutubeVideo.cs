@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Kernel;
+using Microsoft.EntityFrameworkCore;
 
 namespace Music.App.DbModels
 {
@@ -19,7 +20,7 @@ namespace Music.App.DbModels
         [Required]
         public string YoutubeChannelId { get; set; }
 
-        public long TrackId { get; set; }
+        public long? TrackId { get; set; }
 
         public Track Track { get; set; }
 
@@ -42,6 +43,22 @@ namespace Music.App.DbModels
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
+
+        public static void Configure(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<YoutubeVideo>()
+                .HasOne(v => v.Track)
+                .WithMany()
+                .HasForeignKey(i => i.TrackId);
+
+            //modelBuilder.Entity<YoutubeVideo>()
+            //    .Property(v => v.Track)
+            //    .IsRequired(false);
+
+            //modelBuilder.Entity<YoutubeVideo>()
+            //    .Property(v => v.TrackId)
+            //    .IsRequired(false);
+        }
     }
 
     public class YoutubeVideoStatistics
