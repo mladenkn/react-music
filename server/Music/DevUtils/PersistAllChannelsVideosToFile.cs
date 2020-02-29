@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App;
@@ -14,14 +15,14 @@ namespace Music.DevUtils
 
         public async Task Execute()
         {
-            var allChannels = await Db.YouTubeChannels.ToArrayAsync();
+            var allChannels = await Db.YouTubeChannels.Skip(3).ToArrayAsync();
             var ytService = Resolve<YouTubeVideoService>();
+            var store = Resolve<ChannelVideosPersistantStore>();
             foreach (var youTubeChannel in allChannels)
             {
                 try
                 {
                     var channelWithVideos = await ytService.GetVideosOfChannel(youTubeChannel);
-                    var store = Resolve<ChannelVideosPersistantStore>();
                     await store.Store(channelWithVideos);
                 }
                 catch (Exception e)

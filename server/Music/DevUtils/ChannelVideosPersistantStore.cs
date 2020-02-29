@@ -21,6 +21,7 @@ namespace Music.DevUtils
 
         public async Task Store(YouTubeChannelWithVideos channel)
         {
+            Directory.CreateDirectory(_folder);
             var filePath = Path.Combine(_folder, $"{channel.Title} - {channel.Id}");
             var channelJson = JsonConvert.SerializeObject(channel, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, channelJson);
@@ -29,7 +30,7 @@ namespace Music.DevUtils
         public async Task<YouTubeChannelWithVideos> Get(string channelId)
         {
             var files = Directory.GetFiles(_folder);
-            var channelFile = files.Single(fileName => fileName.EndsWith($" - {channelId}"));
+            var channelFile = files.Single(fileName => fileName.EndsWith($" - {channelId}.json"));
             var channelJson = await File.ReadAllTextAsync(channelFile);
             var channel = JsonConvert.DeserializeObject<YouTubeChannelWithVideos>(channelJson);
             return channel;
