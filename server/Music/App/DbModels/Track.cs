@@ -3,8 +3,7 @@ using Kernel;
 
 namespace Music.App.DbModels
 {
-    [DatabaseEntity]
-    public class Track
+    public class Track : IDatabaseEntity
     {
         public long Id { get; set; }
 

@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Kernel;
 
 namespace Music.App.DbModels
 {
-    public class YouTubeChannel
+    public class YouTubeChannel : IDatabaseEntity
     {
         [Required] 
         public string Id { get; set; }

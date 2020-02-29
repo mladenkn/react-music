@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Music.App.DbModels
 {
-    [DatabaseEntity]
-    public class TrackUserProps
+    public class TrackUserProps : IDatabaseEntity
     {
         [Required]
         public long Id { get; set; }
@@ -32,8 +31,7 @@ namespace Music.App.DbModels
         [Required] public DateTime InsertedAt { get; set; }
     }
 
-    [DatabaseEntity]
-    public class TrackUserPropsTag
+    public class TrackUserPropsTag : IDatabaseEntity
     {
         [Required]
         public long TrackUserPropsId { get; set; }

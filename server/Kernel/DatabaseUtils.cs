@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kernel
 {
-    public class DatabaseEntity : Attribute
+    public interface IDatabaseEntity
     {
     }
 
@@ -15,9 +15,9 @@ namespace Kernel
         {
            foreach (var type in assembly.GetTypes())
            {
-                var entityAttribute = type.GetCustomAttributes(typeof(DatabaseEntity), true).FirstOrDefault();
-                if (entityAttribute != null)
-                {
+               var isDbEntity = type.GetInterfaces().Count(t => t == typeof(IDatabaseEntity)) == 1;
+               if (isDbEntity)
+               {
                     var configureMethod = type.GetMethods().FirstOrDefault(m =>
                     {
                         var parameters = m.GetParameters();
@@ -28,7 +28,7 @@ namespace Kernel
                     });
                     if (configureMethod != null)
                         configureMethod.Invoke(null, new object[] { modelBuilder });
-                }
+               }
             }
         }
     }

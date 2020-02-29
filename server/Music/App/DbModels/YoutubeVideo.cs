@@ -5,8 +5,7 @@ using Kernel;
 
 namespace Music.App.DbModels
 {
-    [DatabaseEntity]
-    public class YoutubeVideo
+    public class YoutubeVideo : IDatabaseEntity
     {
         [Required]
         public string Id { get; set; }

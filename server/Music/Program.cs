@@ -12,7 +12,7 @@ namespace Music
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            DoTasks(host).Wait();
+            //DoTasks(host).Wait();
             host.Run();
         }
 

@@ -3,8 +3,7 @@ using Kernel;
 
 namespace Music.App.DbModels
 {
-    [DatabaseEntity]
-    public class User
+    public class User : IDatabaseEntity
     {
         [Required]
         public int Id { get; set; }
