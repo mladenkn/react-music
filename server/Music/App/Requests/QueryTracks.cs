@@ -45,7 +45,7 @@ namespace Music.App.Requests
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 
-            var query = Db.TrackUserProps.Where(t => t.UserId == userId);
+            var query = Query<TrackUserProps>().Where(t => t.UserId == userId);
 
             if (!string.IsNullOrEmpty(req.TitleContains))
                 query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));

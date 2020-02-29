@@ -36,7 +36,7 @@ namespace Music.App.Requests
 
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
-            var foundIds = await Db.YoutubeVideos
+            var foundIds = await Query<YoutubeVideo>()
                 .Select(v => v.Id)
                 .Where(vId => ids.Contains(vId))
                 .ToArrayAsync();

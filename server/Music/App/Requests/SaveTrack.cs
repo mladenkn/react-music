@@ -30,7 +30,7 @@ namespace Music.App.Requests
         {
             var currentUserId = Resolve<ICurrentUserContext>().Id;
 
-            var trackUserProps = await Db.TrackUserProps
+            var trackUserProps = await Query<TrackUserProps>()
                 .FirstOrDefaultAsync(t => t.TrackId == req.TrackId && t.UserId == currentUserId);
 
             var newTags = req.Tags
@@ -54,7 +54,7 @@ namespace Music.App.Requests
             }
             else
             {
-                var track = await Db.Tracks
+                var track = await Query<Track>()
                     .Include(t => t.YoutubeVideos)
                     .FirstOrDefaultAsync(t => t.Id == req.TrackId);
 

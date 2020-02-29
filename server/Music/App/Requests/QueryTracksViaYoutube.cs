@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Music.App.DbModels;
 using Music.App.Models;
 using Music.App.YouTubeVideos;
 
@@ -25,7 +26,7 @@ namespace Music.App.Requests
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
-            var tracks = await Db.TrackUserProps
+            var tracks = await Query<TrackUserProps>()
                 .Where(trackUserProps => trackUserProps.UserId == curUserId &&
                                          wantedTracksYtIds.Contains(trackUserProps.YoutubeVideoId))
                 .Select(TrackModel.FromTrackUserProps)

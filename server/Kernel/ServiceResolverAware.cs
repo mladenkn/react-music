@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,5 +23,7 @@ namespace Kernel
         }
 
         protected TService Resolve<TService>() => _serviceProvider.GetRequiredService<TService>();
+
+        protected IQueryable<T> Query<T>() where T : class, IDatabaseEntity => Db.Set<T>();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Music.App.DbModels;
 using Music.App.Models;
 using Newtonsoft.Json;
 using Utilities;
@@ -35,7 +36,7 @@ namespace Music.App.Requests
         public async Task<HomeSectionProps> Execute()
         {
             var userId = Resolve<ICurrentUserContext>().Id;
-            var user = await Db.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var user = await Query<User>().FirstOrDefaultAsync(u => u.Id == userId);
 
             if (string.IsNullOrEmpty(user.HomeSectionStateJson))
             {
@@ -73,13 +74,13 @@ namespace Music.App.Requests
 
         private async Task<IEnumerable<string>> GetAllTags()
         {
-            var tags = await Db.TrackUserProps.SelectMany(tp => tp.TrackTags.Select(tt => tt.Value)).Distinct().ToArrayAsync();
+            var tags = await Query<TrackUserProps>().SelectMany(tp => tp.TrackTags.Select(tt => tt.Value)).Distinct().ToArrayAsync();
             return tags;
         }
 
         private async Task<IEnumerable<IdWithName>> GetAllChannels()
         {
-            var channels = await Db.YouTubeChannels.Select(c => new IdWithName {Id = c.Id, Name = c.Title}).ToArrayAsync();
+            var channels = await Query<YouTubeChannel>().Select(c => new IdWithName {Id = c.Id, Name = c.Title}).ToArrayAsync();
             return channels;
         }
     }
