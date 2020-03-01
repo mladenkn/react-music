@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.App.Models;
-using Music.App.Requests;
+using Music.App.Services;
 using Utilities;
 
 namespace Music.App.Api.Controllers

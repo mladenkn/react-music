@@ -10,11 +10,11 @@ using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 
-namespace Music.App.YouTubeVideos
+namespace Music.App.Services
 {
-    public class YouTubeVideoService : ServiceResolverAware
+    public class YouTubeVideoServices : ServiceResolverAware
     {
-        public YouTubeVideoService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public YouTubeVideoServices(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

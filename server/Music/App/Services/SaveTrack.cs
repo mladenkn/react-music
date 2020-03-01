@@ -7,7 +7,7 @@ using Music.App.DbModels;
 using Music.App.Models;
 using Utilities;
 
-namespace Music.App.Requests
+namespace Music.App.Services
 {
     public class SaveTrackModel
     {

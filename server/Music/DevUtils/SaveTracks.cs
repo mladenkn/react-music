@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Music.App;
-using Music.App.Requests;
+using Music.App.Services;
 
 namespace Music.DevUtils
 {
@@ -297,7 +297,7 @@ namespace Music.DevUtils
             foreach (var newTrackDescriptor in tracks)
             {
                 var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
-                var saveTrackModel = new App.Requests.SaveTrackModel
+                var saveTrackModel = new App.Services.SaveTrackModel
                 {
                     TrackId = track.Id,
                     Tags = newTrackDescriptor.Tags,

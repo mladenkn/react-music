@@ -11,8 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Music.App.Api;
-using Music.App.Requests;
-using Music.App.YouTubeVideos;
+using Music.App.DbModels;
+using Music.App.Services;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music.App

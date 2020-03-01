@@ -4,10 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App.DbModels;
-using Music.App.YouTubeVideos;
 using Utilities;
 
-namespace Music.App.Requests
+namespace Music.App.Services
 {
     public class InsertTracksFromYouTubeVideosIfFound : ServiceResolverAware
     {
@@ -18,7 +17,7 @@ namespace Music.App.Requests
         public async Task<Result> Execute(IReadOnlyCollection<string> wantedVideosIds)
         {
             var unknownVideosIds = (await FilterToUnknownVideosIds(wantedVideosIds)).ToArray();
-            var videosFromYt = (await Resolve<YouTubeVideoService>().GetByIds(unknownVideosIds)).ToArray();
+            var videosFromYt = (await Resolve<YouTubeVideoServices>().GetByIds(unknownVideosIds)).ToArray();
             
             var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
 

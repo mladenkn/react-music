@@ -5,7 +5,7 @@ using Music.App.DbModels;
 using Music.App.Models;
 using Newtonsoft.Json;
 
-namespace Music.App.Requests
+namespace Music.App.Services
 {
     public class SaveHomeSectionOptions : ServiceResolverAware
     {

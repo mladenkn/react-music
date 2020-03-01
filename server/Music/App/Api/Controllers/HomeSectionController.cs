@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.App.Models;
-using Music.App.Requests;
+using Music.App.Services;
 
 namespace Music.App.Api.Controllers
 {

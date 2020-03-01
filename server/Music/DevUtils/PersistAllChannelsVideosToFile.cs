@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App;
-using Music.App.YouTubeVideos;
+using Music.App.Services;
 
 namespace Music.DevUtils
 {
@@ -16,7 +16,7 @@ namespace Music.DevUtils
         public async Task Execute()
         {
             var allChannels = await Db.YouTubeChannels.Skip(3).ToArrayAsync();
-            var ytService = Resolve<YouTubeVideoService>();
+            var ytService = Resolve<YouTubeVideoServices>();
             var store = Resolve<ChannelVideosPersistantStore>();
             foreach (var youTubeChannel in allChannels)
             {

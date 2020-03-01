@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App.DbModels;
 using Music.App.Models;
-using Music.App.YouTubeVideos;
 
-namespace Music.App.Requests
+namespace Music.App.Services
 {
     public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
     {
@@ -17,7 +16,7 @@ namespace Music.App.Requests
 
         public async Task<IEnumerable<TrackModel>> Execute(string query)
         {
-            var wantedTracksYtIds = (await Resolve<YouTubeVideoService>().SearchIds(query)).ToArray();
+            var wantedTracksYtIds = (await Resolve<YouTubeVideoServices>().SearchIds(query)).ToArray();
             await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;

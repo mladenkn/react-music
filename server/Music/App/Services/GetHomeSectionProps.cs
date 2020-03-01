@@ -8,7 +8,7 @@ using Music.App.Models;
 using Newtonsoft.Json;
 using Utilities;
 
-namespace Music.App.Requests
+namespace Music.App.Services
 {
     public class HomeSectionProps
     {
