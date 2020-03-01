@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Music.App.Api.Controllers;
 using Music.App.DbModels;
 using Utilities;
 
@@ -39,44 +40,32 @@ namespace Music.App
             _afterCommitTransaction = afterCommitTransaction;
         }
 
-        public void InsertTracks(IEnumerable<Track> tracks)
+        public void InsertTracks(IEnumerable<Track> tracks, Action<Track> mutate)
         {
-            var pairs = Copy(tracks, t =>
-            {
-                t.YoutubeVideos = null;
-                t.TrackUserProps = null;
-            }).ToArray();
-            _db.Tracks.AddRange(pairs.Select(t => t.copy));
+            var pairs = Copy(tracks, mutate).ToArray();
+            _db.Tracks.AddRange(pairs.Select(p => p.copy));
             _afterCommitTransaction(
-                () => pairs.ForEach(p => p.original.Id = p.copy.Id)
-            );
+                () =>
+                {
+                    pairs.ForEach(p => p.original.Id = p.copy.Id);
+                });
         }
 
-        public void InsertTrackUserProps(IEnumerable<TrackUserProps> trackUserProps)
+        public void InsertTrackUserProps(IEnumerable<TrackUserProps> trackUserProps, Action<TrackUserProps> mutate = null)
         {
-            var pairs = Copy(trackUserProps, item =>
-            {
-                item.Track = null;
-                item.User = null;
-                item.YoutubeVideo = null;
-            }).ToArray();
-
+            var pairs = Copy(trackUserProps, mutate).ToArray();
             _db.TrackUserProps.AddRange(pairs.Select(p => p.copy));
             _afterCommitTransaction(
                 () => pairs.ForEach(p => p.original.Id = p.copy.Id)
             );
         }
 
-        public void UpdateTrackUserProps(IEnumerable<TrackUserProps> trackUserProps)
+        public void UpdateTrackUserProps(IEnumerable<TrackUserProps> trackUserProps, Action<TrackUserProps> mutate = null)
         {
-            var readyToUpdate = Copy(trackUserProps, t =>
-            {
-                t.Track = null;
-                t.User = null;
-                t.YoutubeVideo = null;
-            });
+            var pairs = Copy(trackUserProps.ToArray(), mutate).ToArray();
+            _db.TrackUserProps.UpdateRange(pairs.Select(p => p.copy));
             _afterCommitTransaction(
-                () => _db.TrackUserProps.UpdateRange(readyToUpdate.Select(i => i.original))
+                () => pairs.ForEach(p => p.original.Id = p.copy.Id)
             );
         }
 
@@ -86,9 +75,9 @@ namespace Music.App
         public void DeleteTrackUserPropsTags(IEnumerable<TrackUserPropsTag> models) => 
             _db.TrackUserPropsTags.RemoveRange(models);
 
-        public void InsertYouTubeVideos(IEnumerable<YoutubeVideo> videos)
+        public void InsertYouTubeVideos(IEnumerable<YoutubeVideo> videos, Action<YoutubeVideo> mutate = null)
         {
-            var pairs = Copy(videos, v => v.YouTubeChannel = null).ToArray();
+            var pairs = Copy(videos, mutate).ToArray();
             _db.YoutubeVideos.AddRange(pairs.Select(p => p.copy));
             _afterCommitTransaction(
                 () => pairs.ForEach(p => p.original.Id = p.copy.Id)
@@ -107,7 +96,7 @@ namespace Music.App
             var pairs = source.Select(original =>
             {
                 var copy = ReflectionUtils.ShallowCopy(original);
-                mutate(copy);
+                mutate?.Invoke(copy);
                 return (original, copy);
             });
             return pairs;

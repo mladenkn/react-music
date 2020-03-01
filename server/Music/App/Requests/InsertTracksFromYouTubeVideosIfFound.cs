@@ -28,8 +28,20 @@ namespace Music.App.Requests
             await Persist(ops =>
             {
                 ops.InsertYouTubeChannels(channelsToInsert);
-                ops.InsertTracks(tracks);
-                ops.InsertYouTubeVideos(videosFromYt);
+                ops.InsertTracks(tracks, t =>
+                {
+                    if (t.YoutubeVideos != null) 
+                        t.YoutubeVideos.ForEach(v => v.YouTubeChannel = null);
+                    if(t.TrackUserProps != null)
+                        t.TrackUserProps.ForEach(tup =>
+                        {
+                            tup.YoutubeVideo = null;
+                            if (tup.Track != null)
+                            {
+                                tup.Track.YoutubeVideos = null;
+                            }
+                        });
+                });
             });
 
             var notFoundVideosIds = wantedVideosIds.Except(videosFromYt.Select(v => v.Id));

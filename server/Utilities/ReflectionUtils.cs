@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -24,7 +25,16 @@ namespace Utilities
 
             return memberExpression.ToString();
         }
-        
+
+        public static void ForEachPropertyDeep(object o, Action<PropertyInfo> consumeProperty)
+        {
+            var props = o.GetType().GetProperties();
+            if (props.GetType().IsPrimitive())
+                return;
+            foreach (var propertyInfo in props) 
+                consumeProperty(propertyInfo);
+        }
+
         public static T ShallowCopy<T>(T sourceObject) where T : new()
         {
             var destinationObject = new T();

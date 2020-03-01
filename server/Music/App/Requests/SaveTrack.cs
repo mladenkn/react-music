@@ -47,8 +47,12 @@ namespace Music.App.Requests
 
                 await Persist(ops =>
                 {
-                    ops.InsertTrackUserPropsTags(newTags);
                     ops.DeleteTrackUserPropsTags(tagsToDelete);
+                });
+
+                await Persist(ops =>
+                {
+                    ops.InsertTrackUserPropsTags(newTags);
                     ops.UpdateTrackUserProps(new []{ trackUserProps });
                 });
             }
