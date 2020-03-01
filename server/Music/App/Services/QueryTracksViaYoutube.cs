@@ -16,7 +16,7 @@ namespace Music.App.Services
 
         public async Task<IEnumerable<TrackModel>> Execute(string query)
         {
-            var wantedTracksYtIds = (await Resolve<YouTubeVideoServices>().SearchIds(query)).ToArray();
+            var wantedTracksYtIds = (await Resolve<YouTubeServices>().SearchIds(query)).ToArray();
             await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;

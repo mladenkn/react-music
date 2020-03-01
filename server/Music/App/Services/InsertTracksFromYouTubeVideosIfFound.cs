@@ -17,7 +17,7 @@ namespace Music.App.Services
         public async Task<Result> Execute(IReadOnlyCollection<string> wantedVideosIds)
         {
             var unknownVideosIds = (await FilterToUnknownVideosIds(wantedVideosIds)).ToArray();
-            var videosFromYt = (await Resolve<YouTubeVideoServices>().GetByIds(unknownVideosIds)).ToArray();
+            var videosFromYt = (await Resolve<YouTubeServices>().GetByIds(unknownVideosIds)).ToArray();
             
             var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
 

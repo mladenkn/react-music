@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,13 +28,20 @@ namespace Music.DevUtils
             await File.WriteAllTextAsync(filePath, channelJson);
         }
 
-        public async Task<YouTubeChannelWithVideos> Get(string channelId)
+        private async Task<YouTubeChannelWithVideos> GetOne(string filePath)
         {
-            var files = Directory.GetFiles(_folder);
-            var channelFile = files.Single(fileName => fileName.EndsWith($" - {channelId}.json"));
-            var channelJson = await File.ReadAllTextAsync(channelFile);
+            var channelJson = await File.ReadAllTextAsync(filePath);
             var channel = JsonConvert.DeserializeObject<YouTubeChannelWithVideos>(channelJson);
             return channel;
+        }
+
+        public async Task<IReadOnlyList<YouTubeChannelWithVideos>> GetAll()
+        {
+            var files = Directory.GetFiles(_folder);
+            var r = new List<YouTubeChannelWithVideos>();
+            foreach (var file in files)
+                r.Add(await GetOne(file));
+            return r;
         }
     }
 }

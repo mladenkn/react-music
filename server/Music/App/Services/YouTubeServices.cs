@@ -12,9 +12,9 @@ using Utilities;
 
 namespace Music.App.Services
 {
-    public class YouTubeVideoServices : ServiceResolverAware
+    public class YouTubeServices : ServiceResolverAware
     {
-        public YouTubeVideoServices(IServiceProvider serviceProvider) : base(serviceProvider)
+        public YouTubeServices(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
