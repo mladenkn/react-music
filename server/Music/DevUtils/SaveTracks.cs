@@ -281,6 +281,18 @@ namespace Music.DevUtils
                     Tags = new []{ "progressive", "trance", "house", },
                     Year = 2002,
                 },
+                new SaveTrackModel
+                {
+                    YouTubeVideoId = "https://www.youtube.com/watch?v=Lx-tt1XBaVM",
+                    Tags = new []{ "techno", "acid", },
+                    Year = 1993,
+                },
+                new SaveTrackModel
+                {
+                    YouTubeVideoId = "https://www.youtube.com/watch?v=pAwWzgUbLag",
+                    Tags = new []{ "techno", "acid", },
+                    Year = 1993,
+                },
             };
 
             await PersistTracks(tracks);

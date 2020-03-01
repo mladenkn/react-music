@@ -1,5 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Kernel;
+using Music.App.Models;
 
 namespace Music.App.DbModels
 {
@@ -20,5 +22,13 @@ namespace Music.App.DbModels
         public string WatchLaterPlaylistId { get; set; }
 
         public string WatchHistoryPlaylistId { get; set; }
+
+        public DateTime LastUpdateAt { get; set; }
+
+        public static YouTubeChannel FromYouTubeChannelWithVideos(YouTubeChannelWithVideos c) => new YouTubeChannel
+        {
+            Id = c.Id,
+            Title = c.Title,
+        };
     }
 }

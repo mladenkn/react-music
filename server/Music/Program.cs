@@ -24,6 +24,7 @@ namespace Music
             await new ResetDb(sp).Execute();
             await new SaveTracks(sp).Execute();
             //await new PersistAllChannelsVideosToFile(sp).Execute();
+            await new PersistChannelsFromFileToDb(sp).Execute();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

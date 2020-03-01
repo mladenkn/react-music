@@ -79,9 +79,6 @@ namespace Music.App
         {
             var pairs = Copy(videos, mutate).ToArray();
             _db.YoutubeVideos.AddRange(pairs.Select(p => p.copy));
-            _afterCommitTransaction(
-                () => pairs.ForEach(p => p.original.Id = p.copy.Id)
-            );
         }
 
         public void InsertUser(IEnumerable<User> users) => _db.Users.AddRange(users);

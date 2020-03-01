@@ -40,6 +40,8 @@ namespace Music.App.DbModels
         [Required]
         public TimeSpan Duration { get; set; }
 
+        public DateTime LastUpdateAt { get; set; }
+
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
@@ -48,8 +50,7 @@ namespace Music.App.DbModels
         {
             modelBuilder.Entity<YoutubeVideo>()
                 .HasOne(v => v.Track)
-                .WithMany()
-                .HasForeignKey(i => i.TrackId);
+                .WithMany(t => t.YoutubeVideos);
 
             //modelBuilder.Entity<YoutubeVideo>()
             //    .Property(v => v.Track)

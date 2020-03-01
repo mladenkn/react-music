@@ -21,7 +21,7 @@ namespace Music.App.Services
             
             var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
 
-            var channelsToInsert = await FilterToNotPersistedChannels(
+            var channelsToInsert = await Resolve<SharedServices>().FilterToNotPersistedChannels(
                 videosFromYt.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id)
             );
             await Persist(ops =>
@@ -61,14 +61,6 @@ namespace Music.App.Services
                 .ToArrayAsync();
             var notFoundIds = ids.Except(foundIds);
             return notFoundIds;
-        }
-
-        private async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
-            IEnumerable<YouTubeChannel> channels)
-        {
-            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
-            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
-            return filtered;
         }
 
         public class Result

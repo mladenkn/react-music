@@ -113,7 +113,7 @@ namespace Music.App.Services
             
             var videosFromYtMapped = vids.Select(v => Mapper.Map<YoutubeVideo>(v)).ToArray();
             var channels = videosFromYtMapped.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id).ToArray();
-            await FetchChannelsAdditionalData(channels);
+            await FetchChannelsPlaylistInfo(channels);
             return videosFromYtMapped;
         }
 
@@ -127,7 +127,7 @@ namespace Music.App.Services
             return result.Items.ToList();
         }
 
-        private async Task FetchChannelsAdditionalData(IReadOnlyCollection<YouTubeChannel> channels)
+        public async Task FetchChannelsPlaylistInfo(IReadOnlyCollection<YouTubeChannel> channels)
         {
             var ytService = Resolve<YouTubeService>();
             var request = ytService.Channels.List("contentDetails");

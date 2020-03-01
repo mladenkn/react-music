@@ -10,5 +10,7 @@ namespace Music.App.DbModels
         public IReadOnlyCollection<TrackUserProps> TrackUserProps { get; set; }
 
         public IReadOnlyCollection<YoutubeVideo> YoutubeVideos { get; set; }
+
+        public bool IsDuplicate { get; set; }
     }
 }
