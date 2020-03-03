@@ -5,6 +5,7 @@ using AutoMapper;
 using ElmahCore.Mvc;
 using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
+using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Music.App.Api;
 using Music.App.DbModels;
-using Music.App.Services;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music.App
@@ -54,34 +54,15 @@ namespace Music.App
                 }
             ));
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
-            AddServiceResolverAwares(services);
+            DependencyInversionUtils.AddServiceResolverAwares(
+                services, 
+                typeof(Startup).Assembly, 
+                type => type.IsSubclassOf(typeof(ServiceResolverAware))
+            );
 
             services.AddElmah();
 
             _reconfigureServices?.Invoke(services);
-        }
-
-        public void AddServiceResolverAwares(IServiceCollection services)
-        {
-            var assembly = typeof(QueryTracksExecutor).Assembly;
-            
-            foreach (var type in assembly.GetTypes())
-            {
-                if (type.IsSubclassOf(typeof(ServiceResolverAware)))
-                {
-                    services.AddTransient(type);
-                    var configureMethod = type.GetMethods().FirstOrDefault(m =>
-                    {
-                        var parameters = m.GetParameters();
-                        return m.Name == "Configure" &&
-                               m.IsStatic &&
-                               parameters.Length == 1 &&
-                               parameters.Single().ParameterType.IsAssignableFrom(typeof(IServiceCollection));
-                    });
-                    if (configureMethod != null)
-                        configureMethod.Invoke(null, new object[]{ services });
-                }
-            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
