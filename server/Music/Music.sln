@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\Utilities\U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Executables", "..\Operations\Executables.csproj", "{255062D1-CE8F-400F-9579-BCD46B976FFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kernel", "..\Kernel\Kernel.csproj", "{31F0B62A-E304-44F6-84AB-F647F95A212B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kernel", "..\Kernel\Kernel.csproj", "{31F0B62A-E304-44F6-84AB-F647F95A212B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Music.DevOps", "..\Music.DevOps\Music.DevOps.csproj", "{DD4C7290-B65F-4ECB-8F8B-A8D151E1FDC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{31F0B62A-E304-44F6-84AB-F647F95A212B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31F0B62A-E304-44F6-84AB-F647F95A212B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31F0B62A-E304-44F6-84AB-F647F95A212B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4C7290-B65F-4ECB-8F8B-A8D151E1FDC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4C7290-B65F-4ECB-8F8B-A8D151E1FDC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4C7290-B65F-4ECB-8F8B-A8D151E1FDC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4C7290-B65F-4ECB-8F8B-A8D151E1FDC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
