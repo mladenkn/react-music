@@ -45,21 +45,6 @@ namespace Music.App.DbModels
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
-
-        public static void Configure(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<YoutubeVideo>()
-                .HasOne(v => v.Track)
-                .WithMany(t => t.YoutubeVideos);
-
-            //modelBuilder.Entity<YoutubeVideo>()
-            //    .Property(v => v.Track)
-            //    .IsRequired(false);
-
-            //modelBuilder.Entity<YoutubeVideo>()
-            //    .Property(v => v.TrackId)
-            //    .IsRequired(false);
-        }
     }
 
     public class YoutubeVideoStatistics

@@ -25,10 +25,10 @@ namespace Music.App.Services
         private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
-            var tracks = await Query<TrackUserProps>()
-                .Where(trackUserProps => trackUserProps.UserId == curUserId &&
-                                         wantedTracksYtIds.Contains(trackUserProps.YoutubeVideoId))
-                .Select(TrackModel.FromTrackUserProps)
+            var tracks = await Query<Track>()
+                .Where(track => track.TrackUserProps.FirstOrDefault(p => p.UserId == curUserId).UserId == curUserId &&
+                                wantedTracksYtIds.Contains(track.TrackUserProps.FirstOrDefault(p => p.UserId == curUserId).YoutubeVideoId))
+                .Select(TrackModel.FromTrack(curUserId))
                 .ToArrayAsync();
             return tracks;
         }

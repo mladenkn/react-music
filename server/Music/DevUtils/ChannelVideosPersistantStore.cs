@@ -23,7 +23,7 @@ namespace Music.DevUtils
         public async Task Store(YouTubeChannelWithVideos channel)
         {
             Directory.CreateDirectory(_folder);
-            var filePath = Path.Combine(_folder, $"{channel.Title} - {channel.Id}");
+            var filePath = Path.Combine(_folder, $"{channel.Title} - {channel.Id}.json");
             var channelJson = JsonConvert.SerializeObject(channel, Formatting.Indented);
             await File.WriteAllTextAsync(filePath, channelJson);
         }

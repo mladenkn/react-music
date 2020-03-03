@@ -15,7 +15,7 @@ namespace Music.DevUtils
 
         public async Task Execute()
         {
-            var allChannels = await Db.YouTubeChannels.Skip(3).ToArrayAsync();
+            var allChannels = await Db.YouTubeChannels.Skip(4).Take(1).ToArrayAsync();
             var ytService = Resolve<YouTubeServices>();
             var store = Resolve<ChannelVideosPersistantStore>();
             foreach (var youTubeChannel in allChannels)

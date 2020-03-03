@@ -25,11 +25,12 @@ namespace Music.DevUtils
             var channels = await Map(channelsFromFile);
             var channelsNotInDb = await services.FilterToNotPersistedChannels(channels);
             var videos = await services.FilterToUnknownVideos(channelsFromFile.SelectMany(v => v.Videos).DistinctBy(v => v.Id));
+            var tracks = videos.Select(v => new Track {YoutubeVideos = new []{v} });
 
             await Persist(ops =>
             {
                 ops.InsertYouTubeChannels(channelsNotInDb);
-                ops.InsertYouTubeVideos(videos, v => v.YouTubeChannel = null);
+                ops.InsertTracks(tracks, t => t.YoutubeVideos.ForEach(v => v.YouTubeChannel = null));
             });
         }
 

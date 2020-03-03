@@ -40,6 +40,26 @@ namespace Music.App.Models
                 Tags = trackUserProps.TrackTags.Select(t => t.Value).ToArray(),
             };
 
+        public static Expression<Func<Track, TrackModel>> FromTrack(int userId) => track =>
+            new TrackModel
+            {
+                Id = track.Id,
+                YouTubeVideoId = track.YoutubeVideos.FirstOrDefault().Id,
+                Title = track.YoutubeVideos.FirstOrDefault().Title,
+                Description = track.YoutubeVideos.FirstOrDefault().Description,
+                Image = track.YoutubeVideos.FirstOrDefault().Thumbnails.First(t => t.Name == "Default__").Url,
+                YoutubeChannelId = track.YoutubeVideos.FirstOrDefault().YoutubeChannelId,
+                YoutubeChannelTitle = track.YoutubeVideos.FirstOrDefault().YouTubeChannel.Title,
+                Year = track.TrackUserProps.FirstOrDefault(t => t.UserId == userId) == null ?
+                    null :
+                    track.TrackUserProps.FirstOrDefault(t => t.UserId == userId).Year,
+                Tags = track.TrackUserProps.FirstOrDefault(t => t.UserId == userId) == null ?
+                    EmptyTagsArray :
+                    track.TrackUserProps.FirstOrDefault(t => t.UserId == userId).TrackTags
+                        .Select(t => t.Value)
+                        .ToArray(),
+            };
+
         private static string[] EmptyTagsArray = new string[0];
     }
 }

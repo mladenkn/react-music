@@ -16,13 +16,14 @@ namespace Music.App.Services
 
         public async Task<ArrayWithTotalCount<TrackModel>> Execute(TracksQueryModel req)
         {
-            var query = BuildFilter(req);
+            var query = BuildFilterNew(req);
+            var userId = Resolve<ICurrentUserContext>().Id;
 
             if (req.Randomize)
             {
                 var result = await query
                     .OrderBy(t => Guid.NewGuid())
-                    .Select(TrackModel.FromTrackUserProps)
+                    .Select(TrackModel.FromTrack(userId))
                     .ToArrayWithTotalCount(q =>
                         q.Take(req.Take)
                     );
@@ -31,8 +32,7 @@ namespace Music.App.Services
             else
             {
                 var result = await query
-                    .OrderByDescending(t => t.InsertedAt)
-                    .Select(TrackModel.FromTrackUserProps)
+                    .Select(TrackModel.FromTrack(userId))
                     .ToArrayWithTotalCount(q => q
                         .Skip(req.Skip)
                         .Take(req.Take)
@@ -41,20 +41,20 @@ namespace Music.App.Services
             }
         }
 
-        private IQueryable<TrackUserProps> BuildFilter(TracksQueryModel req)
+        private IQueryable<Track> BuildFilterNew(TracksQueryModel req)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 
-            var query = Query<TrackUserProps>().Where(t => t.UserId == userId);
+            var query = Query<Track>();
 
             if (!string.IsNullOrEmpty(req.TitleContains))
-                query = query.Where(t => t.YoutubeVideo.Title.Contains(req.TitleContains));
+                query = query.Where(t => t.YoutubeVideos.First().Title.Contains(req.TitleContains));
 
             if (req.SupportedYouTubeChannelsIds != null && req.SupportedYouTubeChannelsIds.Any())
-                query = query.Where(t => req.SupportedYouTubeChannelsIds.Contains(t.YoutubeVideo.YoutubeChannelId));
+                query = query.Where(t => req.SupportedYouTubeChannelsIds.Contains(t.YoutubeVideos.First().YoutubeChannelId));
 
             if (req.MustHaveAnyTag != null && req.MustHaveAnyTag.Any())
-                query = query.Where(t => t.TrackTags.Any(tt => req.MustHaveAnyTag.Contains(tt.Value)));
+                query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).TrackTags.Any(tt => req.MustHaveAnyTag.Contains(tt.Value)));
 
             //var mustHaveEveryTag = req.MustHaveEveryTag?.ToArray();
             //if (mustHaveEveryTag != null && mustHaveEveryTag.Length > 0)
@@ -71,16 +71,16 @@ namespace Music.App.Services
             if (req.MustHaveEveryTag != null)
             {
                 foreach (var reqTag in req.MustHaveEveryTag)
-                    query = query.Where(t => t.TrackTags.Any(tt => tt.Value == reqTag));
+                    query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).TrackTags.Any(tt => tt.Value == reqTag));
             }
 
             if (req.YearRange != null)
             {
                 if (req.YearRange.LowerBound > 0)
-                    query = query.Where(t => t.Year >= req.YearRange.LowerBound);
+                    query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).Year >= req.YearRange.LowerBound);
 
                 if (req.YearRange.UpperBound > 0)
-                    query = query.Where(t => t.Year < req.YearRange.UpperBound);
+                    query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).Year < req.YearRange.UpperBound);
             }
 
             return query;
