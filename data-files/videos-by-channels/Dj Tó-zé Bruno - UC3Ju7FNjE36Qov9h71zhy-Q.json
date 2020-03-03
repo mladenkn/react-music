@@ -1,0 +1,4548 @@
+{
+  "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+  "Title": "Dj Tó-zé Bruno",
+  "Videos": [
+    {
+      "Id": "z15lJR79pTg",
+      "Title": "Release The Pressure - Leftfield",
+      "Description": "",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": "UU3Ju7FNjE36Qov9h71zhy-Q",
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": "WL",
+        "WatchHistoryPlaylistId": "HL"
+      },
+      "PublishedAt": "2014-06-02T21:48:44+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/z15lJR79pTg/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/z15lJR79pTg/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/z15lJR79pTg/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Standard",
+          "Url": "https://i.ytimg.com/vi/z15lJR79pTg/sddefault.jpg",
+          "Width": 640,
+          "Height": 480,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Release The Pressure"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Leftfield (Musical Group)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Reggae (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance-pop (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dj Music"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Disc Jockey (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Album"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:07:42",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "z15lJR79pTg",
+        "ViewCount": 433019,
+        "LikeCount": 2741,
+        "DislikeCount": 105,
+        "FavoriteCount": 0,
+        "CommentCount": 223,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "z15lJR79pTg",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "z15lJR79pTg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "I8YzjXLIMLc",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 20/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-24T21:34:45+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/I8YzjXLIMLc/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/I8YzjXLIMLc/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/I8YzjXLIMLc/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Vol"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Volume"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "DJ Premier (Record Producer)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track Records (Organization)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Mixing Engineer (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "party"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:07:01",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "I8YzjXLIMLc",
+        "ViewCount": 34,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "I8YzjXLIMLc",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "I8YzjXLIMLc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "Upd-4e_6wAA",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 19/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-24T21:29:01+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/Upd-4e_6wAA/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/Upd-4e_6wAA/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/Upd-4e_6wAA/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:03:45",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "Upd-4e_6wAA",
+        "ViewCount": 24,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "Upd-4e_6wAA",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Upd-4e_6wAA",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "0F8TcwT88m0",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 18/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-24T21:19:42+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/0F8TcwT88m0/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/0F8TcwT88m0/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/0F8TcwT88m0/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Vol"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Volume"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus Army Conflict (Event)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Disc Jockey (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Mixing Engineer (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Party people"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:05:58",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "0F8TcwT88m0",
+        "ViewCount": 12,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "0F8TcwT88m0",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "0F8TcwT88m0",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "stzn3RBIdXU",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 17/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-24T02:07:53+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/stzn3RBIdXU/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/stzn3RBIdXU/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/stzn3RBIdXU/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Vol"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Video (Ontology Class)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song (Composition Type)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Acid House (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Industry (Musical Artist)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:42",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "stzn3RBIdXU",
+        "ViewCount": 16,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "stzn3RBIdXU",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "stzn3RBIdXU",
+            "Value": "/m/02jjt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "7GVIPrQsTxc",
+      "Title": "House Music o Inicio - Pump Up The Volume Parte - 16/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:51:07+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/7GVIPrQsTxc/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/7GVIPrQsTxc/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/7GVIPrQsTxc/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Disc Jockey (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:08:21",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "7GVIPrQsTxc",
+        "ViewCount": 11,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "7GVIPrQsTxc",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "7GVIPrQsTxc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "qOYHhRv8yPc",
+      "Title": "House Music o Inicio - Pump Up The Volume Parte - 15/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:47:22+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/qOYHhRv8yPc/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/qOYHhRv8yPc/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/qOYHhRv8yPc/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song Dynasty (Government)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "DJ Premier (Record Producer)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Vol1"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:06:05",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "qOYHhRv8yPc",
+        "ViewCount": 12,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "qOYHhRv8yPc",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "qOYHhRv8yPc",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "vKN1ICT0Ktk",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 14/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:44:09+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/vKN1ICT0Ktk/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/vKN1ICT0Ktk/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/vKN1ICT0Ktk/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Chapter"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "DJ Premier (Record Producer)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Industry (Musical Artist)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:08:08",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "vKN1ICT0Ktk",
+        "ViewCount": 13,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "vKN1ICT0Ktk",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "vKN1ICT0Ktk",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "PDr5n_B2jSI",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 13/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:37:22+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/PDr5n_B2jSI/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/PDr5n_B2jSI/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/PDr5n_B2jSI/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Industry (Musical Artist)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Musician (Occupation)"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:06:28",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "PDr5n_B2jSI",
+        "ViewCount": 13,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "PDr5n_B2jSI",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "PDr5n_B2jSI",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "rOacmIcEVY8",
+      "Title": "House Music o Inicio - Pump Up The Volume Parte - 12/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:23:44+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/rOacmIcEVY8/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/rOacmIcEVY8/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/rOacmIcEVY8/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Disc Jockey (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "DJ Premier (Record Producer)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:08:26",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "rOacmIcEVY8",
+        "ViewCount": 7,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "rOacmIcEVY8",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "rOacmIcEVY8",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "msrFAui8Dng",
+      "Title": "House Music o Inicio - Pump Up The Volume Parte - 11/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:13:46+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/msrFAui8Dng/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/msrFAui8Dng/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/msrFAui8Dng/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Dance Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Disc Jockey (Profession)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "DJ Premier (Record Producer)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Song"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:25",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "msrFAui8Dng",
+        "ViewCount": 26,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "msrFAui8Dng",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "msrFAui8Dng",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "XeNNUHKMrug",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 10/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T02:04:17+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/XeNNUHKMrug/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/XeNNUHKMrug/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/XeNNUHKMrug/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:21",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "XeNNUHKMrug",
+        "ViewCount": 19,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "XeNNUHKMrug",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "XeNNUHKMrug",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "Xkwk1ewh21Y",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 9/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T01:55:55+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/Xkwk1ewh21Y/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/Xkwk1ewh21Y/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/Xkwk1ewh21Y/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Vol"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Chapter"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Volume"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:05:29",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "Xkwk1ewh21Y",
+        "ViewCount": 15,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "Xkwk1ewh21Y",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "Xkwk1ewh21Y",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "dL2vMYx6hBg",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 8/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T01:35:04+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/dL2vMYx6hBg/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/dL2vMYx6hBg/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/dL2vMYx6hBg/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume (Composition)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music (Musical Genre)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music (Industry)"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:47",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "dL2vMYx6hBg",
+        "ViewCount": 20,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "dL2vMYx6hBg",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "dL2vMYx6hBg",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "giMmGTcA-tk",
+      "Title": "House Music o Inicio - Pump Up The Volume Parte - 7/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T01:30:16+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/giMmGTcA-tk/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/giMmGTcA-tk/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/giMmGTcA-tk/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:03:13",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "giMmGTcA-tk",
+        "ViewCount": 13,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "giMmGTcA-tk",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "giMmGTcA-tk",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "-lFnim4Qxdg",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 6/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-21T00:50:43+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/-lFnim4Qxdg/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/-lFnim4Qxdg/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/-lFnim4Qxdg/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:16",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "-lFnim4Qxdg",
+        "ViewCount": 18,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "-lFnim4Qxdg",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-lFnim4Qxdg",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "df-UswshAkY",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 5/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-20T23:43:44+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/df-UswshAkY/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/df-UswshAkY/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/df-UswshAkY/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:08:27",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "df-UswshAkY",
+        "ViewCount": 21,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "df-UswshAkY",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "df-UswshAkY",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "wWIO3eMuKeQ",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 4/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-20T23:31:41+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/wWIO3eMuKeQ/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/wWIO3eMuKeQ/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/wWIO3eMuKeQ/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:05:47",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "wWIO3eMuKeQ",
+        "ViewCount": 31,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "wWIO3eMuKeQ",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wWIO3eMuKeQ",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "wSp8ySN1CGU",
+      "Title": "House Music o Inicio - Pump Up The Volume - Parte 3/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-20T21:40:24+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/wSp8ySN1CGU/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/wSp8ySN1CGU/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/wSp8ySN1CGU/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:07:46",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "wSp8ySN1CGU",
+        "ViewCount": 67,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "wSp8ySN1CGU",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/0glt670"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "wSp8ySN1CGU",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "-re97ggoovQ",
+      "Title": "House Music O Inicio - Pump Up The Volume - parte 2/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-20T21:32:13+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/-re97ggoovQ/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/-re97ggoovQ/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/-re97ggoovQ/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:05:48",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "-re97ggoovQ",
+        "ViewCount": 26,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "-re97ggoovQ",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "-re97ggoovQ",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "AJJpLP8nCQ8",
+      "Title": "House Music o Inicio - Pump Up The Volume - parte 1/20",
+      "Description": "Visita a minha pagina de fans no Facebook\nhttps://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-20T21:18:40+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/AJJpLP8nCQ8/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/AJJpLP8nCQ8/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/AJJpLP8nCQ8/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Pump Up The Volume Composition"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:09:03",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "AJJpLP8nCQ8",
+        "ViewCount": 73,
+        "LikeCount": 1,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "AJJpLP8nCQ8",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "AJJpLP8nCQ8",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "o4rcPQaiFuY",
+      "Title": "Sky Bar com Dj Tó-zé Bruno e Fogo de Artificio no Tejo",
+      "Description": "",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-19T01:35:14+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/o4rcPQaiFuY/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/o4rcPQaiFuY/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/o4rcPQaiFuY/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "23",
+      "Duration": "00:01:38",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "o4rcPQaiFuY",
+        "ViewCount": 38,
+        "LikeCount": 2,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "o4rcPQaiFuY",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "o4rcPQaiFuY",
+            "Value": "/m/019_rr"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "9dn3H9DCwbI",
+      "Title": "Long Days Hot Nights - Sirens Of Lesbos",
+      "Description": "https://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-17T03:31:12+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/9dn3H9DCwbI/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/9dn3H9DCwbI/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/9dn3H9DCwbI/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Standard",
+          "Url": "https://i.ytimg.com/vi/9dn3H9DCwbI/sddefault.jpg",
+          "Width": 640,
+          "Height": 480,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "10",
+      "Duration": "00:05:10",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "9dn3H9DCwbI",
+        "ViewCount": 220,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 1,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "9dn3H9DCwbI",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "9dn3H9DCwbI",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "DzWR3e23a_U",
+      "Title": "After All - Oliver Koletzki feat Nord (Clapton remix)",
+      "Description": "https://www.youtube.com/watch?v=GldBNssp_rk",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-17T03:01:51+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/DzWR3e23a_U/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/DzWR3e23a_U/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/DzWR3e23a_U/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Standard",
+          "Url": "https://i.ytimg.com/vi/DzWR3e23a_U/sddefault.jpg",
+          "Width": 640,
+          "Height": 480,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "10",
+      "Duration": "00:06:42",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "DzWR3e23a_U",
+        "ViewCount": 2123,
+        "LikeCount": 16,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 1,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "DzWR3e23a_U",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "DzWR3e23a_U",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "5Ojjnmh9NnM",
+      "Title": "Pump Up The Volume - M.A.R.R.S.",
+      "Description": "https://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-17T02:49:59+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/5Ojjnmh9NnM/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/5Ojjnmh9NnM/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/5Ojjnmh9NnM/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "10",
+      "Duration": "00:04:08",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "5Ojjnmh9NnM",
+        "ViewCount": 18,
+        "LikeCount": 0,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": null
+    },
+    {
+      "Id": "zb24gjftDrs",
+      "Title": "Tony Humphries - Feel The Light (Classic Mix)",
+      "Description": "https://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-17T02:18:29+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/zb24gjftDrs/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/zb24gjftDrs/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/zb24gjftDrs/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "10",
+      "Duration": "00:07:22",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "zb24gjftDrs",
+        "ViewCount": 415,
+        "LikeCount": 4,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "zb24gjftDrs",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "zb24gjftDrs",
+            "Value": "/m/064t9"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "EAEssGvTiO4",
+      "Title": "In The Mix - Dj Tó-zé Bruno",
+      "Description": "Tó-zé Bruno Dj Set",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-13T02:17:53+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/EAEssGvTiO4/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/EAEssGvTiO4/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Maxres",
+          "Url": "https://i.ytimg.com/vi/EAEssGvTiO4/maxresdefault.jpg",
+          "Width": 1280,
+          "Height": 720,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/EAEssGvTiO4/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Standard",
+          "Url": "https://i.ytimg.com/vi/EAEssGvTiO4/sddefault.jpg",
+          "Width": 640,
+          "Height": 480,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "iMovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "10",
+      "Duration": "00:34:16",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "EAEssGvTiO4",
+        "ViewCount": 25,
+        "LikeCount": 1,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "EAEssGvTiO4",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "EAEssGvTiO4",
+            "Value": "/m/04rlf"
+          }
+        ],
+        "ETag": null
+      }
+    },
+    {
+      "Id": "uSwH4DUd7-I",
+      "Title": "No Eyes feat  Jaw - Clapton /  Exploited",
+      "Description": "https://www.facebook.com/djtozebruno",
+      "YoutubeChannelId": "UC3Ju7FNjE36Qov9h71zhy-Q",
+      "TrackId": 0,
+      "Track": null,
+      "YouTubeChannel": {
+        "Id": "UC3Ju7FNjE36Qov9h71zhy-Q",
+        "Title": "Dj Tó-zé Bruno",
+        "FavoritesPlaylistId": null,
+        "UploadsPlaylistId": null,
+        "LikesPlaylistId": null,
+        "WatchLaterPlaylistId": null,
+        "WatchHistoryPlaylistId": null
+      },
+      "PublishedAt": "2014-05-08T04:01:24+02:00",
+      "Thumbnails": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Default__",
+          "Url": "https://i.ytimg.com/vi/uSwH4DUd7-I/default.jpg",
+          "Width": 120,
+          "Height": 90,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "High",
+          "Url": "https://i.ytimg.com/vi/uSwH4DUd7-I/hqdefault.jpg",
+          "Width": 480,
+          "Height": 360,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Medium",
+          "Url": "https://i.ytimg.com/vi/uSwH4DUd7-I/mqdefault.jpg",
+          "Width": 320,
+          "Height": 180,
+          "Etag": null
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Name": "Standard",
+          "Url": "https://i.ytimg.com/vi/uSwH4DUd7-I/sddefault.jpg",
+          "Width": 640,
+          "Height": 480,
+          "Etag": null
+        }
+      ],
+      "ThumbnailsEtag": null,
+      "Tags": [
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Imovie"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Bonus"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Hollywood"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Track"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Music Industry"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "Compilation"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "House Music Musical Genre"
+        },
+        {
+          "Id": 0,
+          "YoutubeVideoId": null,
+          "Value": "New"
+        }
+      ],
+      "YoutubeCategoryId": "22",
+      "Duration": "00:07:03",
+      "Statistics": {
+        "Id": 0,
+        "YoutubeVideoId": "uSwH4DUd7-I",
+        "ViewCount": 64,
+        "LikeCount": 1,
+        "DislikeCount": 0,
+        "FavoriteCount": 0,
+        "CommentCount": 0,
+        "ETag": null
+      },
+      "TopicDetails": {
+        "Id": 0,
+        "YoutubeVideoId": "uSwH4DUd7-I",
+        "TopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "RelevantTopicIds": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "TopicCategories": [
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/04rlf"
+          },
+          {
+            "Id": 0,
+            "YoutubeVideoId": "uSwH4DUd7-I",
+            "Value": "/m/02lkt"
+          }
+        ],
+        "ETag": null
+      }
+    }
+  ]
+}
