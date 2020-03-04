@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles, Select, MenuItem } from '@material-ui/core';
+import { makeStyles, Select, MenuItem, Button } from '@material-ui/core';
 import { ems } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
@@ -14,7 +14,14 @@ const useStyles = makeStyles({
   },
   queryEditorCol: {
     width: ems(30),
-    marginLeft: ems(3)
+    marginLeft: ems(3),
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  executeButton: {
+    marginRight: ems(0.5),
+    marginTop: ems(1),
+    alignSelf: 'flex-end',
   },
   response: {
     width: ems(30),
@@ -33,7 +40,11 @@ export const AdminSection = () => {
 
   return (
     <div className={styles.root}>
-      <Select value={activeQuery.name} onChange={e => setActiveQueryName(e.target.value as string)} className={styles.querySelect}>
+      <Select 
+        value={activeQuery.name} 
+        onChange={e => setActiveQueryName(e.target.value as string)} 
+        className={styles.querySelect}
+      >
         {queries.map((queryName) => (
           <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
         ))}
@@ -42,7 +53,8 @@ export const AdminSection = () => {
         <YamlEditor
           codeMirrorRootClassName={styles.codeMirrorRoot}
           value={activeQuery.yaml} 
-        />        
+        />
+        <Button variant="contained" className={styles.executeButton}>Execute</Button>
       </div>
       <YamlEditor
         className={styles.response}
