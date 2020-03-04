@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
-  const { queries, activeQuery, setActiveQueryName } = useAdminSectionLogic()
+  const { queries, activeQuery, setActiveQueryName, responseYaml } = useAdminSectionLogic()
   
   const styles = useStyles()
 
@@ -52,14 +52,14 @@ export const AdminSection = () => {
       <div className={styles.queryEditorCol}>
         <YamlEditor
           codeMirrorRootClassName={styles.codeMirrorRoot}
-          value={activeQuery.yaml} 
+          value={activeQuery.yaml}
         />
         <Button variant="contained" className={styles.executeButton}>Execute</Button>
       </div>
       <YamlEditor
         className={styles.response}
         codeMirrorRootClassName={styles.codeMirrorRoot}
-        value={''}
+        value={responseYaml}
       />
     </div>
   )
