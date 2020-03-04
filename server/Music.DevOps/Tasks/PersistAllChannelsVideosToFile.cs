@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Music.App;
 using Music.App.Services;
 
@@ -29,6 +31,17 @@ namespace Music.DevOps.Tasks
                 {
                 }
             }
+        }
+
+        public static void ConfigureCommand(CommandLineApplication c, IServiceProvider sp)
+        {
+            c.Command("channels-to-file", cmd =>
+            {
+                cmd.OnExecuteAsync(async _ =>
+                {
+                    await new PersistAllChannelsVideosToFile(sp).Execute();
+                });
+            });
         }
     }
 }

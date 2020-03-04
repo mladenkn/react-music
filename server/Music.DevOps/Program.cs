@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Kernel;
+using McMaster.Extensions.CommandLineUtils;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,18 +19,15 @@ namespace Music.DevOps
                     services.AddServiceResolverAwares(typeof(Program).Assembly, type => type.IsSubclassOf(typeof(ServiceResolverAware)));
                 })
                 .Build();
-            DoTasks(host).Wait();
-        }
 
-        public static async Task DoTasks(IHost host)
-        {
+            var app = new CommandLineApplication<Program>(throwOnUnexpectedArg: false);
+
             using var serviceScope = host.Services.CreateScope();
             var sp = serviceScope.ServiceProvider;
 
-            await new ResetDb(sp).Execute();
-            await new SaveTracks(sp).Execute();
-            //await new PersistAllChannelsVideosToFile(sp).Execute();
-            await new PersistChannelsFromFileToDb(sp).Execute();
+            PersistAllChannelsVideosToFile.ConfigureCommand(app, sp);
+
+            app.Execute(args);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
