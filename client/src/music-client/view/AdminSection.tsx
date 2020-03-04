@@ -9,11 +9,11 @@ const useStyles = makeStyles({
     alignItems: 'start',
   },
   querySelect: {
-    marginTop: ems(2),
     width: ems(10),
+    marginBottom: ems(1)
   },
   queryEditorCol: {
-    width: ems(30),
+    width: ems(35),
     marginLeft: ems(3),
     display: 'flex',
     flexDirection: 'column'
@@ -24,11 +24,12 @@ const useStyles = makeStyles({
     alignSelf: 'flex-end',
   },
   response: {
-    width: ems(30),
+    marginTop: ems(3),
+    width: ems(35),
     marginLeft: ems(1)
   },
   codeMirrorRoot: {
-    height: ems(30)
+    height: ems(40)
   }
 }, { name: 'AdminSection' })
 
@@ -40,16 +41,16 @@ export const AdminSection = () => {
 
   return (
     <div className={styles.root}>
-      <Select 
-        value={activeQuery.name} 
-        onChange={e => setActiveQueryName(e.target.value as string)} 
-        className={styles.querySelect}
-      >
-        {queries.map((queryName) => (
-          <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
-        ))}
-      </Select>
       <div className={styles.queryEditorCol}>
+        <Select 
+          value={activeQuery.name} 
+          onChange={e => setActiveQueryName(e.target.value as string)} 
+          className={styles.querySelect}
+        >
+          {queries.map((queryName) => (
+            <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
+          ))}
+        </Select>
         <YamlEditor
           codeMirrorRootClassName={styles.codeMirrorRoot}
           value={activeQuery.yaml}
