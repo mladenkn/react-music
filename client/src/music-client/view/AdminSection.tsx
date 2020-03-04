@@ -1,18 +1,24 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { makeStyles, Select, MenuItem } from '@material-ui/core';
 import { ems } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
-
+import { useAdminSectionLogic } from '../logic/adminSection';
 const useStyles = makeStyles({
   root: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'start',
   },
-  queryEditor: {
-    width: ems(40)
+  querySelect: {
+    marginTop: ems(2),
+    width: ems(10),
+  },
+  queryEditorCol: {
+    width: ems(30),
+    marginLeft: ems(3)
   },
   response: {
-    width: ems(40),
-    marginLeft: ems(3)
+    width: ems(30),
+    marginLeft: ems(1)
   },
   codeMirrorRoot: {
     height: ems(30)
@@ -21,34 +27,23 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
+  const { queries, activeQuery, setActiveQueryName } = useAdminSectionLogic()
+  
   const styles = useStyles()
 
-  const yaml = `name: Martin D'vloper
-job: Developer
-skill: Elite
-employed: True
-foods:
-    - Apple
-    - Orange
-    - Strawberry
-    - Mango
-languages:
-    perl: Elite
-    python: Elite
-    pascal: Lame
-education: |
-    4 GCSEs
-    3 A-Levels
-    BSc in the Internet of Things 
-`;
-
   return (
-    <div className={styles.root}>      
-      <YamlEditor
-        className={styles.queryEditor}
-        codeMirrorRootClassName={styles.codeMirrorRoot}
-        value={yaml}
-      />
+    <div className={styles.root}>
+      <Select value={activeQuery.name} onChange={e => setActiveQueryName(e.target.value as string)} className={styles.querySelect}>
+        {queries.map((queryName) => (
+          <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
+        ))}
+      </Select>
+      <div className={styles.queryEditorCol}>
+        <YamlEditor
+          codeMirrorRootClassName={styles.codeMirrorRoot}
+          value={activeQuery.yaml} 
+        />        
+      </div>
       <YamlEditor
         className={styles.response}
         codeMirrorRootClassName={styles.codeMirrorRoot}

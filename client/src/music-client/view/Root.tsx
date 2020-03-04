@@ -10,10 +10,9 @@ import { AdminSection } from "./AdminSection";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
-
+    padding: ems(1),
   },
   home: {
-    padding: ems(1),
     fontSize: ems(0.8)
   },
 }), {name: 'AppRoot'})
