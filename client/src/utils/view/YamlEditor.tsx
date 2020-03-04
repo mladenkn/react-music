@@ -16,7 +16,7 @@ interface Props {
 
 const useStyles = makeStyles({
   rootHidden: {
-    display: 'none'
+    visibility: 'hidden'
   },
 }, {name: 'YamlEditor'})
 
@@ -32,7 +32,7 @@ export const YamlEditor = (props: Props) => {
 
       const codeMirror = wrapped.current.ref.getElementsByClassName('CodeMirror')[0] as HTMLElement
       props.codeMirrorRootClassName && codeMirror.classList.add(props.codeMirrorRootClassName)
-      
+
       setIsReady(true)
     }
   })
