@@ -6,6 +6,7 @@ import { ems } from "../../utils/css";
 import { AxiosProvider } from "../api/axios";
 import { HomeSectionRoot } from "./HomeSectionRoot";
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
+import { AdminSection } from "./AdminSection";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -42,7 +43,7 @@ export const Root = (p: AppRootProps) => {
               <HomeSectionRoot className={classes.home} />
             </Route>
             <Route exact path='/admin'>
-              admin
+              <AdminSection />
             </Route>        
           </div>
         </Router>
