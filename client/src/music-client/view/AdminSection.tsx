@@ -14,7 +14,6 @@ const useStyles = makeStyles({
   },
   queryEditorCol: {
     width: ems(35),
-    marginLeft: ems(3),
     display: 'flex',
     flexDirection: 'column'
   },

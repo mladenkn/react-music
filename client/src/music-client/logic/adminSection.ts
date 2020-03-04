@@ -66,8 +66,7 @@ education: |
 
   const activeQuery = queries.find(q => q.name === state.activeQueryName)!
 
-  const responseYaml = `
-doe: "a deer, a female deer"
+  const responseYaml = `doe: "a deer, a female deer"
 ray: "a drop of golden sun"
 pi: 3.14159
 xmas: true
