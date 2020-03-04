@@ -1,13 +1,11 @@
 import { makeStyles, createMuiTheme } from "@material-ui/core"
 import { ThemeProvider } from '@material-ui/styles'
-import React, { Fragment } from 'react'
-import { HomeUI as WideHomeUI, HomeProps } from "./HomeSectionUI";
+import React from 'react'
 import clsx from 'clsx'
 import { ems } from "../../utils/css";
-import MediaQuery from 'react-responsive'
-import { NarrowHomeUI } from "./NarrowHomeUI";
 import { AxiosProvider } from "../api/axios";
 import { HomeSectionRoot } from "./HomeSectionRoot";
+import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -22,16 +20,6 @@ const useAppRootStyles = makeStyles(() => ({
 interface AppRootProps {
   className?: string
 }
- 
-const HomeUI = (p: HomeProps) => 
-  <Fragment>
-    <MediaQuery maxDeviceWidth={700}>
-      <NarrowHomeUI {...p} />
-    </MediaQuery>
-    <MediaQuery minDeviceWidth={701}>
-      <WideHomeUI {...p} />
-    </MediaQuery>
-  </Fragment>
 
 const theme = createMuiTheme({
   overrides: {
@@ -48,9 +36,16 @@ export const Root = (p: AppRootProps) => {
   return (
     <ThemeProvider theme={theme}>
       <AxiosProvider>
-        <div className={clsx(classes.root, p.className)}>
-          <HomeSectionRoot className={classes.home} />
-        </div>
+        <Router>
+          <div className={clsx(classes.root, p.className)}>
+            <Route exact path='/'>
+              <HomeSectionRoot className={classes.home} />
+            </Route>
+            <Route exact path='/admin'>
+              admin
+            </Route>        
+          </div>
+        </Router>
       </AxiosProvider>
     </ThemeProvider>
   )
