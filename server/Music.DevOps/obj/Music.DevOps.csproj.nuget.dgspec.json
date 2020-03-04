@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj": {}
+    "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj": {
+    "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj",
+        "projectUniqueName": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj",
         "projectName": "Kernel",
-        "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj",
-        "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\obj\\",
+        "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj",
+        "packagesPath": "C:\\Users\\Petra Pauk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Petra Pauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -27,8 +30,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
-                "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj"
+              "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj"
               }
             }
           }
@@ -71,17 +74,20 @@
         }
       }
     },
-    "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj": {
+    "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj",
+        "projectUniqueName": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj",
         "projectName": "Music.DevOps",
-        "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj",
-        "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music.DevOps\\obj\\",
+        "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music.DevOps\\Music.DevOps.csproj",
+        "packagesPath": "C:\\Users\\Petra Pauk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music.DevOps\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Petra Pauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -94,8 +100,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\Music.csproj": {
-                "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\Music.csproj"
+              "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\Music.csproj": {
+                "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\Music.csproj"
               }
             }
           }
@@ -130,17 +136,20 @@
         }
       }
     },
-    "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\Music.csproj": {
+    "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\Music.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\Music.csproj",
+        "projectUniqueName": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\Music.csproj",
         "projectName": "Music",
-        "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\Music.csproj",
-        "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Music\\obj\\",
+        "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\Music.csproj",
+        "packagesPath": "C:\\Users\\Petra Pauk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Music\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Petra Pauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -153,11 +162,11 @@
         "frameworks": {
           "netcoreapp3.0": {
             "projectReferences": {
-              "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj": {
-                "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj"
+              "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj": {
+                "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Kernel\\Kernel.csproj"
               },
-              "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
-                "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj"
+              "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
+                "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj"
               }
             }
           }
@@ -256,17 +265,20 @@
         }
       }
     },
-    "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
+    "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj",
+        "projectUniqueName": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj",
         "projectName": "Utilities",
-        "projectPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj",
-        "packagesPath": "C:\\Users\\mlade\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mlade\\Documents\\projekti\\music\\server\\Utilities\\obj\\",
+        "projectPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\Utilities.csproj",
+        "packagesPath": "C:\\Users\\Petra Pauk\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Petra Pauk\\Documents\\projekti\\music\\server\\Utilities\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mlade\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Petra Pauk\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

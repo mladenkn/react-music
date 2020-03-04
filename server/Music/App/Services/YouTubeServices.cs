@@ -32,13 +32,14 @@ namespace Music.App.Services
 
             var beforeIdUrlContent = "/watch?v=";
 
-            var urls = document.QuerySelectorAll("#results a")
+            var ids = document.QuerySelectorAll("#results a")
                 .Where(anchorTag => anchorTag.Attributes.Any(a => a.Name == "href"))
                 .Select(anchorTag => anchorTag.Attributes.First(a => a.Name == "href").Value)
                 .Where(url => url.StartsWith(beforeIdUrlContent))
-                .Select(url => url.Substring(beforeIdUrlContent.Length));
+                .Select(url => url.Substring(beforeIdUrlContent.Length))
+                .Distinct();
 
-            return urls;
+            return ids;
         }
 
         public async Task<bool> DoesChannelExist(string channelId)

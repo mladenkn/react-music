@@ -26,8 +26,7 @@ namespace Music.App.Services
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
             var tracks = await Query<Track>()
-                .Where(track => track.TrackUserProps.FirstOrDefault(p => p.UserId == curUserId).UserId == curUserId &&
-                                wantedTracksYtIds.Contains(track.TrackUserProps.FirstOrDefault(p => p.UserId == curUserId).YoutubeVideoId))
+                .Where(track => wantedTracksYtIds.Contains(track.YoutubeVideos.First().Id))
                 .Select(TrackModel.FromTrack(curUserId))
                 .ToArrayAsync();
             return tracks;

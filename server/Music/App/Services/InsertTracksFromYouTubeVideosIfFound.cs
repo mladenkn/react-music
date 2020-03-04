@@ -29,17 +29,15 @@ namespace Music.App.Services
                 ops.InsertYouTubeChannels(channelsToInsert);
                 ops.InsertTracks(tracks, t =>
                 {
-                    if (t.YoutubeVideos != null) 
-                        t.YoutubeVideos.ForEach(v => v.YouTubeChannel = null);
-                    if(t.TrackUserProps != null)
-                        t.TrackUserProps.ForEach(tup =>
+                    t.YoutubeVideos?.ForEach(v => v.YouTubeChannel = null);
+                    t.TrackUserProps?.ForEach(tup =>
+                    {
+                        tup.YoutubeVideo = null;
+                        if (tup.Track != null)
                         {
-                            tup.YoutubeVideo = null;
-                            if (tup.Track != null)
-                            {
-                                tup.Track.YoutubeVideos = null;
-                            }
-                        });
+                            tup.Track.YoutubeVideos = null;
+                        }
+                    });
                 });
             });
 
