@@ -1,12 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import {UnControlled} from 'react-codemirror2'
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
 import { ems } from '../../utils/css';
-
-
-const CodeMirror = UnControlled as any
+import { YamlEditor } from '../../utils/view/YamlEditor';
 
 const useStyles = makeStyles({
   root: {
@@ -19,35 +14,46 @@ const useStyles = makeStyles({
     width: ems(40),
     marginLeft: ems(3)
   },
+  codeMirrorRoot: {
+    height: ems(30)
+  }
 }, { name: 'AdminSection' })
 
 export const AdminSection = () => {
 
   const styles = useStyles()
 
-  const json = `
-  `;
+  const yaml = `name: Martin D'vloper
+job: Developer
+skill: Elite
+employed: True
+foods:
+    - Apple
+    - Orange
+    - Strawberry
+    - Mango
+languages:
+    perl: Elite
+    python: Elite
+    pascal: Lame
+education: |
+    4 GCSEs
+    3 A-Levels
+    BSc in the Internet of Things 
+`;
 
   return (
     <div className={styles.root}>      
-      <CodeMirror
+      <YamlEditor
         className={styles.queryEditor}
-        value={json}
-        options={{
-          mode: 'json',
-          theme: 'material',
-        }}
-        onChange={() => {
-        }}
+        codeMirrorRootClassName={styles.codeMirrorRoot}
+        value={yaml}
       />
-      <CodeMirror
+      <YamlEditor
         className={styles.response}
-        value={json}
-        options={{
-          mode: 'json',
-          theme: 'material',
-        }}
+        codeMirrorRootClassName={styles.codeMirrorRoot}
+        value={''}
       />
     </div>
   )
-} 
+}
