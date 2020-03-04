@@ -1,11 +1,7 @@
-﻿using System.Threading.Tasks;
-using Kernel;
-using McMaster.Extensions.CommandLineUtils;
+﻿using Kernel;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Music.App;
-using Music.DevOps.Tasks;
 
 namespace Music.DevOps
 {
@@ -19,15 +15,6 @@ namespace Music.DevOps
                     services.AddServiceResolverAwares(typeof(Program).Assembly, type => type.IsSubclassOf(typeof(ServiceResolverAware)));
                 })
                 .Build();
-
-            var app = new CommandLineApplication<Program>(throwOnUnexpectedArg: false);
-
-            using var serviceScope = host.Services.CreateScope();
-            var sp = serviceScope.ServiceProvider;
-
-            PersistAllChannelsVideosToFile.ConfigureCommand(app, sp);
-
-            app.Execute(args);
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
