@@ -5,6 +5,7 @@ import { TracklistOptions, TrackQueryFormDataSource } from "../shared/homeSectio
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
 import { useEffect } from "../../utils/useEffect";
+import { uniqBy } from 'lodash';
 
 export interface Tracklist {
   options: TracklistOptions
@@ -76,9 +77,9 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
     const response = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip, take: pageSize })
+    const tracks = uniqBy([ ...state.fromMusicDb!.data, ...response.data.data ], t => t.id)
     updateState(draft => {
-      draft.fromMusicDb!.totalCount = response.data.totalCount
-      draft.fromMusicDb!.data = [ ...draft.fromMusicDb!.data, ...response.data.data ]
+      draft.fromMusicDb = { data: tracks, totalCount: response.data.totalCount }
     })
   }
 
