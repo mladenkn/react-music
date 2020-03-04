@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Kernel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,7 +12,12 @@ namespace Music.DevOps
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args)
+                .ConfigureServices(services =>
+                {
+                    services.AddServiceResolverAwares(typeof(Program).Assembly, type => type.IsSubclassOf(typeof(ServiceResolverAware)));
+                })
+                .Build();
             DoTasks(host).Wait();
         }
 

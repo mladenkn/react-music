@@ -16,7 +16,7 @@ namespace Music.DevOps.Tasks
         public ChannelVideosPersistantStore(IServiceProvider sp) : base(sp)
         {
             var env = sp.GetRequiredService<IWebHostEnvironment>();
-            _folder = Path.Combine(env.ContentRootPath, "..", "..", "data-files", "videos-by-channels");
+            _folder = Path.Combine(env.ContentRootPath, "data-files", "videos-by-channels");
         }
 
         public async Task Store(YouTubeChannelWithVideos channel)

@@ -1,3 +1,4 @@
+using Kernel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Music.App;

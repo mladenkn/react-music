@@ -19,7 +19,7 @@ namespace Kernel
             });
         }
         
-        public static void AddServiceResolverAwares(IServiceCollection services, Assembly assembly, Func<Type, bool> isServicesResolverAware)
+        public static void AddServiceResolverAwares(this IServiceCollection services, Assembly assembly, Func<Type, bool> isServicesResolverAware)
         {
             foreach (var type in assembly.GetTypes())
             {

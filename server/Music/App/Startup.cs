@@ -54,8 +54,7 @@ namespace Music.App
                 }
             ));
             services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
-            DependencyInversionUtils.AddServiceResolverAwares(
-                services, 
+            services.AddServiceResolverAwares(
                 typeof(Startup).Assembly, 
                 type => type.IsSubclassOf(typeof(ServiceResolverAware))
             );
