@@ -1,12 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Music.App.Api.Controllers
+namespace Music.App.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ExampleController : ControllerBase
     {
+        public ExampleController(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+
         // GET: api/Example
         [HttpGet]
         public IEnumerable<string> Get()

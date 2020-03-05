@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Music.App
 {
@@ -16,5 +17,17 @@ namespace Music.App
             var persistor = Resolve<DataPersistor>();
             return persistor.Persist(specifyOperations);
         }
+    }
+
+    public class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
+    {
+        private readonly IServiceProvider _serviceProvider;
+
+        public ControllerBase(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public T Resolve<T>() => _serviceProvider.GetRequiredService<T>();
     }
 }
