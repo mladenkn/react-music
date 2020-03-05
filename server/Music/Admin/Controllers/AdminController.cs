@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Music.Admin.Models;
+using Music.Admin.Services;
 using ControllerBase = Music.App.ControllerBase;
 
 namespace Music.Admin.Controllers
@@ -14,9 +17,6 @@ namespace Music.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<string> Get()
-        {
-            return "radi";
-        }
+        public Task<IEnumerable<AdminYamlCommand>> Get() => Resolve<AdminCommandsService>().Get();
     }
 }
