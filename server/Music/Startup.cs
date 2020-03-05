@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Net.Http;
 using AngleSharp;
 using AutoMapper;
@@ -11,10 +10,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Music.App;
 using Music.App.DbModels;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace Music.App
+namespace Music
 {
     public class Startup
     {
@@ -35,7 +35,10 @@ namespace Music.App
         {
             //services.AddMvc(o => o.EnableEndpointRouting = true);
 
-            services.AddControllers(o => o.Filters.Add(new ExceptionToHttpResponseMapper()));
+            services.AddControllers(o =>
+            {
+                o.Filters.Add(new ExceptionToHttpResponseMapper());
+            });
 
             services.AddDbContext<MusicDbContext>(MusicDbContext.Configure);
 

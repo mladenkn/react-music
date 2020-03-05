@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Music.App.Controllers
@@ -7,6 +8,10 @@ namespace Music.App.Controllers
     [ApiController]
     public class ExampleController : ControllerBase
     {
+        public ExampleController(IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+        }
+
         // GET: api/Example
         [HttpGet]
         public IEnumerable<string> Get()
