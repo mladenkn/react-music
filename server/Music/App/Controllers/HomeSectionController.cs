@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Music.App.Models;
 using Music.App.Services;
 
-namespace Music.App.Api.Controllers
+namespace Music.App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

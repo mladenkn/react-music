@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Music.App.Api.Controllers
+namespace Music.App.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

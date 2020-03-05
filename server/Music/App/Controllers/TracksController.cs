@@ -6,7 +6,7 @@ using Music.App.Models;
 using Music.App.Services;
 using Utilities;
 
-namespace Music.App.Api.Controllers
+namespace Music.App.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

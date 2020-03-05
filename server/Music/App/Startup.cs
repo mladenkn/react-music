@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Music.App.Api;
 using Music.App.DbModels;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
