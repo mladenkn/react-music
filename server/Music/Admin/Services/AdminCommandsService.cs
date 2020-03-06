@@ -49,5 +49,19 @@ xmas-fifth-day:
 
             return r;
         }
+
+        public async Task SaveCommand(AdminCommand cmd)
+        {
+            var userId = Resolve<ICurrentUserContext>().Id;
+            var cmdFromDb = await Query<AdminCommandDbModel>()
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+            if(cmdFromDb == null)
+                throw new ApplicationException("Command not found.");
+            cmdFromDb.Name = cmd.Name;
+            cmdFromDb.Yaml = cmd.Yaml;
+
+            Db.Update(cmdFromDb);
+            await Db.SaveChangesAsync();
+        }
     }
 }

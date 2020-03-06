@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Admin.Models;
 using Music.Admin.Services;
-using ControllerBase = Music.ControllerBase;
 
 namespace Music.Admin.Controllers
 {
@@ -17,5 +16,7 @@ namespace Music.Admin.Controllers
 
         [HttpGet]
         public Task<AdminSectionParams> Get() => Resolve<AdminCommandsService>().GetAdminSectionParams();
+
+        public Task Post(AdminCommand cmd) => Resolve<AdminCommandsService>().SaveCommand(cmd);
     }
 }

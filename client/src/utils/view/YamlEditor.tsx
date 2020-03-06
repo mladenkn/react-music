@@ -13,6 +13,7 @@ interface Props {
   className?: string
   value?: string
   codeMirrorRootClassName?: string
+  onChange?: (value: string) => void
 }
 
 const useStyles = makeStyles({
@@ -56,6 +57,7 @@ export const YamlEditor = (props: Props) => {
           mode: 'yaml',
           theme: 'material',
         }}
+        onChange={(_: unknown, __: unknown, value: string) => props.onChange && props.onChange(value)}
       />
       {!props.value && <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />}
     </>

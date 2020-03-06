@@ -8,4 +8,3 @@ export interface AdminSectionParams {
   currentCommandName: string
   currentCommandResponse: string
 }
-

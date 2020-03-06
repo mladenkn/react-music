@@ -82,6 +82,7 @@ export const AdminSection = () => {
           <YamlEditor
             codeMirrorRootClassName={styles.codeMirrorRoot}
             value={logic.data.activeCommand.yaml}
+            onChange={logic.data.updateCommandYaml}
           />
           <Button variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
