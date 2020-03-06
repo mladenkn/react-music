@@ -1,61 +1,68 @@
-import { useImmer } from "use-immer"
 import { useAdminApi } from "../api/adminApi"
 import { AdminYamlCommand } from "../shared/admin"
 import { useEffect, useState } from "react"
-import { Loaded, Loadable } from "../../utils/types"
+import { Loadable, Loaded } from "../../utils/types"
+import { useImmer } from "use-immer"
 
-interface UnloadedState {
-  type: 'UnloadedState',
-}
-
-interface LoadedState {
-  type: 'LoadedState',  
+interface State {
   activeCommandName: string
   activeCommandResponseYaml: Loadable<string>
   commands: AdminYamlCommand[]
 }
 
-interface LoadedAdminSectionLogic {
-  type: 'LoadedAdminSectionLogic'
+interface AdminSectionLogic {
   activeCommand: AdminYamlCommand
   activeCommandResponseYaml: Loadable<string>
   commands: AdminYamlCommand[]
   setActiveCommand(cmdName: string): void
 }
 
-export const useAdminSectionLogic = (): UnloadedState | LoadedAdminSectionLogic => {
+export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
 
   const { getInitialParams } = useAdminApi()
+  
 
-  const [state, updateState] = useState<UnloadedState | LoadedState>({
-    type: "UnloadedState"
+  const [state, updateState] = useImmer<Loadable<State>>({
+    type: "LOADING"
   })
+  
+  console.log(state)
 
   useEffect(() => {
     getInitialParams()
       .then(response => {
-        updateState({
-          type: 'LoadedState',
-          activeCommandName: response.currentCommandName,
-          activeCommandResponseYaml: response.currentCommandResponse,
-          commands: response.commands
-        } as any)
+        updateState(() => ({
+          type: 'LOADED',
+          data: {
+            activeCommandName: response.currentCommandName,
+            activeCommandResponseYaml: { type: 'LOADED', data: response.currentCommandResponse },
+            commands: response.commands
+          }
+        }))
       })
-  })
+  }, [])
 
-  if(state.type === 'UnloadedState')
-    return { type: 'UnloadedState' }
-  else {
+  if(state.type === 'LOADING')
+    return { type: 'LOADING' }
+
+  else if (state.type === 'LOADED') {
     const setActiveCommand = (name: string) => {
-      updateState(curState => ({ ...curState, activeCommandName: name }))
+      updateState(draft => {
+        (draft as Loaded<State>).data.activeCommandName = name
+      })
     }
-    const activeCommand = state.commands.find(q => q.name === state.activeCommandName)!    
+    const activeCommand = state.data.commands.find(q => q.name === state.data.activeCommandName)!
     return {
-      type: 'LoadedAdminSectionLogic',
-      activeCommand,
-      activeCommandResponseYaml: state.activeCommandResponseYaml,
-      commands: state.commands,
-      setActiveCommand,
+      type: 'LOADED',
+      data: {
+        activeCommand,
+        activeCommandResponseYaml: state.data.activeCommandResponseYaml,
+        commands: state.data.commands,
+        setActiveCommand,
+      }
     }
   }
+
+  else 
+    return { type: 'ERROR' }
 }

@@ -52,49 +52,54 @@ export const AdminSection = () => {
   const logic = useAdminSectionLogic()  
   const styles = useStyles()
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.commandEditorCol}>
-        {logic.type === 'LoadedAdminSectionLogic' ?
-          <>          
-            <div className={styles.commandEditorActionBar}>
-              <Select
-                value={logic.activeCommand.name} 
-                onChange={e => logic.setActiveCommand(e.target.value as string)} 
-                className={styles.commandSelect}
-              >
-                {logic.commands.map(command => (
-                  <MenuItem key={command.name} value={command.name}>{command.name}</MenuItem>
-                ))}
-              </Select>
-              <div className={styles.commandEditorActionBarRight}>
-                <IconButton size='small'>
-                  <EditIcon />
-                </IconButton>
-                <IconButton className={styles.addButton} size='small'>
-                  <AddCircleOutlineIcon />
-                </IconButton>
-              </div>          
-            </div>
-            <YamlEditor
-              codeMirrorRootClassName={styles.codeMirrorRoot}
-              value={logic.activeCommand.yaml}
-            />
-            <Button variant="contained" className={styles.executeButton}>Execute</Button>
-          </> :
-          <>
-            <YamlEditor codeMirrorRootClassName={styles.codeMirrorRoot} />
-          </>
-        }
+  console.log(logic)
+
+  if(logic.type === 'LOADING'){
+    return <div>Loading...</div>
+  }
+  else if (logic.type === 'LOADED') {
+    return (
+      <div className={styles.root}>
+        <div className={styles.commandEditorCol}>
+          <div className={styles.commandEditorActionBar}>
+            <Select
+              value={logic.data.activeCommand.name} 
+              onChange={e => logic.data.setActiveCommand(e.target.value as string)} 
+              className={styles.commandSelect}
+            >
+              {logic.data.commands.map(command => (
+                <MenuItem key={command.name} value={command.name}>{command.name}</MenuItem>
+              ))}
+            </Select>
+            <div className={styles.commandEditorActionBarRight}>
+              <IconButton size='small'>
+                <EditIcon />
+              </IconButton>
+              <IconButton className={styles.addButton} size='small'>
+                <AddCircleOutlineIcon />
+              </IconButton>
+            </div>          
+          </div>
+          <YamlEditor
+            codeMirrorRootClassName={styles.codeMirrorRoot}
+            value={logic.data.activeCommand.yaml}
+          />
+          <Button variant="contained" className={styles.executeButton}>Execute</Button>
+        </div>
+        {logic.data.activeCommandResponseYaml.type === 'LOADED' ?
+          <YamlEditor
+            className={styles.response}
+            codeMirrorRootClassName={styles.codeMirrorRoot}
+            value={logic.data.activeCommandResponseYaml.data}
+          /> :
+          <YamlEditor 
+            className={styles.response}
+            codeMirrorRootClassName={styles.codeMirrorRoot} 
+          />
+        }  
       </div>
-      {logic.type === 'LoadedAdminSectionLogic' && logic.activeCommandResponseYaml.type === 'LOADED' ?
-        <YamlEditor
-          className={styles.response}
-          codeMirrorRootClassName={styles.codeMirrorRoot}
-          value={logic.activeCommandResponseYaml.data}
-        /> :
-        <YamlEditor className={styles.response} />
-      }      
-    </div>
-  )
+    )
+  }
+  else 
+    return <div>Error</div>
 }
