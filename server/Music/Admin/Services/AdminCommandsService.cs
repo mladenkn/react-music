@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Music.Admin.Models;
 using Music.App;
@@ -12,7 +12,7 @@ namespace Music.Admin.Services
         {
         }
 
-        public async Task<IEnumerable<AdminYamlCommand>> Get()
+        public async Task<AdminSectionParams> GetAdminSectionParams()
         {
             var commands = new[]
             {
@@ -70,7 +70,32 @@ education: |
                 },
             };
 
-            return commands;
+            var r = new AdminSectionParams
+            {
+                Commands = commands,
+                CurrentCommandName = commands.First().Name,
+                CurrentCommandResponse = @"doe: 'a deer, a female deer'
+ray: 'a drop of golden sun'
+pi: 3.14159
+xmas: true
+french-hens: 3
+calling-birds: 
+  - huey
+  - dewey
+  - louie
+  - fred
+xmas-fifth-day: 
+  calling-birds: four
+  french-hens: 3
+  golden-rings: 5
+  partridges: 
+    count: 1
+    location: 'a pear tree'
+  turtle-doves: two
+",
+            };
+
+            return r;
         }
     }
 }

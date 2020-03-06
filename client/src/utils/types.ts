@@ -19,3 +19,10 @@ export interface IdWithName {
   id: string
   name: string
 }
+
+export interface Loaded<T> {
+  type: 'LOADED',
+  data: T
+}
+
+export type Loadable<T> = Loaded<T> | { type: 'LOADING' } | { type: 'ERROR' }

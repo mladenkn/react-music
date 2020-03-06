@@ -49,43 +49,52 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
-  const { commands, activeCommand, setActiveCommandName, responseYaml } = useAdminSectionLogic()
-  
+  const logic = useAdminSectionLogic()  
   const styles = useStyles()
 
   return (
     <div className={styles.root}>
       <div className={styles.commandEditorCol}>
-        <div className={styles.commandEditorActionBar}>
-          <Select
-            value={activeCommand.name} 
-            onChange={e => setActiveCommandName(e.target.value as string)} 
-            className={styles.commandSelect}
-          >
-            {commands.map(commandName => (
-              <MenuItem key={commandName} value={commandName}>{commandName}</MenuItem>
-            ))}
-          </Select>
-          <div className={styles.commandEditorActionBarRight}>
-            <IconButton size='small'>
-              <EditIcon />
-            </IconButton>
-            <IconButton className={styles.addButton} size='small'>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </div>          
-        </div>
-        <YamlEditor
-          codeMirrorRootClassName={styles.codeMirrorRoot}
-          value={activeCommand.yaml}
-        />
-        <Button variant="contained" className={styles.executeButton}>Execute</Button>
+        {logic.type === 'LoadedAdminSectionLogic' ?
+          <>          
+            <div className={styles.commandEditorActionBar}>
+              <Select
+                value={logic.activeCommand.name} 
+                onChange={e => logic.setActiveCommand(e.target.value as string)} 
+                className={styles.commandSelect}
+              >
+                {logic.commands.map(command => (
+                  <MenuItem key={command.name} value={command.name}>{command.name}</MenuItem>
+                ))}
+              </Select>
+              <div className={styles.commandEditorActionBarRight}>
+                <IconButton size='small'>
+                  <EditIcon />
+                </IconButton>
+                <IconButton className={styles.addButton} size='small'>
+                  <AddCircleOutlineIcon />
+                </IconButton>
+              </div>          
+            </div>
+            <YamlEditor
+              codeMirrorRootClassName={styles.codeMirrorRoot}
+              value={logic.activeCommand.yaml}
+            />
+            <Button variant="contained" className={styles.executeButton}>Execute</Button>
+          </> :
+          <>
+            <YamlEditor codeMirrorRootClassName={styles.codeMirrorRoot} />
+          </>
+        }
       </div>
-      <YamlEditor
-        className={styles.response}
-        codeMirrorRootClassName={styles.codeMirrorRoot}
-        value={responseYaml}
-      />
+      {logic.type === 'LoadedAdminSectionLogic' && logic.activeCommandResponseYaml.type === 'LOADED' ?
+        <YamlEditor
+          className={styles.response}
+          codeMirrorRootClassName={styles.codeMirrorRoot}
+          value={logic.activeCommandResponseYaml.data}
+        /> :
+        <YamlEditor className={styles.response} />
+      }      
     </div>
   )
 }
