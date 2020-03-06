@@ -4,19 +4,26 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/yaml/yaml';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, CircularProgress } from '@material-ui/core';
+import { percent } from '../css';
 
 const CodeMirror = UnControlled as any
 
 interface Props {
   className?: string
-  value: string
+  value?: string
   codeMirrorRootClassName?: string
 }
 
 const useStyles = makeStyles({
   rootHidden: {
-    visibility: 'hidden'
+    visibility: 'hidden',
+    position: 'relative'
+  },
+  loadingSpinner: {
+    position: 'absolute',
+    left: percent(43.5),
+    top: percent(39),
   },
 }, {name: 'YamlEditor'})
 
@@ -40,14 +47,17 @@ export const YamlEditor = (props: Props) => {
   const styles = useStyles()
  
   return (
-    <CodeMirror
-      ref={wrapped}
-      className={clsx(props.className, !isReady && styles.rootHidden)}
-      value={props.value}
-      options={{
-        mode: 'yaml',
-        theme: 'material',
-      }}
-    />
+    <>
+      <CodeMirror
+        ref={wrapped}
+        className={clsx(props.className, !isReady && styles.rootHidden)}
+        value={props.value}
+        options={{
+          mode: 'yaml',
+          theme: 'material',
+        }}
+      />
+      {!props.value && <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />}
+    </>
   )
 }
