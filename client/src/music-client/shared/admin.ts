@@ -1,10 +1,10 @@
-export interface AdminYamlCommand {
+export interface AdminCommand {
   name: string
   yaml: string
 }
 
 export interface AdminSectionParams {
-  commands: AdminYamlCommand[]
+  commands: AdminCommand[]
   currentCommandName: string
   currentCommandResponse: string
 }

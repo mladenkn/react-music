@@ -1,5 +1,5 @@
 import { useAdminApi } from "../api/adminApi"
-import { AdminYamlCommand } from "../shared/admin"
+import { AdminCommand } from "../shared/admin"
 import { useEffect, useState } from "react"
 import { Loadable, Loaded } from "../../utils/types"
 import { useImmer } from "use-immer"
@@ -7,13 +7,13 @@ import { useImmer } from "use-immer"
 interface State {
   activeCommandName: string
   activeCommandResponseYaml: Loadable<string>
-  commands: AdminYamlCommand[]
+  commands: AdminCommand[]
 }
 
 interface AdminSectionLogic {
-  activeCommand: AdminYamlCommand
+  activeCommand: AdminCommand
   activeCommandResponseYaml: Loadable<string>
-  commands: AdminYamlCommand[]
+  commands: AdminCommand[]
   setActiveCommand(cmdName: string): void
 }
 
