@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
-  const { queries, activeQuery, setActiveQueryName, responseYaml } = useAdminSectionLogic()
+  const { commands: queries, activeCommand: activeQuery, setActiveCommandName: setActiveQueryName, responseYaml } = useAdminSectionLogic()
   
   const styles = useStyles()
 

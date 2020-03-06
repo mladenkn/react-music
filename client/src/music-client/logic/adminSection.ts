@@ -2,7 +2,7 @@ import { useImmer } from "use-immer"
 
 export const useAdminSectionLogic = () => {
 
-  const queries = [
+  const commands = [
     {
       name: 'Query 1',
       yaml: `name: Martin D'vloper
@@ -55,16 +55,16 @@ education: |
   ]
 
   const [state, updateState] = useImmer({
-    activeQueryName: queries[0].name
+    activeCommandName: commands[0].name
   })
 
-  const setActiveQueryName = (name: string) => {
+  const setActiveCommandName = (name: string) => {
     updateState(draft => {
-      draft.activeQueryName = name
+      draft.activeCommandName = name
     })
   }
 
-  const activeQuery = queries.find(q => q.name === state.activeQueryName)!
+  const activeCommand = commands.find(q => q.name === state.activeCommandName)!
 
   const responseYaml = `
 doe: "a deer, a female deer"
@@ -88,9 +88,9 @@ xmas-fifth-day:
   `
 
   return { 
-    queries: queries.map(q => q.name),
-    activeQuery,
-    setActiveQueryName,
-    responseYaml
+    commands: commands.map(q => q.name),
+    activeCommand,
+    setActiveCommandName,
+    responseYaml,
   }
 }
