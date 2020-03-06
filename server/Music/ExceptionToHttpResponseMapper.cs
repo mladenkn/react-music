@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Music.App
+namespace Music
 {
     public class ExceptionToHttpResponseMapper : IActionFilter, IOrderedFilter
     {

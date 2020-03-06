@@ -1,9 +1,10 @@
 ﻿using Kernel;
 using Microsoft.EntityFrameworkCore;
+using Music.Admin.Models;
 using Music.App.DbModels;
 using Utilities;
 
-namespace Music.App
+namespace Music
 {
     public sealed class MusicDbContext : DbContext
     {
@@ -18,6 +19,8 @@ namespace Music.App
         public DbSet<TrackUserPropsTag> TrackUserPropsTags { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<UserAdminData> UserAdminData { get; set; }
 
         public MusicDbContext(DbContextOptions options) : base(options)
         {

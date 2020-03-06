@@ -11,22 +11,22 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'start',
   },
-  querySelect: {
+  commandSelect: {
     width: ems(10),
   },
-  querEditorActionBar: {
+  commandEditorActionBar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     marginBottom: ems(0.7),
   },
-  querEditorActionBarRight: {
+  commandEditorActionBarRight: {
     marginRight: ems(-0.3),
   },
   addButton: {
     marginLeft: ems(0.5)
   },
-  queryEditorCol: {
+  commandEditorCol: {
     width: ems(35),
     display: 'flex',
     flexDirection: 'column'
@@ -48,43 +48,57 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
-  const { queries, activeQuery, setActiveQueryName, responseYaml } = useAdminSectionLogic()
-  
+  const logic = useAdminSectionLogic()  
   const styles = useStyles()
 
-  return (
-    <div className={styles.root}>
-      <div className={styles.queryEditorCol}>
-        <div className={styles.querEditorActionBar}>
-          <Select
-            value={activeQuery.name} 
-            onChange={e => setActiveQueryName(e.target.value as string)} 
-            className={styles.querySelect}
-          >
-            {queries.map((queryName) => (
-              <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
-            ))}
-          </Select>
-          <div className={styles.querEditorActionBarRight}>
-            <IconButton size='small'>
-              <EditIcon />
-            </IconButton>
-            <IconButton className={styles.addButton} size='small'>
-              <AddCircleOutlineIcon />
-            </IconButton>
-          </div>          
+  console.log(logic)
+
+  if(logic.type === 'LOADING'){
+    return <div>Loading...</div>
+  }
+  else if (logic.type === 'LOADED') {
+    return (
+      <div className={styles.root}>
+        <div className={styles.commandEditorCol}>
+          <div className={styles.commandEditorActionBar}>
+            <Select
+              value={logic.data.activeCommand.name} 
+              onChange={e => logic.data.setActiveCommand(e.target.value as string)} 
+              className={styles.commandSelect}
+            >
+              {logic.data.commands.map(command => (
+                <MenuItem key={command.name} value={command.name}>{command.name}</MenuItem>
+              ))}
+            </Select>
+            <div className={styles.commandEditorActionBarRight}>
+              <IconButton size='small'>
+                <EditIcon />
+              </IconButton>
+              <IconButton className={styles.addButton} size='small'>
+                <AddCircleOutlineIcon />
+              </IconButton>
+            </div>          
+          </div>
+          <YamlEditor
+            codeMirrorRootClassName={styles.codeMirrorRoot}
+            value={logic.data.activeCommand.yaml}
+          />
+          <Button variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
-        <YamlEditor
-          codeMirrorRootClassName={styles.codeMirrorRoot}
-          value={activeQuery.yaml}
-        />
-        <Button variant="contained" className={styles.executeButton}>Execute</Button>
+        {logic.data.activeCommandResponseYaml.type === 'LOADED' ?
+          <YamlEditor
+            className={styles.response}
+            codeMirrorRootClassName={styles.codeMirrorRoot}
+            value={logic.data.activeCommandResponseYaml.data}
+          /> :
+          <YamlEditor 
+            className={styles.response}
+            codeMirrorRootClassName={styles.codeMirrorRoot} 
+          />
+        }  
       </div>
-      <YamlEditor
-        className={styles.response}
-        codeMirrorRootClassName={styles.codeMirrorRoot}
-        value={responseYaml}
-      />
-    </div>
-  )
+    )
+  }
+  else 
+    return <div>Error</div>
 }

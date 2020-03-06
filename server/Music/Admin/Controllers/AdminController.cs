@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Admin.Models;
 using Music.Admin.Services;
-using ControllerBase = Music.App.ControllerBase;
+using ControllerBase = Music.ControllerBase;
 
 namespace Music.Admin.Controllers
 {
@@ -17,6 +16,6 @@ namespace Music.Admin.Controllers
         }
 
         [HttpGet]
-        public Task<IEnumerable<AdminYamlCommand>> Get() => Resolve<AdminCommandsService>().Get();
+        public Task<AdminSectionParams> Get() => Resolve<AdminCommandsService>().GetAdminSectionParams();
     }
 }

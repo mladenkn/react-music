@@ -1,95 +1,68 @@
+import { useAdminApi } from "../api/adminApi"
+import { AdminCommand } from "../shared/admin"
+import { useEffect, useState } from "react"
+import { Loadable, Loaded } from "../../utils/types"
 import { useImmer } from "use-immer"
 
-export const useAdminSectionLogic = () => {
+interface State {
+  activeCommandName: string
+  activeCommandResponseYaml: Loadable<string>
+  commands: AdminCommand[]
+}
 
-  const queries = [
-    {
-      name: 'Query 1',
-      yaml: `name: Martin D'vloper
-job: Developer
-skill: Elite
-employed: True
-foods:
-  - Apple
-  - Orange
-  - Strawberry
-  - Mango
-languages:
-  perl: Elite
-  python: Elite
-  pascal: Lame
-education: |
-  4 GCSEs
-  3 A-Levels
-  BSc in the Internet of Things 
-`
-    },
-    {
-      name: 'Query 2',
-      yaml: `# A list of tasty fruits
-- Apple
-- Orange
-- Strawberry
-- Mango
-`
-    },
-    {
-      name: 'Query 3',
-      yaml: `# Employee records
--  martin:
-    name: Martin D'vloper
-    job: Developer
-    skills:
-      - python
-      - perl
-      - pascal
--  tabitha:
-    name: Tabitha Bitumen
-    job: Developer
-    skills:
-      - lisp
-      - fortran
-      - erlang
-`
-    }
-  ]
+interface AdminSectionLogic {
+  activeCommand: AdminCommand
+  activeCommandResponseYaml: Loadable<string>
+  commands: AdminCommand[]
+  setActiveCommand(cmdName: string): void
+}
 
-  const [state, updateState] = useImmer({
-    activeQueryName: queries[0].name
+export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
+
+  const { getInitialParams } = useAdminApi()
+  
+
+  const [state, updateState] = useImmer<Loadable<State>>({
+    type: "LOADING"
   })
+  
+  console.log(state)
 
-  const setActiveQueryName = (name: string) => {
-    updateState(draft => {
-      draft.activeQueryName = name
-    })
+  useEffect(() => {
+    getInitialParams()
+      .then(response => {
+        updateState(() => ({
+          type: 'LOADED',
+          data: {
+            activeCommandName: response.currentCommandName,
+            activeCommandResponseYaml: { type: 'LOADED', data: response.currentCommandResponse },
+            commands: response.commands
+          }
+        }))
+      })
+  }, [])
+
+  if(state.type === 'LOADING')
+    return { type: 'LOADING' }
+
+  else if (state.type === 'LOADED') {
+    const setActiveCommand = (name: string) => {
+      updateState(draft => {
+        (draft as Loaded<State>).data.activeCommandName = name
+      })
+    }
+    const activeCommand = state.data.commands.find(q => q.name === state.data.activeCommandName)!
+    return {
+      type: 'LOADED',
+      data: {
+        activeCommand,
+        activeCommandResponseYaml: state.data.activeCommandResponseYaml,
+        commands: state.data.commands,
+        setActiveCommand,
+      }
+    }
   }
 
-  const activeQuery = queries.find(q => q.name === state.activeQueryName)!
-
-  const responseYaml = `doe: "a deer, a female deer"
-ray: "a drop of golden sun"
-pi: 3.14159
-xmas: true
-french-hens: 3
-calling-birds: 
-  - huey
-  - dewey
-  - louie
-  - fred
-xmas-fifth-day: 
-  calling-birds: four
-  french-hens: 3
-  golden-rings: 5
-  partridges: 
-    count: 1
-    location: "a pear tree"
-  turtle-doves: two
-  `
-
-  return { 
-    queries: queries.map(q => q.name),
-    activeQuery,
-    setActiveQueryName,
-    responseYaml
-  }
+  else 
+    return { type: 'ERROR' }
 }
