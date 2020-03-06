@@ -26,7 +26,5 @@ namespace Music.Admin.Models
         public IEnumerable<AdminCommand> Commands { get; set; }
 
         public string CurrentCommandName { get; set; }
-
-        public string CurrentCommandResponse { get; set; }
     }
 }
