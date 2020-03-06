@@ -11,22 +11,22 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'start',
   },
-  querySelect: {
+  commandSelect: {
     width: ems(10),
   },
-  querEditorActionBar: {
+  commandEditorActionBar: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     marginBottom: ems(0.7),
   },
-  querEditorActionBarRight: {
+  commandEditorActionBarRight: {
     marginRight: ems(-0.3),
   },
   addButton: {
     marginLeft: ems(0.5)
   },
-  queryEditorCol: {
+  commandEditorCol: {
     width: ems(35),
     marginLeft: ems(3),
     display: 'flex',
@@ -49,24 +49,24 @@ const useStyles = makeStyles({
 
 export const AdminSection = () => {
 
-  const { commands: queries, activeCommand: activeQuery, setActiveCommandName: setActiveQueryName, responseYaml } = useAdminSectionLogic()
+  const { commands, activeCommand, setActiveCommandName, responseYaml } = useAdminSectionLogic()
   
   const styles = useStyles()
 
   return (
     <div className={styles.root}>
-      <div className={styles.queryEditorCol}>
-        <div className={styles.querEditorActionBar}>
+      <div className={styles.commandEditorCol}>
+        <div className={styles.commandEditorActionBar}>
           <Select
-            value={activeQuery.name} 
-            onChange={e => setActiveQueryName(e.target.value as string)} 
-            className={styles.querySelect}
+            value={activeCommand.name} 
+            onChange={e => setActiveCommandName(e.target.value as string)} 
+            className={styles.commandSelect}
           >
-            {queries.map((queryName) => (
-              <MenuItem key={queryName} value={queryName}>{queryName}</MenuItem>
+            {commands.map(commandName => (
+              <MenuItem key={commandName} value={commandName}>{commandName}</MenuItem>
             ))}
           </Select>
-          <div className={styles.querEditorActionBarRight}>
+          <div className={styles.commandEditorActionBarRight}>
             <IconButton size='small'>
               <EditIcon />
             </IconButton>
@@ -77,7 +77,7 @@ export const AdminSection = () => {
         </div>
         <YamlEditor
           codeMirrorRootClassName={styles.codeMirrorRoot}
-          value={activeQuery.yaml}
+          value={activeCommand.yaml}
         />
         <Button variant="contained" className={styles.executeButton}>Execute</Button>
       </div>

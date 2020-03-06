@@ -4,7 +4,7 @@ export const useAdminSectionLogic = () => {
 
   const commands = [
     {
-      name: 'Query 1',
+      name: 'Command 1',
       yaml: `name: Martin D'vloper
 job: Developer
 skill: Elite
@@ -25,7 +25,7 @@ education: |
 `
     },
     {
-      name: 'Query 2',
+      name: 'Command 2',
       yaml: `# A list of tasty fruits
 - Apple
 - Orange
@@ -34,7 +34,7 @@ education: |
 `
     },
     {
-      name: 'Query 3',
+      name: 'Command 3',
       yaml: `# Employee records
 -  martin:
     name: Martin D'vloper
