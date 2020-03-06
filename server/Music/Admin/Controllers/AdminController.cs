@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Admin.Models;
 using Music.Admin.Services;
-using ControllerBase = Music.App.ControllerBase;
+using ControllerBase = Music.ControllerBase;
 
 namespace Music.Admin.Controllers
 {

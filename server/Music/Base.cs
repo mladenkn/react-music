@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using Kernel;
 using Microsoft.Extensions.DependencyInjection;
+using Music.App;
 
-namespace Music.App
+namespace Music
 {
 
     public class ServiceResolverAware : ServiceResolverAware<MusicDbContext>
