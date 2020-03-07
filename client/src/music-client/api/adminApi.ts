@@ -2,11 +2,13 @@ import { useAxios } from "./axios"
 import { AdminSectionParams, AdminCommand } from "../shared/admin"
 
 export const useAdminApi = () => {
-  const { get, post } = useAxios()
+  const { get, post, put } = useAxios()
 
   const getInitialParams = async () => get<AdminSectionParams>('/admin').then(r => r.data)
 
-  const updateCommand = async (cmd: AdminCommand) => post('/admin', cmd)
+  const addCommand = async (cmd: AdminCommand) => post('/admin', cmd)
 
-  return { getInitialParams, updateCommand }
+  const updateCommand = async (cmd: AdminCommand) => put('/admin', cmd)
+
+  return { getInitialParams, addCommand, updateCommand }
 }
