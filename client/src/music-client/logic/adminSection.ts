@@ -42,7 +42,7 @@ xmas-fifth-day:
 
 export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
 
-  const { getInitialParams, saveCommand } = useAdminApi()
+  const api = useAdminApi()
   
 
   const [state, updateState] = useImmer<Loadable<State>>({
@@ -52,7 +52,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   console.log(state)
 
   useEffect(() => {
-    getInitialParams()
+    api.getInitialParams()
       .then(response => {
         updateState(() => ({
           type: 'LOADED',
@@ -67,7 +67,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   }, [])
 
   const updateCommand = (cmd: AdminCommand) => {
-    saveCommand(cmd)
+    api.updateCommand(cmd)
       .then(() => {
         updateState(draft => {
           const draftC = draft as Loaded<State>

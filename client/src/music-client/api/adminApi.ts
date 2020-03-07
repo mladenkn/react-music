@@ -6,7 +6,7 @@ export const useAdminApi = () => {
 
   const getInitialParams = async () => get<AdminSectionParams>('/admin').then(r => r.data)
 
-  const saveCommand = async (cmd: AdminCommand) => post('/admin', cmd)
+  const updateCommand = async (cmd: AdminCommand) => post('/admin', cmd)
 
-  return { getInitialParams, saveCommand }
+  return { getInitialParams, updateCommand }
 }
