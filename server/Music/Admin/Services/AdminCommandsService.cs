@@ -31,7 +31,20 @@ namespace Music.Admin.Services
             return r;
         }
 
-        public async Task SaveCommand(AdminCommandForAdminSection cmd)
+        public async Task Add(AdminCommandForAdminSection cmd)
+        {
+            var userId = Resolve<ICurrentUserContext>().Id;
+            var cmdDbEntity = new AdminCommand
+            {
+                UserId = userId,
+                Name = cmd.Name,
+                Yaml = cmd.Yaml,
+            };
+            Db.Add(cmdDbEntity);
+            await Db.SaveChangesAsync();
+        }
+
+        public async Task Update(AdminCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var cmdFromDb = await Query<AdminCommand>()

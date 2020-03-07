@@ -17,6 +17,10 @@ namespace Music.Admin.Controllers
         [HttpGet]
         public Task<AdminSectionParams> Get() => Resolve<AdminCommandsService>().GetAdminSectionParams();
 
-        public Task Post(AdminCommandForAdminSection cmd) => Resolve<AdminCommandsService>().SaveCommand(cmd);
+        [HttpPost]
+        public Task Post(AdminCommandForAdminSection cmd) => Resolve<AdminCommandsService>().Add(cmd);
+
+        [HttpPut]
+        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminCommandsService>().Update(cmd);
     }
 }
