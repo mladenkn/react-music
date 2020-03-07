@@ -6,7 +6,7 @@ using Music.App.DbModels;
 
 namespace Music.App.Models
 {
-    public class TrackModel
+    public class TrackForHomeSection
     {
         public long Id { get; set; }
 
@@ -26,8 +26,8 @@ namespace Music.App.Models
 
         public IReadOnlyCollection<string> Tags { get; set; }
 
-        public static Expression<Func<TrackUserProps, TrackModel>> FromTrackUserProps => trackUserProps =>
-            new TrackModel
+        public static Expression<Func<TrackUserProps, TrackForHomeSection>> FromTrackUserProps => trackUserProps =>
+            new TrackForHomeSection
             {
                 Id = trackUserProps.TrackId,
                 YouTubeVideoId = trackUserProps.YoutubeVideoId,
@@ -40,8 +40,8 @@ namespace Music.App.Models
                 Tags = trackUserProps.TrackTags.Select(t => t.Value).ToArray(),
             };
 
-        public static Expression<Func<Track, TrackModel>> FromTrack(int userId) => track =>
-            new TrackModel
+        public static Expression<Func<Track, TrackForHomeSection>> FromTrack(int userId) => track =>
+            new TrackForHomeSection
             {
                 Id = track.Id,
                 YouTubeVideoId = track.YoutubeVideos.FirstOrDefault().Id,

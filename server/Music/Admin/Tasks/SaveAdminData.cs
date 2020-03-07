@@ -15,7 +15,7 @@ namespace Music.Admin.Tasks
         {
             var commands = new[]
             {
-                new AdminCommandDbModel
+                new AdminCommand
                 {
                     Name = "Query 1",
                     Yaml = @"name: Martin D'vloper
@@ -38,7 +38,7 @@ education: |
 ",
                     UserId = 1,
                 },
-                new AdminCommandDbModel
+                new AdminCommand
                 {
                     Name = "Query 2",
                     Yaml = @"# A list of tasty fruits
@@ -49,7 +49,7 @@ education: |
 ",
                     UserId = 1,
                 },
-                new AdminCommandDbModel
+                new AdminCommand
                 {
                     Name = "Query 3",
                     Yaml = @"# Employee records

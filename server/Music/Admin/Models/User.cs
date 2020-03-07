@@ -13,7 +13,7 @@ namespace Music.Admin.Models
 
         public User User { get; set; }
 
-        public IReadOnlyCollection<AdminCommandDbModel> Commands { get; set; }
+        public IReadOnlyCollection<AdminCommand> Commands { get; set; }
 
         public string CurrentCommandName { get; set; }
 

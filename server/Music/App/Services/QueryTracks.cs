@@ -14,7 +14,7 @@ namespace Music.App.Services
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackModel>> Execute(TracksQueryModel req)
+        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Execute(TracksQueryModel req)
         {
             var query = BuildFilterNew(req);
             var userId = Resolve<ICurrentUserContext>().Id;
@@ -23,7 +23,7 @@ namespace Music.App.Services
             {
                 var result = await query
                     .OrderBy(t => Guid.NewGuid())
-                    .Select(TrackModel.FromTrack(userId))
+                    .Select(TrackForHomeSection.FromTrack(userId))
                     .ToArrayWithTotalCount(q =>
                         q.Take(req.Take)
                     );
@@ -32,7 +32,7 @@ namespace Music.App.Services
             else
             {
                 var result = await query
-                    .Select(TrackModel.FromTrack(userId))
+                    .Select(TrackForHomeSection.FromTrack(userId))
                     .ToArrayWithTotalCount(q => q
                         .Skip(req.Skip)
                         .Take(req.Take)

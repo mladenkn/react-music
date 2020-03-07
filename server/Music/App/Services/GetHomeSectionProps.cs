@@ -18,9 +18,9 @@ namespace Music.App.Services
 
         public string CurrentTrackYoutubeId { get; set; }
 
-        public ArrayWithTotalCount<TrackModel> TracksFromMusicDb { get; set; }
+        public ArrayWithTotalCount<TrackForHomeSection> TracksFromMusicDb { get; set; }
 
-        public IEnumerable<TrackModel> TracksFromYouTube { get; set; }
+        public IEnumerable<TrackForHomeSection> TracksFromYouTube { get; set; }
 
         public IEnumerable<string> Tags { get; set; }
 

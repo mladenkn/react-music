@@ -14,7 +14,7 @@ namespace Music.App.Services
         {
         }
 
-        public async Task<IEnumerable<TrackModel>> Execute(string query)
+        public async Task<IEnumerable<TrackForHomeSection>> Execute(string query)
         {
             var wantedTracksYtIds = (await Resolve<YouTubeServices>().SearchIds(query)).ToArray();
             await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(wantedTracksYtIds);
@@ -22,12 +22,12 @@ namespace Music.App.Services
             return tracks;
         }
 
-        private async Task<IReadOnlyCollection<TrackModel>> GetTracks(IEnumerable<string> wantedTracksYtIds)
+        private async Task<IReadOnlyCollection<TrackForHomeSection>> GetTracks(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
             var tracks = await Query<Track>()
                 .Where(track => wantedTracksYtIds.Contains(track.YoutubeVideos.First().Id))
-                .Select(TrackModel.FromTrack(curUserId))
+                .Select(TrackForHomeSection.FromTrack(curUserId))
                 .ToArrayAsync();
             return tracks;
         }

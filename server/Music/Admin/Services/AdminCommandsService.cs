@@ -19,7 +19,7 @@ namespace Music.Admin.Services
 
             var commands = await Query<UserAdminData>()
                 .Where(d => d.UserId == userId)
-                .SelectMany(d => d.Commands.Select(c => new AdminCommand { Name = c.Name, Yaml = c.Yaml }))
+                .SelectMany(d => d.Commands.Select(c => new AdminCommandForAdminSection { Name = c.Name, Yaml = c.Yaml }))
                 .ToArrayAsync();
 
             var r = new AdminSectionParams
@@ -31,10 +31,10 @@ namespace Music.Admin.Services
             return r;
         }
 
-        public async Task SaveCommand(AdminCommand cmd)
+        public async Task SaveCommand(AdminCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
-            var cmdFromDb = await Query<AdminCommandDbModel>()
+            var cmdFromDb = await Query<AdminCommand>()
                 .FirstOrDefaultAsync(c => c.UserId == userId);
             if(cmdFromDb == null)
                 throw new ApplicationException("Command not found.");

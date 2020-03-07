@@ -17,15 +17,15 @@ namespace Music.App.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<TrackModel>> Get([FromQuery]TracksQueryModel req) => 
+        public Task<ArrayWithTotalCount<TrackForHomeSection>> Get([FromQuery]TracksQueryModel req) => 
             Resolve<QueryTracksExecutor>().Execute(req);
 
         [HttpGet("yt")]
-        public Task<IEnumerable<TrackModel>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
+        public Task<IEnumerable<TrackForHomeSection>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
             Resolve<QueryTracksViaYoutubeExecutor>().Execute(searchQuery);
 
         [HttpPost]
-        public Task<ArrayWithTotalCount<TrackModel>> Save([FromBody]SaveTrackModel trackProps) => 
+        public Task<ArrayWithTotalCount<TrackForHomeSection>> Save([FromBody]SaveTrackModel trackProps) => 
             Resolve<SaveTrackExecutor>().Execute(trackProps);
     }
 }

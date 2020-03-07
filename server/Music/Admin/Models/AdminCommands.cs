@@ -5,7 +5,7 @@ using Music.App.DbModels;
 
 namespace Music.Admin.Models
 {
-    public class AdminCommandDbModel : IDatabaseEntity
+    public class AdminCommand : IDatabaseEntity
     {
         public int Id { get; set; }
 
@@ -18,15 +18,14 @@ namespace Music.Admin.Models
         public string Yaml { get; set; }
 
         public static void Configure(ModelBuilder modelBuilder) =>
-            modelBuilder.Entity<AdminCommandDbModel>(b =>
+            modelBuilder.Entity<AdminCommand>(b =>
             {
                 b.Property(m => m.Name).IsRequired();
                 b.HasIndex(m => m.Name).IsUnique();
-                b.ToTable("AdminCommands");
             });
     }
 
-    public class AdminCommand
+    public class AdminCommandForAdminSection
     {
         public string Name { get; set; }
 
@@ -35,7 +34,7 @@ namespace Music.Admin.Models
 
     public class AdminSectionParams
     {
-        public IEnumerable<AdminCommand> Commands { get; set; }
+        public IEnumerable<AdminCommandForAdminSection> Commands { get; set; }
 
         public string CurrentCommandName { get; set; }
     }

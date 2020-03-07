@@ -26,7 +26,7 @@ namespace Music.App.Services
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackModel>> Execute(SaveTrackModel req)
+        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Execute(SaveTrackModel req)
         {
             var currentUserId = Resolve<ICurrentUserContext>().Id;
 
