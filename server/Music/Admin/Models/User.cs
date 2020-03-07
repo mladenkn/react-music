@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Kernel;
+using Microsoft.EntityFrameworkCore;
 using Music.App.DbModels;
 
 namespace Music.Admin.Models
@@ -15,5 +16,11 @@ namespace Music.Admin.Models
         public IReadOnlyCollection<AdminCommandDbModel> Commands { get; set; }
 
         public string CurrentCommandName { get; set; }
+
+        public static void Configure(ModelBuilder modelBuilder) =>
+            modelBuilder.Entity<UserAdminData>(b =>
+            {
+                b.Property(e => e.CurrentCommandName).IsRequired();
+            });
     }
 }

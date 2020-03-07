@@ -36,14 +36,6 @@ namespace Music
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ConfigureEntities(typeof(YoutubeVideo).Assembly);
-
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                if (entityType.ClrType.IsAnyOf(typeof(YoutubeVideoStatistics), typeof(YoutubeVideoTopicDetails), typeof(TrackUserProps)))
-                    ;
-                else
-                    entityType.SetTableName(entityType.DisplayName() + "s");
-            }
         }
     }
 }
