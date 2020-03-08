@@ -94,10 +94,5 @@ namespace Music.Admin.Services
             Db.Update(cmdFromDb);
             await Db.SaveChangesAsync();
         }
-
-        public async Task ExecuteComamnd(string commandYaml)
-        {
-
-        }
     }
 }
