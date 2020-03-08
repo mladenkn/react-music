@@ -29,6 +29,6 @@ namespace Music.Admin.Controllers
 
         [HttpPost("exe-command")]
         public Task<string> ExecuteCommand(Dictionary<string, string> args) => 
-            Resolve<AdminCommandExecutor>().ExecuteComamnd(args["commandYaml"]);
+            Resolve<AdminCommandExecutor>().ExecuteCommand(args["commandYaml"]);
     }
 }

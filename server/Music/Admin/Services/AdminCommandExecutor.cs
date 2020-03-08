@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace Music.Admin.Services
 {
@@ -10,7 +11,7 @@ namespace Music.Admin.Services
         {
         }
 
-        public async Task<string> ExecuteComamnd(string commandYaml)
+        public async Task<string> ExecuteCommand(string commandYaml)
         {
             var yamlService = Resolve<YamlService>();
             var cmd = yamlService.DeserializeToDictionary(commandYaml);
@@ -19,20 +20,25 @@ namespace Music.Admin.Services
                 throw new ApplicationException();
             else
             {
+                var ytService = Resolve<AdminYouTubeService>();
                 switch (type)
                 {
                     case "GetChannelDetails":
-                        var channelId = cmd["channelId"];
-                        var response = new Dictionary<string, object>
-                        {
-                            ["channelId"] = "qojrt'1u45iowfhnawiofh",
-                            ["channelTitle"] = "Mate i Jure",
-                            ["videosCount"] = 4235
-                        };
+                    {
+                        var channelId = cmd.Get<string>("channelId");
+                        var response = await ytService.GetChannelDetails(channelId);
                         return yamlService.Serialize(response);
+                    }
+
+                    case "GetChannelsOfUser":
+                    {
+                        var username = cmd.Get<string>("username");
+                        var response = await ytService.GetChannelsOfUser(username);
+                        return yamlService.Serialize(response);
+                    }
 
                     default:
-                        throw new ApplicationException("Unsupported command type");
+                        return "Unsupported command";
                 }
             }
         }

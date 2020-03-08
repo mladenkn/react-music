@@ -29,5 +29,10 @@ namespace Utilities
         public static bool IsAnyOf(this object o, params object[] values) => values.Contains(o);
 
         public static bool IsIn<T>(this T o, IEnumerable<T> enumerable) => enumerable.Contains(o);
+
+        public static T Get<T>(this IReadOnlyDictionary<string, object> dict, string key)
+        {
+            return (T) dict[key];
+        }
     }
 }

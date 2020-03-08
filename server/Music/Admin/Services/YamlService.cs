@@ -23,6 +23,6 @@ namespace Music.Admin.Services
             return o;
         }
 
-        public string Serialize(IReadOnlyDictionary<string, object> dict) => _serializer.Serialize(dict);
+        public string Serialize(object o) => _serializer.Serialize(o);
     }
 }

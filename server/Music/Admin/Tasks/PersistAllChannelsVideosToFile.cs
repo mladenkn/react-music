@@ -3,8 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.Admin.Services;
-using Music.App;
-using Music.App.Services;
 
 namespace Music.Admin.Tasks
 {

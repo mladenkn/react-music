@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Music.App;
 using Music.App.DbModels;
 using Music.App.Models;
 using Music.App.Services;

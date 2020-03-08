@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Music.Admin.Models;
-using Music.App;
 using Music.App.DbModels;
 using Music.App.Models;
 
@@ -19,7 +18,7 @@ namespace Music.Admin.Services
 
         public async Task<IEnumerable<YouTubeChannelDetails>> GetChannelsOfUser(string username)
         {
-            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
+            var ytService = Resolve<YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.ForUsername = username;
             var response = await request.ExecuteAsync();
@@ -30,7 +29,7 @@ namespace Music.Admin.Services
 
         public async Task<YouTubeChannelDetails> GetChannelDetails(string channelId)
         {
-            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
+            var ytService = Resolve<YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.Id = channelId;
             var response = await request.ExecuteAsync();
@@ -51,8 +50,8 @@ namespace Music.Admin.Services
 
         private async Task<int> GetPlaylistVideoCount(string playlistId)
         {
-            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
-            var request = ytService.PlaylistItems.List("");
+            var ytService = Resolve<YouTubeService>();
+            var request = ytService.PlaylistItems.List("id");
             request.PlaylistId = playlistId;
             var response = await request.ExecuteAsync();
             return response.PageInfo.TotalResults ?? 0;

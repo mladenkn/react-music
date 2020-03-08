@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using Music.App;
 using Music.App.Services;
 
 namespace Music.Admin.Tasks

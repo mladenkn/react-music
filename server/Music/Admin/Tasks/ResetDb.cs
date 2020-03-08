@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Music.Admin.Models;
-using Music.App;
-using Music.App.DbModels;
 
 namespace Music.Admin.Tasks
 {
