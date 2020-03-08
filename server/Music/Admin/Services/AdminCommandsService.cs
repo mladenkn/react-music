@@ -17,21 +17,27 @@ namespace Music.Admin.Services
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 
-            var commands = await Query<UserAdminData>()
-                .Where(d => d.UserId == userId)
-                .SelectMany(d => d.Commands.Select(c => new AdminCommandForAdminSection { Name = c.Name, Yaml = c.Yaml }))
+            var commands = await Query<AdminCommand>()
+                .Where(c => c.UserId == userId)
+                .OrderByDescending(c => c.AddedAt)
+                .Select(c => new AdminCommandForAdminSection
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Yaml = c.Yaml
+                })
                 .ToArrayAsync();
 
             var r = new AdminSectionParams
             {
                 Commands = commands,
-                CurrentCommandName = commands.First().Name
+                CurrentCommandId = commands.First().Id
             };
 
             return r;
         }
 
-        public async Task Add(AdminCommandForAdminSection cmd)
+        public async Task<AdminCommandForAdminSection> Add(AdminCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var cmdDbEntity = new AdminCommand
@@ -39,18 +45,30 @@ namespace Music.Admin.Services
                 UserId = userId,
                 Name = cmd.Name,
                 Yaml = cmd.Yaml,
+                AddedAt = DateTime.Now
             };
             Db.Add(cmdDbEntity);
             await Db.SaveChangesAsync();
+            return new AdminCommandForAdminSection
+            {
+                Id = cmdDbEntity.Id,
+                Name = cmdDbEntity.Name,
+                Yaml = cmdDbEntity.Yaml
+            };
         }
 
         public async Task Update(AdminCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
+            
             var cmdFromDb = await Query<AdminCommand>()
-                .FirstOrDefaultAsync(c => c.UserId == userId);
-            if(cmdFromDb == null)
+                .FirstOrDefaultAsync(c => c.Id == cmd.Id);
+
+            if (cmdFromDb == null)
                 throw new ApplicationException("Command not found.");
+            if(cmdFromDb.UserId != userId)
+                throw new ApplicationException("Trying to update other user's command.");
+
             cmdFromDb.Name = cmd.Name;
             cmdFromDb.Yaml = cmd.Yaml;
 

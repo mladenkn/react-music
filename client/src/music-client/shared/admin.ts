@@ -1,10 +1,11 @@
 export interface AdminCommand {
+  id: number
   name: string
   yaml: string
 }
 
 export interface AdminSectionParams {
   commands: AdminCommand[]
-  currentCommandName: string
+  currentCommandId: number
   currentCommandResponse: string
 }

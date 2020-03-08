@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { makeStyles, Select, MenuItem, Button, IconButton } from '@material-ui/core';
+import React from 'react';
+import { makeStyles, Select, MenuItem, Button } from '@material-ui/core';
 import { ems } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
+import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
 
 const useStyles = makeStyles({
   root: {
@@ -62,21 +63,30 @@ export const AdminSection = () => {
         <div className={styles.commandEditorCol}>
           <div className={styles.commandEditorActionBar}>
             <Select
-              value={logic.data.activeCommand.name} 
-              onChange={e => logic.data.setActiveCommand(e.target.value as string)} 
+              value={logic.data.activeCommand.id} 
+              onChange={e => logic.data.setActiveCommand(e.target.value as number)} 
               className={styles.commandSelect}
             >
               {logic.data.commands.map(command => (
-                <MenuItem key={command.name} value={command.name}>{command.name}</MenuItem>
+                <MenuItem key={command.id} value={command.id}>{command.name}</MenuItem>
               ))}
             </Select>
             <div className={styles.commandEditorActionBarRight}>
-              <IconButton size='small'>
+              <IconButtonWithTextFieldPopup 
+                onCommit={logic.data.updateCommandName}
+                popupId={1} 
+                size='small'
+              >
                 <EditIcon />
-              </IconButton>
-              <IconButton className={styles.addButton} size='small'>
+              </IconButtonWithTextFieldPopup>
+              <IconButtonWithTextFieldPopup 
+                onCommit={logic.data.addNewCommand}
+                popupId={2} 
+                className={styles.addButton} 
+                size='small'
+              >
                 <AddCircleOutlineIcon />
-              </IconButton>
+              </IconButtonWithTextFieldPopup>
             </div>          
           </div>
           <YamlEditor

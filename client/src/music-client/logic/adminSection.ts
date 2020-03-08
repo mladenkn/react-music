@@ -6,7 +6,7 @@ import { useImmer } from "use-immer"
 import { useDebouncedCallback } from "use-debounce/lib"
 
 interface State {
-  activeCommandName: string
+  activeCommandId: number
   activeCommandYaml: string
   activeCommandResponseYaml: Loadable<string>
   commands: AdminCommand[]
@@ -16,7 +16,7 @@ interface AdminSectionLogic {
   activeCommand: AdminCommand
   activeCommandResponseYaml: Loadable<string>
   commands: AdminCommand[]
-  setActiveCommand(cmdName: string): void
+  setActiveCommand(cmdId: number): void
   updateCommandYaml(yaml: string): void
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
@@ -43,8 +43,7 @@ xmas-fifth-day:
 
 export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
 
-  const api = useAdminApi()
-  
+  const api = useAdminApi()  
 
   const [state, updateState] = useImmer<Loadable<State>>({
     type: "LOADING"
@@ -58,8 +57,8 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         updateState(() => ({
           type: 'LOADED',
           data: {
-            activeCommandName: response.currentCommandName,
-            activeCommandYaml: response.commands.find(c => c.name === response.currentCommandName)!.yaml,
+            activeCommandId: response.currentCommandId,
+            activeCommandYaml: response.commands.find(c => c.id === response.currentCommandId)!.yaml,
             activeCommandResponseYaml: { type: 'LOADED', data: initalCmdResponse },
             commands: response.commands,
           }
@@ -70,51 +69,53 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   const updateCommand = (cmd: AdminCommand) => {
     api.updateCommand(cmd)
       .then(() => {
-        updateState(draft => {
-          const draftC = draft as Loaded<State>
-          const cmd_ = draftC.data.commands.find(
-            q => q.name === draftC.data.activeCommandName
-          )!
-          Object.assign(cmd_, cmd)
+        updateState(draft_ => {
+          const draft = (draft_ as Loaded<State>).data
+          console.log({ draft, cmd })
+          const cmd_ = draft.commands.find(q => q.id === draft.activeCommandId)!
+          cmd_.name = cmd.name
+          cmd_.yaml = cmd.yaml
         })
       })
   }
 
-  const [updateCommandYamlOnApi] = useDebouncedCallback((cmd: AdminCommand) => updateCommand(cmd), 1000)
+  const [updateCommandDebounced] = useDebouncedCallback(updateCommand, 1000)
 
   if(state.type === 'LOADING')
     return { type: 'LOADING' }
 
   else if (state.type === 'LOADED') {
-    const setActiveCommand = (name: string) => {
-      updateState(draft => {
-        (draft as Loaded<State>).data.activeCommandName = name
+    const setActiveCommand = (id: number) => {
+      updateState(draft_ => {
+        const draft = (draft_ as Loaded<State>).data
+        draft.activeCommandId = id
+        draft.activeCommandYaml = draft.commands.find(c => c.id === id)!.yaml
       })
     }
 
-    const activeCommand = state.data.commands.find(q => q.name === state.data.activeCommandName)!
+    const activeCommand = state.data.commands.find(q => q.id === state.data.activeCommandId)!
 
     const updateCommandName = (name: string) => {
-      updateCommand({ ...activeCommand, name })
+      updateCommand({ id: activeCommand.id, name, yaml: state.data.activeCommandYaml })
     }
 
     const updateCommandYaml = (yaml: string) => {
       updateState(draft => {
         (draft as Loaded<State>).data.activeCommandYaml = yaml
       })
-      updateCommandYamlOnApi({...activeCommand, yaml})
+      updateCommandDebounced({ ...activeCommand, yaml})
     }
 
     const addNewCommand = (name: string) => {
       const cmd = {name, yaml: ''}
       api.addCommand(cmd)
-        .then(() => {
+        .then((cmdFromApi) => {
           updateState(draft_ => {
             const draft = (draft_ as Loaded<State>).data
-            draft.activeCommandName = name
+            draft.activeCommandId = cmdFromApi.id
             draft.activeCommandResponseYaml = { type: 'LOADED', data: '' }
             draft.activeCommandYaml = ''
-            draft.commands.unshift(cmd)
+            draft.commands.unshift(cmdFromApi)
           }) 
         })
     }
@@ -123,7 +124,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
       type: 'LOADED',
       data: {
         activeCommand: {
-          name: state.data.activeCommandName,
+          ...activeCommand,
           yaml: state.data.activeCommandYaml
         },
         addNewCommand,

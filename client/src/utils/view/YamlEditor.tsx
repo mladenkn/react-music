@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import {UnControlled} from 'react-codemirror2'
+import { Controlled } from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/yaml/yaml';
@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { makeStyles, CircularProgress } from '@material-ui/core';
 import { percent } from '../css';
 
-const CodeMirror = UnControlled as any
+const CodeMirror = Controlled as any
 
 interface Props {
   className?: string
@@ -46,6 +46,11 @@ export const YamlEditor = (props: Props) => {
   })
 
   const styles = useStyles()
+
+  const handleChange = (value: string) => {
+    console.log(value)
+    props.onChange && props.onChange(value)
+  }
  
   return (
     <>
@@ -57,9 +62,10 @@ export const YamlEditor = (props: Props) => {
           mode: 'yaml',
           theme: 'material',
         }}
-        onChange={(_: unknown, __: unknown, value: string) => props.onChange && props.onChange(value)}
+        onBeforeChange={(_: unknown, __: unknown, value: string) => handleChange(value)}
       />
-      {!props.value && <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />}
+      {props.value === undefined && 
+        <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />}
     </>
   )
 }
