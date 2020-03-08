@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Admin.Models;
@@ -25,5 +26,11 @@ namespace Music.Admin.Controllers
 
         [HttpPut]
         public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
+
+        [HttpPost("exe-command")]
+        public Task ExecuteCommand(Dictionary<string, string> args)
+        {
+            return Resolve<AdminService>().ExecuteComamnd(args["commandYaml"]);
+        }
     }
 }

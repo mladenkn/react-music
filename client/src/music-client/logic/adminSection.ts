@@ -20,6 +20,7 @@ interface AdminSectionLogic {
   updateCommandYaml(yaml: string): void
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
+  executeCommand(): void
 }
 
 const initalCmdResponse = `doe: 'a deer, a female deer'
@@ -124,6 +125,20 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         })
     }
 
+    const executeCommand = () => {
+      updateState(draft_ => {
+        const draft = (draft_ as Loaded<State>).data
+        draft.activeCommandResponseYaml = { type: 'LOADING' }        
+      })
+      api.executeCommand(state.data.activeCommandYaml)
+        .then(responseYaml => {
+          updateState(draft_ => {
+            const draft = (draft_ as Loaded<State>).data
+            draft.activeCommandResponseYaml = { type: 'LOADED', data: responseYaml }  
+          })
+        })
+    }
+
     return {
       type: 'LOADED',
       data: {
@@ -136,7 +151,8 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         commands: state.data.commands,
         setActiveCommand,
         updateCommandName,
-        updateCommandYaml
+        updateCommandYaml,
+        executeCommand
       }
     }
   }

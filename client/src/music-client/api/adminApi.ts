@@ -12,5 +12,8 @@ export const useAdminApi = () => {
 
   const persistAdminSectionState = (s: AdminSectionPersistableState) => post('/admin/admin-section', s)
 
-  return { getInitialParams, addCommand, updateCommand, persistAdminSectionState }
+  const executeCommand = async (commandYaml: string) => 
+    (await post<string>('admin/exe-command', {commandYaml})).data
+
+  return { getInitialParams, addCommand, updateCommand, persistAdminSectionState, executeCommand }
 }

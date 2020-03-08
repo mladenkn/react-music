@@ -94,7 +94,7 @@ export const AdminSection = () => {
             value={{ type: 'LOADED', data: logic.data.activeCommand.yaml }}
             onChange={logic.data.updateCommandYaml}
           />
-          <Button variant="contained" className={styles.executeButton}>Execute</Button>
+          <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
         <YamlEditor
           className={styles.response}

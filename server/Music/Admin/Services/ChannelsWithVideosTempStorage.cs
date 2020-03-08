@@ -9,7 +9,7 @@ namespace Music.Admin.Services
         {
         }
         
-        public async Task PersistToFile((string userId, string channelId) args)
+        public async Task PersistToFile(string channelId)
         {
 
         }
