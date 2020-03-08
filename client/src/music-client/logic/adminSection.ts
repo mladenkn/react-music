@@ -1,9 +1,9 @@
 import { useAdminApi } from "../api/adminApi"
 import { AdminCommand } from "../shared/admin"
-import { useEffect } from "react"
 import { Loadable, Loaded } from "../../utils/types"
 import { useImmer } from "use-immer"
 import { useDebouncedCallback } from "use-debounce/lib"
+import { useEffect } from "../../utils/useEffect"
 
 interface State {
   activeCommandId: number
@@ -54,17 +54,22 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   useEffect(() => {
     api.getInitialParams()
       .then(response => {
+        const activeCommandId = response.currentCommandId || response.commands[0].id
         updateState(() => ({
           type: 'LOADED',
           data: {
-            activeCommandId: response.currentCommandId,
-            activeCommandYaml: response.commands.find(c => c.id === response.currentCommandId)!.yaml,
+            activeCommandId,
+            activeCommandYaml: response.commands.find(c => c.id === activeCommandId)!.yaml,
             activeCommandResponseYaml: { type: 'LOADED', data: initalCmdResponse },
             commands: response.commands,
           }
         }))
       })
-  }, [])
+  }, [], { runOnFirstRender: true })
+
+  useEffect(() => {
+    api.persistAdminSectionState({ currentCommandId: (state as Loaded<State>).data.activeCommandId })
+  }, [state.type == 'LOADED' && state.data.activeCommandId])
 
   const updateCommand = (cmd: AdminCommand) => {
     api.updateCommand(cmd)

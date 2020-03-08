@@ -4,12 +4,13 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.Admin.Models;
 using Music.App;
+using Newtonsoft.Json;
 
 namespace Music.Admin.Services
 {
-    public class AdminCommandsService : ServiceResolverAware
+    public class AdminService : ServiceResolverAware
     {
-        public AdminCommandsService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
@@ -28,13 +29,31 @@ namespace Music.Admin.Services
                 })
                 .ToArrayAsync();
 
+            var sectionStateJson = await Query<AdminUser>()
+                .Where(u => u.Id == userId)
+                .Select(u => u.AdminSectionStateJson)
+                .FirstOrDefaultAsync();
+
+            var currentCommandId = string.IsNullOrEmpty(sectionStateJson)
+                ? (int?) null
+                : JsonConvert.DeserializeObject<AdminSectionState>(sectionStateJson).CurrentCommandId;
+
             var r = new AdminSectionParams
             {
                 Commands = commands,
-                CurrentCommandId = commands.First().Id
+                CurrentCommandId = currentCommandId
             };
 
             return r;
+        }
+
+        public async Task SaveSectionState(AdminSectionState state)
+        {
+            var userId = Resolve<ICurrentUserContext>().Id;
+            var user = await Query<AdminUser>().FirstOrDefaultAsync(u => u.Id == userId);
+            user.AdminSectionStateJson = JsonConvert.SerializeObject(state);
+            Db.Update(user);
+            await Db.SaveChangesAsync();
         }
 
         public async Task<AdminCommandForAdminSection> Add(AdminCommandForAdminSection cmd)

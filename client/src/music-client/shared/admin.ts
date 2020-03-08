@@ -6,6 +6,10 @@ export interface AdminCommand {
 
 export interface AdminSectionParams {
   commands: AdminCommand[]
-  currentCommandId: number
+  currentCommandId?: number
   currentCommandResponse: string
+}
+
+export interface AdminSectionPersistableState {
+  currentCommandId: number
 }

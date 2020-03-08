@@ -14,13 +14,16 @@ namespace Music.Admin.Controllers
         {
         }
 
-        [HttpGet]
-        public Task<AdminSectionParams> Get() => Resolve<AdminCommandsService>().GetAdminSectionParams();
+        [HttpGet("admin-section")]
+        public Task<AdminSectionParams> Get() => Resolve<AdminService>().GetAdminSectionParams();
+
+        [HttpPost("admin-section")]
+        public Task Post(AdminSectionState s) => Resolve<AdminService>().SaveSectionState(s);
 
         [HttpPost]
-        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminCommandsService>().Add(cmd);
+        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Add(cmd);
 
         [HttpPut]
-        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminCommandsService>().Update(cmd);
+        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
     }
 }

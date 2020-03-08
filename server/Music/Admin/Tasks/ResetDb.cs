@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Music.Admin.Models;
 using Music.App;
 using Music.App.DbModels;
 
@@ -20,7 +21,7 @@ namespace Music.Admin.Tasks
 
             await Persist(ops =>
             {
-                var user = new User
+                var user = new AdminUser
                 {
                     Email = "mladen.knezovic.1993@gmail.com",
                 };

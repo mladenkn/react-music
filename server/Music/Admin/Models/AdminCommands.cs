@@ -42,6 +42,6 @@ namespace Music.Admin.Models
     {
         public IEnumerable<AdminCommandForAdminSection> Commands { get; set; }
 
-        public int CurrentCommandId { get; set; }
+        public int? CurrentCommandId { get; set; }
     }
 }
