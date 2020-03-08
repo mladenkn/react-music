@@ -42,15 +42,6 @@ namespace Music.App.Services
             return ids;
         }
 
-        public async Task<bool> DoesChannelExist(string channelId)
-        {
-            var service = Resolve<YouTubeService>();
-            var req = service.Channels.List("id");
-            req.Id = channelId;
-            var result = await req.ExecuteAsync();
-            return result.Items.Single().Id == channelId;
-        }
-
         public async Task<IReadOnlyList<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
         {
             var videosFromYt = new List<Video>(ids.Count);
@@ -63,39 +54,6 @@ namespace Music.App.Services
             }
 
             return await PostRead(videosFromYt.ToArray());
-        }
-
-        public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
-        {
-            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
-            var videos = await GetByIds(allVideosIds.ToArray());
-            return new YouTubeChannelWithVideos
-            {
-                Id = channel.Id,
-                Title = channel.Title,
-                Videos = videos
-            };
-        }
-
-        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
-        {
-            var ytService = Resolve<YouTubeService>();
-            var r = new List<string>();
-
-            string nextPageToken = null;
-            do
-            {
-                var request = ytService.PlaylistItems.List("contentDetails");
-                request.PageToken = nextPageToken;
-                request.PlaylistId = playlistId;
-                request.MaxResults = 50;
-                var response = await request.ExecuteAsync();
-                r.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
-                nextPageToken = response.NextPageToken;
-            }
-            while (nextPageToken != null);
-
-            return r;
         }
 
         private async Task<YoutubeVideo[]> PostRead(IReadOnlyCollection<Video> vids)
@@ -123,6 +81,7 @@ namespace Music.App.Services
             var ytService = Resolve<YouTubeService>();
             var partsAsOneString = string.Join(",", _videoParts);
             var request = ytService.Videos.List(partsAsOneString);
+            var a = ytService.Channels;
             consumeRequest(request);
             var result = await request.ExecuteAsync();
             return result.Items.ToList();

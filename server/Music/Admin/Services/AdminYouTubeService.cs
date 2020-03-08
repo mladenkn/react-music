@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Music.Admin.Models;
 using Music.App;
+using Music.App.DbModels;
+using Music.App.Models;
 
 namespace Music.Admin.Services
 {
@@ -53,6 +56,39 @@ namespace Music.Admin.Services
             request.PlaylistId = playlistId;
             var response = await request.ExecuteAsync();
             return response.PageInfo.TotalResults ?? 0;
+        }
+
+        public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
+        {
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
+            var videos = await Resolve<App.Services.YouTubeServices>().GetByIds(allVideosIds.ToArray());
+            return new YouTubeChannelWithVideos
+            {
+                Id = channel.Id,
+                Title = channel.Title,
+                Videos = videos
+            };
+        }
+
+        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
+        {
+            var ytService = Resolve<YouTubeService>();
+            var r = new List<string>();
+
+            string nextPageToken = null;
+            do
+            {
+                var request = ytService.PlaylistItems.List("contentDetails");
+                request.PageToken = nextPageToken;
+                request.PlaylistId = playlistId;
+                request.MaxResults = 50;
+                var response = await request.ExecuteAsync();
+                r.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
+                nextPageToken = response.NextPageToken;
+            }
+            while (nextPageToken != null);
+
+            return r;
         }
     }
 }
