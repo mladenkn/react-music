@@ -18,15 +18,16 @@ namespace Kernel
                var isDbEntity = type.GetInterfaces().Count(t => t == typeof(IDatabaseEntity)) == 1;
                if (isDbEntity)
                {
-                    var configureMethod = type.GetMethods().FirstOrDefault(m =>
-                    {
+                   modelBuilder.Entity(type);
+                   var configureMethod = type.GetMethods().FirstOrDefault(m =>
+                   {
                         var parameters = m.GetParameters();
                         return m.Name == "Configure" &&
                                m.IsStatic &&
                                parameters.Length == 1 &&
                                parameters.Single().ParameterType == typeof(ModelBuilder);
-                    });
-                    if (configureMethod != null)
+                   });
+                   if (configureMethod != null)
                         configureMethod.Invoke(null, new object[] { modelBuilder });
                }
             }

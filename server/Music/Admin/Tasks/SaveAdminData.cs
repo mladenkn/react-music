@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Music.Admin.Models;
+using Utilities;
 
 namespace Music.Admin.Tasks
 {
@@ -71,17 +72,10 @@ education: |
                     UserId = 1,
                 },
             };
-
-            var adminData = new UserAdminData
-            {
-                UserId = 1,
-                Commands = commands,
-                CurrentCommandName = commands.First().Name
-            };
-
+            
             var db = Resolve<MusicDbContext>();
 
-            db.UserAdminData.Add(adminData);
+            commands.ForEach(c => db.Add(c));
             await db.SaveChangesAsync();
         }
     }
