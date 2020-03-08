@@ -91,22 +91,16 @@ export const AdminSection = () => {
           </div>
           <YamlEditor
             codeMirrorRootClassName={styles.codeMirrorRoot}
-            value={logic.data.activeCommand.yaml}
+            value={{ type: 'LOADED', data: logic.data.activeCommand.yaml }}
             onChange={logic.data.updateCommandYaml}
           />
           <Button variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
-        {logic.data.activeCommandResponseYaml.type === 'LOADED' ?
-          <YamlEditor
-            className={styles.response}
-            codeMirrorRootClassName={styles.codeMirrorRoot}
-            value={logic.data.activeCommandResponseYaml.data}
-          /> :
-          <YamlEditor 
-            className={styles.response}
-            codeMirrorRootClassName={styles.codeMirrorRoot} 
-          />
-        }  
+        <YamlEditor
+          className={styles.response}
+          codeMirrorRootClassName={styles.codeMirrorRoot}
+          value={logic.data.activeCommandResponseYaml}
+        />
       </div>
     )
   }

@@ -6,12 +6,13 @@ import 'codemirror/mode/yaml/yaml';
 import clsx from 'clsx';
 import { makeStyles, CircularProgress } from '@material-ui/core';
 import { percent } from '../css';
+import { Loadable } from '../types';
 
 const CodeMirror = Controlled as any
 
 interface Props {
   className?: string
-  value?: string
+  value: Loadable<string>
   codeMirrorRootClassName?: string
   onChange?: (value: string) => void
 }
@@ -51,21 +52,24 @@ export const YamlEditor = (props: Props) => {
     console.log(value)
     props.onChange && props.onChange(value)
   }
+
+  const content = props.value.type === 'LOADED' ? props.value.data : ''
  
   return (
     <>
       <CodeMirror
         ref={wrapped}
         className={clsx(props.className, !isReady && styles.rootHidden)}
-        value={props.value}
+        value={content}
         options={{
           mode: 'yaml',
           theme: 'material',
         }}
         onBeforeChange={(_: unknown, __: unknown, value: string) => handleChange(value)}
       />
-      {props.value === undefined && 
-        <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />}
+      {props.value.type === 'LOADING' &&
+        <CircularProgress size={60} color="secondary" className={styles.loadingSpinner} />        
+      }
     </>
   )
 }
