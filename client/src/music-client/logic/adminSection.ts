@@ -76,7 +76,6 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
       .then(() => {
         updateState(draft_ => {
           const draft = (draft_ as Loaded<State>).data
-          console.log({ draft, cmd })
           const cmd_ = draft.commands.find(q => q.id === draft.activeCommandId)!
           cmd_.name = cmd.name
           cmd_.yaml = cmd.yaml

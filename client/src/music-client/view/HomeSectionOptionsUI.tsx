@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { TracklistOptions, HomeSectionOptions } from "../shared/homeSectionOptions"
+import React from 'react'
+import { HomeSectionOptions } from "../shared/homeSectionOptions"
 import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button, Checkbox } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
@@ -7,6 +7,7 @@ import clsx from 'clsx'
 import { ems, percent } from '../../utils/css'
 import { snapshot } from '../../utils'
 import { IdWithName } from '../../utils/types'
+import { useEffect } from '../../utils/useEffect'
 
 interface HomeSectionOptionsUIProps {
 	className?: string

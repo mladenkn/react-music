@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { HomeSectionPropsFromApi } from "../shared/homeSectionOptions"
 import { useHomeSectionApi } from "../api/homeSection"
 import { HomeUI } from "./HomeSectionUI"
 import React from 'react'
+import { useEffect } from "../../utils/useEffect"
 
 interface Props {
   className?: string
@@ -21,7 +22,7 @@ export const HomeSectionRoot = (props: Props) => {
       if(propsFromApi.status >= 200 ||  propsFromApi.status < 300 )
         setPropsFromApi(propsFromApi.data)
     })()
-  }, [])
+  }, [], { runOnFirstRender: true })
 
   return propsFromApi ?
     <HomeUI className={props.className} {...propsFromApi} /> :

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Controlled } from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { makeStyles, CircularProgress } from '@material-ui/core';
 import { percent } from '../css';
 import { Loadable } from '../types';
+import { useEffect } from '../useEffect';
 
 const CodeMirror = Controlled as any
 
@@ -31,20 +32,14 @@ const useStyles = makeStyles({
 
 export const YamlEditor = (props: Props) => {
   const wrapped = useRef<any>()
-  const isFirstRender = useRef(true)
 
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    if(isFirstRender.current){      
-      isFirstRender.current = false
-
-      const codeMirror = wrapped.current.ref.getElementsByClassName('CodeMirror')[0] as HTMLElement
-      props.codeMirrorRootClassName && codeMirror.classList.add(props.codeMirrorRootClassName)
-
-      setIsReady(true)
-    }
-  })
+    const codeMirror = wrapped.current.ref.getElementsByClassName('CodeMirror')[0] as HTMLElement
+    props.codeMirrorRootClassName && codeMirror.classList.add(props.codeMirrorRootClassName)
+    setIsReady(true)
+  }, [], { runOnFirstRender: true })
 
   const styles = useStyles()
 
