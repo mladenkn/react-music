@@ -15,7 +15,7 @@ namespace Music.Admin
         public ChannelVideosPersistantStore(IServiceProvider sp) : base(sp)
         {
             var env = sp.GetRequiredService<IWebHostEnvironment>();
-            _folder = Path.Combine(env.ContentRootPath, "data-files", "videos-by-channels");
+            _folder = Path.Combine(env.ContentRootPath, "..", "data-files", "videos-by-channels");
         }
 
         public async Task Store(YouTubeChannelWithVideos channel)
@@ -33,12 +33,15 @@ namespace Music.Admin
             return channel;
         }
 
-        public async Task<IReadOnlyList<YouTubeChannelWithVideos>> GetAll()
+        public async Task<IReadOnlyList<YouTubeChannelWithVideos>> Get(Func<string, bool> filter = null)
         {
             var files = Directory.GetFiles(_folder);
             var r = new List<YouTubeChannelWithVideos>();
             foreach (var file in files)
-                r.Add(await GetOne(file));
+            {
+                if(filter?.Invoke(file) ?? true)
+                    r.Add(await GetOne(file));
+            }
             return r;
         }
     }

@@ -89,5 +89,22 @@ namespace Music.Admin.Services
 
             return r;
         }
+
+        public async Task<YouTubeChannelWithVideos> GetYouTubeChannelWithVideos(string channelId)
+        {
+            var ytService = Resolve<YouTubeService>();
+            var request = ytService.Channels.List("snippet,contentDetails");
+            request.Id = channelId;
+            var response = await request.ExecuteAsync();
+            var channel = response.Items.Single();
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.ContentDetails.RelatedPlaylists.Uploads);
+            var videos = await Resolve<App.Services.YouTubeServices>().GetByIds(allVideosIds.ToArray());
+            return new YouTubeChannelWithVideos
+            {
+                Id = channelId,
+                Title = channel.Snippet.Title,
+                Videos = videos
+            };
+        }
     }
 }
