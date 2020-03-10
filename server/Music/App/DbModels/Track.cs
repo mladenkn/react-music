@@ -11,6 +11,6 @@ namespace Music.App.DbModels
 
         public IReadOnlyCollection<YoutubeVideo> YoutubeVideos { get; set; }
 
-        public bool IsDuplicate { get; set; }
+        public bool IsIgnored { get; set; }
     }
 }

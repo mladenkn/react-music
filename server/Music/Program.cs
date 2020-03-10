@@ -19,9 +19,9 @@ namespace Music
 
         private static async Task Initialize(IServiceProvider sp)
         {
-            //await new ResetDb(sp).Execute();
-            //await new SaveAdminData(sp).Execute();
-            //await new SaveTracks(sp).Execute();
+            await new ResetDb(sp).Execute();
+            await new SaveAdminData(sp).Execute();
+            await new SaveTracks(sp).Execute();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
