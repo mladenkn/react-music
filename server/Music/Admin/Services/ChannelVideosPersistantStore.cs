@@ -7,11 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Music.App.Models;
 using Newtonsoft.Json;
 
-namespace Music.Admin
+namespace Music.Admin.Services
 {
     public class ChannelVideosPersistantStore : ServiceResolverAware
     {
         private readonly string _folder;
+
         public ChannelVideosPersistantStore(IServiceProvider sp) : base(sp)
         {
             var env = sp.GetRequiredService<IWebHostEnvironment>();

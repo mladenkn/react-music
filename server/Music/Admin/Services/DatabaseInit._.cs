@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using Music.Admin.Models;
 
-namespace Music.Admin.DatabaseInitTasks
+namespace Music.Admin.Services
 {
-    public class ResetDb : ServiceResolverAware
+    public partial class DatabaseInit : ServiceResolverAware
     {
-        public ResetDb(IServiceProvider serviceProvider) : base(serviceProvider)
+        public DatabaseInit(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task Execute()
+        public async Task ResetDb()
         {
             var db = Resolve<MusicDbContext>();
 
@@ -23,7 +23,7 @@ namespace Music.Admin.DatabaseInitTasks
                 {
                     Email = "mladen.knezovic.1993@gmail.com",
                 };
-                ops.InsertUser(new []{user});
+                ops.InsertUser(new[] { user });
             });
         }
     }

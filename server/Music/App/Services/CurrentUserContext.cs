@@ -1,4 +1,4 @@
-﻿namespace Music.App
+﻿namespace Music.App.Services
 {
     public interface ICurrentUserContext
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Music.Admin.DatabaseInitTasks;
+using Music.Admin.Services;
 
 namespace Music
 {
@@ -19,9 +19,10 @@ namespace Music
 
         private static async Task Initialize(IServiceProvider sp)
         {
-            await new ResetDb(sp).Execute();
-            await new SaveAdminData(sp).Execute();
-            await new SaveTracks(sp).Execute();
+            var dbIniter = sp.GetRequiredService<DatabaseInit>();
+            await dbIniter.ResetDb();
+            await dbIniter.SaveTracks();
+            await dbIniter.SaveAdminSectionData();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

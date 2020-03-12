@@ -19,7 +19,7 @@ namespace Music.Admin.Services
         
         public async Task ToTemp(string channelId)
         {
-            var channelWithVideos = await Resolve<AdminYouTubeService>().GetYouTubeChannelWithVideos(channelId);
+            var channelWithVideos = await Resolve<YouTubeRemoteService>().GetYouTubeChannelWithVideos(channelId);
             await Resolve<ChannelVideosPersistantStore>().Store(channelWithVideos);
         }
 

@@ -20,7 +20,7 @@ namespace Music.Admin.Services
                 throw new ApplicationException();
             else
             {
-                var ytService = Resolve<AdminYouTubeService>();
+                var ytService = Resolve<YouTubeRemoteService>();
                 switch (type)
                 {
                     case "GetChannelDetails":

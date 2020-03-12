@@ -5,15 +5,11 @@ using System.Threading.Tasks;
 using System.Web;
 using Music.App.Services;
 
-namespace Music.Admin.DatabaseInitTasks
+namespace Music.Admin.Services
 {
-    public class SaveTracks : ServiceResolverAware
+    public partial class DatabaseInit
     {
-        public SaveTracks(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task Execute()
+        public async Task SaveTracks()
         {
             var tracks = new[]
             {
@@ -297,7 +293,7 @@ namespace Music.Admin.DatabaseInitTasks
             await PersistTracks(tracks);
         }
 
-        public async Task PersistTracks(IReadOnlyCollection<SaveTrackModel> tracks)
+        private async Task PersistTracks(IReadOnlyCollection<SaveTrackModel> tracks)
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
@@ -318,17 +314,16 @@ namespace Music.Admin.DatabaseInitTasks
             }
         }
 
-        public void Normalize(IEnumerable<SaveTrackModel> tracks)
+        private void Normalize(IEnumerable<SaveTrackModel> tracks)
         {
             foreach (var track in tracks)
             {
                 var isIdUri = Uri.TryCreate(track.YouTubeVideoId, UriKind.RelativeOrAbsolute, out var trackUri);
-                if (isIdUri) 
+                if (isIdUri)
                     track.YouTubeVideoId = HttpUtility.ParseQueryString(trackUri.Query).Get("v");
             }
         }
     }
-
     public class SaveTrackModel
     {
         public string YouTubeVideoId { get; set; }
