@@ -301,20 +301,20 @@ namespace Music.Admin.DatabaseInitTasks
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
-            var result = await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(trackYouTubeVideoIds);
 
-            var saveTrack = Resolve<SaveTrackExecutor>();
+            var service = Resolve<TracksService>();
+            var result = await service.InsertFromYouTubeVideosIfFound(trackYouTubeVideoIds);
 
             foreach (var newTrackDescriptor in tracks)
             {
                 var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
-                var saveTrackModel = new App.Services.SaveTrackModel
+                var saveTrackModel = new App.Services.SaveTrackUserPropsModel
                 {
                     TrackId = track.Id,
                     Tags = newTrackDescriptor.Tags,
                     Year = newTrackDescriptor.Year
                 };
-                await saveTrack.Execute(saveTrackModel);
+                await service.SaveUserProps(saveTrackModel);
             }
         }
 

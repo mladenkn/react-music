@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,18 +7,14 @@ using Utilities;
 
 namespace Music.App.Services
 {
-    public class InsertTracksFromYouTubeVideosIfFound : ServiceResolverAware
+    public partial class TracksService
     {
-        public InsertTracksFromYouTubeVideosIfFound(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task<Result> Execute(IReadOnlyCollection<string> wantedVideosIds)
+        public async Task<Result> InsertFromYouTubeVideosIfFound(IReadOnlyCollection<string> wantedVideosIds)
         {
             var unknownVideosIds = (await FilterToUnknownVideosIds(wantedVideosIds)).ToArray();
             var videosFromYt = (await Resolve<YouTubeVideosRemoteService>().GetByIds(unknownVideosIds)).ToArray();
-            
-            var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
+
+            var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] { v } }).ToArray();
 
             var channelsToInsert = await Resolve<SharedServices>().FilterToNotPersistedChannels(
                 videosFromYt.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id)
@@ -51,6 +46,7 @@ namespace Music.App.Services
             };
         }
 
+
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
             var foundIds = await Query<YoutubeVideo>()
@@ -60,6 +56,7 @@ namespace Music.App.Services
             var notFoundIds = ids.Except(foundIds);
             return notFoundIds;
         }
+
 
         public class Result
         {

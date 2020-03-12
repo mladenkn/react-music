@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +7,12 @@ using Music.App.Models;
 
 namespace Music.App.Services
 {
-    public class QueryTracksViaYoutubeExecutor : ServiceResolverAware
+    public partial class TracksService
     {
-        public QueryTracksViaYoutubeExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task<IEnumerable<TrackForHomeSection>> Execute(string query)
+        public async Task<IEnumerable<TrackForHomeSection>> QueryViaYouTube(string query)
         {
             var wantedTracksYtIds = (await Resolve<YouTubeVideosRemoteService>().SearchIds(query)).ToArray();
-            await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(wantedTracksYtIds);
+            await InsertFromYouTubeVideosIfFound(wantedTracksYtIds);
             var tracks = await GetTracks(wantedTracksYtIds);
             return tracks;
         }

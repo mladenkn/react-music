@@ -8,13 +8,13 @@ using Utilities;
 
 namespace Music.App.Services
 {
-    public class QueryTracksExecutor : ServiceResolverAware
+    public partial class TracksService : ServiceResolverAware
     {
-        public QueryTracksExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
+        public TracksService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Execute(TracksQueryModel req)
+        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Query(TracksQueryModel req)
         {
             var query = BuildFilterNew(req);
             var userId = Resolve<ICurrentUserContext>().Id;
