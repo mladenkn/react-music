@@ -25,7 +25,6 @@ namespace Kernel
             {
                 if (isServicesResolverAware(type))
                 {
-                    services.AddTransient(type);
                     var configureMethod = type.GetMethods().FirstOrDefault(m =>
                     {
                         var parameters = m.GetParameters();
@@ -36,6 +35,8 @@ namespace Kernel
                     });
                     if (configureMethod != null)
                         configureMethod.Invoke(null, new object[] { services });
+                    else
+                        services.AddTransient(type);
                 }
             }
         }
