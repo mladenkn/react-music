@@ -40,7 +40,7 @@ namespace Music
                 o.Filters.Add(new ExceptionToHttpResponseMapper());
             });
 
-            services.AddDbContext<MusicDbContext>(MusicDbContext.Configure);
+            services.AddDbContext<MusicDbContext>();
 
             services.AddSwaggerGen(c =>
             {

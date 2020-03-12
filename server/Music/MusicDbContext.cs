@@ -22,7 +22,7 @@ namespace Music
         {
         }
 
-        public static void Configure(DbContextOptionsBuilder options)
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options
                 .UseSqlServer("Data Source=localhost;Initial Catalog=Music;Integrated Security=True")
