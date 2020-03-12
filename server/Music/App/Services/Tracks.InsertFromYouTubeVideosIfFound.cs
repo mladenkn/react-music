@@ -21,18 +21,24 @@ namespace Music.App.Services
             );
             await Persist(ops =>
             {
-                ops.InsertYouTubeChannels(channelsToInsert);
-                ops.InsertTracks(tracks, t =>
+                channelsToInsert.ForEach(ops.Add);
+                tracks.ForEach(track =>
                 {
-                    t.YoutubeVideos?.ForEach(v => v.YouTubeChannel = null);
-                    t.TrackUserProps?.ForEach(tup =>
-                    {
-                        tup.YoutubeVideo = null;
-                        if (tup.Track != null)
+                    ops.Add(track,
+                        t =>
                         {
-                            tup.Track.YoutubeVideos = null;
-                        }
-                    });
+                            t.YoutubeVideos?.ForEach(v => v.YouTubeChannel = null);
+                            t.TrackUserProps?.ForEach(tup =>
+                            {
+                                tup.YoutubeVideo = null;
+                                if (tup.Track != null)
+                                {
+                                    tup.Track.YoutubeVideos = null;
+                                }
+                            });
+                        },
+                        (original, copy) => original.Id = copy.Id
+                    );
                 });
             });
 

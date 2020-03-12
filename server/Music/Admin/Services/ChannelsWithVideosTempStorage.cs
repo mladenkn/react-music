@@ -35,8 +35,13 @@ namespace Music.Admin.Services
 
             await Persist(ops =>
             {
-                ops.InsertYouTubeChannels(new []{ channelDbModel });
-                ops.InsertTracks(tracks, t => t.YoutubeVideos.ForEach(v => v.YouTubeChannel = null));
+                ops.Add(channelDbModel);
+                tracks.ForEach(track => ops.Add(
+                        track, 
+                        t => t.YoutubeVideos.ForEach(v => v.YouTubeChannel = null),
+                        (original, copy) => original.Id = copy.Id
+                    )
+                );
             });
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,9 +20,14 @@ namespace Kernel
             });
         }
         
-        public static void AddServiceResolverAwares(this IServiceCollection services, Assembly assembly, Func<Type, bool> isServicesResolverAware)
+        public static void AddServiceResolverAwares(
+            this IServiceCollection services, 
+            IEnumerable<Assembly> assemblies, 
+            Func<Type, bool> isServicesResolverAware
+        )
         {
-            foreach (var type in assembly.GetTypes())
+            var types = assemblies.SelectMany(a => a.GetTypes());
+            foreach (var type in types)
             {
                 if (isServicesResolverAware(type))
                 {

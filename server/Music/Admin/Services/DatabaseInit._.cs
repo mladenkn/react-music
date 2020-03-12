@@ -17,13 +17,13 @@ namespace Music.Admin.Services
             await db.Database.EnsureDeletedAsync();
             await db.Database.EnsureCreatedAsync();
 
+            var user = new AdminUser
+            {
+                Email = "mladen.knezovic.1993@gmail.com",
+            };
             await Persist(ops =>
             {
-                var user = new AdminUser
-                {
-                    Email = "mladen.knezovic.1993@gmail.com",
-                };
-                ops.InsertUser(new[] { user });
+                ops.Add(user);
             });
         }
     }

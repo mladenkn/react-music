@@ -7,11 +7,11 @@ using Google.Apis.YouTube.v3;
 using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Music.App.DbModels;
-using Music.App.Services;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
@@ -53,9 +53,12 @@ namespace Music
                 }
             ));
             services.AddServiceResolverAwares(
-                typeof(Startup).Assembly, 
+                new []{ typeof(Startup).Assembly }, 
                 type => type.IsSubclassOf(typeof(ServiceResolverAware))
             );
+
+            services.AddTransient<DataPersistor>();
+            services.AddScoped<DbContext, MusicDbContext>();
 
             services.AddElmah();
 

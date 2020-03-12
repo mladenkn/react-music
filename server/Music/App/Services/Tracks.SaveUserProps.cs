@@ -42,12 +42,12 @@ namespace Music.App.Services
                 var tagsToDelete = await Db.TrackUserPropsTags.Where(t => t.TrackUserPropsId == trackUserProps.Id)
                     .ToArrayAsync();
 
-                await Persist(ops => { ops.DeleteTrackUserPropsTags(tagsToDelete); });
+                await Persist(ops => tagsToDelete.ForEach(ops.Remove));
 
                 await Persist(ops =>
                 {
-                    ops.InsertTrackUserPropsTags(newTags);
-                    ops.UpdateTrackUserProps(new[] {trackUserProps});
+                    newTags.ForEach(ops.Add);
+                    ops.Update(trackUserProps);
                 });
             }
             else
@@ -69,7 +69,7 @@ namespace Music.App.Services
                     YoutubeVideoId = track.YoutubeVideos.First().Id
                 };
 
-                await Persist(ops => { ops.InsertTrackUserProps(new[] {newTrackProps}); });
+                await Persist(ops => ops.Add(newTrackProps));
             }
 
             return req.Query != null ? await Query(req.Query) : null;

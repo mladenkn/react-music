@@ -13,7 +13,7 @@ namespace Music.App.Services
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Query<User>().FirstOrDefaultAsync(u => u.Id == userId);
             user.HomeSectionStateJson = JsonConvert.SerializeObject(opt);
-            await Persist(ops => ops.UpdateUsers(new []{ user }));
+            await Persist(ops => ops.Update(user));
         }
     }
 }

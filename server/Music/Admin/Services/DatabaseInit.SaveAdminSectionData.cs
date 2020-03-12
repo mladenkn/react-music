@@ -67,10 +67,7 @@ education: |
                 },
             };
 
-            var db = Resolve<MusicDbContext>();
-
-            commands.ForEach(c => db.Add(c));
-            await db.SaveChangesAsync();
+            await Persist(ops => commands.ForEach(ops.Add));
         }
     }
 }
