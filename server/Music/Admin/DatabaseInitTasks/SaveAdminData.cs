@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Music.Admin.Models;
 using Utilities;
 
-namespace Music.Admin.Tasks
+namespace Music.Admin.DatabaseInitTasks
 {
     public class SaveAdminData : ServiceResolverAware
     {

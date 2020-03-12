@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Music.Admin.Models;
 
-namespace Music.Admin.Tasks
+namespace Music.Admin.DatabaseInitTasks
 {
     public class ResetDb : ServiceResolverAware
     {

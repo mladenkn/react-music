@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Music.App.Services;
 
-namespace Music.Admin.Tasks
+namespace Music.Admin.DatabaseInitTasks
 {
     public class SaveTracks : ServiceResolverAware
     {
