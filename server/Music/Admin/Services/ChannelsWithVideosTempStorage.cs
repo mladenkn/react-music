@@ -46,7 +46,7 @@ namespace Music.Admin.Services
                 .Select(YouTubeChannel.FromYouTubeChannelWithVideos)
                 .DistinctBy(c => c.Id)
                 .ToArray();
-            var ytService = Resolve<YouTubeServices>();
+            var ytService = Resolve<YouTubeVideosRemoteService>();
             await ytService.FetchChannelsPlaylistInfo(channels);
             return channels;
         }

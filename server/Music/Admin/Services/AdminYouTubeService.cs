@@ -7,6 +7,7 @@ using Google.Apis.YouTube.v3.Data;
 using Music.Admin.Models;
 using Music.App.DbModels;
 using Music.App.Models;
+using Music.App.Services;
 
 namespace Music.Admin.Services
 {
@@ -60,7 +61,7 @@ namespace Music.Admin.Services
         public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
         {
             var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
-            var videos = await Resolve<App.Services.YouTubeServices>().GetByIds(allVideosIds.ToArray());
+            var videos = await Resolve<YouTubeVideosRemoteService>().GetByIds(allVideosIds.ToArray());
             return new YouTubeChannelWithVideos
             {
                 Id = channel.Id,
@@ -98,7 +99,7 @@ namespace Music.Admin.Services
             var response = await request.ExecuteAsync();
             var channel = response.Items.Single();
             var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.ContentDetails.RelatedPlaylists.Uploads);
-            var videos = await Resolve<App.Services.YouTubeServices>().GetByIds(allVideosIds.ToArray());
+            var videos = await Resolve<YouTubeVideosRemoteService>().GetByIds(allVideosIds.ToArray());
             return new YouTubeChannelWithVideos
             {
                 Id = channelId,
