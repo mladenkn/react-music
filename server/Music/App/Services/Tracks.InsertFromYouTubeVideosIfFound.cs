@@ -31,10 +31,8 @@ namespace Music.App.Services
                             t.TrackUserProps?.ForEach(tup =>
                             {
                                 tup.YoutubeVideo = null;
-                                if (tup.Track != null)
-                                {
+                                if (tup.Track != null) 
                                     tup.Track.YoutubeVideos = null;
-                                }
                             });
                         },
                         (original, copy) => original.Id = copy.Id
@@ -51,7 +49,6 @@ namespace Music.App.Services
                 NewYouTubeVideos = videosFromYt
             };
         }
-
 
         private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
@@ -75,7 +72,9 @@ namespace Music.App.Services
         public class Result
         {
             public IEnumerable<string> NotFoundVideoIds { get; set; }
+
             public IReadOnlyCollection<Track> NewTracks { get; set; }
+
             public IReadOnlyCollection<YoutubeVideo> NewYouTubeVideos { get; set; }
         }
     }
