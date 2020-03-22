@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music", "Music.csproj", "{BA5D256F-7257-4EB3-B5C6-82757FFF3E8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Music", "Music\Music.csproj", "{BA5D256F-7257-4EB3-B5C6-82757FFF3E8B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "..\Utilities\Utilities.csproj", "{BC4771EF-3E72-49F0-8957-FE9A41AAF734}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{BC4771EF-3E72-49F0-8957-FE9A41AAF734}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Executables", "..\Operations\Executables.csproj", "{255062D1-CE8F-400F-9579-BCD46B976FFC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kernel", "..\Kernel\Kernel.csproj", "{31F0B62A-E304-44F6-84AB-F647F95A212B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kernel", "Kernel\Kernel.csproj", "{31F0B62A-E304-44F6-84AB-F647F95A212B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
