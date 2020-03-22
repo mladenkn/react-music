@@ -66,7 +66,11 @@ namespace Music.App.Services
             var response = await request.ExecuteAsync();
 
             if (response.Items.Count != channels.Count)
-                throw new Exception();
+            {
+                var channelsIdsNotFetched = channels.Select(c => c.Id).Except(response.Items.Select(c => c.Id));
+                var channelsIdsNotFetchedString = string.Join(",", channelsIdsNotFetched);
+                throw new Exception($"Could not fetch channels with following ids: {channelsIdsNotFetchedString}");
+            }
 
             foreach (var channel in channels)
             {

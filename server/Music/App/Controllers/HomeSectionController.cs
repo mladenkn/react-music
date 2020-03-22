@@ -15,9 +15,10 @@ namespace Music.App.Controllers
         }
 
         [HttpPost]
-        public Task SaveOptions(HomeSectionPersistableStateModel opt) => Resolve<SaveHomeSectionOptions>().Save(opt);
+        public Task SaveOptions(HomeSectionPersistableStateModel opt) => 
+            Resolve<HomeSectionService>().SaveState(opt);
 
         [HttpGet("props")]
-        public Task<HomeSectionProps> GetProps() => Resolve<GetHomeSectionProps>().Execute();
+        public Task<HomeSectionProps> GetProps() => Resolve<HomeSectionService>().GetProps();
     }
 }

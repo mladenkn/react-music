@@ -1,17 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Music.Admin.Models;
 using Utilities;
 
-namespace Music.Admin.DatabaseInitTasks
+namespace Music.Admin.Services
 {
-    public class SaveAdminData : ServiceResolverAware
+    public partial class DatabaseInit
     {
-        public SaveAdminData(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task Execute()
+        public async Task SaveAdminSectionData()
         {
             var commands = new[]
             {
@@ -71,11 +66,8 @@ education: |
                     UserId = 1,
                 },
             };
-            
-            var db = Resolve<MusicDbContext>();
 
-            commands.ForEach(c => db.Add(c));
-            await db.SaveChangesAsync();
+            await Persist(ops => commands.ForEach(ops.Add));
         }
     }
 }

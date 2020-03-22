@@ -16,16 +16,16 @@ namespace Music.Admin.Controllers
         }
 
         [HttpGet("admin-section")]
-        public Task<AdminSectionParams> Get() => Resolve<AdminService>().GetAdminSectionParams();
+        public Task<AdminSectionParams> Get() => Resolve<AdminSectionService>().GetAdminSectionParams();
 
         [HttpPost("admin-section")]
-        public Task Post(AdminSectionState s) => Resolve<AdminService>().SaveSectionState(s);
+        public Task Post(AdminSectionState s) => Resolve<AdminSectionService>().SaveSectionState(s);
 
         [HttpPost]
-        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Add(cmd);
+        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminSectionService>().Add(cmd);
 
         [HttpPut]
-        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
+        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminSectionService>().Update(cmd);
 
         [HttpPost("exe-command")]
         public Task<string> ExecuteCommand(Dictionary<string, string> args) => 

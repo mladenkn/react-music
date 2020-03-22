@@ -3,14 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.Admin.Models;
-using Music.App;
+using Music.App.Services;
 using Newtonsoft.Json;
 
 namespace Music.Admin.Services
 {
-    public class AdminService : ServiceResolverAware
+    public class AdminSectionService : ServiceResolverAware
     {
-        public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public AdminSectionService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

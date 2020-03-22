@@ -9,7 +9,7 @@ using Utilities;
 
 namespace Music.App.Services
 {
-    public class SaveTrackModel
+    public class SaveTrackUserPropsModel
     {
         public long TrackId { get; set; }
 
@@ -20,13 +20,9 @@ namespace Music.App.Services
         public TracksQueryModel Query { get; set; }
     }
 
-    public class SaveTrackExecutor : ServiceResolverAware
+    public partial class TracksService
     {
-        public SaveTrackExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Execute(SaveTrackModel req)
+        public async Task<ArrayWithTotalCount<TrackForHomeSection>> SaveUserProps(SaveTrackUserPropsModel req)
         {
             var currentUserId = Resolve<ICurrentUserContext>().Id;
 
@@ -34,7 +30,7 @@ namespace Music.App.Services
                 .FirstOrDefaultAsync(t => t.TrackId == req.TrackId && t.UserId == currentUserId);
 
             var newTags = req.Tags
-                .Select(t => new TrackUserPropsTag { TrackUserPropsId = trackUserProps?.Id ?? 0, Value = t })
+                .Select(t => new TrackUserPropsTag {TrackUserPropsId = trackUserProps?.Id ?? 0, Value = t})
                 .ToArray();
 
             if (trackUserProps != null)
@@ -43,17 +39,15 @@ namespace Music.App.Services
                     throw new ApplicationException("Trying to update other users track.");
 
                 trackUserProps.Year = req.Year;
-                var tagsToDelete = await Db.TrackUserPropsTags.Where(t => t.TrackUserPropsId == trackUserProps.Id).ToArrayAsync();
+                var tagsToDelete = await Db.TrackUserPropsTags.Where(t => t.TrackUserPropsId == trackUserProps.Id)
+                    .ToArrayAsync();
+
+                await Persist(ops => tagsToDelete.ForEach(ops.Remove));
 
                 await Persist(ops =>
                 {
-                    ops.DeleteTrackUserPropsTags(tagsToDelete);
-                });
-
-                await Persist(ops =>
-                {
-                    ops.InsertTrackUserPropsTags(newTags);
-                    ops.UpdateTrackUserProps(new []{ trackUserProps });
+                    newTags.ForEach(ops.Add);
+                    ops.Update(trackUserProps);
                 });
             }
             else
@@ -62,7 +56,7 @@ namespace Music.App.Services
                     .Include(t => t.YoutubeVideos)
                     .FirstOrDefaultAsync(t => t.Id == req.TrackId);
 
-                if(track == null)
+                if (track == null)
                     throw new ApplicationException("Track not found.");
 
                 var newTrackProps = new TrackUserProps
@@ -75,13 +69,10 @@ namespace Music.App.Services
                     YoutubeVideoId = track.YoutubeVideos.First().Id
                 };
 
-                await Persist(ops => { ops.InsertTrackUserProps(new []{ newTrackProps }); });
+                await Persist(ops => ops.Add(newTrackProps));
             }
 
-            if (req.Query != null)
-                return await Resolve<QueryTracksExecutor>().Execute(req.Query);
-            else
-                return null;
+            return req.Query != null ? await Query(req.Query) : null;
         }
     }
 }

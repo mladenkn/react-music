@@ -5,15 +5,11 @@ using System.Threading.Tasks;
 using System.Web;
 using Music.App.Services;
 
-namespace Music.Admin.DatabaseInitTasks
+namespace Music.Admin.Services
 {
-    public class SaveTracks : ServiceResolverAware
+    public partial class DatabaseInit
     {
-        public SaveTracks(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task Execute()
+        public async Task SaveTracks()
         {
             var tracks = new[]
             {
@@ -297,38 +293,37 @@ namespace Music.Admin.DatabaseInitTasks
             await PersistTracks(tracks);
         }
 
-        public async Task PersistTracks(IReadOnlyCollection<SaveTrackModel> tracks)
+        private async Task PersistTracks(IReadOnlyCollection<SaveTrackModel> tracks)
         {
             Normalize(tracks);
             var trackYouTubeVideoIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
-            var result = await Resolve<InsertTracksFromYouTubeVideosIfFound>().Execute(trackYouTubeVideoIds);
 
-            var saveTrack = Resolve<SaveTrackExecutor>();
+            var service = Resolve<TracksService>();
+            var result = await service.InsertFromYouTubeVideosIfFound(trackYouTubeVideoIds);
 
             foreach (var newTrackDescriptor in tracks)
             {
                 var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
-                var saveTrackModel = new App.Services.SaveTrackModel
+                var saveTrackModel = new App.Services.SaveTrackUserPropsModel
                 {
                     TrackId = track.Id,
                     Tags = newTrackDescriptor.Tags,
                     Year = newTrackDescriptor.Year
                 };
-                await saveTrack.Execute(saveTrackModel);
+                await service.SaveUserProps(saveTrackModel);
             }
         }
 
-        public void Normalize(IEnumerable<SaveTrackModel> tracks)
+        private void Normalize(IEnumerable<SaveTrackModel> tracks)
         {
             foreach (var track in tracks)
             {
                 var isIdUri = Uri.TryCreate(track.YouTubeVideoId, UriKind.RelativeOrAbsolute, out var trackUri);
-                if (isIdUri) 
+                if (isIdUri)
                     track.YouTubeVideoId = HttpUtility.ParseQueryString(trackUri.Query).Get("v");
             }
         }
     }
-
     public class SaveTrackModel
     {
         public string YouTubeVideoId { get; set; }

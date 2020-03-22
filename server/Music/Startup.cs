@@ -7,10 +7,10 @@ using Google.Apis.YouTube.v3;
 using Kernel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Music.App;
 using Music.App.DbModels;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
@@ -29,12 +29,9 @@ namespace Music
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvc(o => o.EnableEndpointRouting = true);
-
             services.AddControllers(o =>
             {
                 o.Filters.Add(new ExceptionToHttpResponseMapper());
@@ -55,18 +52,19 @@ namespace Music
                     ApiKey = "AIzaSyA1xQd0rfJCzG1ghK7RoKRI7EfakGLfDZM"
                 }
             ));
-            services.AddTransient<ICurrentUserContext, CurrentUserContextMock>();
             services.AddServiceResolverAwares(
-                typeof(Startup).Assembly, 
+                new []{ typeof(Startup).Assembly }, 
                 type => type.IsSubclassOf(typeof(ServiceResolverAware))
             );
+
+            services.AddTransient<DataPersistor>();
+            services.AddScoped<DbContext, MusicDbContext>();
 
             services.AddElmah();
 
             _reconfigureServices?.Invoke(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

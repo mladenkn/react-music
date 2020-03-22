@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using Music.Admin.Models;
 using Music.App.DbModels;
@@ -11,15 +10,15 @@ using Music.App.Services;
 
 namespace Music.Admin.Services
 {
-    public class AdminYouTubeService : ServiceResolverAware
+    public class YouTubeRemoteService : ServiceResolverAware
     {
-        public AdminYouTubeService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public YouTubeRemoteService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
         public async Task<IEnumerable<YouTubeChannelDetails>> GetChannelsOfUser(string username)
         {
-            var ytService = Resolve<YouTubeService>();
+            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.ForUsername = username;
             var response = await request.ExecuteAsync();
@@ -30,7 +29,7 @@ namespace Music.Admin.Services
 
         public async Task<YouTubeChannelDetails> GetChannelDetails(string channelId)
         {
-            var ytService = Resolve<YouTubeService>();
+            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.Id = channelId;
             var response = await request.ExecuteAsync();
@@ -38,7 +37,7 @@ namespace Music.Admin.Services
             return await MapToYouTubeChannelDetails(channel);
         }
 
-        public async Task<YouTubeChannelDetails> MapToYouTubeChannelDetails(Channel channel)
+        private async Task<YouTubeChannelDetails> MapToYouTubeChannelDetails(Channel channel)
         {
             var videosCount = await GetPlaylistVideoCount(channel.ContentDetails.RelatedPlaylists.Uploads);
             return new YouTubeChannelDetails
@@ -51,7 +50,7 @@ namespace Music.Admin.Services
 
         private async Task<int> GetPlaylistVideoCount(string playlistId)
         {
-            var ytService = Resolve<YouTubeService>();
+            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.PlaylistItems.List("id");
             request.PlaylistId = playlistId;
             var response = await request.ExecuteAsync();
@@ -72,7 +71,7 @@ namespace Music.Admin.Services
 
         private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
         {
-            var ytService = Resolve<YouTubeService>();
+            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var r = new List<string>();
 
             string nextPageToken = null;
@@ -93,7 +92,7 @@ namespace Music.Admin.Services
 
         public async Task<YouTubeChannelWithVideos> GetYouTubeChannelWithVideos(string channelId)
         {
-            var ytService = Resolve<YouTubeService>();
+            var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.Id = channelId;
             var response = await request.ExecuteAsync();

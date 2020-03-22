@@ -27,21 +27,23 @@ namespace Music.App.Services
         public IEnumerable<IdWithName> YouTubeChannels { get; set; }
     }
 
-    public class GetHomeSectionProps : ServiceResolverAware
+    public partial class HomeSectionService : ServiceResolverAware
     {
-        public GetHomeSectionProps(IServiceProvider serviceProvider) : base(serviceProvider)
+        public HomeSectionService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
-        public async Task<HomeSectionProps> Execute()
+        public async Task<HomeSectionProps> GetProps()
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             var user = await Query<User>().FirstOrDefaultAsync(u => u.Id == userId);
 
+            var tracksService = Resolve<TracksService>();
+
             if (string.IsNullOrEmpty(user.HomeSectionStateJson))
             {
                 var options = HomeSectionOptionsModel.CreateInitial();
-                var tracks = await Resolve<QueryTracksExecutor>().Execute(options.Tracklist.QueryForm.MusicDbQuery);
+                var tracks = await tracksService.Query(options.Tracklist.QueryForm.MusicDbQuery);
                 return new HomeSectionProps
                 {
                     Options = options,
@@ -65,9 +67,9 @@ namespace Music.App.Services
             var queryForm = homeSectionPersistableState.Options.Tracklist.QueryForm;
 
             if (queryForm.DataSource == "MusicDb")
-                props.TracksFromMusicDb = await Resolve<QueryTracksExecutor>().Execute(queryForm.MusicDbQuery);
+                props.TracksFromMusicDb = await tracksService.Query(queryForm.MusicDbQuery);
             else
-                props.TracksFromYouTube = await Resolve<QueryTracksViaYoutubeExecutor>().Execute(queryForm.YouTubeQuery);
+                props.TracksFromYouTube = await tracksService.QueryViaYouTube(queryForm.YouTubeQuery);
 
             return props;
         }
@@ -80,7 +82,7 @@ namespace Music.App.Services
 
         private async Task<IEnumerable<IdWithName>> GetAllChannels()
         {
-            var channels = await Query<YouTubeChannel>().Select(c => new IdWithName {Id = c.Id, Name = c.Title}).ToArrayAsync();
+            var channels = await Query<YouTubeChannel>().Select(c => new IdWithName { Id = c.Id, Name = c.Title }).ToArrayAsync();
             return channels;
         }
     }

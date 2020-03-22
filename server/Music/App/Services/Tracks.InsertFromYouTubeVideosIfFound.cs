@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -8,36 +7,36 @@ using Utilities;
 
 namespace Music.App.Services
 {
-    public class InsertTracksFromYouTubeVideosIfFound : ServiceResolverAware
+    public partial class TracksService
     {
-        public InsertTracksFromYouTubeVideosIfFound(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
-        public async Task<Result> Execute(IReadOnlyCollection<string> wantedVideosIds)
+        public async Task<Result> InsertFromYouTubeVideosIfFound(IReadOnlyCollection<string> wantedVideosIds)
         {
             var unknownVideosIds = (await FilterToUnknownVideosIds(wantedVideosIds)).ToArray();
             var videosFromYt = (await Resolve<YouTubeVideosRemoteService>().GetByIds(unknownVideosIds)).ToArray();
-            
-            var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] {v} }).ToArray();
 
-            var channelsToInsert = await Resolve<SharedServices>().FilterToNotPersistedChannels(
+            var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] { v } }).ToArray();
+
+            var channelsToInsert = await FilterToNotPersistedChannels(
                 videosFromYt.Select(v => v.YouTubeChannel).DistinctBy(c => c.Id)
             );
             await Persist(ops =>
             {
-                ops.InsertYouTubeChannels(channelsToInsert);
-                ops.InsertTracks(tracks, t =>
+                channelsToInsert.ForEach(ops.Add);
+                tracks.ForEach(track =>
                 {
-                    t.YoutubeVideos?.ForEach(v => v.YouTubeChannel = null);
-                    t.TrackUserProps?.ForEach(tup =>
-                    {
-                        tup.YoutubeVideo = null;
-                        if (tup.Track != null)
+                    ops.Add(track,
+                        t =>
                         {
-                            tup.Track.YoutubeVideos = null;
-                        }
-                    });
+                            t.YoutubeVideos?.ForEach(v => v.YouTubeChannel = null);
+                            t.TrackUserProps?.ForEach(tup =>
+                            {
+                                tup.YoutubeVideo = null;
+                                if (tup.Track != null) 
+                                    tup.Track.YoutubeVideos = null;
+                            });
+                        },
+                        (original, copy) => original.Id = copy.Id
+                    );
                 });
             });
 
@@ -61,10 +60,21 @@ namespace Music.App.Services
             return notFoundIds;
         }
 
+        public async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
+            IEnumerable<YouTubeChannel> channels)
+        {
+            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
+            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
+            return filtered;
+        }
+
+
         public class Result
         {
             public IEnumerable<string> NotFoundVideoIds { get; set; }
+
             public IReadOnlyCollection<Track> NewTracks { get; set; }
+
             public IReadOnlyCollection<YoutubeVideo> NewYouTubeVideos { get; set; }
         }
     }
