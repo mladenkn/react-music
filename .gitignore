@@ -11,3 +11,4 @@ server/Kernel/bin/
 server/Music.DevOps/obj/
 server/Music.DevOps/bin/
 server/data-files/videos-by-channels
+server/.vs
