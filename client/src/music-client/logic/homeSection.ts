@@ -4,6 +4,7 @@ import { HomeSectionOptions, HomeSectionPropsFromApi } from "../shared/homeSecti
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useHomeSectionApi } from "../api/homeSection";
 import { useEffect } from "../../utils/useEffect";
+import { usePrevious } from "./previous";
 
 export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   const [state, updateState] = useImmer({
@@ -53,8 +54,13 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
     })
   }
 
-  const currentTrack = tracklist.tracks && state.currentTrackId && tracklist.tracks!.find(t => t.id === state.currentTrackId)
-  const currentTrackYoutubeId = currentTrack && currentTrack!.youTubeVideoId
+  const currentTrack = tracklist.tracks &&
+    state.currentTrackId && 
+    tracklist.tracks!.find(t => t.id === state.currentTrackId)
+  const prevCurrentTrackYoutubeId = usePrevious(currentTrack && currentTrack!.youTubeVideoId)
+  const currentTrackYoutubeId = (currentTrack && currentTrack!.youTubeVideoId) || prevCurrentTrackYoutubeId
+
+  console.log({currentTrackYoutubeId}, state)
 
   return { ...tracklist, ...state, currentTrackYoutubeId, setCurrentTrack, onCurrentTrackFinish, setOptions }
 }
