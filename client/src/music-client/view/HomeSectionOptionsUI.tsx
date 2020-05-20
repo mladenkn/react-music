@@ -57,39 +57,40 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 		onSubmit: () => {}
 	})
 	useEffect(() => {
+		console.log(form)
 		props.onChange(form.values)
 	}, [form.values])
 	
-	console.log(form.values.tracklist.queryForm.youTubeQuery!, snapshot(form.values), snapshot(props.values))
+	console.log(form.values.tracklist.filter.youTubeQuery, snapshot(form.values), snapshot(props.values))
 
 	return (
 		<div className={clsx(props.className, styles.root)}>
 			<Select
 				className={styles.dataSource}
 				label='Data source'
-				value={form.values.tracklist.queryForm.dataSource}
-				onChange={e => form.setFieldValue('tracklist.queryForm.dataSource', e.target.value)}
+				value={form.values.tracklist.filter.dataSource}
+				onChange={e => form.setFieldValue('tracklist.filter.dataSource', e.target.value)}
 			>
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
 
-			{form.values.tracklist.queryForm.dataSource === 'MusicDb' &&
+			{form.values.tracklist.filter.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.tracklist.queryForm.musicDbQuery!}
-          onChange={value => form.setFieldValue('tracklist.queryForm.musicDbQuery', value)}
+					input={form.values.tracklist.filter.musicDbQuery!}
+          onChange={value => form.setFieldValue('tracklist.filter.musicDbQuery', value)}
           availableTags={props.tags}
           availableYouTubeChannels={props.youTubeChannels}
 				/>
 			} 
 
-			{form.values.tracklist.queryForm.dataSource === 'YouTube' &&
+			{form.values.tracklist.filter.dataSource === 'YouTube' &&
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'
-					value={form.values.tracklist.queryForm.youTubeQuery!}
-					onChange={e => form.setFieldValue('tracklist.queryForm.youTubeQuery', e.target.value)}
+					value={form.values.tracklist.filter.youTubeQuery!}
+					onChange={e => form.setFieldValue('tracklist.filter.youTubeQuery', e.target.value)}
 				/>
 			}
 			

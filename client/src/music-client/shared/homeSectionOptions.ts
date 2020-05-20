@@ -7,19 +7,20 @@ export enum TrackQueryFormDataSource {
   YouTube = 'YouTube'
 }
 
-export interface TracklistOptions {
-  queryForm: {
+export interface HomeSectionOptions {
+  tracklist: TracklistOptions
+  tracklistShown: boolean
+}
+
+export type TracklistOptions = {
+  variant: 'normal'
+  filter: {
     dataSource: TrackQueryFormDataSource
     musicDbQuery?: MusicDbTrackQueryParams
     youTubeQuery?: string
   }
   autoRefresh: boolean
   autoPlay: boolean
-}
-
-export interface HomeSectionOptions {
-  tracklist: TracklistOptions
-  tracklistShown: boolean
 }
 
 export interface HomeSectionPersistableState {

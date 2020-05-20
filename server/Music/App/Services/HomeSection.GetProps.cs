@@ -43,7 +43,7 @@ namespace Music.App.Services
             if (string.IsNullOrEmpty(user.HomeSectionStateJson))
             {
                 var options = HomeSectionOptionsModel.CreateInitial();
-                var tracks = await tracksService.Query(options.Tracklist.QueryForm.MusicDbQuery);
+                var tracks = await tracksService.Query(options.Tracklist.Filter.MusicDbQuery);
                 return new HomeSectionProps
                 {
                     Options = options,
@@ -64,7 +64,7 @@ namespace Music.App.Services
                 YouTubeChannels = await GetAllChannels(),
             };
 
-            var queryForm = homeSectionPersistableState.Options.Tracklist.QueryForm;
+            var queryForm = homeSectionPersistableState.Options.Tracklist.Filter;
 
             if (queryForm.DataSource == "MusicDb")
                 props.TracksFromMusicDb = await tracksService.Query(queryForm.MusicDbQuery);
