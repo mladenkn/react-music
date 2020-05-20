@@ -2,7 +2,7 @@ import { Range } from './index'
 import { ArrayWithTotalCount, IdWithName } from '../../utils/types'
 import { Track } from './track'
 
-export enum TrackQueryFormDataSource {
+export enum TrackQueryFormType {
   MusicDb = 'MusicDb',
   YouTube = 'YouTube'
 }
@@ -15,7 +15,7 @@ export interface HomeSectionOptions {
 export type TracklistOptions = {
   variant: 'normal'
   query: {
-    dataSource: TrackQueryFormDataSource
+    dataSource: TrackQueryFormType
     musicDbQuery?: MusicDbTrackQueryParams
     youTubeQuery?: string
   }

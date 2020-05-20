@@ -1,7 +1,7 @@
 import { Track, SaveTrackModel, mapToTrackViewModel, TrackViewModel } from "../shared/track";
 import { ArrayWithTotalCount } from "../../utils/types";
 import { useImmer } from "use-immer";
-import { TracklistOptions, TrackQueryFormDataSource } from "../shared/homeSectionOptions";
+import { TracklistOptions, TrackQueryFormType } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
 import { useEffect } from "../../utils/useEffect";
@@ -58,14 +58,14 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb){
+    if(queryForm.dataSource === TrackQueryFormType.MusicDb){
       const { data } = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     } 
-    else if(queryForm.dataSource === TrackQueryFormDataSource.YouTube){
+    else if(queryForm.dataSource === TrackQueryFormType.YouTube){
       const { data } = await api.fetchFromYouTube(queryForm.youTubeQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
@@ -84,7 +84,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   }
 
   function doesPassCurrentFilter(track: { tags: string[], year: number }){
-    if(queryForm.dataSource === TrackQueryFormDataSource.YouTube)
+    if(queryForm.dataSource === TrackQueryFormType.YouTube)
       return true
     else {
       const filter = queryForm.musicDbQuery!

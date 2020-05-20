@@ -6,7 +6,7 @@ import { ems, percent } from "../../utils/css";
 import { HomeSectionOptionsUI } from "./HomeSectionOptionsUI";
 import { useHomeLogic } from "../logic/homeSection";
 import { TrackPlayerUI } from "./TrackPlayer";
-import { TrackQueryFormDataSource, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
+import { TrackQueryFormType, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
  
 const useHomeStyles = makeStyles({
   root: {
@@ -73,7 +73,7 @@ export const HomeUI = (p: HomeProps) => {
 
   const onScrollToBottom = () => {
     const { query: queryForm } = options.tracklist
-    if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
+    if(queryForm.dataSource === TrackQueryFormType.MusicDb)
       logic.fetchTracksNextPage()
   }
 
