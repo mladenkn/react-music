@@ -61,36 +61,36 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 		props.onChange(form.values)
 	}, [form.values])
 	
-	console.log(form.values.tracklist.filter.youTubeQuery, snapshot(form.values), snapshot(props.values))
+	console.log(form.values.tracklist.query.youTubeQuery, snapshot(form.values), snapshot(props.values))
 
 	return (
 		<div className={clsx(props.className, styles.root)}>
 			<Select
 				className={styles.dataSource}
 				label='Data source'
-				value={form.values.tracklist.filter.dataSource}
-				onChange={e => form.setFieldValue('tracklist.filter.dataSource', e.target.value)}
+				value={form.values.tracklist.query.dataSource}
+				onChange={e => form.setFieldValue('tracklist.query.dataSource', e.target.value)}
 			>
 				<MenuItem value='MusicDb'>Music DB</MenuItem>
 				<MenuItem value='YouTube'>YouTube</MenuItem>
 			</Select>
 
-			{form.values.tracklist.filter.dataSource === 'MusicDb' &&
+			{form.values.tracklist.query.dataSource === 'MusicDb' &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
-					input={form.values.tracklist.filter.musicDbQuery!}
-          onChange={value => form.setFieldValue('tracklist.filter.musicDbQuery', value)}
+					input={form.values.tracklist.query.musicDbQuery!}
+          onChange={value => form.setFieldValue('tracklist.query.musicDbQuery', value)}
           availableTags={props.tags}
           availableYouTubeChannels={props.youTubeChannels}
 				/>
 			} 
 
-			{form.values.tracklist.filter.dataSource === 'YouTube' &&
+			{form.values.tracklist.query.dataSource === 'YouTube' &&
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'
-					value={form.values.tracklist.filter.youTubeQuery!}
-					onChange={e => form.setFieldValue('tracklist.filter.youTubeQuery', e.target.value)}
+					value={form.values.tracklist.query.youTubeQuery!}
+					onChange={e => form.setFieldValue('tracklist.query.youTubeQuery', e.target.value)}
 				/>
 			}
 			

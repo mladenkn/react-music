@@ -14,7 +14,7 @@ export interface HomeSectionOptions {
 
 export type TracklistOptions = {
   variant: 'normal'
-  filter: {
+  query: {
     dataSource: TrackQueryFormDataSource
     musicDbQuery?: MusicDbTrackQueryParams
     youTubeQuery?: string

@@ -4,7 +4,7 @@
     {
         public class TracklistOptions
         {
-            public class Filter_
+            public class Query_
             {
                 public string DataSource { get; set; }
 
@@ -13,7 +13,7 @@
                 public string YouTubeQuery { get; set; }
             }
 
-            public Filter_ Filter { get; set; }
+            public Query_ Query { get; set; }
 
             public bool AutoRefresh { get; set; }
 
@@ -31,7 +31,7 @@
             {
                 AutoPlay = true,
                 AutoRefresh = true,
-                Filter = new TracklistOptions.Filter_
+                Query = new TracklistOptions.Query_
                 {
                     DataSource = "MusicDb",
                     MusicDbQuery = new TracksQueryModel

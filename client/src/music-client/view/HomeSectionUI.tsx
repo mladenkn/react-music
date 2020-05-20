@@ -72,7 +72,7 @@ export const HomeUI = (p: HomeProps) => {
   console.log(logic)
 
   const onScrollToBottom = () => {
-    const { filter: queryForm } = options.tracklist
+    const { query: queryForm } = options.tracklist
     if(queryForm.dataSource === TrackQueryFormDataSource.MusicDb)
       logic.fetchTracksNextPage()
   }

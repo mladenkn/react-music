@@ -47,11 +47,11 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   useEffect(() => {
     if(props.options.autoRefresh)
       refetchOnChange()
-  }, [props.options.filter])
+  }, [props.options.query])
 
   const [refetchOnChange] = useDebouncedCallback(() => fetch(), 700)
 
-  const { filter: queryForm } = props.options
+  const { query: queryForm } = props.options
 
   async function fetch(){
     updateState(draft => {
