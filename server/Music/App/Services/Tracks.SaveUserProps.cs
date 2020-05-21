@@ -72,7 +72,7 @@ namespace Music.App.Services
                 await Persist(ops => ops.Add(newTrackProps));
             }
 
-            return req.Query != null ? await Query(req.Query) : null;
+            return req.Query != null ? await QueryMusicDb(req.Query) : null;
         }
     }
 }

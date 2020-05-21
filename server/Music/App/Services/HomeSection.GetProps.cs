@@ -43,7 +43,7 @@ namespace Music.App.Services
             if (string.IsNullOrEmpty(user.HomeSectionStateJson))
             {
                 var options = HomeSectionOptionsModel.CreateInitial();
-                var tracks = await tracksService.Query(options.Tracklist.Query.MusicDbQuery);
+                var tracks = await tracksService.QueryMusicDb(options.Tracklist.Query.MusicDbQuery);
                 return new HomeSectionProps
                 {
                     Options = options,
@@ -66,10 +66,14 @@ namespace Music.App.Services
 
             var queryForm = homeSectionPersistableState.Options.Tracklist.Query;
 
-            if (queryForm.DataSource == "MusicDb")
-                props.TracksFromMusicDb = await tracksService.Query(queryForm.MusicDbQuery);
-            else
+            if (queryForm.Type == "MusicDbQuery")
+                props.TracksFromMusicDb = await tracksService.QueryMusicDb(queryForm.MusicDbQuery);
+            else if (queryForm.Type == "YouTubeQuery")
                 props.TracksFromYouTube = await tracksService.QueryViaYouTube(queryForm.YouTubeQuery);
+            else if (queryForm.Type == "ReleatedToTrackQuery")
+                throw new NotImplementedException();
+            else
+                throw new Exception("Unallowed value.");
 
             return props;
         }

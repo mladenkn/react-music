@@ -6,11 +6,13 @@
         {
             public class Query_
             {
-                public string DataSource { get; set; }
+                public string Type { get; set; }
 
                 public TracksQueryModel MusicDbQuery { get; set; }
 
                 public string YouTubeQuery { get; set; }
+
+                public int RelatedToTrackId { get; set; }
             }
 
             public Query_ Query { get; set; }
@@ -33,7 +35,7 @@
                 AutoRefresh = true,
                 Query = new TracklistOptions.Query_
                 {
-                    DataSource = "MusicDb",
+                    Type = "MusicDbQuery",
                     MusicDbQuery = new TracksQueryModel
                     {
                         SupportedYouTubeChannelsIds = new string[0],

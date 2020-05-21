@@ -1,5 +1,5 @@
 import React from 'react'
-import { HomeSectionOptions } from "../shared/homeSectionOptions"
+import { HomeSectionOptions, TrackQueryFormType } from "../shared/homeSectionOptions"
 import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button, Checkbox } from "@material-ui/core"
 import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
@@ -61,21 +61,21 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 		props.onChange(form.values)
 	}, [form.values])
 	
-	console.log(form.values.tracklist.query.youTubeQuery, snapshot(form.values), snapshot(props.values))
+	console.log(form.values.tracklist.query, snapshot(form.values), snapshot(props.values))
 
 	return (
 		<div className={clsx(props.className, styles.root)}>
 			<Select
 				className={styles.dataSource}
 				label='Data source'
-				value={form.values.tracklist.query.dataSource}
+				value={form.values.tracklist.query.type}
 				onChange={e => form.setFieldValue('tracklist.query.dataSource', e.target.value)}
 			>
-				<MenuItem value='MusicDb'>Music DB</MenuItem>
-				<MenuItem value='YouTube'>YouTube</MenuItem>
+				<MenuItem value={TrackQueryFormType.MusicDbQuery}>Music DB</MenuItem>
+				<MenuItem value={TrackQueryFormType.YouTubeQuery}>YouTube</MenuItem>
 			</Select>
 
-			{form.values.tracklist.query.dataSource === 'MusicDb' &&
+			{form.values.tracklist.query.type === TrackQueryFormType.MusicDbQuery &&
 				<MusicDbTrackQueryInteractiveForm
 					className={styles.fields}
 					input={form.values.tracklist.query.musicDbQuery!}
@@ -85,7 +85,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				/>
 			} 
 
-			{form.values.tracklist.query.dataSource === 'YouTube' &&
+			{form.values.tracklist.query.type === TrackQueryFormType.YouTubeQuery &&
 				<TextField
 					className={styles.searchQueryField}
 					label='Search Query'

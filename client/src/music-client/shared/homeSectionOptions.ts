@@ -3,8 +3,9 @@ import { ArrayWithTotalCount, IdWithName } from '../../utils/types'
 import { Track } from './track'
 
 export enum TrackQueryFormType {
-  MusicDb = 'MusicDb',
-  YouTube = 'YouTube'
+  MusicDbQuery = 'MusicDbQuery',
+  YouTubeQuery = 'YouTubeQuery',
+  ReleatedToTrackQuery = 'ReleatedToTrackQuery',
 }
 
 export interface HomeSectionOptions {
@@ -15,9 +16,14 @@ export interface HomeSectionOptions {
 export type TracklistOptions = {
   variant: 'normal'
   query: {
-    dataSource: TrackQueryFormType
-    musicDbQuery?: MusicDbTrackQueryParams
-    youTubeQuery?: string
+    type: TrackQueryFormType.MusicDbQuery
+    musicDbQuery: MusicDbTrackQueryParams
+  } | {
+    type: TrackQueryFormType.YouTubeQuery
+    youTubeQuery: string
+  } | {
+    type: TrackQueryFormType.ReleatedToTrackQuery
+    relatedToTrackId: number
   }
   autoRefresh: boolean
   autoPlay: boolean

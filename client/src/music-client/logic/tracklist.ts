@@ -58,14 +58,14 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       draft.fromYouTube = undefined
       draft.fromMusicDb = undefined
     })
-    if(queryForm.dataSource === TrackQueryFormType.MusicDb){
+    if(queryForm.type === TrackQueryFormType.MusicDbQuery){
       const { data } = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip: 0, take: pageSize })
       updateState(draft => {
         draft.fromYouTube = undefined
         draft.fromMusicDb = data
       })
     } 
-    else if(queryForm.dataSource === TrackQueryFormType.YouTube){
+    else if(queryForm.type === TrackQueryFormType.YouTubeQuery){
       const { data } = await api.fetchFromYouTube(queryForm.youTubeQuery!)
       updateState(draft => {
         draft.fromMusicDb = undefined
@@ -76,6 +76,8 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   async function fetchTracksNextPage(){
     const skip = state.fromMusicDb!.data.length
+    if(queryForm.type !== TrackQueryFormType.MusicDbQuery)
+      throw new Error();
     const response = await api.fetchFromMusicDb({ ...queryForm.musicDbQuery!, skip, take: pageSize })
     const tracks = uniqBy([ ...state.fromMusicDb!.data, ...response.data.data ], t => t.id)
     updateState(draft => {
@@ -84,9 +86,9 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   }
 
   function doesPassCurrentFilter(track: { tags: string[], year: number }){
-    if(queryForm.dataSource === TrackQueryFormType.YouTube)
+    if(queryForm.type === TrackQueryFormType.YouTubeQuery)
       return true
-    else {
+    else if (queryForm.type === TrackQueryFormType.MusicDbQuery) {
       const filter = queryForm.musicDbQuery!
       if(filter.mustHaveAnyTag && filter.mustHaveAnyTag.length > 0){
         const hasAny = track.tags.some(t => filter.mustHaveAnyTag.includes(t))
@@ -108,6 +110,8 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       }
       return true
     }
+    else if (queryForm.type === TrackQueryFormType.ReleatedToTrackQuery)
+      throw new Error("Not implemented")
   }
 
   function saveTrack(editedTrackFromUser: SaveTrackModel) {

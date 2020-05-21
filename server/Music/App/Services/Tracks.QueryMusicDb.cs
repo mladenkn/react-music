@@ -14,7 +14,7 @@ namespace Music.App.Services
         {
         }
 
-        public async Task<ArrayWithTotalCount<TrackForHomeSection>> Query(TracksQueryModel req)
+        public async Task<ArrayWithTotalCount<TrackForHomeSection>> QueryMusicDb(TracksQueryModel req)
         {
             var query = BuildFilterNew(req);
             var userId = Resolve<ICurrentUserContext>().Id;

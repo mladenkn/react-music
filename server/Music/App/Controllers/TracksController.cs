@@ -18,7 +18,7 @@ namespace Music.App.Controllers
 
         [HttpGet]
         public Task<ArrayWithTotalCount<TrackForHomeSection>> Get([FromQuery]TracksQueryModel req) => 
-            Resolve<TracksService>().Query(req);
+            Resolve<TracksService>().QueryMusicDb(req);
 
         [HttpGet("yt")]
         public Task<IEnumerable<TrackForHomeSection>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
