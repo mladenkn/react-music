@@ -5,7 +5,6 @@ import { Track } from './track'
 export enum TrackQueryFormType {
   MusicDbQuery = 'MusicDbQuery',
   YouTubeQuery = 'YouTubeQuery',
-  ReleatedToTrackQuery = 'ReleatedToTrackQuery',
 }
 
 export interface HomeSectionOptions {
@@ -14,16 +13,12 @@ export interface HomeSectionOptions {
 }
 
 export type TracklistOptions = {
-  variant: 'normal'
   query: {
     type: TrackQueryFormType.MusicDbQuery
     musicDbQuery: MusicDbTrackQueryParams
   } | {
     type: TrackQueryFormType.YouTubeQuery
     youTubeQuery: string
-  } | {
-    type: TrackQueryFormType.ReleatedToTrackQuery
-    relatedToTrackId: number
   }
   autoRefresh: boolean
   autoPlay: boolean
@@ -52,4 +47,5 @@ export interface MusicDbTrackQueryParams {
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>
   randomize: boolean
+  relatedToTrackId: number
 }

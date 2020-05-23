@@ -20,6 +20,8 @@ namespace Music.App.Models
 
         public bool Randomize { get; set; }
 
+        public int RelatedToTrackId { get; set; }
+
         public class YearRange_
         {
             public int? LowerBound { get; set; }

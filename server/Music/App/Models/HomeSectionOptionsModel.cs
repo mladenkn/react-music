@@ -11,8 +11,6 @@
                 public TracksQueryModel MusicDbQuery { get; set; }
 
                 public string YouTubeQuery { get; set; }
-
-                public int RelatedToTrackId { get; set; }
             }
 
             public Query_ Query { get; set; }

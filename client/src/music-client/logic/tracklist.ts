@@ -110,8 +110,6 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       }
       return true
     }
-    else if (queryForm.type === TrackQueryFormType.ReleatedToTrackQuery)
-      throw new Error("Not implemented")
   }
 
   function saveTrack(editedTrackFromUser: SaveTrackModel) {
