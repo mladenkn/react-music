@@ -2,7 +2,7 @@
 
 namespace Music.App.Models
 {
-    public class TracksQueryModel
+    public class MusicDbTrackQueryParamsModel
     {
         public int Skip { get; set; }
 

@@ -17,7 +17,7 @@ namespace Music.App.Services
 
         public IReadOnlyCollection<string> Tags { get; set; }
 
-        public TracksQueryModel Query { get; set; }
+        public MusicDbTrackQueryParamsModel Query { get; set; }
     }
 
     public partial class TracksService

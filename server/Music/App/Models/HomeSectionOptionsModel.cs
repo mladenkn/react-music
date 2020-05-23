@@ -8,7 +8,7 @@
             {
                 public string Type { get; set; }
 
-                public TracksQueryModel MusicDbQuery { get; set; }
+                public MusicDbTrackQueryParamsModel MusicDbQuery { get; set; }
 
                 public string YouTubeQuery { get; set; }
             }
@@ -34,7 +34,7 @@
                 Query = new TracklistOptions.Query_
                 {
                     Type = "MusicDbQuery",
-                    MusicDbQuery = new TracksQueryModel
+                    MusicDbQuery = new MusicDbTrackQueryParamsModel
                     {
                         SupportedYouTubeChannelsIds = new string[0],
                         MustHaveEveryTag = new string[0],
@@ -42,7 +42,7 @@
                         Randomize = true,
                         Skip = 0,
                         Take = 30,
-                        YearRange = new TracksQueryModel.YearRange_(),
+                        YearRange = new MusicDbTrackQueryParamsModel.YearRange_(),
                     }
                 }
             }

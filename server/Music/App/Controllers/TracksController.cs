@@ -17,7 +17,7 @@ namespace Music.App.Controllers
         }
 
         [HttpGet]
-        public Task<ArrayWithTotalCount<TrackForHomeSection>> Get([FromQuery]TracksQueryModel req) => 
+        public Task<ArrayWithTotalCount<TrackForHomeSection>> Get([FromQuery]MusicDbTrackQueryParamsModel req) => 
             Resolve<TracksService>().QueryMusicDb(req);
 
         [HttpGet("yt")]
