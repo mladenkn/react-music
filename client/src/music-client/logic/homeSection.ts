@@ -1,6 +1,6 @@
 import { useTracklistLogic } from "./tracklist"
 import { useImmer } from "use-immer";
-import { HomeSectionOptions, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
+import { HomeSectionOptions, HomeSectionPropsFromApi, TracklistOptions } from "../shared/homeSectionOptions";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useHomeSectionApi } from "../api/homeSection";
 import { useEffect } from "../../utils/useEffect";
@@ -11,12 +11,19 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
     currentTrackId: undefined as undefined | number,
     options: props.options
   })
+
+  function setTracklistOptions(o: TracklistOptions){
+    updateState(draft => {
+      draft.options.tracklist = o
+    })
+  }
   
   const tracklist = useTracklistLogic({
     options: state.options.tracklist,
     tracksFromMusicDb: props.tracksFromMusicDb,
     tracksFromYouTube: props.tracksFromYouTube,
-    selectedTrackId: props.selectedTrackId
+    selectedTrackId: props.selectedTrackId,
+    setTracklistOptions
   });
 
   const api = useHomeSectionApi();

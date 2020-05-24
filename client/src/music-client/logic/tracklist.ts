@@ -6,6 +6,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useTracksApi } from "../api/tracks";
 import { useEffect } from "../../utils/useEffect";
 import { uniqBy } from 'lodash';
+import { produce } from 'immer';
 
 export interface Tracklist {
   options: TracklistOptions
@@ -18,6 +19,7 @@ export interface Tracklist {
   saveTrack(t: SaveTrackModel): Promise<void>
   onTrackClick(trackId: number): void
   fetchTracks(): void
+  fetchRecommendationsOf(trackId: number): void
 }
 
 interface State {
@@ -31,6 +33,7 @@ interface TracklistProps {
   tracksFromMusicDb?: ArrayWithTotalCount<Track>
   tracksFromYouTube?: Track[]
   selectedTrackId?: string
+  setTracklistOptions(o: TracklistOptions): void
 }
 
 const pageSize = 30;
@@ -139,6 +142,15 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     })
   }
 
+  function fetchRecommendationsOf(relatedToTrackId: number){
+    const newOpt = produce(props.options, draft => {
+      if(draft.query.type !== TrackQueryFormType.MusicDbQuery)
+        throw new Error()
+      draft.query.musicDbQuery.relatedToTrackId = relatedToTrackId;
+    })
+    props.setTracklistOptions(newOpt)
+  }
+
   let tracks: TrackViewModel[] | undefined
   if(state.fromMusicDb || state.fromYouTube){
     const beforeMap = state.fromMusicDb ? state.fromMusicDb.data : state.fromYouTube!
@@ -156,5 +168,6 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     fetchTracksNextPage, 
     saveTrack, 
     onTrackClick,
+    fetchRecommendationsOf
   }
 }
