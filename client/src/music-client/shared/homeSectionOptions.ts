@@ -47,5 +47,5 @@ export interface MusicDbTrackQueryParams {
   mustHaveAnyTag: string[]
   yearRange?: Partial<Range<number>>
   randomize: boolean
-  relatedToTrackId: number
+  relatedTracks: number[]
 }

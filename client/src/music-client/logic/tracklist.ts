@@ -144,9 +144,11 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   function fetchRecommendationsOf(relatedToTrackId: number){
     const newOpt = produce(props.options, draft => {
-      if(draft.query.type !== TrackQueryFormType.MusicDbQuery)
+      const { query } = draft
+      if(query.type !== TrackQueryFormType.MusicDbQuery)
         throw new Error()
-      draft.query.musicDbQuery.relatedToTrackId = relatedToTrackId;
+      if(!query.musicDbQuery.relatedTracks.includes(relatedToTrackId))
+        query.musicDbQuery.relatedTracks.push(relatedToTrackId)
     })
     props.setTracklistOptions(newOpt)
   }
