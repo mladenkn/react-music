@@ -36,7 +36,7 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 		result.push('mustHaveEveryTag')	
 	if(params.titleContains !== '')
 		result.push('titleContains')
-	if(params.yearRange && Object.values(params.yearRange).filter(v => v).length > 0)
+	if(params.yearRange?.lowerBound || params.yearRange?.upperBound)
 		result.push('yearRange')
 	if(params.supportedYouTubeChannelsIds?.length > 0)
 		result.push('supportedYouTubeChannelsIds')
