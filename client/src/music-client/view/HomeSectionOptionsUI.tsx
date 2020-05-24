@@ -71,7 +71,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
 				className={styles.dataSource}
 				label='Data source'
 				value={form.values.tracklist.query.type}
-				onChange={e => form.setFieldValue('tracklist.query.dataSource', e.target.value)}
+				onChange={e => form.setFieldValue('tracklist.query.type', e.target.value)}
 			>
 				<MenuItem value={TrackQueryFormType.MusicDbQuery}>Music DB</MenuItem>
 				<MenuItem value={TrackQueryFormType.YouTubeQuery}>YouTube</MenuItem>
