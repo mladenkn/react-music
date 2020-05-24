@@ -60,14 +60,6 @@ namespace Music.App.Services
             return notFoundIds;
         }
 
-        public async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
-            IEnumerable<YouTubeChannel> channels)
-        {
-            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
-            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
-            return filtered;
-        }
-
 
         public class Result
         {

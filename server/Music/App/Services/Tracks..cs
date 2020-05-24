@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Music.App.DbModels;
 using Music.App.Models;
+using Utilities;
 
 namespace Music.App.Services
 {
@@ -24,6 +25,14 @@ namespace Music.App.Services
                 .Select(TrackForHomeSection.FromTrack(curUserId))
                 .ToArrayAsync();
             return tracks;
+        }
+
+        public async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
+            IEnumerable<YouTubeChannel> channels)
+        {
+            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
+            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
+            return filtered;
         }
     }
 }
