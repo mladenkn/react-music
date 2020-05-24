@@ -90,12 +90,12 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
       return true
     else if (queryForm.type === TrackQueryFormType.MusicDbQuery) {
       const filter = queryForm.musicDbQuery!
-      if(filter.mustHaveAnyTag && filter.mustHaveAnyTag.length > 0){
+      if(filter.mustHaveAnyTag?.length > 0){
         const hasAny = track.tags.some(t => filter.mustHaveAnyTag.includes(t))
         if(!hasAny)
           return false
       }
-      if(filter.mustHaveEveryTag && filter.mustHaveEveryTag.length > 0){        
+      if(filter.mustHaveEveryTag?.length > 0){        
         const hasAll = track.tags.every(t => filter.mustHaveEveryTag.includes(t))
         if(!hasAll)
           return false
@@ -145,7 +145,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     tracks = beforeMap.map(track => mapToTrackViewModel(track, state.selectedTrackId))
   }
 
-  const tracksTotalCount = state.fromMusicDb && state.fromMusicDb.totalCount
+  const tracksTotalCount = state.fromMusicDb?.totalCount
 
   return { 
     ...state, 

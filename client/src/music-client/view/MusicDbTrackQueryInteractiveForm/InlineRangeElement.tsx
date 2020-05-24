@@ -60,7 +60,7 @@ export const InlineRangeElement = (props: Props) => {
             input: classes.input
           }}
           type="number"
-          value={props.value && props.value.lowerBound!}
+          value={props.value?.lowerBound!}
           onChange={onPropChange("lowerBound")}
         />
         --
@@ -70,7 +70,7 @@ export const InlineRangeElement = (props: Props) => {
             input: classes.input
           }}
           type="number"
-          value={props.value && props.value.upperBound!}
+          value={props.value?.upperBound!}
           onChange={onPropChange("upperBound")}
         />
       </>

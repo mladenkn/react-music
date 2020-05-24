@@ -54,11 +54,9 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
     })
   }
 
-  const currentTrack = tracklist.tracks &&
-    state.currentTrackId && 
-    tracklist.tracks!.find(t => t.id === state.currentTrackId)
-  const prevCurrentTrackYoutubeId = usePrevious(currentTrack && currentTrack!.youTubeVideoId)
-  const currentTrackYoutubeId = (currentTrack && currentTrack!.youTubeVideoId) || prevCurrentTrackYoutubeId
+  const currentTrack = tracklist.tracks?.find(t => t.id === state.currentTrackId)
+  const prevCurrentTrackYoutubeId = usePrevious(currentTrack?.youTubeVideoId)
+  const currentTrackYoutubeId = (currentTrack?.youTubeVideoId) || prevCurrentTrackYoutubeId
 
   console.log({currentTrackYoutubeId}, state)
 

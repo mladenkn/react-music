@@ -43,11 +43,7 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
   const unpickedChannels = difference(props.availableChannels.map(c => c.id), props.value)
     .map(cId => props.availableChannels.find(c => c.id == cId)!)
 
-  const handlePickerChange = (channelId: string | null) => {
-    if(channelId){
-      props.onChange([ ...props.value, channelId ])
-    }
-  }
+  const handlePickerChange = (channelId?: string) => channelId && props.onChange([ ...props.value, channelId ])
 
   const removeChannel = (channelId: string) => {
     const withoutIt = props.value.filter(cId => cId != channelId)
@@ -67,7 +63,7 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
         options={unpickedChannels} 
         getOptionLabel={o => o.name} 
         renderInput={params => <TextField {...params} />}
-        onChange={(event: any, value: IdWithName | null) => handlePickerChange(value && value.id)}
+        onChange={(event: any, value: IdWithName | null) => handlePickerChange(value?.id)}
       />
     </ElementBase>
   );

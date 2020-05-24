@@ -33,7 +33,7 @@ export const useHistory = (): History => {
 
   const whereTypeSingle = <TEventArgs extends any[], TEventPayload>(eventCreator: EventCreator<TEventArgs, TEventPayload>) => {
     const eventsOfType = state[eventCreator.type]
-    return eventsOfType && eventsOfType.find(e => e.type === eventCreator.type) as Event<TEventPayload> | undefined
+    return eventsOfType?.find(e => e.type === eventCreator.type) as Event<TEventPayload> | undefined
   }
 
   return { save, whereType, latestWhereType: whereTypeSingle }
