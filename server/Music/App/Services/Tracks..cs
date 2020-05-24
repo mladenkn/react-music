@@ -9,15 +9,14 @@ namespace Music.App.Services
 {
     public partial class TracksService
     {
-        public async Task<IEnumerable<TrackForHomeSection>> QueryViaYouTube(string query)
+        public async Task<IEnumerable<string>> LearnYtVideos(string query)
         {
             var wantedTracksYtIds = (await Resolve<YouTubeVideosRemoteService>().SearchIds(query)).ToArray();
             await InsertFromYouTubeVideosIfFound(wantedTracksYtIds);
-            var tracks = await GetTracks(wantedTracksYtIds);
-            return tracks;
+            return wantedTracksYtIds;
         }
 
-        private async Task<IReadOnlyCollection<TrackForHomeSection>> GetTracks(IEnumerable<string> wantedTracksYtIds)
+        public async Task<IReadOnlyCollection<TrackForHomeSection>> GetTracksWithVideoIds(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
             var tracks = await Query<Track>()

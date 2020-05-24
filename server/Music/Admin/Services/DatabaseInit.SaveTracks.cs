@@ -304,7 +304,7 @@ namespace Music.Admin.Services
             foreach (var newTrackDescriptor in tracks)
             {
                 var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
-                var saveTrackModel = new App.Services.SaveTrackUserPropsModel
+                var saveTrackModel = new SaveTrackUserPropsModel
                 {
                     TrackId = track.Id,
                     Tags = newTrackDescriptor.Tags,

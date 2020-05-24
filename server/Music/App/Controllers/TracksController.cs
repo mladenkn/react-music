@@ -21,8 +21,12 @@ namespace Music.App.Controllers
             Resolve<TracksService>().QueryMusicDb(req);
 
         [HttpGet("yt")]
-        public Task<IEnumerable<TrackForHomeSection>> QueryTracksViaYoutube([FromQuery]string searchQuery) =>
-            Resolve<TracksService>().QueryViaYouTube(searchQuery);
+        public async Task<IEnumerable<TrackForHomeSection>> QueryTracksViaYoutube([FromQuery]string searchQuery)
+        {
+            var service = Resolve<TracksService>();
+            var videoIds = await service.LearnYtVideos(searchQuery);
+            return await service.GetTracksWithVideoIds(videoIds);
+        }
 
         [HttpPost]
         public Task<ArrayWithTotalCount<TrackForHomeSection>> Save([FromBody]SaveTrackUserPropsModel trackProps) => 
