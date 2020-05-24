@@ -8,6 +8,7 @@ import { ems, percent } from '../../utils/css'
 import { snapshot } from '../../utils'
 import { IdWithName } from '../../utils/types'
 import { useEffect } from '../../utils/useEffect'
+import { Track } from '../shared/track'
 
 interface HomeSectionOptionsUIProps {
 	className?: string
@@ -16,6 +17,7 @@ interface HomeSectionOptionsUIProps {
   onSearch: () => void
   tags: string[]
   youTubeChannels: IdWithName[]
+  getTracksWithIds(ids: number[]): Track[]
 }
 
 const useStyles = makeStyles(
@@ -82,6 +84,7 @@ export const HomeSectionOptionsUI = (props: HomeSectionOptionsUIProps) => {
           onChange={value => form.setFieldValue('tracklist.query.musicDbQuery', value)}
           availableTags={props.tags}
           availableYouTubeChannels={props.youTubeChannels}
+					getTracksWithIds={props.getTracksWithIds}
 				/>
 			} 
 

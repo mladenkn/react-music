@@ -13,6 +13,8 @@ import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/ho
 import { TextField } from "./TextField";
 import { IdWithName } from "../../../utils/types";
 import { SupportedChannelsBuilderElement } from "./SupportedChannelsBuilderElement";
+import { Track } from "../../shared/track";
+import { RelatedTracks } from "./RelatedTracks";
 
 export interface MusicDbTrackQueryInteractiveFormProps {
   className?: string;
@@ -20,6 +22,7 @@ export interface MusicDbTrackQueryInteractiveFormProps {
   onChange: (i: MusicDbTrackQueryParams) => void;
   availableTags: string[]
   availableYouTubeChannels: IdWithName[]
+  getTracksWithIds(ids: number[]): Track[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -149,6 +152,13 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             onChange={onFieldChange("supportedYouTubeChannelsIds")}
           />
         }
+
+        {isFieldActive('relatedTracks') && (
+          <RelatedTracks 
+            selectedTracks={p.getTracksWithIds(values.relatedTracks)}
+            onRemoveTrack={() => {}}
+          />
+        )}
       </div>
       <Fab 
         className={styles.addPropertyButton}

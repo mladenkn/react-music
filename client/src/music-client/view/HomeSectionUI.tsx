@@ -86,6 +86,7 @@ export const HomeUI = (p: HomeProps) => {
         onSearch={logic.fetchTracks}
         tags={p.tags}
         youTubeChannels={p.youTubeChannels}
+        getTracksWithIds={logic.getTracksWithIds}
       />
       {logic.options.tracklistShown && (
         <div className={classes.tracklistWrapper}>

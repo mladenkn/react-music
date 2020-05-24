@@ -20,6 +20,7 @@ export interface Tracklist {
   onTrackClick(trackId: number): void
   fetchTracks(): void
   fetchRecommendationsOf(trackId: number): void
+  getTracksWithIds(ids: number[]): Track[]
 }
 
 interface State {
@@ -161,6 +162,11 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   const tracksTotalCount = state.fromMusicDb?.totalCount
 
+  function getTracksWithIds(ids: number[]){
+    const tracks = props.tracksFromMusicDb?.data || props.tracksFromYouTube
+    return tracks!.filter(t => ids.includes(t.id))
+  }
+
   return { 
     ...state, 
     options: props.options,
@@ -170,6 +176,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     fetchTracksNextPage, 
     saveTrack, 
     onTrackClick,
-    fetchRecommendationsOf
+    fetchRecommendationsOf,
+    getTracksWithIds
   }
 }

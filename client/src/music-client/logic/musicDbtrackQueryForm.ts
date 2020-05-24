@@ -30,16 +30,18 @@ const allFields: Field[] = ['titleContains', 'supportedYouTubeChannelsIds', 'mus
 const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 	const result: Field[] = ['randomize']
 
-	if(params.mustHaveAnyTag?.length > 0)
+	if(params.mustHaveAnyTag?.length)
 		result.push('mustHaveAnyTag')	
-	if(params.mustHaveEveryTag?.length > 0)
+	if(params.mustHaveEveryTag?.length)
 		result.push('mustHaveEveryTag')	
 	if(params.titleContains !== '')
 		result.push('titleContains')
 	if(params.yearRange?.lowerBound || params.yearRange?.upperBound)
 		result.push('yearRange')
-	if(params.supportedYouTubeChannelsIds?.length > 0)
+	if(params.supportedYouTubeChannelsIds?.length)
 		result.push('supportedYouTubeChannelsIds')
+	if(params.relatedTracks?.length)
+		result.push('relatedTracks')
 		
 	return result;
 }
