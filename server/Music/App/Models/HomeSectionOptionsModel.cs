@@ -43,7 +43,7 @@
                         Skip = 0,
                         Take = 30,
                         YearRange = new MusicDbTrackQueryParamsModel.YearRange_(),
-                        RelatedTracks = new int[0]
+                        RelatedTracks = new long[0]
                     }
                 }
             }

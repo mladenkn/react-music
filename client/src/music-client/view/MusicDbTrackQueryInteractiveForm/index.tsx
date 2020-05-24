@@ -81,7 +81,8 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     isFieldActive, 
     onFieldChange, 
     setFieldActive,
-    setFieldInactive 
+    setFieldInactive,
+    removeRelatedTrack
   } = useMusicDbTrackQueryFormLogic({
     values: p.input,
     onChange: p.onChange,
@@ -156,7 +157,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         {isFieldActive('relatedTracks') && (
           <RelatedTracks 
             selectedTracks={p.getTracksWithIds(values.relatedTracks)}
-            onRemoveTrack={() => {}}
+            onRemoveTrack={removeRelatedTrack}
           />
         )}
       </div>

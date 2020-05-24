@@ -20,7 +20,7 @@ namespace Music.App.Models
 
         public bool Randomize { get; set; }
 
-        public int[] RelatedTracks { get; set; }
+        public long[] RelatedTracks { get; set; }
 
         public class YearRange_
         {

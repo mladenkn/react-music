@@ -15,6 +15,7 @@ interface MusicDbTrackQueryFormLogic {
 	setFieldActive(fieldName: Field): void
 	setFieldInactive(fieldName: Field): void
 	onFieldChange(fieldName: Field): (value: any) => void
+	removeRelatedTrack(trackId: number): void
   availableYouTubeChannels: IdWithName[]
 }
 
@@ -99,6 +100,11 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 
 	const inactiveFields = difference(allFields, activeFields)
 
+	const removeRelatedTrack = (trackId: number) => {
+		const newRelatedTracks = form.values.relatedTracks.filter(t => t !== trackId)
+		form.setFieldValue('relatedTracks', newRelatedTracks);
+	}
+
 	return { 
     values: form.values, 
     availableYouTubeChannels: props.availableYouTubeChannels, 
@@ -107,6 +113,7 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
     isFieldActive, 
     onFieldChange, 
     setFieldInactive, 
-    setFieldActive 
+		setFieldActive,
+		removeRelatedTrack
   }
 }
