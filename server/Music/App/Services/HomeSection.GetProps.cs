@@ -70,8 +70,6 @@ namespace Music.App.Services
                 props.TracksFromMusicDb = await tracksService.QueryMusicDb(queryForm.MusicDbQuery);
             else if (queryForm.Type == "YouTubeQuery")
                 props.TracksFromYouTube = await tracksService.QueryViaYouTube(queryForm.YouTubeQuery);
-            else if (queryForm.Type == "ReleatedToTrackQuery")
-                throw new NotImplementedException();
             else
                 throw new Exception("Unallowed value.");
 

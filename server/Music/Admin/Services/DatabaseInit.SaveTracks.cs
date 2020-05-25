@@ -299,11 +299,12 @@ namespace Music.Admin.Services
             var trackYouTubeVideoIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
 
             var service = Resolve<TracksService>();
-            var result = await service.InsertFromYouTubeVideosIfFound(trackYouTubeVideoIds);
+            var newVideos = await Resolve<YouTubeVideosService>().EnsureAreSavedIfFound(trackYouTubeVideoIds);
+            var newTracks = await service.SaveTracksFromVideoIds(newVideos.Select(v => v.Id));
 
             foreach (var newTrackDescriptor in tracks)
             {
-                var track = result.NewTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
+                var track = newTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
                 var saveTrackModel = new SaveTrackUserPropsModel
                 {
                     TrackId = track.Id,

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,10 @@ namespace Music.App.Services
     {
         public async Task<Result> InsertFromYouTubeVideosIfFound(IReadOnlyCollection<string> wantedVideosIds)
         {
+            // TODO: move to other methods
+
             var unknownVideosIds = (await FilterToUnknownVideosIds(wantedVideosIds)).ToArray();
-            var videosFromYt = (await Resolve<YouTubeVideosRemoteService>().GetByIds(unknownVideosIds)).ToArray();
+            var videosFromYt = (await Resolve<YouTubeVideosRemoteService>().GetByIdsIfFound(unknownVideosIds)).ToArray();
 
             var tracks = videosFromYt.Select(v => new Track { YoutubeVideos = new[] { v } }).ToArray();
 
@@ -50,7 +53,12 @@ namespace Music.App.Services
             };
         }
 
-        private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
+        public async Task<Result> InsertFromYouTubeVideos(IReadOnlyCollection<string> videosIds)
+        {
+
+        }
+
+            private async Task<IEnumerable<string>> FilterToUnknownVideosIds(IEnumerable<string> ids)
         {
             var foundIds = await Query<YoutubeVideo>()
                 .Select(v => v.Id)

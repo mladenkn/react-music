@@ -14,7 +14,7 @@ namespace Music.App.Services
 
         private readonly string[] _videoParts = { "snippet", "contentDetails", "statistics", "topicDetails" };
 
-        public async Task<IReadOnlyList<YoutubeVideo>> GetByIds(IReadOnlyCollection<string> ids)
+        public async Task<IReadOnlyList<YoutubeVideo>> GetByIdsIfFound(IReadOnlyCollection<string> ids)
         {
             var videosFromYt = new List<Video>(ids.Count);
 

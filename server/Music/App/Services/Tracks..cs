@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,7 @@ namespace Music.App.Services
 {
     public partial class TracksService
     {
-        public async Task<IEnumerable<string>> LearnYtVideos(string query)
-        {
-            var wantedTracksYtIds = (await Resolve<YouTubeVideosRemoteService>().SearchIds(query)).ToArray();
-            await InsertFromYouTubeVideosIfFound(wantedTracksYtIds);
-            return wantedTracksYtIds;
-        }
-
-        public async Task<IReadOnlyCollection<TrackForHomeSection>> GetTracksWithVideoIds(IEnumerable<string> wantedTracksYtIds)
+        public async Task<IReadOnlyCollection<TrackForHomeSection>> GetTracksWithVideoIdsIfFound(IEnumerable<string> wantedTracksYtIds)
         {
             var curUserId = Resolve<ICurrentUserContext>().Id;
             var tracks = await Query<Track>()
@@ -25,6 +19,11 @@ namespace Music.App.Services
                 .Select(TrackForHomeSection.FromTrack(curUserId))
                 .ToArrayAsync();
             return tracks;
+        }
+
+        public async Task<IEnumerable<Track>> SaveTracksFromVideoIds(IEnumerable<string> videoIds)
+        {
+
         }
 
         public async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
