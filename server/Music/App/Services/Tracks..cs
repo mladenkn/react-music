@@ -21,17 +21,33 @@ namespace Music.App.Services
             return tracks;
         }
 
-        public async Task<IEnumerable<Track>> SaveTracksFromVideoIds(IEnumerable<string> videoIds)
+        public async Task<IEnumerable<Track>> SaveTracksFromVideos(IEnumerable<YoutubeVideo> videos)
         {
+            var pairs = videos.Select(v => (track: new Track(), video: v)).ToArray();
+            
+            await Persist(ops => pairs.ForEach(p => ops.Add(p.track)));
 
-        }
+            foreach(var (track, video) in pairs)
+                video.TrackId = track.Id;
 
-        public async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
-            IEnumerable<YouTubeChannel> channels)
-        {
-            var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
-            var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
-            return filtered;
+            // try to use Persist
+            foreach (var (track, video) in pairs)
+            {
+                var videoCopy = ReflectionUtils.ShallowCopy(video);
+                videoCopy.YouTubeChannel = null;
+                Db.Update(videoCopy);
+            }
+            await Db.SaveChangesAsync();
+            
+            //await Persist(ops =>
+            //{
+            //    pairs.ForEach(p =>
+            //    {
+            //        ops.Update(p.video, v => v.YouTubeChannel = null);
+            //    });
+            //});
+
+            return pairs.Select(p => p.track);
         }
     }
 }

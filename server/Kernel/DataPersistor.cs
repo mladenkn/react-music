@@ -57,13 +57,12 @@ namespace Kernel
             _db.Update(entity);
         }
 
-        public void Update<TEntity>(TEntity entity, Action<TEntity> mutate, Action<TEntity, TEntity> setId)
+        public void Update<TEntity>(TEntity entity, Action<TEntity> mutate)
             where TEntity : IDatabaseEntity, new()
         {
             var entityCopy = ReflectionUtils.ShallowCopy(entity);
             mutate(entityCopy);
             _db.Update(entityCopy);
-            _afterCommitTransaction(() => setId(entity, entityCopy));
         }
 
         public void Remove<TEntity>(TEntity entity) 

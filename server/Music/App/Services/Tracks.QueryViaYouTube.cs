@@ -1,6 +1,5 @@
 ﻿using Music.App.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Music.App.Services
@@ -13,7 +12,7 @@ namespace Music.App.Services
             var newVideos = await Resolve<YouTubeVideosService>().EnsureAreSavedIfFound(foundVideosIds);
 
             var tracksService = Resolve<TracksService>();
-            await tracksService.SaveTracksFromVideoIds(newVideos.Select(v => v.Id));
+            await tracksService.SaveTracksFromVideos(newVideos);
             return await tracksService.GetTracksWithVideoIdsIfFound(foundVideosIds);
         }
     }

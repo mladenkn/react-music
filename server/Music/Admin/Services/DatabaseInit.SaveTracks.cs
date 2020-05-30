@@ -300,7 +300,7 @@ namespace Music.Admin.Services
 
             var service = Resolve<TracksService>();
             var newVideos = await Resolve<YouTubeVideosService>().EnsureAreSavedIfFound(trackYouTubeVideoIds);
-            var newTracks = await service.SaveTracksFromVideoIds(newVideos.Select(v => v.Id));
+            var newTracks = await service.SaveTracksFromVideos(newVideos);
 
             foreach (var newTrackDescriptor in tracks)
             {

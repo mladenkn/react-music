@@ -60,6 +60,9 @@ namespace Music.App.Services
 
         public async Task FetchChannelsPlaylistInfo(IReadOnlyCollection<YouTubeChannel> channels)
         {
+            if (channels.Count == 0)
+                return;
+
             var ytService = Resolve<YouTubeService>();
             var request = ytService.Channels.List("contentDetails");
             request.Id = string.Join(",", channels.Select(c => c.Id));
