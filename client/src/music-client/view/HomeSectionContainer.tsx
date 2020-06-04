@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { HomeSectionPropsFromApi } from "../shared/homeSectionOptions"
 import { useHomeSectionApi } from "../api/homeSection"
-import { HomeUI } from "./HomeSectionUI"
+import { HomeSection } from "./HomeSection"
 import React from 'react'
 import { useEffect } from "../../utils/useEffect"
 
@@ -9,7 +9,7 @@ interface Props {
   className?: string
 }
 
-export const HomeSectionRoot = (props: Props) => {
+export const HomeSectionContainer = (props: Props) => {
 
   const [propsFromApi, setPropsFromApi] = useState<HomeSectionPropsFromApi | undefined>(undefined)
 
@@ -25,6 +25,6 @@ export const HomeSectionRoot = (props: Props) => {
   }, [], { runOnFirstRender: true })
 
   return propsFromApi ?
-    <HomeUI className={props.className} {...propsFromApi} /> :
+    <HomeSection className={props.className} {...propsFromApi} /> :
     <div>Loading...</div>
 }

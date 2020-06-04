@@ -64,7 +64,7 @@ export interface HomeProps extends HomeSectionPropsFromApi {
   className?: string
 }
 
-export const HomeUI = (p: HomeProps) => {
+export const HomeSection = (p: HomeProps) => {
   const classes = useHomeStyles()
   const logic = useHomeLogic(p)
   const { options } = logic

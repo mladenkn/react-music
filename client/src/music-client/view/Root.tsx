@@ -4,7 +4,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { ems } from "../../utils/css";
 import { AxiosProvider } from "../api/axios";
-import { HomeSectionRoot } from "./HomeSectionRoot";
+import { HomeSectionContainer } from "./HomeSectionContainer";
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import { AdminSection } from "./AdminSection";
 import { VideosSection } from "./VideosSection";
@@ -40,7 +40,7 @@ export const Root = (p: AppRootProps) => {
         <Router>
           <div className={clsx(classes.root, p.className)}>
             <Route exact path='/'>
-              <HomeSectionRoot className={classes.home} />
+              <HomeSectionContainer className={classes.home} />
             </Route>
             <Route exact path='/admin'>
               <AdminSection />

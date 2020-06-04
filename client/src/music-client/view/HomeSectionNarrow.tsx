@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HomeProps } from "./HomeSectionUI";
+import { HomeProps } from "./HomeSection";
 import { makeStyles } from '@material-ui/styles';
 import { TrackListUI } from './Tracklist';
 import { ems, percent } from '../../utils/css';
@@ -56,7 +56,7 @@ const useNarrowHomeUIStyles = makeStyles({
   },
 }, {name: 'NarrowHomeUI'})
  
-export const NarrowHomeUI = (p: HomeProps) => {
+export const HomeSectionNarrow = (p: HomeProps) => {
   const classes = useNarrowHomeUIStyles()
   const [queryModalOpen, setQueryModalOpen] = useState(false)
   return (
