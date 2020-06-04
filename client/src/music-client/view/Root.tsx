@@ -7,6 +7,7 @@ import { AxiosProvider } from "../api/axios";
 import { HomeSectionRoot } from "./HomeSectionRoot";
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import { AdminSection } from "./AdminSection";
+import { VideosSection } from "./VideosSection";
 
 const useAppRootStyles = makeStyles(() => ({
   root: {
@@ -43,7 +44,10 @@ export const Root = (p: AppRootProps) => {
             </Route>
             <Route exact path='/admin'>
               <AdminSection />
-            </Route>        
+            </Route>
+            <Route exact path='/videos'>
+              <VideosSection />
+            </Route>
           </div>
         </Router>
       </AxiosProvider>
