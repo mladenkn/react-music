@@ -1,1 +1,1 @@
-export { TrackListUI } from './List'
+export { TrackList as TrackListUI } from './TrackList'

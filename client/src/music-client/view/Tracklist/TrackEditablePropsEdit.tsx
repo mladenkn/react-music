@@ -32,10 +32,6 @@ interface Props {
 export const TrackEditablePropsEditUI = (p: Props) => {
   const classes = useItemEditablePropsEditStyles()
 
-  function onPropChange(key: keyof TrackEditableProps){
-    p.onChange({...p.track})
-  }
-
 	return (
 		<div className={clsx(classes.root, p.className)}>
       <ChipInput

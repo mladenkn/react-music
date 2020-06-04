@@ -1,6 +1,6 @@
 import { makeStyles, List, ListItem, Typography } from "@material-ui/core"
 import React from 'react'
-import { TrackUI, TrackUIClasses } from "./TrackUI"
+import { Track, TrackUIClasses } from "./Track"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
@@ -29,7 +29,7 @@ const useTrackListStyles = makeStyles(() => ({
   },
 }), {name: 'TrackList'})
 
-export const TrackListUI = (props: TrackListProps) => {
+export const TrackList = (props: TrackListProps) => {
   const classes = useTrackListStyles()  
   
   const onScroll = createOnScrollListener(({isOnBottom, scrollTop}) => {
@@ -48,7 +48,7 @@ export const TrackListUI = (props: TrackListProps) => {
       <List className={clsx(classes.list, props.listClassName)} onScroll={onScroll} disablePadding>
         {props.tracks.map(t => (
           <ListItem disableGutters key={t.id}>
-            <TrackUI 
+            <Track 
               fetchRecommendationsOf={props.fetchRecommendationsOf} 
               track={t} 
               onPlay={() => props.onPlayTrack(t.id)}

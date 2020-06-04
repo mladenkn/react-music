@@ -15,7 +15,7 @@ import recommendationUrl from '../icons/recommendation2.png'
 import { Link } from "../../../utils/view";
 import clsx from 'clsx';
 import { $PropertyType } from "utility-types";
-import { TrackViewModel, TrackEditableProps, Track } from "../../shared/track";
+import { TrackViewModel, TrackEditableProps } from "../../shared/track";
 import { useImmer } from "use-immer";
 
 const styles = createStyles({
@@ -129,7 +129,7 @@ const useLogic = (onFinsihEdit: (t: TrackEditableProps) => Promise<void>, initia
   }
 }
  
-const TrackUI_ = (p: ItemProps) => {
+const Track_ = (p: ItemProps) => {
   const logic = useLogic(p.saveTrack, p.track)
 
 	return (
@@ -209,4 +209,4 @@ const TrackUI_ = (p: ItemProps) => {
 	)
 }
 
-export const TrackUI = withStyles(styles)(TrackUI_)
+export const Track = withStyles(styles)(Track_)
