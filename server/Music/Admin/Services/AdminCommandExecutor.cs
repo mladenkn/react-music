@@ -50,6 +50,10 @@ namespace Music.Admin.Services
                     {
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
                     }
+                    case "GetTracksWithoutYouTubeVideos":
+                    {
+                        return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
+                    }
                     default:
                         return "Unsupported command";
                 }

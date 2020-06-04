@@ -12,57 +12,32 @@ namespace Music.Admin.Services
             {
                 new AdminCommand
                 {
-                    Name = "Query 1",
-                    Yaml = @"name: Martin D'vloper
-job: Developer
-skill: Elite
-employed: True
-foods:
-  - Apple
-  - Orange
-  - Strawberry
-  - Mango
-languages:
-  perl: Elite
-  python: Elite
-  pascal: Lame
-education: |
-  4 GCSEs
-  3 A-Levels
-  BSc in the Internet of Things 
-",
+                    Name = "_",
+                    Yaml = "",
                     UserId = 1,
                 },
                 new AdminCommand
                 {
-                    Name = "Query 2",
-                    Yaml = @"# A list of tasty fruits
-- Apple
-- Orange
-- Strawberry
-- Mango
-",
+                    Name = "GetTracksWithoutYouTubeVideos",
+                    Yaml = "type: GetTracksWithoutYouTubeVideos",
                     UserId = 1,
                 },
                 new AdminCommand
                 {
-                    Name = "Query 3",
-                    Yaml = @"# Employee records
--  martin:
-    name: Martin D'vloper
-    job: Developer
-    skills:
-      - python
-      - perl
-      - pascal
--  tabitha:
-    name: Tabitha Bitumen
-    job: Developer
-    skills:
-      - lisp
-      - fortran
-      - erlang
-",
+                    Name = "GetVideosWithoutTracks",
+                    Yaml = "type: GetVideosWithoutTracks",
+                    UserId = 1,
+                },
+                new AdminCommand
+                {
+                    Name = "DeleteVideos",
+                    Yaml = "type: DeleteVideos",
+                    UserId = 1,
+                },
+                new AdminCommand
+                {
+                    Name = "DeleteTracks",
+                    Yaml = "type: DeleteTracks",
                     UserId = 1,
                 },
             };

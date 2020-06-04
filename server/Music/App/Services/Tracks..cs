@@ -49,5 +49,13 @@ namespace Music.App.Services
 
             return pairs.Select(p => p.track);
         }
+
+        public async Task<IEnumerable<Track>> GetTracksWithoutYouTubeVideos()
+        {
+            return await Query<Track>()
+                .Include(t => t.YoutubeVideos)
+                .Where(t => t.YoutubeVideos.Count() == 0)
+                .ToArrayAsync();
+        }
     }
 }
