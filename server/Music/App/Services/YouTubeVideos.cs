@@ -59,5 +59,13 @@ namespace Music.App.Services
             var notFoundIds = ids.Except(foundIds);
             return notFoundIds;
         }
+
+        public async Task<IEnumerable<YoutubeVideo>> GetVideosWithoutTracks()
+        {
+            var r = await Query<YoutubeVideo>()
+                .Where(v => v.TrackId == null)
+                .ToArrayAsync();
+            return r;
+        }
     }
 }

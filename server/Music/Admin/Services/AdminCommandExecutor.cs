@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Music.App.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Utilities;
@@ -21,6 +22,7 @@ namespace Music.Admin.Services
             else
             {
                 var ytService = Resolve<YouTubeRemoteService>();
+
                 try
                 {
                     switch (type)
@@ -48,6 +50,11 @@ namespace Music.Admin.Services
                             var fileName = cmd.Get<string>("file");
                             await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
                             return "Channel videos saved.";
+                        }
+                        case "GetVideosWithoutTracks":
+                        {
+                            var r = await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
+                            return yamlService.Serialize(r);
                         }
                         default:
                             return "Unsupported command";
