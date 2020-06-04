@@ -17,48 +17,52 @@ namespace Music.Admin.Services
             var yamlService = Resolve<YamlService>();
             var cmd = yamlService.DeserializeToDictionary(commandYaml);
             var type = cmd.GetValueOrDefault("type");
+
+            async Task<object> Execute()
+            {
+                var ytService = Resolve<YouTubeRemoteService>();
+
+                switch (type)
+                {
+                    case "GetChannelDetails":
+                    {
+                        var channelId = cmd.Get<string>("channelId");
+                        return await ytService.GetChannelDetails(channelId);
+                    }
+                    case "GetChannelsOfUser":
+                    {
+                        var username = cmd.Get<string>("username");
+                        return await ytService.GetChannelsOfUser(username);
+                    }
+                    case "SaveChannelWithVideosToTempStorage":
+                    {
+                        var channelId = cmd.Get<string>("channelId");
+                        await Resolve<ChannelsWithVideosTempStorage>().ToTemp(channelId);
+                        return "Channel videos saved.";
+                    }
+                    case "SaveChannelWithVideosFromTempToDb":
+                    {
+                        var fileName = cmd.Get<string>("file");
+                        await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
+                        return "Channel videos saved.";
+                    }
+                    case "GetVideosWithoutTracks":
+                    {
+                        return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
+                    }
+                    default:
+                        return "Unsupported command";
+                }
+            }
+
             if (type == null)
                 throw new ApplicationException();
             else
             {
-                var ytService = Resolve<YouTubeRemoteService>();
-
                 try
                 {
-                    switch (type)
-                    {
-                        case "GetChannelDetails":
-                        {
-                            var channelId = cmd.Get<string>("channelId");
-                            var response = await ytService.GetChannelDetails(channelId);
-                            return yamlService.Serialize(response);
-                        }
-                        case "GetChannelsOfUser":
-                        {
-                            var username = cmd.Get<string>("username");
-                            var response = await ytService.GetChannelsOfUser(username);
-                            return yamlService.Serialize(response);
-                        }
-                        case "SaveChannelWithVideosToTempStorage":
-                        {
-                            var channelId = cmd.Get<string>("channelId");
-                            await Resolve<ChannelsWithVideosTempStorage>().ToTemp(channelId);
-                            return "Channel videos saved.";
-                        }
-                        case "SaveChannelWithVideosFromTempToDb":
-                        {
-                            var fileName = cmd.Get<string>("file");
-                            await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
-                            return "Channel videos saved.";
-                        }
-                        case "GetVideosWithoutTracks":
-                        {
-                            var r = await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
-                            return yamlService.Serialize(r);
-                        }
-                        default:
-                            return "Unsupported command";
-                    }
+                    var r = await Execute();
+                    return yamlService.Serialize(r);
                 }
                 catch (Exception)
                 {
