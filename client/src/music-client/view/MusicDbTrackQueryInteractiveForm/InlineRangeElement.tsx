@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { ems } from "../../../utils/css";
 import { colors, InputLabel, Input } from "@material-ui/core";
-import { ElementBase } from "./ElementBase";
+import { RemovableElementBase } from "./RemovableElementBase";
 import clsx from "clsx";
 import { Range } from '../../shared'
 
@@ -51,7 +51,7 @@ export const InlineRangeElement = (props: Props) => {
   };
  
   return (
-    <ElementBase className={clsx(classes.base, props.className)} onRemove={props.onRemove}>
+    <RemovableElementBase className={clsx(classes.base, props.className)} onRemove={props.onRemove}>
       <>
         <InputLabel className={classes.label}>{props.label}</InputLabel>
         <Input
@@ -74,6 +74,6 @@ export const InlineRangeElement = (props: Props) => {
           onChange={onPropChange("upperBound")}
         />
       </>
-    </ElementBase>
+    </RemovableElementBase>
   );
 };

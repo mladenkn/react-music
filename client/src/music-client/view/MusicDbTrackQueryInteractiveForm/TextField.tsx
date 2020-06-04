@@ -1,4 +1,4 @@
-import { ElementBase } from "./ElementBase"
+import { RemovableElementBase } from "./RemovableElementBase"
 import { TextField as Input, makeStyles, InputLabel, colors } from '@material-ui/core'
 import React from 'react'
 import { percent, ems } from "../../../utils/css"
@@ -30,13 +30,13 @@ const useStyles = makeStyles({
 export const TextField = (props: TextFieldProps) => {
   const styles = useStyles()
   return (
-    <ElementBase className={styles.base} onRemove={props.onRemove}>
+    <RemovableElementBase className={styles.base} onRemove={props.onRemove}>
       <InputLabel className={styles.label}>{props.label}</InputLabel>
       <Input
         className={styles.field}
         value={props.value}
         onChange={e => props.onChange(e.target.value)}
       />
-    </ElementBase>
+    </RemovableElementBase>
   )
 }

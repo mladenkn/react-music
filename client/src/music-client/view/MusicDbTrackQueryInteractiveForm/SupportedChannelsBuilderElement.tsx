@@ -1,5 +1,5 @@
 import { IdWithName } from "../../../utils/types";
-import { ElementBase } from "./ElementBase";
+import { RemovableElementBase } from "./RemovableElementBase";
 import { InputLabel, colors, makeStyles, TextField, Chip } from "@material-ui/core";
 import { ems, percent } from "../../../utils/css";
 import React from 'react'
@@ -51,7 +51,7 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
   }
   
   return (
-    <ElementBase onRemove={props.onRemove} className={styles.base}>
+    <RemovableElementBase onRemove={props.onRemove} className={styles.base}>
       <InputLabel className={styles.label}>{props.label}</InputLabel>
       <div>
         {props.value.map(channelId => (
@@ -65,6 +65,6 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
         renderInput={params => <TextField {...params} />}
         onChange={(event: any, value: IdWithName | null) => handlePickerChange(value?.id)}
       />
-    </ElementBase>
+    </RemovableElementBase>
   );
 }

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import { ems, percent } from "../../../utils/css";
 import { colors, InputLabel } from "@material-ui/core";
 import { ChipList } from "../../../utils/view/ChipList";
-import { ElementBase } from "./ElementBase";
+import { RemovableElementBase } from "./RemovableElementBase";
 
 const useStyles = makeStyles(() => ({
   base: {
@@ -33,7 +33,7 @@ interface Props {
 export const ChipListElement = (p: Props) => {
   const classes = useStyles();
   return (
-    <ElementBase onRemove={p.onRemove} className={classes.base}>
+    <RemovableElementBase onRemove={p.onRemove} className={classes.base}>
       <InputLabel className={classes.label}>{p.label}</InputLabel>
       <ChipList
         className={classes.value}
@@ -41,6 +41,6 @@ export const ChipListElement = (p: Props) => {
         selectedOptions={p.value}
         onChange={p.onChange}
       />
-    </ElementBase>
+    </RemovableElementBase>
   );
 };

@@ -45,7 +45,7 @@ const useLogic = () => {
   return { isHovered: state.isHovered, onHover, onHoverEnd };
 };
 
-export const ElementBase = (props: Props) => {
+export const RemovableElementBase = (props: Props) => {
   const styles = useStyles();
   const logic = useLogic();
 
