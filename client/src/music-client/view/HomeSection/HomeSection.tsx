@@ -1,12 +1,12 @@
 import { makeStyles } from "@material-ui/core"
 import React from 'react'
-import { TrackListUI } from "./Tracklist";
+import { TrackListUI } from "../Tracklist";
 import clsx from 'clsx'
-import { ems, percent } from "../../utils/css";
+import { ems, percent } from "../../../utils/css";
 import { HomeSectionOptionsUI } from "./HomeSectionOptionsUI";
-import { useHomeLogic } from "../logic/homeSection";
-import { TrackPlayerUI } from "./TrackPlayer";
-import { TrackQueryFormType, HomeSectionPropsFromApi } from "../shared/homeSectionOptions";
+import { useHomeLogic } from "../../logic/homeSection";
+import { TrackPlayerUI } from "../TrackPlayer";
+import { TrackQueryFormType, HomeSectionPropsFromApi } from "../../shared/homeSectionOptions";
  
 const useHomeStyles = makeStyles({
   root: {

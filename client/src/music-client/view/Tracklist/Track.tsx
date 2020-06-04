@@ -87,7 +87,7 @@ type ItemProps = {
   saveTrack(t: TrackEditableProps): Promise<void>
 } & WithStyles<typeof styles>
 
-export type TrackUIClasses = Partial<$PropertyType<ItemProps, 'classes'>>
+export type TrackClasses = Partial<$PropertyType<ItemProps, 'classes'>>
 
 const useLogic = (onFinsihEdit: (t: TrackEditableProps) => Promise<void>, initial: TrackEditableProps) => {
   const [state, updateState] = useImmer({

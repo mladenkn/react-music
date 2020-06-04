@@ -1,6 +1,6 @@
 import { makeStyles, List, ListItem, Typography } from "@material-ui/core"
 import React from 'react'
-import { Track, TrackUIClasses } from "./Track"
+import { Track, TrackClasses } from "./Track"
 import { ems } from "../../../utils/css";
 import { createOnScrollListener } from "../../../utils/view";
 import clsx from "clsx";
@@ -8,7 +8,7 @@ import { TrackViewModel, SaveTrackModel } from "../../shared/track";
 
 interface TrackListProps {
   className?: string
-  trackClasses?: TrackUIClasses
+  trackClasses?: TrackClasses
   listClassName: string
   tracks: TrackViewModel[]
   tracksTotalCount?: number

@@ -1,14 +1,14 @@
 import React from 'react'
-import { HomeSectionOptions, TrackQueryFormType } from "../shared/homeSectionOptions"
+import { HomeSectionOptions, TrackQueryFormType } from "../../shared/homeSectionOptions"
 import { InputLabel, Select, MenuItem, Switch, TextField, makeStyles, createStyles, Button, Checkbox } from "@material-ui/core"
-import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm'
+import { MusicDbTrackQueryInteractiveForm } from '../MusicDbTrackQueryInteractiveForm'
 import { useFormik } from 'formik'
 import clsx from 'clsx'
-import { ems, percent } from '../../utils/css'
-import { snapshot } from '../../utils'
-import { IdWithName } from '../../utils/types'
-import { useEffect } from '../../utils/useEffect'
-import { Track } from '../shared/track'
+import { ems, percent } from '../../../utils/css'
+import { snapshot } from '../../../utils'
+import { IdWithName } from '../../../utils/types'
+import { useEffect } from '../../../utils/useEffect'
+import { Track } from '../../shared/track'
 
 interface HomeSectionOptionsUIProps {
 	className?: string

@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { HomeSectionPropsFromApi } from "../shared/homeSectionOptions"
-import { useHomeSectionApi } from "../api/homeSection"
+import { HomeSectionPropsFromApi } from "../../shared/homeSectionOptions"
+import { useHomeSectionApi } from "../../api/homeSection"
 import { HomeSection } from "./HomeSection"
 import React from 'react'
-import { useEffect } from "../../utils/useEffect"
+import { useEffect } from "../../../utils/useEffect"
 
 interface Props {
   className?: string

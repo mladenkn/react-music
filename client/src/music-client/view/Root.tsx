@@ -4,7 +4,7 @@ import React from 'react'
 import clsx from 'clsx'
 import { ems } from "../../utils/css";
 import { AxiosProvider } from "../api/axios";
-import { HomeSectionContainer } from "./HomeSectionContainer";
+import { HomeSectionContainer } from "./HomeSection/HomeSectionContainer";
 import { BrowserRouter as Router, Switch, Route, } from "react-router-dom";
 import { AdminSection } from "./AdminSection";
 import { VideosSection } from "./VideosSection";

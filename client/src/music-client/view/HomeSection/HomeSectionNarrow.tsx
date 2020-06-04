@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { HomeProps } from "./HomeSection";
 import { makeStyles } from '@material-ui/styles';
-import { TrackListUI } from './Tracklist';
-import { ems, percent } from '../../utils/css';
+import { TrackListUI } from '../Tracklist';
+import { ems, percent } from '../../../utils/css';
 import { Button, Dialog, MenuItem, Select } from '@material-ui/core';
-import { TrackPlayerUI } from './TrackPlayer';
-import { MusicDbTrackQueryInteractiveForm } from './MusicDbTrackQueryInteractiveForm';
+import { TrackPlayerUI } from '../TrackPlayer';
+import { MusicDbTrackQueryInteractiveForm } from '../MusicDbTrackQueryInteractiveForm';
 
 const useNarrowHomeUIStyles = makeStyles({
   root: {
