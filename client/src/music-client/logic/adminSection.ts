@@ -204,5 +204,10 @@ const mapResponse = (responseYaml: string, jsMapper: string) => {
         ${jsMapper}
       })()
     `
-    return yaml.safeDump(eval(code))
+    try {
+      return yaml.safeDump(eval(code))
+    }
+    catch (error) {
+      return `'Error in js mapper: ${error.message}'`
+    }
 }
