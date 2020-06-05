@@ -47,16 +47,12 @@ namespace Music.Admin.Services
                         return "Channel videos saved.";
                     }
                     case "GetYouTubeVideosWithoutTracks":
-                    {
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
-                    }
                     case "GetTracksWithoutYouTubeVideos":
-                    {
                         return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
-                    }
                     case "DeleteTracks":
                     {
-                        var trackIds = cmd.GetProperty("tracks").EnumerateArray().Select(e => e.GetInt64());
+                        var trackIds = cmd.GetProperty("tracks").EnumerateArray().Select(e => e.GetInt64()).ToArray();
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
                     }

@@ -58,12 +58,14 @@ namespace Music.App.Services
                 .ToArrayAsync();
         }
 
-        public async Task Delete(IEnumerable<long> ids)
+        public async Task Delete(IReadOnlyCollection<long> ids)
         {
-            var trakcs = await Query<Track>()
+            var tracks = await Query<Track>()
                 .Where(t => ids.Contains(t.Id))
                 .ToArrayAsync();
-            await Persist(ops => trakcs.ForEach(ops.Remove));
+            if (tracks.Length != ids.Count)
+                throw new Exception("Not all tracks were found.");
+            await Persist(ops => tracks.ForEach(ops.Remove));
         }
     }
 }

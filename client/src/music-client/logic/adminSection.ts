@@ -155,6 +155,21 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
               draft.activeCommandResponseYaml = { type: 'LOADED', data: responseYaml }  
           })
         })
+        .catch(error => {        
+          updateState(draft_ => {
+            const draft = (draft_ as Loaded<State>).data
+            if(error.response.status >= 400 || error.response.status <= 500)
+              draft.activeCommandResponseYaml = {
+                type: 'LOADED',
+                data: 'Bad command'
+              }
+            else
+            draft.activeCommandResponseYaml = {
+              type: 'LOADED',
+              data: 'Error'
+            }
+          })
+        })
     }
 
     return {
