@@ -40,6 +40,18 @@ namespace Music.Admin.Services
                     Yaml = "type: DeleteTracks",
                     UserId = 1,
                 },
+                new AdminCommand
+                {
+                    Name = "GetChannelsOfUser",
+                    Yaml = "type: GetChannelsOfUser",
+                    UserId = 1,
+                },
+                new AdminCommand
+                {
+                    Name = "GetChannelDetails",
+                    Yaml = "type: GetChannelDetails",
+                    UserId = 1,
+                },
             };
 
             await Persist(ops => commands.ForEach(ops.Add));
