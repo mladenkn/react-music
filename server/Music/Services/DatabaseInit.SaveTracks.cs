@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Music.Services
 {
-    public partial class DatabaseInit
+    public partial class DatabaseInitService
     {
         public async Task SaveTracks()
         {

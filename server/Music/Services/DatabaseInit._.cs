@@ -4,9 +4,9 @@ using Music.DbModels;
 
 namespace Music.Services
 {
-    public partial class DatabaseInit : ServiceResolverAware
+    public partial class DatabaseInitService : ServiceResolverAware
     {
-        public DatabaseInit(IServiceProvider serviceProvider) : base(serviceProvider)
+        public DatabaseInitService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 

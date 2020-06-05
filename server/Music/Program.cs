@@ -19,7 +19,7 @@ namespace Music
 
         private static async Task Initialize(IServiceProvider sp)
         {
-            //var dbIniter = sp.GetRequiredService<DatabaseInit>();
+            //var dbIniter = sp.GetRequiredService<DatabaseInitService>();
             //await dbIniter.ResetDb();
             //await dbIniter.SaveTracks();
             //await dbIniter.SaveAdminSectionData();

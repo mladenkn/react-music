@@ -4,7 +4,7 @@ using Utilities;
 
 namespace Music.Services
 {
-    public partial class DatabaseInit
+    public partial class DatabaseInitService
     {
         public async Task SaveAdminSectionData()
         {
