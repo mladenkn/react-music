@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Music.App.Models;
+using Music.Models;
 using Newtonsoft.Json;
 
 namespace Music.Admin.Services

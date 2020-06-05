@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Music.App.DbModels;
+using Music.DbModels;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music

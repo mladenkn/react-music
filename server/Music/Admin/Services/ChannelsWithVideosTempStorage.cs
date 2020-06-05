@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Music.App.DbModels;
-using Music.App.Models;
-using Music.App.Services;
+using Music.DbModels;
+using Music.Models;
+using Music.Services;
 using Utilities;
 
 namespace Music.Admin.Services
@@ -58,7 +58,7 @@ namespace Music.Admin.Services
                 .Select(YouTubeChannel.FromYouTubeChannelWithVideos)
                 .DistinctBy(c => c.Id)
                 .ToArray();
-            var ytService = Resolve<YouTubeVideosRemoteService>();
+            var ytService = Resolve<YouTubeRemoteService>();
             await ytService.FetchChannelsPlaylistInfo(channels);
             return channels;
         }
