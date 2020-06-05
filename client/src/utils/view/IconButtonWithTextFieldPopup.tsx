@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 
 interface IconButtonWithTextFieldPopupProps extends ComponentProps<typeof IconButton> {
   popupId: number
+  textFieldInitialValue?: string
   onCommit(text: string): void
 }
 
@@ -46,7 +47,7 @@ export const IconButtonWithTextFieldPopup = (props: IconButtonWithTextFieldPopup
         }}
         {...bindPopover(popupState)}
       >
-        <TextField autoFocus onKeyDown={handleKeyDown} className={styles.textField} />
+        <TextField defaultValue={props.textFieldInitialValue} autoFocus onKeyDown={handleKeyDown} className={styles.textField} />
       </Popover>
     </>
   )

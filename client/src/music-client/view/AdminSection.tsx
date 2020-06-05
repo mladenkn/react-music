@@ -86,6 +86,7 @@ export const AdminSection = () => {
             </Select>
             <div className={styles.commandEditorActionBarRight}>
               <IconButtonWithTextFieldPopup 
+                textFieldInitialValue={logic.data.activeCommand.name}
                 onCommit={logic.data.updateCommandName}
                 popupId={1} 
                 size='small'
