@@ -4,20 +4,24 @@ import { Loadable, Loaded } from "../../utils/types"
 import { useImmer } from "use-immer"
 import { useDebouncedCallback } from "use-debounce/lib"
 import { useEffect } from "../../utils/useEffect"
+import yaml from 'js-yaml'
 
 interface State {
   activeCommandId: number
   activeCommandYaml: string
   activeCommandResponseYaml: Loadable<string>
+  jsMapperYaml: string
   commands: AdminCommand[]
 }
 
 interface AdminSectionLogic {
   activeCommand: AdminCommand
+  jsMapperYaml: string
   activeCommandResponseYaml: Loadable<string>
   commands: AdminCommand[]
   setActiveCommand(cmdId: number): void
   updateCommandYaml(yaml: string): void
+  updateJsMapperYaml(yaml: string): void
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
   executeCommand(): void
@@ -63,6 +67,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
             activeCommandYaml: response.commands.find(c => c.id === activeCommandId)!.yaml,
             activeCommandResponseYaml: { type: 'LOADED', data: initalCmdResponse },
             commands: response.commands,
+            jsMapperYaml: '',
           }
         }))
       })
@@ -111,6 +116,12 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
       updateCommandDebounced({ ...activeCommand, yaml})
     }
 
+    const updateJsMapperYaml = (yaml: string) => {
+      updateState(draft => {
+        (draft as Loaded<State>).data.jsMapperYaml = yaml
+      })
+    }
+
     const addNewCommand = (name: string) => {
       const cmd = {name, yaml: ''}
       api.addCommand(cmd)
@@ -134,7 +145,14 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         .then(responseYaml => {
           updateState(draft_ => {
             const draft = (draft_ as Loaded<State>).data
-            draft.activeCommandResponseYaml = { type: 'LOADED', data: responseYaml }  
+            if(state.data.jsMapperYaml !== ''){
+              draft.activeCommandResponseYaml = {
+                type: 'LOADED',
+                data: mapResponse(responseYaml, state.data.jsMapperYaml)
+              }
+            } 
+            else           
+              draft.activeCommandResponseYaml = { type: 'LOADED', data: responseYaml }  
           })
         })
     }
@@ -148,15 +166,28 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         },
         addNewCommand,
         activeCommandResponseYaml: state.data.activeCommandResponseYaml,
-        commands: state.data.commands,
+        commands: state.data.commands,        
+        jsMapperYaml: state.data?.jsMapperYaml,
         setActiveCommand,
         updateCommandName,
         updateCommandYaml,
-        executeCommand
+        executeCommand,
+        updateJsMapperYaml
       }
     }
   }
 
   else 
     return { type: 'ERROR' }
+}
+
+const mapResponse = (responseYaml: string, jsMapper: string) => {
+  const responseObject = yaml.safeLoad(responseYaml)
+  const code = `
+      (function(){
+        var response = ${JSON.stringify(responseObject)}
+        ${jsMapper}
+      })()
+    `
+    return yaml.safeDump(eval(code))
 }

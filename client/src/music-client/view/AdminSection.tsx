@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, Select, MenuItem, Button } from '@material-ui/core';
-import { ems } from '../../utils/css';
+import { ems, percent } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -13,7 +13,8 @@ const useStyles = makeStyles({
     alignItems: 'start',
   },
   commandSelect: {
-    width: ems(10),
+    minWidth: ems(10),
+    maxWidth: percent(100)
   },
   commandEditorActionBar: {
     display: 'flex',
@@ -44,7 +45,12 @@ const useStyles = makeStyles({
   },
   codeMirrorRoot: {
     height: ems(40)
-  }
+  },
+  jsMapper: {
+    width: ems(35),
+    marginTop: ems(2.65),
+    marginLeft: ems(1),
+  } 
 }, { name: 'AdminSection' })
 
 export const AdminSection = () => {
@@ -93,6 +99,14 @@ export const AdminSection = () => {
             codeMirrorRootClassName={styles.codeMirrorRoot}
             value={{ type: 'LOADED', data: logic.data.activeCommand.yaml }}
             onChange={logic.data.updateCommandYaml}
+          />
+        </div>
+        <div>
+          <YamlEditor 
+            className={styles.jsMapper}
+            codeMirrorRootClassName={styles.codeMirrorRoot} 
+            value={{ type: 'LOADED', data: logic.data.jsMapperYaml }}
+            onChange={logic.data.updateJsMapperYaml}
           />
           <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>
         </div>

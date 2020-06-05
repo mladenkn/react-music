@@ -46,7 +46,7 @@ namespace Music.Admin.Services
                         await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
                         return "Channel videos saved.";
                     }
-                    case "GetVideosWithoutTracks":
+                    case "GetYouTubeVideosWithoutTracks":
                     {
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
                     }
