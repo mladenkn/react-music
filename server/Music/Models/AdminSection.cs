@@ -18,4 +18,9 @@ namespace Music.Models
 
         public int? CurrentCommandId { get; set; }
     }
+
+    public class AdminSectionState
+    {
+        public int CurrentCommandId { get; set; }
+    }
 }
