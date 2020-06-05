@@ -31,7 +31,7 @@ export const IconButtonWithTextFieldPopup = (props: IconButtonWithTextFieldPopup
     }
   }
 
-  const buttonProps = omit(props, ['popupId', 'onCommit'])
+  const buttonProps = omit(props, ['popupId', 'onCommit', 'textFieldInitialValue'])
   
   return (
     <>
