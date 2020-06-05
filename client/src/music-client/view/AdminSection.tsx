@@ -38,19 +38,26 @@ const useStyles = makeStyles({
     marginTop: ems(1),
     alignSelf: 'flex-end',
   },
+  command: {    
+  },
+  commandCodeMirrorRoot: {
+    height: ems(12)
+  },
   response: {
     marginTop: ems(2.65),
-    width: ems(35),
+    width: ems(36),
     marginLeft: ems(1),
   },
-  codeMirrorRoot: {
-    height: ems(40)
+  responseCodeMirrorRoot: {
+    height: ems(43.7)
   },
   jsMapper: {
     width: ems(35),
-    marginTop: ems(2.65),
-    marginLeft: ems(1),
-  } 
+    marginTop: ems(0.5),
+  },
+  jsMapperCodeMirrorRoot: {
+    height: ems(27)
+  },
 }, { name: 'AdminSection' })
 
 export const AdminSection = () => {
@@ -96,15 +103,14 @@ export const AdminSection = () => {
             </div>          
           </div>
           <YamlEditor
-            codeMirrorRootClassName={styles.codeMirrorRoot}
+            className={styles.command}
+            codeMirrorRootClassName={styles.commandCodeMirrorRoot}
             value={{ type: 'LOADED', data: logic.data.activeCommand.yaml }}
             onChange={logic.data.updateCommandYaml}
           />
-        </div>
-        <div>
           <YamlEditor 
             className={styles.jsMapper}
-            codeMirrorRootClassName={styles.codeMirrorRoot} 
+            codeMirrorRootClassName={styles.jsMapperCodeMirrorRoot} 
             value={{ type: 'LOADED', data: logic.data.jsMapperYaml }}
             onChange={logic.data.updateJsMapperYaml}
           />
@@ -112,7 +118,7 @@ export const AdminSection = () => {
         </div>
         <YamlEditor
           className={styles.response}
-          codeMirrorRootClassName={styles.codeMirrorRoot}
+          codeMirrorRootClassName={styles.responseCodeMirrorRoot}
           value={logic.data.activeCommandResponseYaml}
         />
       </div>
