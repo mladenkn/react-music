@@ -1,6 +1,7 @@
 ﻿using Music.App.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Utilities;
 
@@ -54,6 +55,15 @@ namespace Music.Admin.Services
                     {
                         return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
                     }
+                    case "DeleteTracks":
+                    {
+                        var trackIds = cmd
+                            .Get<IEnumerable<object>>("tracks")
+                            .Cast<string>()
+                            .Select(long.Parse);
+                        await Resolve<TracksService>().Delete(trackIds);
+                        return "Successfully deleted all stated tracks";
+                    }
                     default:
                         return "Unsupported command";
                 }
@@ -66,9 +76,10 @@ namespace Music.Admin.Services
                 try
                 {
                     var r = await Execute();
-                    return yamlService.Serialize(r);
+                    var serialized = yamlService.Serialize(r);
+                    return serialized;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     throw new ApplicationException("Command failed to execute probably because of user's mistake.");
                 }

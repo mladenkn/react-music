@@ -57,5 +57,13 @@ namespace Music.App.Services
                 .Where(t => t.YoutubeVideos.Count() == 0)
                 .ToArrayAsync();
         }
+
+        public async Task Delete(IEnumerable<long> ids)
+        {
+            var trakcs = await Query<Track>()
+                .Where(t => ids.Contains(t.Id))
+                .ToArrayAsync();
+            await Persist(ops => trakcs.ForEach(ops.Remove));
+        }
     }
 }

@@ -67,5 +67,10 @@ namespace Music.App.Services
                 .ToArrayAsync();
             return r;
         }
+
+        public async Task AddTracksToVideos(IEnumerable<string> ids)
+        {
+
+        }
     }
 }

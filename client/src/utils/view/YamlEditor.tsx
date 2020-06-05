@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 export const YamlEditor = (props: Props) => {
   const wrapped = useRef<any>()
-
+  console.log(props)
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
