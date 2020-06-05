@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Utilities;
 
@@ -13,9 +14,9 @@ namespace Music.Admin.Services
         {
         }
 
-        public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object>  cmd)
+        public async Task<object> ExecuteCommand(JsonElement cmd)
         {
-            var type = cmd.Get<string>("type");
+            var type = cmd.GetProperty("type").GetString();
 
             async Task<object> Execute()
             {
@@ -25,23 +26,23 @@ namespace Music.Admin.Services
                 {
                     case "GetChannelDetails":
                     {
-                        var channelId = cmd.Get<string>("channelId");
+                        var channelId = cmd.GetProperty("channelId").GetString();
                         return await ytService.GetChannelDetails(channelId);
                     }
                     case "GetChannelsOfUser":
                     {
-                        var username = cmd.Get<string>("username");
+                        var username = cmd.GetProperty("username").GetString();
                         return await ytService.GetChannelsOfUser(username);
                     }
                     case "SaveChannelWithVideosToTempStorage":
                     {
-                        var channelId = cmd.Get<string>("channelId");
+                        var channelId = cmd.GetProperty("channelId").GetString();
                         await Resolve<ChannelsWithVideosTempStorage>().ToTemp(channelId);
                         return "Channel videos saved.";
                     }
                     case "SaveChannelWithVideosFromTempToDb":
                     {
-                        var fileName = cmd.Get<string>("file");
+                        var fileName = cmd.GetProperty("file").GetString();
                         await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
                         return "Channel videos saved.";
                     }
@@ -55,10 +56,7 @@ namespace Music.Admin.Services
                     }
                     case "DeleteTracks":
                     {
-                        var trackIds = cmd
-                            .Get<IEnumerable<object>>("tracks")
-                            .Cast<string>()
-                            .Select(long.Parse);
+                        var trackIds = cmd.GetProperty("tracks").EnumerateArray().Select(e => e.GetInt64());
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
                     }
