@@ -1,5 +1,6 @@
 import { useAxios } from "./axios"
 import { AdminSectionParams, AdminCommand, AdminSectionPersistableState } from "../shared/admin"
+import yaml from 'js-yaml';
 
 export const useAdminApi = () => {
   const { get, post, put } = useAxios()
@@ -12,8 +13,12 @@ export const useAdminApi = () => {
 
   const persistAdminSectionState = (s: AdminSectionPersistableState) => post('/admin/admin-section', s)
 
-  const executeCommand = async (commandYaml: string) => 
-    (await post<string>('admin/exe-command', {commandYaml})).data
+  const executeCommand = async (commandYaml: string) =>
+  {
+    const command = yaml.safeLoad(commandYaml)
+    const response = await post<string>('admin/exe-command', command)
+    return yaml.safeDump(response.data)
+  }
 
   return { getInitialParams, addCommand, updateCommand, persistAdminSectionState, executeCommand }
 }

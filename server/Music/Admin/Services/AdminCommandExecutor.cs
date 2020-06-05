@@ -13,11 +13,9 @@ namespace Music.Admin.Services
         {
         }
 
-        public async Task<string> ExecuteCommand(string commandYaml)
+        public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object>  cmd)
         {
-            var yamlService = Resolve<YamlService>();
-            var cmd = yamlService.DeserializeToDictionary(commandYaml);
-            var type = cmd.GetValueOrDefault("type");
+            var type = cmd.Get<string>("type");
 
             async Task<object> Execute()
             {
@@ -76,8 +74,7 @@ namespace Music.Admin.Services
                 try
                 {
                     var r = await Execute();
-                    var serialized = yamlService.Serialize(r);
-                    return serialized;
+                    return r;
                 }
                 catch (Exception e)
                 {
