@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Music.DbModels;
 using Music.Models;
 
@@ -12,6 +12,14 @@ namespace Music.Services
     {
         public YouTubeChannelService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+        }
+
+        public async Task<IEnumerable<object>> Get()
+        {
+            var r = await Query<YouTubeChannel>()
+                .Select(YouTubeChannelDetailsForAdmin.Map)
+                .ToListAsync();
+            return r;
         }
     }
 }

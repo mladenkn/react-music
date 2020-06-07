@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Kernel;
+using Music.Models;
 
 namespace Music.DbModels
 {
@@ -23,5 +25,7 @@ namespace Music.DbModels
         public string WatchHistoryPlaylistId { get; set; }
 
         public DateTime LastUpdateAt { get; set; }
+
+        public IReadOnlyList<YoutubeVideo> Videos { get; set; }
     }
 }
