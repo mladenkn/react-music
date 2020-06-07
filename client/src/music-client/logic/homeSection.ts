@@ -47,6 +47,7 @@ export const useHomeLogic = (props: HomeSectionPropsFromApi) => {
   function onCurrentTrackFinish(){
     if(!tracklist.options.autoPlay)
       return
+    // TODO: pick next random
     const curTrackIndex = tracklist.tracks!.findIndex(t => t.id === state.currentTrackId!)
     const maybeNextTrack = tracklist.tracks![curTrackIndex + 1]
     const nextTrackId = maybeNextTrack ? maybeNextTrack.id : tracklist.tracks![0].id

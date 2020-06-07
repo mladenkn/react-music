@@ -12,7 +12,7 @@ namespace Music.Services
     public partial class YouTubeRemoteService
     {
 
-        public async Task<IEnumerable<YouTubeChannelForAdmin>> GetChannelsOfUser(string username, bool saveChannels = false)
+        public async Task<IEnumerable<YouTubeChannelForAdmin>> GetChannelsOfUser(string username, bool ensureChannelsAreSaved = false)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
@@ -22,7 +22,7 @@ namespace Music.Services
                 throw new ApplicationException("Channel not found");
             var tasks = response.Items.Select(MapToYouTubeChannelDetails).ToArray();
             await Task.WhenAll(tasks);
-            if (saveChannels)
+            if (ensureChannelsAreSaved)
                 await Resolve<YouTubeChannelService>().EnsureAreSaved(response.Items);
             return tasks.Select(t => t.Result);
         }

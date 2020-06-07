@@ -26,8 +26,20 @@ namespace Music.Services
 
         public async Task EnsureAreSaved(IEnumerable<Channel> channels)
         {
-            var dbModels = channels.Select(YouTubeChannel.FromYouTubeApiChannel);
-            await Persist(ops => dbModels.ForEach(ops.Add));
+            var dbModels = channels.Select(YouTubeChannel.FromYouTubeApiChannel).ToArray();
+            var unknownChannels = await FilterToUnknown(dbModels);
+            await Persist(ops => unknownChannels.ForEach(ops.Add));
+        }
+
+        private async Task<IEnumerable<YouTubeChannel>> FilterToUnknown(IReadOnlyCollection<YouTubeChannel> channels)
+        {
+            var channelsIds = channels.Select(c => c.Id);
+            var foundIds = await Query<YouTubeChannel>()
+                .Select(v => v.Id)
+                .Where(vId => channelsIds.Contains(vId))
+                .ToArrayAsync();
+            var notFoundIds = channels.Where(c => !foundIds.Contains(c.Id));
+            return notFoundIds;
         }
     }
 }

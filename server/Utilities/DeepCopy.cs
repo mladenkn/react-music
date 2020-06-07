@@ -71,7 +71,7 @@ namespace Utilities
         }
     }
 
-    public class ReferenceEqualityComparer : EqualityComparer<object>
+    public class ReferenceEqualityComparer : System.Collections.Generic.EqualityComparer<object>
     {
         public override bool Equals(object x, object y) => ReferenceEquals(x, y);
 
