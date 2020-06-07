@@ -11,7 +11,7 @@ namespace Music.Services
     public partial class YouTubeRemoteService
     {
 
-        public async Task<IEnumerable<YouTubeChannelDetails>> GetChannelsOfUser(string username)
+        public async Task<IEnumerable<YouTubeChannelDetailsForAdmin>> GetChannelsOfUser(string username)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
@@ -22,7 +22,7 @@ namespace Music.Services
             return tasks.Select(t => t.Result);
         }
 
-        public async Task<YouTubeChannelDetails> GetChannelDetails(string channelId)
+        public async Task<YouTubeChannelDetailsForAdmin> GetChannelDetails(string channelId)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
@@ -32,10 +32,10 @@ namespace Music.Services
             return await MapToYouTubeChannelDetails(channel);
         }
 
-        private async Task<YouTubeChannelDetails> MapToYouTubeChannelDetails(Channel channel)
+        private async Task<YouTubeChannelDetailsForAdmin> MapToYouTubeChannelDetails(Channel channel)
         {
             var videosCount = await GetPlaylistVideoCount(channel.ContentDetails.RelatedPlaylists.Uploads);
-            return new YouTubeChannelDetails
+            return new YouTubeChannelDetailsForAdmin
             {
                 Id = channel.Id,
                 Title = channel.Snippet.Title,

@@ -1,6 +1,6 @@
 ﻿namespace Music.Models
 {
-    public class YouTubeChannelDetails
+    public class YouTubeChannelDetailsForAdmin
     {
         public string Id { get; set; }
 
