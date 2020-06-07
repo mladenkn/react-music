@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Google.Apis.YouTube.v3.Data;
 using Kernel;
 using Music.Models;
 
@@ -27,5 +28,20 @@ namespace Music.DbModels
         public DateTime LastUpdateAt { get; set; }
 
         public IReadOnlyList<YoutubeVideo> Videos { get; set; }
+
+        public static YouTubeChannel FromYouTubeApiChannel(Channel video)
+        {
+            var playlists = video.ContentDetails.RelatedPlaylists;
+            return new YouTubeChannel
+            {
+                Id = video.Id,
+                Title = video.Snippet.Title,
+                FavoritesPlaylistId = playlists.Favorites,
+                UploadsPlaylistId = playlists.Uploads,
+                LikesPlaylistId = playlists.Likes,
+                WatchLaterPlaylistId = playlists.WatchLater,
+                WatchHistoryPlaylistId = playlists.WatchHistory,
+            };
+        }
     }
 }

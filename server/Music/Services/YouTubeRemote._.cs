@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
@@ -11,23 +12,29 @@ namespace Music.Services
     public partial class YouTubeRemoteService
     {
 
-        public async Task<IEnumerable<YouTubeChannelForAdmin>> GetChannelsOfUser(string username)
+        public async Task<IEnumerable<YouTubeChannelForAdmin>> GetChannelsOfUser(string username, bool saveChannels = false)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.ForUsername = username;
             var response = await request.ExecuteAsync();
+            if(response.Items == null || !response.Items.Any())
+                throw new ApplicationException("Channel not found");
             var tasks = response.Items.Select(MapToYouTubeChannelDetails).ToArray();
             await Task.WhenAll(tasks);
+            if (saveChannels)
+                await Resolve<YouTubeChannelService>().EnsureAreSaved(response.Items);
             return tasks.Select(t => t.Result);
         }
 
-        public async Task<YouTubeChannelForAdmin> GetChannelDetails(string channelId)
+        public async Task<YouTubeChannelForAdmin> GetChannelDetails(string channelId, bool saveChannels = false)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.Id = channelId;
             var response = await request.ExecuteAsync();
+            if (saveChannels)
+                await Resolve<YouTubeChannelService>().EnsureAreSaved(response.Items);
             var channel = response.Items.Single();
             return await MapToYouTubeChannelDetails(channel);
         }

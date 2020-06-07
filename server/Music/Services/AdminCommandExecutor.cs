@@ -24,12 +24,12 @@ namespace Music.Services
                     case "GetChannelDetails":
                     {
                         var channelId = cmd.GetProperty("channelId").GetString();
-                        return await ytService.GetChannelDetails(channelId);
+                        return await ytService.GetChannelDetails(channelId, true);
                     }
                     case "GetChannelsOfUser":
                     {
                         var username = cmd.GetProperty("username").GetString();
-                        return await ytService.GetChannelsOfUser(username);
+                        return await ytService.GetChannelsOfUser(username, true);
                     }
                     case "GetYouTubeVideosWithoutTracks":
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
