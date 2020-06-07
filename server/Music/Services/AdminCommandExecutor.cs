@@ -55,6 +55,7 @@ namespace Music.Services
                     }
                     case "GetKnownYouTubeChannels":
                         return await Resolve<YouTubeChannelService>().Get();
+
                     default:
                         return "Unsupported command";
                 }
