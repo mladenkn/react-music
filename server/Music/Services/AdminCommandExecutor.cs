@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Music.Services
 {
@@ -11,9 +13,9 @@ namespace Music.Services
         {
         }
 
-        public async Task<object> ExecuteCommand(JsonElement cmd)
+        public async Task<object> ExecuteCommand(JObject cmd)
         {
-            var type = cmd.GetProperty("type").GetString();
+            var type = cmd.GetValue("type").Value<string>();
 
             async Task<object> Execute()
             {
@@ -23,14 +25,14 @@ namespace Music.Services
                 {
                     case "GetChannelDetails":
                     {
-                        var channelId = cmd.GetProperty("channelId").GetString();
-                        var ensureChannelsAreSaved = cmd.GetProperty("ensureChannelsAreSaved").GetBoolean();
+                        var channelId = cmd.GetValue("channelId").Value<string>();
+                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved").Value<bool>();
                         return await ytService.GetChannelDetails(channelId, ensureChannelsAreSaved);
                     }
                     case "GetChannelsOfUser":
                     {
-                        var username = cmd.GetProperty("username").GetString();
-                        var ensureChannelsAreSaved = cmd.GetProperty("ensureChannelsAreSaved").GetBoolean();
+                        var username = cmd.GetValue("username").Value<string>();
+                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved").Value<bool>();
                         return await ytService.GetChannelsOfUser(username, ensureChannelsAreSaved);
                     }
                     case "GetYouTubeVideosWithoutTracks":
@@ -39,17 +41,23 @@ namespace Music.Services
                     case "GetTracksWithoutYouTubeVideos":
                         return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
 
+                    case "AddTracksToYouTubeVideos":
+                    {
+                        var videoIds = cmd.GetValue("videoIds").Values<string>();
+                        return await Resolve<YouTubeVideosService>().AddTracksToVideos(videoIds);
+                    }
+
                     case "DeleteTracks":
                     {
-                        var trackIds = cmd.GetProperty("tracks").EnumerateArray().Select(e => e.GetInt64()).ToArray();
+                        var trackIds = cmd.GetValue("tracks").Values<long>().ToArray();
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
                     }
                     case "GetVideosOfChannelFromYouTubeApi":
                     {
-                        var channelId = cmd.GetProperty("channelId").GetString();
-                        var maxResults = cmd.GetProperty("maxResults").GetInt32();
-                        var parts = cmd.GetProperty("parts").EnumerateArray().Select(p => p.GetString());
+                        var channelId = cmd.GetValue("channelId").Value<string>();
+                        var maxResults = cmd.GetValue("maxResults").Value<int>();
+                        var parts = cmd.GetValue("parts").Values<string>();
                         var videos = await Resolve<YouTubeRemoteService>().GetVideosOfChannel(channelId, parts, maxResults);
                         return videos;
                     }

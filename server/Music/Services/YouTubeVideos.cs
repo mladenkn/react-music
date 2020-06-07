@@ -68,9 +68,15 @@ namespace Music.Services
             return r;
         }
 
-        public async Task AddTracksToVideos(IEnumerable<string> ids)
+        public async Task<YoutubeVideo[]> AddTracksToVideos(IEnumerable<string> ids)
         {
-
+            var videos = await Query<YoutubeVideo>()
+                .Where(v => ids.Contains(v.Id))
+                .ToArrayAsync();
+            foreach (var vid in videos)
+                vid.Track = new Track();
+            await Persist(ops => videos.ForEach(ops.Update));
+            return videos;
         }
     }
 }

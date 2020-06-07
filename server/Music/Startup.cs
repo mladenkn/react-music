@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Music.DbModels;
+using Newtonsoft.Json;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Music
@@ -32,10 +33,15 @@ namespace Music
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(o =>
-            {
-                o.Filters.Add(new ExceptionToHttpResponseMapper());
-            });
+            services
+                .AddControllers(o =>
+                {
+                    o.Filters.Add(new ExceptionToHttpResponseMapper());
+                })
+                .AddNewtonsoftJson(o =>
+                {
+                    o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
             services.AddDbContext<MusicDbContext>();
 
