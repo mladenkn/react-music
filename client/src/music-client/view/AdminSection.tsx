@@ -1,11 +1,13 @@
 import React from 'react';
-import { makeStyles, Select, MenuItem, Button } from '@material-ui/core';
+import { makeStyles, Select, MenuItem, Button, TextField } from '@material-ui/core';
 import { ems, percent } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
+import { Autocomplete } from '@material-ui/lab';
+import { AdminCommand } from '../shared/admin';
 
 const useStyles = makeStyles({
   root: {
@@ -13,8 +15,7 @@ const useStyles = makeStyles({
     alignItems: 'start',
   },
   commandSelect: {
-    minWidth: ems(10),
-    maxWidth: percent(100)
+    flex: 0.8,
   },
   commandEditorActionBar: {
     display: 'flex',
@@ -75,15 +76,14 @@ export const AdminSection = () => {
       <div className={styles.root}>
         <div className={styles.commandEditorCol}>
           <div className={styles.commandEditorActionBar}>
-            <Select
-              value={logic.data.activeCommand.id} 
-              onChange={e => logic.data.setActiveCommand(e.target.value as number)} 
+            <Autocomplete
+              value={logic.data.activeCommand} 
               className={styles.commandSelect}
-            >
-              {logic.data.commands.map(command => (
-                <MenuItem key={command.id} value={command.id}>{command.name}</MenuItem>
-              ))}
-            </Select>
+              options={logic.data.commands}
+              getOptionLabel={o => o.name}
+              renderInput={params => <TextField {...params} />}
+              onChange={(event: any, command: AdminCommand | null) => command && logic.data.setActiveCommand(command.id)} 
+            />
             <div className={styles.commandEditorActionBarRight}>
               <IconButtonWithTextFieldPopup 
                 textFieldInitialValue={logic.data.activeCommand.name}

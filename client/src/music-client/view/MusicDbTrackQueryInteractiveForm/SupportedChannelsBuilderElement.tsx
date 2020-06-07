@@ -3,7 +3,7 @@ import { RemovableElementBase } from "./RemovableElementBase";
 import { InputLabel, colors, makeStyles, TextField, Chip } from "@material-ui/core";
 import { ems, percent } from "../../../utils/css";
 import React from 'react'
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Autocomplete } from '@material-ui/lab';
 import { difference } from 'lodash'
 
 interface Props {
