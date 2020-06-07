@@ -4,7 +4,7 @@ using Music.DbModels;
 
 namespace Music.Models
 {
-    public class YouTubeChannelDetailsForAdmin
+    public class YouTubeChannelForAdmin
     {
         public string Id { get; set; }
 
@@ -12,7 +12,7 @@ namespace Music.Models
 
         public int VideosCount { get; set; }
 
-        public static Expression<Func<YouTubeChannel, YouTubeChannelDetailsForAdmin>> Map => channel => new YouTubeChannelDetailsForAdmin
+        public static Expression<Func<YouTubeChannel, YouTubeChannelForAdmin>> Map => channel => new YouTubeChannelForAdmin
         {
             Id = channel.Id,
             Title = channel.Title,

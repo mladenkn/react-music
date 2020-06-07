@@ -17,7 +17,7 @@ namespace Music.Services
         public async Task<IEnumerable<object>> Get()
         {
             var r = await Query<YouTubeChannel>()
-                .Select(YouTubeChannelDetailsForAdmin.Map)
+                .Select(YouTubeChannelForAdmin.Map)
                 .ToListAsync();
             return r;
         }
