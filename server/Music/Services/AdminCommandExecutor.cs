@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Music.Admin.Services;
 
 namespace Music.Services
 {
@@ -31,18 +30,6 @@ namespace Music.Services
                     {
                         var username = cmd.GetProperty("username").GetString();
                         return await ytService.GetChannelsOfUser(username);
-                    }
-                    case "SaveChannelWithVideosToTempStorage":
-                    {
-                        var channelId = cmd.GetProperty("channelId").GetString();
-                        await Resolve<ChannelsWithVideosTempStorage>().ToTemp(channelId);
-                        return "Channel videos saved.";
-                    }
-                    case "SaveChannelWithVideosFromTempToDb":
-                    {
-                        var fileName = cmd.GetProperty("file").GetString();
-                        await Resolve<ChannelsWithVideosTempStorage>().FromTempToDb(fileName);
-                        return "Channel videos saved.";
                     }
                     case "GetYouTubeVideosWithoutTracks":
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
