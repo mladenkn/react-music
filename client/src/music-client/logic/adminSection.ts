@@ -141,8 +141,25 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         const draft = (draft_ as Loaded<State>).data
         draft.activeCommandResponseYaml = { type: 'LOADING' }        
       })
-      api.executeCommand(state.data.activeCommandYaml)
-        .then(responseYaml => {
+      
+      let commandObj
+      try {
+        commandObj = yaml.safeLoad(state.data.activeCommandYaml)
+      }
+      catch(error){
+        updateState(draft_ => {
+          const draft = (draft_ as Loaded<State>).data
+          draft.activeCommandResponseYaml = {
+            type: 'LOADED',
+            data: `User YAML error: ${error.message}`
+          }
+        })
+        return
+      }
+
+      api.executeCommand(commandObj)
+        .then(response => {
+          const responseYaml = yaml.safeDump(response.data)
           updateState(draft_ => {
             const draft = (draft_ as Loaded<State>).data
             if(state.data.jsMapperYaml !== ''){
@@ -158,16 +175,17 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         .catch(error => {        
           updateState(draft_ => {
             const draft = (draft_ as Loaded<State>).data
-            if(error.response.status >= 400 || error.response.status <= 500)
+            console.log(error)
+            if(error.response.status >= 400 && error.response.status < 500)
               draft.activeCommandResponseYaml = {
                 type: 'LOADED',
                 data: 'Bad command'
               }
             else
-            draft.activeCommandResponseYaml = {
-              type: 'LOADED',
-              data: 'Error'
-            }
+              draft.activeCommandResponseYaml = {
+                type: 'LOADED',
+                data: `Error: ${error.response.data}`
+              }
           })
         })
     }

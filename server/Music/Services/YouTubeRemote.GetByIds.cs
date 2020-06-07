@@ -28,6 +28,18 @@ namespace Music.Services
             return await PostRead(videosFromYt.ToArray());
         }
 
+        public async Task<IReadOnlyList<Video>> GetByIdsIfFound2(IReadOnlyCollection<string> ids, IEnumerable<string> videoParts)
+        {
+            var videosFromYt = new List<Video>(ids.Count);
+            foreach (var idsChunk in ids.Batch(50))
+            {
+                var idsAsOneString = string.Join(",", idsChunk);
+                var allVideosFromYt = await GetBase(req => req.Id = idsAsOneString, videoParts);
+                videosFromYt.AddRange(allVideosFromYt);
+            }
+            return videosFromYt;
+        }
+
         private async Task<YoutubeVideo[]> PostRead(IReadOnlyCollection<Video> vids)
         {
             foreach (var videoFromYt in vids)
@@ -48,10 +60,10 @@ namespace Music.Services
             return videosFromYtMapped;
         }
 
-        private async Task<List<Video>> GetBase(Action<VideosResource.ListRequest> consumeRequest)
+        private async Task<List<Video>> GetBase(Action<VideosResource.ListRequest> consumeRequest, IEnumerable<string> videoParts = null)
         {
             var ytService = Resolve<YouTubeService>();
-            var partsAsOneString = string.Join(",", _videoParts);
+            var partsAsOneString = string.Join(",", videoParts ?? _videoParts);
             var request = ytService.Videos.List(partsAsOneString);
             consumeRequest(request);
             var result = await request.ExecuteAsync();

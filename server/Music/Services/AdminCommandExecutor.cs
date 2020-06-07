@@ -46,13 +46,23 @@ namespace Music.Services
                     }
                     case "GetYouTubeVideosWithoutTracks":
                         return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
+
                     case "GetTracksWithoutYouTubeVideos":
                         return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
+
                     case "DeleteTracks":
                     {
                         var trackIds = cmd.GetProperty("tracks").EnumerateArray().Select(e => e.GetInt64()).ToArray();
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
+                    }
+                    case "GetVideosOfChannelFromYouTubeApi":
+                    {
+                        var channelId = cmd.GetProperty("channelId").GetString();
+                        var maxResults = cmd.GetProperty("maxResults").GetInt32();
+                        var parts = cmd.GetProperty("parts").EnumerateArray().Select(p => p.GetString());
+                        var videos = await Resolve<YouTubeRemoteService>().GetVideosOfChannel(channelId, parts, maxResults);
+                        return videos;
                     }
                     default:
                         return "Unsupported command";
@@ -68,9 +78,9 @@ namespace Music.Services
                     var r = await Execute();
                     return r;
                 }
-                catch (Exception e)
+                catch (ApplicationException e)
                 {
-                    throw new ApplicationException("Command failed to execute probably because of user's mistake.");
+                    throw new ApplicationException($"Command failed to execute because of user's mistake. {e.Message}");
                 }
             }
         }

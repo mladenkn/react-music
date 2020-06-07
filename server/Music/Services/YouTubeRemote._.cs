@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Apis.YouTube.v3.Data;
+using Microsoft.EntityFrameworkCore;
 using Music.DbModels;
 using Music.Models;
 
@@ -51,22 +52,19 @@ namespace Music.Services
             return response.PageInfo.TotalResults ?? 0;
         }
 
-        public async Task<YouTubeChannelWithVideos> GetVideosOfChannel(YouTubeChannel channel)
+        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int? maxResults)
         {
-            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId);
-            var videos = await Resolve<YouTubeRemoteService>().GetByIdsIfFound(allVideosIds.ToArray());
-            return new YouTubeChannelWithVideos
-            {
-                Id = channel.Id,
-                Title = channel.Title,
-                Videos = videos
-            };
+            var channel = await Query<YouTubeChannel>().FirstOrDefaultAsync(c => c.Id == channelId);
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults);
+            var videos = await Resolve<YouTubeRemoteService>().GetByIdsIfFound2(allVideosIds.ToArray(), videoParts);
+            return videos;
         }
 
-        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId)
+        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId, int? maxResults = null)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var r = new List<string>();
+            var remainingCount = maxResults;
 
             string nextPageToken = null;
             do
@@ -74,12 +72,13 @@ namespace Music.Services
                 var request = ytService.PlaylistItems.List("contentDetails");
                 request.PageToken = nextPageToken;
                 request.PlaylistId = playlistId;
-                request.MaxResults = 50;
+                request.MaxResults = remainingCount;
                 var response = await request.ExecuteAsync();
                 r.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
                 nextPageToken = response.NextPageToken;
+                remainingCount -= response.Items.Count;
             }
-            while (nextPageToken != null);
+            while (nextPageToken != null && remainingCount != 0);
 
             return r;
         }
