@@ -24,13 +24,13 @@ namespace Music.Services
                     case "GetChannelDetails":
                     {
                         var channelId = cmd.GetValue("channelId")!.Value<string>();
-                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved") != null && cmd.GetValue("ensureChannelsAreSaved")!.Value<bool>();
+                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved")?.Value<bool>() ?? true;
                         return await ytService.GetChannelDetails(channelId, ensureChannelsAreSaved);
                     }
                     case "GetChannelsOfUser":
                     {
                         var username = cmd.GetValue("username")!.Value<string>();
-                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved") != null && cmd.GetValue("ensureChannelsAreSaved")!.Value<bool>();
+                        var ensureChannelsAreSaved = cmd.GetValue("ensureChannelsAreSaved")?.Value<bool>() ?? true;
                         return await ytService.GetChannelsOfUser(username, ensureChannelsAreSaved);
                     }
                     case "GetYouTubeVideosWithoutTracks":
