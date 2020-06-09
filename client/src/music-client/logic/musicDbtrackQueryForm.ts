@@ -37,7 +37,7 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 		result.push('mustHaveEveryTag')	
 	if(params.musntHaveEveryTag?.length)
 		result.push('musntHaveEveryTag')	
-	if(params.titleContains !== '')
+	if(params.titleContains && params.titleContains !== '')
 		result.push('titleContains')
 	if(params.yearRange?.lowerBound || params.yearRange?.upperBound)
 		result.push('yearRange')
@@ -78,6 +78,8 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 	})
 
 	const [activeFields, setActiveFields] = useState<Field[]>(getInitialActiveFields(props.values))
+
+	console.log(activeFields)
 
 	useEffect(() => {
 		props.onChange(form.values)
