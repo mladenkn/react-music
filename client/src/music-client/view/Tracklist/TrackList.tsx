@@ -17,7 +17,7 @@ interface TrackListProps {
   fetchRecommendationsOf: (trackId: number) => void
   onScrollToBottom: () => void
   saveTrack(t: SaveTrackModel): Promise<void>
-  declareANonTrack(trackId: number): void
+  declareANonTrack(videoId: string): void
 }
 
 const useTrackListStyles = makeStyles(() => ({
@@ -57,7 +57,7 @@ export const TrackList = (props: TrackListProps) => {
               isFocused={t.isSelected}
               classes={props.trackClasses}
               saveTrack={editedProps => props.saveTrack({...editedProps, trackId: t.id})}
-              declareANonTrack={() => props.declareANonTrack(t.id)}
+              declareANonTrack={() => props.declareANonTrack(t.youTubeVideoId)}
             />
           </ListItem>
         ))}

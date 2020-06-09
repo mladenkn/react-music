@@ -30,7 +30,7 @@ namespace Music.Controllers
 
         // PUT: api/Example/5
         [HttpPut("declareANonTrack/{id}")]
-        public void Put(int id)
+        public void Put(string id)
         {
         }
     }

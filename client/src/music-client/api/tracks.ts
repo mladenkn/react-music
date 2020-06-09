@@ -29,8 +29,8 @@ export const useTracksApi = () => {
     return post<ArrayWithTotalCount<Track>>('tracks', data);
   };
   
-  const declareANonTrack = (trackId: number) => {
-    return put(`tracks/declareANonTrack/${trackId}`)
+  const declareANonTrack = (videoId: string) => {
+    return put(`tracks/declareANonTrack/${videoId}`)
   }
 
   return { fetchFromYouTube, fetchFromMusicDb, save, declareANonTrack }
