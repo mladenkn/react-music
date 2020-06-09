@@ -7,7 +7,7 @@ import { useAxios } from "./axios";
 
 export const useTracksApi = () => {
 
-  const { get, post } = useAxios()
+  const { get, post, put } = useAxios()
 
   const fetchFromYouTube = async (searchQuery: string) => {
     const r = await get<Track[]>('tracks/yt', { params: { searchQuery } });
@@ -28,6 +28,10 @@ export const useTracksApi = () => {
   const save = (data: SaveTrackModel) => {
     return post<ArrayWithTotalCount<Track>>('tracks', data);
   };
+  
+  const declareANonTrack = (trackId: number) => {
+    return put(`tracks/declareANonTrack/${trackId}`)
+  }
 
-  return { fetchFromYouTube, fetchFromMusicDb, save }
+  return { fetchFromYouTube, fetchFromMusicDb, save, declareANonTrack }
 }

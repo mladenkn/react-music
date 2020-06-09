@@ -27,5 +27,11 @@ namespace Music.Controllers
         [HttpPost]
         public Task<ArrayWithTotalCount<TrackForHomeSection>> Save([FromBody]SaveTrackUserPropsModel trackProps) => 
             Resolve<TracksService>().SaveUserProps(trackProps);
+
+        // PUT: api/Example/5
+        [HttpPut("declareANonTrack/{id}")]
+        public void Put(int id)
+        {
+        }
     }
 }

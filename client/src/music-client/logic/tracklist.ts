@@ -169,6 +169,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   }
 
   async function declareANonTrack(trackId: number){
+    await api.declareANonTrack(trackId)      
     updateState(draft => {
       if(draft.fromMusicDb)
         draft.fromMusicDb.data = draft.fromMusicDb?.data.filter(t => t.id !== trackId)
