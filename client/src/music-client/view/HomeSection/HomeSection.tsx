@@ -101,6 +101,7 @@ export const HomeSection = (p: HomeProps) => {
               fetchRecommendationsOf={logic.fetchRecommendationsOf}
               onScrollToBottom={onScrollToBottom}
               saveTrack={logic.saveTrack}
+              declareANonTrack={logic.declareANonTrack}
             />
           )}
         </div>

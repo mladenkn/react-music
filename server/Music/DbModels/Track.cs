@@ -11,6 +11,7 @@ namespace Music.DbModels
 
         public IReadOnlyCollection<YoutubeVideo> YoutubeVideos { get; set; }
 
+        // remove
         public bool IsIgnored { get; set; }
     }
 }

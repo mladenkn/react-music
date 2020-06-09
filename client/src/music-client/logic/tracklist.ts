@@ -21,6 +21,7 @@ export interface Tracklist {
   fetchTracks(): void
   fetchRecommendationsOf(trackId: number): void
   getTracksWithIds(ids: number[]): Track[]
+  declareANonTrack(trackId: number): void
 }
 
 interface State {
@@ -167,6 +168,15 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     return tracks!.filter(t => ids.includes(t.id))
   }
 
+  async function declareANonTrack(trackId: number){
+    updateState(draft => {
+      if(draft.fromMusicDb)
+        draft.fromMusicDb.data = draft.fromMusicDb?.data.filter(t => t.id !== trackId)
+      else
+        draft.fromYouTube = draft.fromYouTube!.filter(t => t.id !== trackId)
+    })
+  }
+
   return { 
     ...state, 
     options: props.options,
@@ -177,6 +187,7 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
     saveTrack, 
     onTrackClick,
     fetchRecommendationsOf,
-    getTracksWithIds
+    getTracksWithIds,
+    declareANonTrack
   }
 }

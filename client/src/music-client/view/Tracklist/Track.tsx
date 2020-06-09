@@ -1,6 +1,6 @@
 import { percent, ems } from "../../../utils/css";
 import { createStyles, withStyles } from "@material-ui/styles";
-import React, { useState, Fragment } from "react";
+import React, { Fragment } from "react";
 import { Card, IconButton, Typography, Dialog, WithStyles } from "@material-ui/core"
 import { TrackEditablePropsEditUI } from "./TrackEditablePropsEdit"
 import EditIcon from "@material-ui/icons/Edit"
@@ -8,6 +8,7 @@ import SaveIcon from "@material-ui/icons/Save"
 import CancelIcon from "@material-ui/icons/Cancel"
 import DescriptionIcon from "@material-ui/icons/Description"
 import PlayCircleOutlinedIcon from "@material-ui/icons/PlayCircleOutlineOutlined"
+import BlockIcon from "@material-ui/icons/Block"
 import { TrackEditablePropsReadonlyUI } from "./TrackEditablePropsReadonly";
 import discogsIconUrl from '../icons/discogs.png'
 import youtubeIconUrl from '../icons/youtube.png'
@@ -81,10 +82,11 @@ type ItemProps = {
   className?: string
   track: TrackViewModel
   onPlay: () => void
-  fetchRecommendationsOf: (trackId: number) => void
+  fetchRecommendationsOf: () => void
   onClick: () => void
   isFocused: boolean
   saveTrack(t: TrackEditableProps): Promise<void>
+  declareANonTrack(): void
 } & WithStyles<typeof styles>
 
 export type TrackClasses = Partial<$PropertyType<ItemProps, 'classes'>>
@@ -161,8 +163,13 @@ const Track_ = (p: ItemProps) => {
                   <DescriptionIcon className={p.classes.actionIcon} />
                 </IconButton>
                 {p.track.canFetchRecommendations && 
-                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={() => p.fetchRecommendationsOf(p.track.id)}>
+                  <IconButton className={clsx(p.classes.actionButton, p.classes.recommendationActionButton)} onClick={p.fetchRecommendationsOf}>
                     <img src={recommendationUrl} className={p.classes.actionIcon} />
+                  </IconButton>
+                }
+                {p.track.canDeclareItANonTrack && 
+                  <IconButton className={p.classes.actionButton} onClick={p.declareANonTrack}>
+                    <BlockIcon className={p.classes.actionIcon} />
                   </IconButton>
                 }
                 {p.track.canEdit && !logic.isEdit && 
