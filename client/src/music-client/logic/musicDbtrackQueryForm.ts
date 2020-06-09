@@ -9,7 +9,7 @@ type Field = keyof MusicDbTrackQueryParams
 
 interface MusicDbTrackQueryFormLogic {
 	values: MusicDbTrackQueryParams
-	inactiveFields: Field[]
+	includableFields: Field[]
 	availableTags: string[]
 	isFieldActive(fieldName: Field): boolean
 	setFieldActive(fieldName: Field): void
@@ -26,7 +26,7 @@ interface MusicDbTrackQueryFormLogicProps {
   availableYouTubeChannels: IdWithName[]
 }
 
-const allFields: Field[] = ['titleContains', 'supportedYouTubeChannelsIds', 'mustHaveEveryTag', 'mustHaveAnyTag', 'yearRange', 'randomize', 'relatedTracks']
+const allFields: Field[] = ['titleContains', 'supportedYouTubeChannelsIds', 'mustHaveEveryTag', 'mustHaveAnyTag', 'musntHaveEveryTag', 'yearRange', 'randomize', 'relatedTracks']
 
 const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 	const result: Field[] = ['randomize']
@@ -35,6 +35,8 @@ const getInitialActiveFields = (params: MusicDbTrackQueryParams) => {
 		result.push('mustHaveAnyTag')	
 	if(params.mustHaveEveryTag?.length)
 		result.push('mustHaveEveryTag')	
+	if(params.musntHaveEveryTag?.length)
+		result.push('musntHaveEveryTag')	
 	if(params.titleContains !== '')
 		result.push('titleContains')
 	if(params.yearRange?.lowerBound || params.yearRange?.upperBound)
@@ -55,6 +57,8 @@ const getFieldDefaultValue = (field: Field) => {
       return [];
     case "mustHaveAnyTag":
       return [];
+		case "musntHaveEveryTag":
+			return [];
     case "titleContains":
       return '';
     case "randomize":
@@ -98,7 +102,7 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
 		setActiveFields([...activeFields, fieldName])
 	}
 
-	const inactiveFields = difference(allFields, activeFields)
+	const includableFields = difference(allFields, activeFields).filter(f => f !== 'relatedTracks')
 
 	const removeRelatedTrack = (trackId: number) => {
 		const newRelatedTracks = form.values.relatedTracks.filter(t => t !== trackId)
@@ -109,7 +113,7 @@ export const useMusicDbTrackQueryFormLogic = (props: MusicDbTrackQueryFormLogicP
     values: form.values, 
     availableYouTubeChannels: props.availableYouTubeChannels, 
     availableTags: props.availableTags, 
-    inactiveFields, 
+    includableFields: includableFields, 
     isFieldActive, 
     onFieldChange, 
     setFieldInactive, 

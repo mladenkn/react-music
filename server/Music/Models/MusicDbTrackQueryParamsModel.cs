@@ -16,6 +16,8 @@ namespace Music.Models
 
         public IReadOnlyCollection<string> MustHaveAnyTag { get; set; }
 
+        public IReadOnlyCollection<string> MusntHaveEveryTag { get; set; }
+
         public YearRange_ YearRange { get; set; }
 
         public bool Randomize { get; set; }

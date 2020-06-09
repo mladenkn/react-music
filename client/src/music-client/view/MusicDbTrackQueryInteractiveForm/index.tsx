@@ -63,6 +63,8 @@ const mapFieldValueToName = (field: Field) => {
       return "Must have all tags";
     case "mustHaveAnyTag":
       return "Must have some tags";
+    case "musntHaveEveryTag":
+      return "Musn't have all tags";
     case "titleContains":
       return "Title Contains";
     case "yearRange":
@@ -77,7 +79,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     values, 
     availableYouTubeChannels,
     availableTags,
-    inactiveFields, 
+    includableFields: inactiveFields, 
     isFieldActive, 
     onFieldChange, 
     setFieldActive,
@@ -90,6 +92,8 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     availableYouTubeChannels: p.availableYouTubeChannels
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
+
+  console.log(inactiveFields, values)
 
   const availableTagsSorted = availableTags.sort()
   
@@ -124,6 +128,16 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
             onRemove={() => setFieldInactive('mustHaveAnyTag')}
           />
         )}
+
+        {isFieldActive('musntHaveEveryTag') && (
+            <ChipListElement
+              label="Musn't have all tags"
+              availableOptions={availableTagsSorted}
+              value={values.musntHaveEveryTag}
+              onChange={onFieldChange('musntHaveEveryTag')}
+              onRemove={() => setFieldInactive('musntHaveEveryTag')}
+            />
+          )}
 
         {isFieldActive("yearRange") && (
           <InlineRangeElement

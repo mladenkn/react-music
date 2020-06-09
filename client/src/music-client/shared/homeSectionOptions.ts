@@ -45,6 +45,7 @@ export interface MusicDbTrackQueryParams {
   supportedYouTubeChannelsIds: string[]
   mustHaveEveryTag: string[]
   mustHaveAnyTag: string[]
+  musntHaveEveryTag: string[]
   yearRange?: Partial<Range<number>>
   randomize: boolean
   relatedTracks: number[]
