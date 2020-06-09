@@ -8,7 +8,7 @@ import { difference } from 'lodash'
 
 interface Props {
   label: string;
-  availableChannels: IdWithName[]
+  availableItems: IdWithName[]
   value: string[]
   onChange(value: string[]): void
   onRemove: () => void
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
     marginLeft: percent(12),
     marginBottom: ems(0.8)
   },
-  channelChip: {
+  itemChip: {
     margin: ems(0.3, 0.3)
   },
   picker: {
@@ -35,18 +35,18 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-export const SupportedChannelsBuilderElement = (props: Props) => {  
+export const ChipListBuilderElement = (props: Props) => {  
   const styles = useStyles();
 
-  const nameOf = (channelId: string) => props.availableChannels.find(c => c.id === channelId)!.name
+  const getLabelOf = (itemId: string) => props.availableItems.find(c => c.id === itemId)!.name
 
-  const unpickedChannels = difference(props.availableChannels.map(c => c.id), props.value)
-    .map(cId => props.availableChannels.find(c => c.id == cId)!)
+  const unpickedItems = difference(props.availableItems.map(c => c.id), props.value)
+    .map(cId => props.availableItems.find(c => c.id == cId)!)
 
-  const handlePickerChange = (channelId?: string) => channelId && props.onChange([ ...props.value, channelId ])
+  const handlePickerChange = (itemId: string) => props.onChange([ ...props.value, itemId ])
 
-  const removeChannel = (channelId: string) => {
-    const withoutIt = props.value.filter(cId => cId != channelId)
+  const removeItem = (itemId: string) => {
+    const withoutIt = props.value.filter(cId => cId != itemId)
     props.onChange(withoutIt)
   }
   
@@ -54,16 +54,16 @@ export const SupportedChannelsBuilderElement = (props: Props) => {
     <RemovableElementBase onRemove={props.onRemove} className={styles.base}>
       <InputLabel className={styles.label}>{props.label}</InputLabel>
       <div>
-        {props.value.map(channelId => (
-          <Chip className={styles.channelChip} size='small' label={nameOf(channelId)} onDelete={() => removeChannel(channelId)} />
+        {props.value.map(itemId => (
+          <Chip className={styles.itemChip} size='small' label={getLabelOf(itemId)} onDelete={() => removeItem(itemId)} />
         ))}
       </div>
       <Autocomplete 
         className={styles.picker}
-        options={unpickedChannels} 
+        options={unpickedItems} 
         getOptionLabel={o => o.name} 
         renderInput={params => <TextField {...params} />}
-        onChange={(event: any, value: IdWithName | null) => handlePickerChange(value?.id)}
+        onChange={(event: any, item: IdWithName | null) => item && handlePickerChange(item.id)}
       />
     </RemovableElementBase>
   );
