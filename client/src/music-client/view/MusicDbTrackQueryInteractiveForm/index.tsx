@@ -12,7 +12,7 @@ import clsx from "clsx";
 import { bindTrigger, bindMenu, usePopupState } from "material-ui-popup-state/hooks";
 import { TextField } from "./TextField";
 import { IdWithName } from "../../../utils/types";
-import { SupportedChannelsBuilderElement } from "./SupportedChannelsBuilderElement";
+import { ChipListBuilderElement } from "./ChipListBuilderElement";
 import { Track } from "../../shared/track";
 import { RelatedTracks } from "./RelatedTracks";
 
@@ -63,6 +63,8 @@ const mapFieldValueToName = (field: Field) => {
       return "Must have all tags";
     case "mustHaveAnyTag":
       return "Must have some tags";
+    case "musntHaveEveryTag":
+      return "Musn't have all tags";
     case "titleContains":
       return "Title Contains";
     case "yearRange":
@@ -77,7 +79,7 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
     values, 
     availableYouTubeChannels,
     availableTags,
-    inactiveFields, 
+    includableFields: inactiveFields, 
     isFieldActive, 
     onFieldChange, 
     setFieldActive,
@@ -91,7 +93,11 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
   })
   const popupState = usePopupState({ variant: "popover", popupId: "TrackQueryInteractiveFormPopup" })
 
-  const availableTagsSorted = availableTags.sort()
+  console.log(inactiveFields, values)
+
+  const availableTagsSortedWithIds = availableTags
+    .sort()
+    .map(t => ({ id: t, name: t }))
   
   return (
     <div className={clsx(p.className, styles.root)}>
@@ -106,24 +112,34 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
         </div>
 
         {isFieldActive('mustHaveEveryTag') && (
-            <ChipListElement
-              label='Must have all tags'
-              availableOptions={availableTagsSorted}
-              value={values.mustHaveEveryTag}
-              onChange={onFieldChange('mustHaveEveryTag')}
-              onRemove={() => setFieldInactive('mustHaveEveryTag')}
-            />
+          <ChipListBuilderElement 
+            onRemove={() => setFieldInactive('mustHaveEveryTag')}
+            label="Must have all tags"
+            availableItems={availableTagsSortedWithIds}
+            value={values.mustHaveEveryTag}
+            onChange={onFieldChange("mustHaveEveryTag")}
+          />
           )}
 
         {isFieldActive('mustHaveAnyTag') && (
-          <ChipListElement
-            label='Must have some tags'
-            availableOptions={availableTagsSorted}
-            value={values.mustHaveAnyTag}
-            onChange={onFieldChange('mustHaveAnyTag')}
+          <ChipListBuilderElement 
             onRemove={() => setFieldInactive('mustHaveAnyTag')}
+            label="Must have some tags"
+            availableItems={availableTagsSortedWithIds}
+            value={values.mustHaveAnyTag}
+            onChange={onFieldChange("mustHaveAnyTag")}
           />
         )}
+
+        {isFieldActive('musntHaveEveryTag') && (
+          <ChipListBuilderElement 
+            onRemove={() => setFieldInactive('musntHaveEveryTag')}
+            label="Musn't have all tags"
+            availableItems={availableTagsSortedWithIds}
+            value={values.musntHaveEveryTag}
+            onChange={onFieldChange("musntHaveEveryTag")}
+          />
+          )}
 
         {isFieldActive("yearRange") && (
           <InlineRangeElement
@@ -144,11 +160,11 @@ export const MusicDbTrackQueryInteractiveForm = (p: MusicDbTrackQueryInteractive
           />
         }
 
-        {isFieldActive('supportedYouTubeChannelsIds') &&          
-          <SupportedChannelsBuilderElement 
+        {isFieldActive('supportedYouTubeChannelsIds') &&
+          <ChipListBuilderElement 
             onRemove={() => setFieldInactive('supportedYouTubeChannelsIds')}
             label='Allowed YouTube channels'
-            availableChannels={availableYouTubeChannels}
+            availableItems={availableYouTubeChannels}
             value={values.supportedYouTubeChannelsIds}
             onChange={onFieldChange("supportedYouTubeChannelsIds")}
           />

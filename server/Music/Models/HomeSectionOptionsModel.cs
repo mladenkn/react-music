@@ -39,6 +39,7 @@
                         SupportedYouTubeChannelsIds = new string[0],
                         MustHaveEveryTag = new string[0],
                         MustHaveAnyTag = new string[0],
+                        MusntHaveEveryTag = new string[0],
                         Randomize = true,
                         Skip = 0,
                         Take = 30,

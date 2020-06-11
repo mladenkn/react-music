@@ -74,6 +74,12 @@ namespace Music.Services
                     query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).TrackTags.Any(tt => tt.Value == reqTag));
             }
 
+            if (req.MusntHaveEveryTag != null)
+            {
+                foreach (var tag in req.MusntHaveEveryTag)
+                    query = query.Where(t => t.TrackUserProps.FirstOrDefault(p => p.UserId == userId).TrackTags.All(tt => tt.Value != tag));
+            }
+
             if (req.YearRange != null)
             {
                 if (req.YearRange.LowerBound > 0)
