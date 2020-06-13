@@ -17,6 +17,7 @@ interface TrackListProps {
   fetchRecommendationsOf: (trackId: number) => void
   onScrollToBottom: () => void
   saveTrack(t: SaveTrackModel): Promise<void>
+  declareANonTrack(videoId: string): void
 }
 
 const useTrackListStyles = makeStyles(() => ({
@@ -49,13 +50,14 @@ export const TrackList = (props: TrackListProps) => {
         {props.tracks.map(t => (
           <ListItem disableGutters key={t.id}>
             <Track 
-              fetchRecommendationsOf={props.fetchRecommendationsOf} 
+              fetchRecommendationsOf={() => props.fetchRecommendationsOf(t.id)}
               track={t} 
               onPlay={() => props.onPlayTrack(t.id)}
               onClick={() => props.onItemClick(t.id)}
               isFocused={t.isSelected}
               classes={props.trackClasses}
               saveTrack={editedProps => props.saveTrack({...editedProps, trackId: t.id})}
+              declareANonTrack={() => props.declareANonTrack(t.youTubeVideoId)}
             />
           </ListItem>
         ))}

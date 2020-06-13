@@ -18,6 +18,7 @@ export interface TrackViewModel extends Track {
   canFetchRecommendations: boolean
   canEdit: boolean
   canPlay: boolean
+  canDeclareItANonTrack: boolean
 }
 
 export interface SaveTrackModel {
@@ -37,6 +38,7 @@ export const mapToTrackViewModel = (t: Track, selectedTrackId?: number): TrackVi
   canEdit: true,
   canFetchRecommendations: true,
   canPlay: true,
+  canDeclareItANonTrack: true, // fix for admin only
   ...t,
   editableProps: {
     year: t.year,
