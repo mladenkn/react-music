@@ -51,10 +51,10 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
 
   useEffect(() => {
     if(props.options.autoRefresh)
-      refetchOnChange()
+      fetchDebounced()
   }, [props.options.query])
 
-  const [refetchOnChange] = useDebouncedCallback(() => fetch(), 700)
+  const [fetchDebounced] = useDebouncedCallback(() => fetch(), 700)
 
   const { query: queryForm } = props.options
 
@@ -171,8 +171,10 @@ export const useTracklistLogic = (props: TracklistProps): Tracklist => {
   async function declareANonTrack(videoId: string){
     await api.declareANonTrack(videoId)      
     updateState(draft => {
-      if(draft.fromMusicDb)
+      if(draft.fromMusicDb){
         draft.fromMusicDb.data = draft.fromMusicDb?.data.filter(t => t.youTubeVideoId !== videoId)
+        draft.fromMusicDb.totalCount -= 1
+      }
       else
         draft.fromYouTube = draft.fromYouTube!.filter(t => t.youTubeVideoId !== videoId)
     })

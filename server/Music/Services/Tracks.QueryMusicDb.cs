@@ -45,7 +45,7 @@ namespace Music.Services
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 
-            var query = Query<Track>();
+            var query = Query<Track>().Where(t => t.YoutubeVideos.First().Category != YouTubeVideoCategory.Other);
 
             if (!string.IsNullOrEmpty(req.TitleContains))
                 query = query.Where(t => t.YoutubeVideos.First().Title.Contains(req.TitleContains));
