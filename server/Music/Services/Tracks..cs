@@ -21,25 +21,19 @@ namespace Music.Services
             return tracks;
         }
 
-        public async Task<IEnumerable<Track>> SaveTracksFromVideos(IEnumerable<YoutubeVideo> videos)
+        public async Task<IEnumerable<Track>> SaveTracksFromVideos(IReadOnlyCollection<YoutubeVideo> videos)
         {
-            var pairs = videos.Select(v => (track: new Track(), video: v)).ToArray();
-            
-            await Persist(ops => pairs.ForEach(p => ops.Add(p.track)));
-
-            foreach(var (track, video) in pairs)
-                video.TrackId = track.Id;
-
             // Sa Persist error da pokušavan update-at isti video više puta
-            foreach (var (track, video) in pairs)
+            foreach (var video in videos)
             {
+                video.Track = new Track();
                 var videoCopy = ReflectionUtils.ShallowCopy(video);
                 videoCopy.YouTubeChannel = null;
                 Db.Update(videoCopy);
             }
             await Db.SaveChangesAsync();
 
-            return pairs.Select(p => p.track);
+            return videos.Select(v => v.Track);
         }
 
         public async Task Save(IReadOnlyCollection<SaveTrackModel> tracks)
