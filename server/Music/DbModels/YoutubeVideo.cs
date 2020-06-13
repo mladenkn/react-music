@@ -21,6 +21,9 @@ namespace Music.DbModels
 
         public long? TrackId { get; set; }
 
+        [Required]
+        public YouTubeVideoCategory Category { get; set; }
+
         public Track Track { get; set; }
 
         public YouTubeChannel YouTubeChannel { get; set; }
@@ -44,6 +47,11 @@ namespace Music.DbModels
         public YoutubeVideoStatistics Statistics { get; set; }
 
         public YoutubeVideoTopicDetails TopicDetails { get; set; }
+    }
+
+    public enum YouTubeVideoCategory
+    {
+        Track, Compilation, Other
     }
 
     public class YoutubeVideoStatistics

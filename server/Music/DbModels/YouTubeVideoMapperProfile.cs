@@ -10,6 +10,7 @@ namespace Music.DbModels
         public YoutubeVideoMapperProfile()
         {
             CreateMap<Video, YoutubeVideo>()
+                .ForMember(dst => dst.Category, o => o.MapFrom(src => YouTubeVideoCategory.Track))
                 .ForMember(dst => dst.YoutubeCategoryId, o => o.MapFrom(src => src.Snippet.CategoryId))
                 .ForMember(dst => dst.YouTubeChannel, o => o.MapFrom(src => new YouTubeChannel
                 {
