@@ -14,6 +14,11 @@ namespace Music.Services
         {
         }
 
+        public async Task<IReadOnlyList<YoutubeVideo>> Get(IEnumerable<string> ids) =>
+            await Query<YoutubeVideo>()
+                .Where(v => ids.Contains(v.Id))
+                .ToArrayAsync();
+
         public async Task<IReadOnlyList<YoutubeVideo>> EnsureAreSavedIfFound(IEnumerable<string> possibleIds)
         {
             var newVideosIds = (await FilterToUnknownVideosIds(possibleIds)).ToArray();

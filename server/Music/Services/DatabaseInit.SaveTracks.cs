@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using Music.Models;
 
 namespace Music.Services
 {
@@ -295,23 +296,7 @@ namespace Music.Services
         private async Task PersistTracks(IReadOnlyCollection<SaveTrackModel> tracks)
         {
             Normalize(tracks);
-            var trackYouTubeVideoIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
-
-            var service = Resolve<TracksService>();
-            var newVideos = await Resolve<YouTubeVideosService>().EnsureAreSavedIfFound(trackYouTubeVideoIds);
-            var newTracks = await service.SaveTracksFromVideos(newVideos);
-
-            foreach (var newTrackDescriptor in tracks)
-            {
-                var track = newTracks.Single(t => t.YoutubeVideos.First().Id == newTrackDescriptor.YouTubeVideoId);
-                var saveTrackModel = new SaveTrackUserPropsModel
-                {
-                    TrackId = track.Id,
-                    Tags = newTrackDescriptor.Tags,
-                    Year = newTrackDescriptor.Year
-                };
-                await service.SaveUserProps(saveTrackModel);
-            }
+            await Resolve<TracksService>().Save(tracks);
         }
 
         private void Normalize(IEnumerable<SaveTrackModel> tracks)
@@ -323,13 +308,5 @@ namespace Music.Services
                     track.YouTubeVideoId = HttpUtility.ParseQueryString(trackUri.Query).Get("v");
             }
         }
-    }
-    public class SaveTrackModel
-    {
-        public string YouTubeVideoId { get; set; }
-
-        public IReadOnlyCollection<string> Tags { get; set; }
-
-        public int Year { get; set; }
     }
 }

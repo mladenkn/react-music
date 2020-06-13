@@ -30,7 +30,7 @@ namespace Music.Services
             foreach(var (track, video) in pairs)
                 video.TrackId = track.Id;
 
-            // try to use Persist
+            // Sa Persist error da pokušavan update-at isti video više puta
             foreach (var (track, video) in pairs)
             {
                 var videoCopy = ReflectionUtils.ShallowCopy(video);
@@ -38,23 +38,48 @@ namespace Music.Services
                 Db.Update(videoCopy);
             }
             await Db.SaveChangesAsync();
-            
-            //await Persist(ops =>
-            //{
-            //    pairs.ForEach(p =>
-            //    {
-            //        ops.Update(p.video, v => v.YouTubeChannel = null);
-            //    });
-            //});
 
             return pairs.Select(p => p.track);
+        }
+
+        public async Task Save(IReadOnlyCollection<SaveTrackModel> tracks)
+        {
+            var videosIds = tracks.Select(t => t.YouTubeVideoId).ToArray();
+
+            var youTubeVideosService = Resolve<YouTubeVideosService>();
+            await youTubeVideosService.EnsureAreSavedIfFound(videosIds);
+
+            var videos = await youTubeVideosService.Get(videosIds);
+
+            foreach (var youtubeVideo in videos)
+            {
+                var saveTrackModel = tracks.Single(t => t.YouTubeVideoId == youtubeVideo.Id);
+                youtubeVideo.Track = new Track
+                {
+                    TrackUserProps = new[]
+                    {
+                        new TrackUserProps
+                        {
+                            UserId = 1,
+                            InsertedAt = DateTime.Now,
+                            TrackTags = saveTrackModel.Tags.Select(tag => new TrackUserPropsTag { Value = tag } ).ToArray(),
+                            Year = saveTrackModel.Year,
+                            YoutubeVideoId = saveTrackModel.YouTubeVideoId
+                        }
+                    }
+                };
+            }
+
+            // Sa Persist error da pokušavan update-at isti video više puta
+            videos.ForEach(v => Db.Update(v));
+            await Db.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Track>> GetTracksWithoutYouTubeVideos()
         {
             return await Query<Track>()
                 .Include(t => t.YoutubeVideos)
-                .Where(t => t.YoutubeVideos.Count() == 0)
+                .Where(t => t.YoutubeVideos.Count == 0)
                 .ToArrayAsync();
         }
 
