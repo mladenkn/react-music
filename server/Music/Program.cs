@@ -19,10 +19,10 @@ namespace Music
 
         private static async Task Initialize(IServiceProvider sp)
         {
-            //var dbIniter = sp.GetRequiredService<DatabaseInitService>();
-            //await dbIniter.ResetDb();
-            //await dbIniter.SaveTracks();
-            //await dbIniter.SaveAdminSectionData();
+            var dbIniter = sp.GetRequiredService<DatabaseInitService>();
+            await dbIniter.ResetDb();
+            await dbIniter.SaveTracks();
+            await dbIniter.SaveAdminSectionData();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

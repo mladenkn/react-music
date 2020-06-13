@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Music.DbModels;
 using Music.Models;
 using Music.Services;
 using Utilities;
@@ -28,10 +29,7 @@ namespace Music.Controllers
         public Task<ArrayWithTotalCount<TrackForHomeSection>> Save([FromBody]SaveTrackUserPropsModel trackProps) => 
             Resolve<TracksService>().SaveUserProps(trackProps);
 
-        // PUT: api/Example/5
-        [HttpPut("declareANonTrack/{id}")]
-        public void Put(string id)
-        {
-        }
+        [HttpPatch("declareANonTrack/{youTubeVideoId}")]
+        public Task Put(string youTubeVideoId) => Resolve<YouTubeVideosService>().SetVideoCategory(youTubeVideoId, YouTubeVideoCategory.Other);
     }
 }

@@ -83,5 +83,12 @@ namespace Music.Services
             await Persist(ops => videos.ForEach(ops.Update));
             return videos;
         }
+
+        public async Task SetVideoCategory(string videoId, YouTubeVideoCategory category)
+        {
+            var video = await Query<YoutubeVideo>().FirstOrDefaultAsync(v => v.Id == videoId);
+            video.Category = category;
+            await Persist(ops => ops.Update(video));
+        }
     }
 }
