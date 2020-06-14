@@ -10,8 +10,5 @@ namespace Music.DbModels
         public IReadOnlyCollection<TrackUserProps> TrackUserProps { get; set; }
 
         public IReadOnlyCollection<YoutubeVideo> YoutubeVideos { get; set; }
-
-        // remove
-        public bool IsIgnored { get; set; }
     }
 }
