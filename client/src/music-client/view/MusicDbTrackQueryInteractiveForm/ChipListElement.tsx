@@ -43,4 +43,4 @@ export const ChipListElement = (p: Props) => {
       />
     </RemovableElementBase>
   );
-};
+}
