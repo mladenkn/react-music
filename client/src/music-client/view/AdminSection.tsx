@@ -1,10 +1,11 @@
 import React from 'react';
-import { makeStyles, Select, MenuItem, Button, TextField } from '@material-ui/core';
-import { ems, percent } from '../../utils/css';
+import { makeStyles, Button, TextField, Snackbar } from '@material-ui/core';
+import { ems } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
+import BackupIcon from '@material-ui/icons/Backup';
 import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
 import { Autocomplete } from '@material-ui/lab';
 import { AdminCommand } from '../shared/admin';
@@ -50,7 +51,7 @@ const useStyles = makeStyles({
     marginLeft: ems(1),
   },
   responseCodeMirrorRoot: {
-    height: ems(43.7)
+    height: ems(39.8)
   },
   jsMapper: {
     width: ems(35),
@@ -59,14 +60,21 @@ const useStyles = makeStyles({
   jsMapperCodeMirrorRoot: {
     height: ems(27)
   },
+  responseColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  backupButton: {
+    marginRight: ems(0.2),
+    marginTop: ems(0.3),
+    alignSelf: 'flex-end',
+  },
 }, { name: 'AdminSection' })
 
 export const AdminSection = () => {
 
   const logic = useAdminSectionLogic()  
   const styles = useStyles()
-
-  console.log(logic)
 
   if(logic.type === 'LOADING'){
     return <div>Loading...</div>
@@ -117,10 +125,30 @@ export const AdminSection = () => {
           />
           <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
-        <YamlEditor
-          className={styles.response}
-          codeMirrorRootClassName={styles.responseCodeMirrorRoot}
-          value={logic.data.activeCommandResponseYaml}
+        <div className={styles.responseColumn}>
+          <YamlEditor
+            className={styles.response}
+            codeMirrorRootClassName={styles.responseCodeMirrorRoot}
+            value={logic.data.activeCommandResponseYaml}
+          />
+          <IconButtonWithTextFieldPopup
+            className={styles.backupButton}
+            textFieldInitialValue={() => ' - ' + new Date().toLocaleString()}
+            onCommit={logic.data.backupResponse}
+            popupId={1}
+          >
+            <BackupIcon />
+          </IconButtonWithTextFieldPopup>
+        </div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          open={logic.data.backupCreatedMessageShown}
+          autoHideDuration={6000}
+          onClose={logic.data.hideBackupCreatedMessage}
+          message="Backup created"
         />
       </div>
     )

@@ -14,10 +14,11 @@ const useStyles = makeStyles({
 
 interface IconButtonWithTextFieldPopupProps extends ComponentProps<typeof IconButton> {
   popupId: number
-  textFieldInitialValue?: string
+  textFieldInitialValue?: string | (() => string)
   onCommit(text: string): void
 }
 
+// Napravit generičniju render props komponentu With{Sth}OnPopup
 export const IconButtonWithTextFieldPopup = (props: IconButtonWithTextFieldPopupProps) => {
   const popupId = 'IconButtonWithTextFieldPopup-popup-' + props.popupId
   const popupState = usePopupState({ variant: "popover", popupId })
@@ -32,6 +33,14 @@ export const IconButtonWithTextFieldPopup = (props: IconButtonWithTextFieldPopup
   }
 
   const buttonProps = omit(props, ['popupId', 'onCommit', 'textFieldInitialValue'])
+
+  const getTextFieldInitialValue = () => {
+    if(!props.textFieldInitialValue)
+      return props.textFieldInitialValue;
+    return typeof props.textFieldInitialValue === 'string' ? 
+      props.textFieldInitialValue : 
+      props.textFieldInitialValue()
+  }
   
   return (
     <>
@@ -47,8 +56,8 @@ export const IconButtonWithTextFieldPopup = (props: IconButtonWithTextFieldPopup
         }}
         {...bindPopover(popupState)}
       >
-        <TextField defaultValue={props.textFieldInitialValue} autoFocus onKeyDown={handleKeyDown} className={styles.textField} />
+        <TextField defaultValue={getTextFieldInitialValue()} autoFocus onKeyDown={handleKeyDown} className={styles.textField} />
       </Popover>
     </>
   )
-}
+} 

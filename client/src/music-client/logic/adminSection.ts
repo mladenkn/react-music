@@ -12,6 +12,7 @@ interface State {
   activeCommandResponseYaml: Loadable<string>
   jsMapperYaml: string
   commands: AdminCommand[]
+  backupCreatedMessageShown: boolean
 }
 
 interface AdminSectionLogic {
@@ -19,12 +20,15 @@ interface AdminSectionLogic {
   jsMapperYaml: string
   activeCommandResponseYaml: Loadable<string>
   commands: AdminCommand[]
+  backupCreatedMessageShown: boolean
   setActiveCommand(cmdId: number): void
   updateCommandYaml(yaml: string): void
   updateJsMapperYaml(yaml: string): void
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
   executeCommand(): void
+  backupResponse(key: string): Promise<unknown>
+  hideBackupCreatedMessage(): void
 }
 
 const initalCmdResponse = ''
@@ -51,6 +55,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
             activeCommandResponseYaml: { type: 'LOADED', data: initalCmdResponse },
             commands: response.commands,
             jsMapperYaml: '',
+            backupCreatedMessageShown: false,
           }
         }))
       })
@@ -173,6 +178,23 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         })
     }
 
+    const hideBackupCreatedMessage = () => {
+      updateState(draft => {
+        (draft as Loaded<State>).data.backupCreatedMessageShown = false;
+      })      
+    }
+
+    const backupResponse = (key: string) => {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          updateState(draft => {
+            (draft as Loaded<State>).data.backupCreatedMessageShown = true;
+          })
+          resolve()
+        }, 500)
+      })
+    }
+
     return {
       type: 'LOADED',
       data: {
@@ -184,11 +206,14 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         activeCommandResponseYaml: state.data.activeCommandResponseYaml,
         commands: state.data.commands,        
         jsMapperYaml: state.data?.jsMapperYaml,
+        backupCreatedMessageShown: state.data.backupCreatedMessageShown,
         setActiveCommand,
         updateCommandName,
         updateCommandYaml,
         executeCommand,
-        updateJsMapperYaml
+        updateJsMapperYaml,
+        backupResponse,
+        hideBackupCreatedMessage
       }
     }
   }
