@@ -1,11 +1,12 @@
 import React from 'react';
-import { makeStyles, Button, TextField, Snackbar } from '@material-ui/core';
+import { makeStyles, Button, TextField, Snackbar, IconButton } from '@material-ui/core';
 import { ems } from '../../utils/css';
 import { YamlEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
 import BackupIcon from '@material-ui/icons/Backup';
+import CloseIcon from '@material-ui/icons/Close';
 import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
 import { Autocomplete } from '@material-ui/lab';
 import { AdminCommand } from '../shared/admin';
@@ -149,6 +150,11 @@ export const AdminSection = () => {
           autoHideDuration={6000}
           onClose={logic.data.hideBackupCreatedMessage}
           message="Backup created"
+          action={
+            <IconButton size="small" aria-label="close" color="secondary" onClick={logic.data.hideBackupCreatedMessage}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          }
         />
       </div>
     )
