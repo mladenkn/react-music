@@ -59,6 +59,10 @@ namespace Music.Services
                         var videos = await Resolve<YouTubeRemoteService>().GetVideosOfChannel(channelId, parts, maxResults);
                         return videos;
                     }
+                    case "GetCommands":
+                    {
+                        return await Resolve<AdminSectionService>().GetCommands();
+                    }
                     case "GetKnownYouTubeChannels":
                         return await Resolve<YouTubeChannelService>().Get();
 

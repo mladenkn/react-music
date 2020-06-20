@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,12 @@ namespace Music.Services
     {
         public AdminSectionService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+        }
+
+        public async Task<IReadOnlyList<AdminCommand>> GetCommands()
+        {
+            return await Query<AdminCommand>()
+                .ToArrayAsync();
         }
 
         public async Task<AdminSectionParams> GetAdminSectionParams()
