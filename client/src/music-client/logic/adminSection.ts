@@ -27,7 +27,7 @@ interface AdminSectionLogic {
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
   executeCommand(): void
-  saveResponseToVariable(key: string): Promise<unknown>
+  saveResponseToVariable(key: string): void
   hideSavedToVariableMessage(): void
 }
 
@@ -185,14 +185,12 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
     }
 
     const backupResponse = (key: string) => {
-      return new Promise(resolve => {
-        setTimeout(() => {
+      api.setVaraiable(key, state.data.activeCommandResponseYaml)
+        .then(() => {
           updateState(draft => {
             (draft as Loaded<State>).data.savedToVariableMessageShown = true;
-          })
-          resolve()
-        }, 500)
-      })
+          })          
+        })
     }
 
     return {

@@ -61,7 +61,7 @@ namespace Music.Services
                     }
                     case "GetCommands":
                     {
-                        return await Resolve<AdminSectionService>().GetCommands();
+                        return await Resolve<AdminService>().GetCommands();
                     }
                     case "GetKnownYouTubeChannels":
                         return await Resolve<YouTubeChannelService>().Get();

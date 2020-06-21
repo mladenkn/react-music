@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 
 namespace Music.Services
 {
-    public class AdminSectionService : ServiceResolverAware
+    public class AdminService : ServiceResolverAware
     {
-        public AdminSectionService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
 
@@ -100,6 +100,11 @@ namespace Music.Services
 
             Db.Update(cmdFromDb);
             await Db.SaveChangesAsync();
+        }
+
+        public Task SetVariable(string key, object value)
+        {
+            return Task.CompletedTask;
         }
     }
 }

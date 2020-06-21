@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Models;
@@ -17,19 +15,22 @@ namespace Music.Controllers
         {
         }
 
-        [HttpGet("admin-section")]
-        public Task<AdminSectionParams> Get() => Resolve<AdminSectionService>().GetAdminSectionParams();
+        [HttpGet("section/props")]
+        public Task<AdminSectionParams> Get() => Resolve<AdminService>().GetAdminSectionParams();
 
-        [HttpPost("admin-section")]
-        public Task Post(AdminSectionState s) => Resolve<AdminSectionService>().SaveSectionState(s);
+        [HttpPost("section/props")]
+        public Task Post(AdminSectionState s) => Resolve<AdminService>().SaveSectionState(s);
 
-        [HttpPost]
-        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminSectionService>().Add(cmd);
+        [HttpPost("commands")]
+        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Add(cmd);
 
-        [HttpPut]
-        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminSectionService>().Update(cmd);
+        [HttpPut("commands")]
+        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
 
-        [HttpPost("exe-command")]
+        [HttpPost("commands/execute")]
         public Task<object> ExecuteCommand([FromBody] JObject args) => Resolve<AdminCommandExecutor>().ExecuteCommand(args);
+
+        [HttpPost("variables")]
+        public Task Post(string key, object value) => Resolve<AdminService>().SetVariable(key, value);
     }
 }

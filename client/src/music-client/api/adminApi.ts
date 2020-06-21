@@ -4,15 +4,14 @@ import { AdminSectionParams, AdminCommand, AdminSectionPersistableState } from "
 export const useAdminApi = () => {
   const { get, post, put } = useAxios()
 
-  const getInitialParams = async () => get<AdminSectionParams>('/admin/admin-section').then(r => r.data)
+  const getInitialParams = async () => get<AdminSectionParams>('/admin/section/props').then(r => r.data)
+  const persistAdminSectionState = (s: AdminSectionPersistableState) => post('/admin/section/props', s)
 
-  const addCommand = async (cmd: Omit<AdminCommand, 'id'>) => (await post<AdminCommand>('/admin', cmd)).data
+  const addCommand = async (cmd: Omit<AdminCommand, 'id'>) => (await post<AdminCommand>('/admin/commands', cmd)).data
+  const updateCommand = (cmd: AdminCommand) => put('/admin/commands', cmd)
+  const executeCommand = (command: unknown) => post<string>('admin/commands/execute', command)
 
-  const updateCommand = (cmd: AdminCommand) => put('/admin', cmd)
+  const setVaraiable = (key: string, value: unknown) => post('admin/variables', {key, value})
 
-  const persistAdminSectionState = (s: AdminSectionPersistableState) => post('/admin/admin-section', s)
-
-  const executeCommand = (command: unknown) => post<string>('admin/exe-command', command)
-
-  return { getInitialParams, addCommand, updateCommand, persistAdminSectionState, executeCommand }
+  return { getInitialParams, addCommand, updateCommand, persistAdminSectionState, executeCommand, setVaraiable }
 }
