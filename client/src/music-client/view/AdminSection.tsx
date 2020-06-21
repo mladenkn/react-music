@@ -135,7 +135,7 @@ export const AdminSection = () => {
           <IconButtonWithTextFieldPopup
             className={styles.backupButton}
             textFieldInitialValue={() => ' - ' + new Date().toLocaleString()}
-            onCommit={logic.data.backupResponse}
+            onCommit={logic.data.saveResponseToVariable}
             popupId={1}
           >
             <BackupIcon />
@@ -148,10 +148,10 @@ export const AdminSection = () => {
           }}
           open={logic.data.backupCreatedMessageShown}
           autoHideDuration={6000}
-          onClose={logic.data.hideBackupCreatedMessage}
-          message="Backup created"
+          onClose={logic.data.hideSavedToVariableMessage}
+          message="Variable set"
           action={
-            <IconButton size="small" aria-label="close" color="secondary" onClick={logic.data.hideBackupCreatedMessage}>
+            <IconButton size="small" aria-label="close" color="secondary" onClick={logic.data.hideSavedToVariableMessage}>
               <CloseIcon fontSize="small" />
             </IconButton>
           }

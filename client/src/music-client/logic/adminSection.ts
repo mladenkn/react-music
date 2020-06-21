@@ -12,7 +12,7 @@ interface State {
   activeCommandResponseYaml: Loadable<string>
   jsMapperYaml: string
   commands: AdminCommand[]
-  backupCreatedMessageShown: boolean
+  savedToVariableMessageShown: boolean
 }
 
 interface AdminSectionLogic {
@@ -27,8 +27,8 @@ interface AdminSectionLogic {
   updateCommandName(newName: string): void
   addNewCommand(name: string): void
   executeCommand(): void
-  backupResponse(key: string): Promise<unknown>
-  hideBackupCreatedMessage(): void
+  saveResponseToVariable(key: string): Promise<unknown>
+  hideSavedToVariableMessage(): void
 }
 
 const initalCmdResponse = ''
@@ -55,7 +55,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
             activeCommandResponseYaml: { type: 'LOADED', data: initalCmdResponse },
             commands: response.commands,
             jsMapperYaml: '',
-            backupCreatedMessageShown: false,
+            savedToVariableMessageShown: false,
           }
         }))
       })
@@ -180,7 +180,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
 
     const hideBackupCreatedMessage = () => {
       updateState(draft => {
-        (draft as Loaded<State>).data.backupCreatedMessageShown = false;
+        (draft as Loaded<State>).data.savedToVariableMessageShown = false;
       })      
     }
 
@@ -188,7 +188,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
       return new Promise(resolve => {
         setTimeout(() => {
           updateState(draft => {
-            (draft as Loaded<State>).data.backupCreatedMessageShown = true;
+            (draft as Loaded<State>).data.savedToVariableMessageShown = true;
           })
           resolve()
         }, 500)
@@ -206,14 +206,14 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
         activeCommandResponseYaml: state.data.activeCommandResponseYaml,
         commands: state.data.commands,        
         jsMapperYaml: state.data?.jsMapperYaml,
-        backupCreatedMessageShown: state.data.backupCreatedMessageShown,
+        backupCreatedMessageShown: state.data.savedToVariableMessageShown,
         setActiveCommand,
         updateCommandName,
         updateCommandYaml,
         executeCommand,
         updateJsMapperYaml,
-        backupResponse,
-        hideBackupCreatedMessage
+        saveResponseToVariable: backupResponse,
+        hideSavedToVariableMessage: hideBackupCreatedMessage
       }
     }
   }
