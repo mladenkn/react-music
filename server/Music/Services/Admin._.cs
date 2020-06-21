@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Music.Services
 {
-    public class AdminService : ServiceResolverAware
+    public partial class AdminService : ServiceResolverAware
     {
         public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
@@ -104,6 +104,7 @@ namespace Music.Services
 
         public Task SetVariable(string key, object value)
         {
+            var variableService = Resolve<PersistantVariablesService>();
             return Task.CompletedTask;
         }
     }

@@ -5,12 +5,8 @@ using Newtonsoft.Json.Linq;
 
 namespace Music.Services
 {
-    public class AdminCommandExecutor : ServiceResolverAware
+    public partial class AdminService
     {
-        public AdminCommandExecutor(IServiceProvider serviceProvider) : base(serviceProvider)
-        {
-        }
-
         public async Task<object> ExecuteCommand(JObject cmd)
         {
             var type = cmd.GetValue("type")!.Value<string>();

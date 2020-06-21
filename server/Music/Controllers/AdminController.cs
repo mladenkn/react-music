@@ -28,7 +28,7 @@ namespace Music.Controllers
         public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
 
         [HttpPost("commands/execute")]
-        public Task<object> ExecuteCommand([FromBody] JObject args) => Resolve<AdminCommandExecutor>().ExecuteCommand(args);
+        public Task<object> ExecuteCommand([FromBody] JObject args) => Resolve<AdminService>().ExecuteCommand(args);
 
         [HttpPost("variables")]
         public Task Post(string key, object value) => Resolve<AdminService>().SetVariable(key, value);
