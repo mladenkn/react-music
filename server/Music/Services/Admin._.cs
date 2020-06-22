@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Music.DbModels;
 using Music.Models;
 using Newtonsoft.Json;
+using Utilities;
 
 namespace Music.Services
 {
@@ -16,6 +17,50 @@ namespace Music.Services
         public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _serviceProvider = serviceProvider;
+        }
+        public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object> cmd)
+        {
+            var type = cmd.Get<string>("type");
+
+            async Task<object> Execute()
+            {
+                switch (type)
+                {
+                    case "AddTracksToYouTubeVideos":
+                    {
+                        var videoIds = cmd.Get<IEnumerable<string>>("videoIds");
+                        return await Resolve<YouTubeVideosService>().AddTracksToVideos(videoIds);
+                    }
+                    case "DeleteTracks":
+                    {
+                        var trackIds = cmd.Get<IEnumerable<long>>("tracks").ToArray();
+                        await Resolve<TracksService>().Delete(trackIds);
+                        return "Successfully deleted all stated tracks";
+                    }
+                    case "CallMethod":
+                    {
+                        var methodParam = cmd.Get<string>("method");
+                        var methodParamIndexOfDot = methodParam.IndexOf(".")!;
+
+                        var className = methodParam.Substring(0, methodParamIndexOfDot);
+                        var methodName = methodParam.Substring(methodParamIndexOfDot + 1);
+                        var params_ = cmd.GetOrDefault<IReadOnlyDictionary<string, object>>("params") ?? new Dictionary<string, object>();
+
+                        var result = await CallMethod(className, methodName, params_);
+                        return result;
+                    }
+                    default:
+                        return "Unsupported command";
+                }
+            }
+
+            if (type == null)
+                throw new ApplicationException();
+            else
+            {
+                var r = await Execute();
+                return r;
+            }
         }
 
         public async Task<IReadOnlyList<AdminCommand>> GetCommands()

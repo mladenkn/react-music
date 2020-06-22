@@ -3,67 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Utilities;
 
 namespace Music.Services
 {
     public partial class AdminService
     {
-        public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object> cmd)
+        private Task<object> CallMethod(string className, string methodName, IReadOnlyDictionary<string, object> @params)
         {
-            var type = cmd.Get<string>("type");
-            
-            async Task<object> Execute()
-            {
-                switch (type)
-                {
-                    case "AddTracksToYouTubeVideos":
-                    {
-                        var videoIds = cmd.Get<IEnumerable<string>>("videoIds");
-                        return await Resolve<YouTubeVideosService>().AddTracksToVideos(videoIds);
-                    }
-                    case "DeleteTracks":
-                    {
-                        var trackIds = cmd.Get<IEnumerable<long>>("tracks").ToArray();
-                        await Resolve<TracksService>().Delete(trackIds);
-                        return "Successfully deleted all stated tracks";
-                    }
-                    case "CallMethod":
-                    {
-                        var methodParam = cmd.Get<string>("method");
-                        var methodParamIndexOfDot = methodParam.IndexOf(".")!;
+            var classTypeInfo = GetClass(className);
+            var matchingMethods = GetMatchingMethods(classTypeInfo, methodName, @params).ToArray();
 
-                        var className = methodParam.Substring(0, methodParamIndexOfDot);
-                        var methodName = methodParam.Substring(methodParamIndexOfDot + 1);
-                        var params_ = cmd.GetOrDefault<IReadOnlyDictionary<string, object>>("params") ?? new Dictionary<string, object>();
+            if (matchingMethods.Length == 0)
+                throw new ApplicationException("No matching methods found");
+            if (matchingMethods.Length != 1)
+                throw new ApplicationException($"Found {matchingMethods.Length} matching methods");
 
-                        var classTypeInfo = GetClass(className);
-                        var matchingMethods = GetMatchingMethods(classTypeInfo, methodName, params_).ToArray();
-
-                        if (matchingMethods.Length == 0)
-                            throw new ApplicationException("No matching methods found");
-                        if (matchingMethods.Length != 1)
-                            throw new ApplicationException($"Found {matchingMethods.Length} matching methods");
-
-                        var classInstance = _serviceProvider.GetService(classTypeInfo);
-                        var method = matchingMethods.Single();
-                        var paramsAdjusted = AdjustParams(params_, method.GetParameters());
-                        var result = await CallMethod(classInstance, method, paramsAdjusted);
-
-                        return result;
-                    }
-                    default:
-                        return "Unsupported command";
-                }
-            }
-
-            if (type == null)
-                throw new ApplicationException();
-            else
-            {
-                var r = await Execute();
-                return r;
-            }
+            var classInstance = _serviceProvider.GetService(classTypeInfo);
+            var method = matchingMethods.Single();
+            var paramsAdjusted = AdjustParams(@params, method.GetParameters());
+            return CallMethod(classInstance, method, paramsAdjusted);
         }
 
         private TypeInfo GetClass(string name)

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Models;
 using Music.Services;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Utilities;
 
