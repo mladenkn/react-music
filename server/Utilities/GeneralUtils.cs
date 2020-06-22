@@ -30,9 +30,12 @@ namespace Utilities
 
         public static bool IsIn<T>(this T o, IEnumerable<T> enumerable) => enumerable.Contains(o);
 
-        public static T Get<T>(this IReadOnlyDictionary<string, object> dict, string key)
+        public static T Get<T>(this IReadOnlyDictionary<string, object> dict, string key) => (T) dict[key];
+
+        public static T GetOrDefault<T>(this IReadOnlyDictionary<string, object> dict, string key)
         {
-            return (T) dict[key];
+            var valueOrDefault = dict.GetValueOrDefault(key);
+            return valueOrDefault == default ? default(T) : (T) valueOrDefault;
         }
     }
 }

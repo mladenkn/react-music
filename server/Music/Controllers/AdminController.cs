@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Models;
 using Music.Services;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Utilities;
 
 namespace Music.Controllers
 {
@@ -28,7 +31,11 @@ namespace Music.Controllers
         public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
 
         [HttpPost("commands/execute")]
-        public Task<object> ExecuteCommand([FromBody] JObject args) => Resolve<AdminService>().ExecuteCommand(args);
+        public Task<object> ExecuteCommand([FromBody] JObject args)
+        {
+            var dictParams = args.ToDictionary();
+            return Resolve<AdminService>().ExecuteCommand(dictParams);
+        }
 
         [HttpPost("variables")]
         public Task Post(string key, object value) => Resolve<AdminService>().SetVariable(key, value);

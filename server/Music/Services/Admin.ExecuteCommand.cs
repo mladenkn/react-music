@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using Utilities;
 
 namespace Music.Services
 {
     public partial class AdminService
     {
-        public async Task<object> ExecuteCommand(JObject cmd)
+        public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object> cmd)
         {
-            var type = cmd.GetValue("type")!.Value<string>();
+            var type = cmd.Get<string>("type");
             
             async Task<object> Execute()
             {
@@ -19,23 +19,23 @@ namespace Music.Services
                 {
                     case "AddTracksToYouTubeVideos":
                     {
-                        var videoIds = cmd.GetValue("videoIds")!.Values<string>();
+                        var videoIds = cmd.Get<IEnumerable<string>>("videoIds");
                         return await Resolve<YouTubeVideosService>().AddTracksToVideos(videoIds);
                     }
                     case "DeleteTracks":
                     {
-                        var trackIds = cmd.GetValue("tracks")!.Values<long>().ToArray();
+                        var trackIds = cmd.Get<IEnumerable<long>>("tracks").ToArray();
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
                     }
                     case "CallMethod":
                     {
-                        var methodParam = cmd.GetValue("method")!.Value<string>();
+                        var methodParam = cmd.Get<string>("method");
                         var methodParamIndexOfDot = methodParam.IndexOf(".")!;
 
                         var className = methodParam.Substring(0, methodParamIndexOfDot);
                         var methodName = methodParam.Substring(methodParamIndexOfDot + 1);
-                        var params_ = ((JObject) cmd.GetValue("params"))?.Properties().ToArray() ?? new JProperty[0];
+                        var params_ = cmd.GetOrDefault<IReadOnlyDictionary<string, object>>("params") ?? new Dictionary<string, object>();
 
                         var classTypeInfo = GetClass(className);
                         var matchingMethods = GetMatchingMethods(classTypeInfo, methodName, params_).ToArray();
@@ -46,7 +46,9 @@ namespace Music.Services
                             throw new ApplicationException($"Found {matchingMethods.Length} matching methods");
 
                         var classInstance = _serviceProvider.GetService(classTypeInfo);
-                        var result = await CallMethod(classInstance, matchingMethods.Single(), params_);
+                        var method = matchingMethods.Single();
+                        var paramsAdjusted = AdjustParams(params_, method.GetParameters());
+                        var result = await CallMethod(classInstance, method, paramsAdjusted);
 
                         return result;
                     }
@@ -59,15 +61,8 @@ namespace Music.Services
                 throw new ApplicationException();
             else
             {
-                try
-                {
-                    var r = await Execute();
-                    return r;
-                }
-                catch (ApplicationException e)
-                {
-                    throw new ApplicationException($"Command failed to execute because of user's mistake. {e.Message}");
-                }
+                var r = await Execute();
+                return r;
             }
         }
 
@@ -78,24 +73,24 @@ namespace Music.Services
             return classTypeInfo;
         }
 
-        private IEnumerable<MethodInfo> GetMatchingMethods(TypeInfo classTypeInfo, string methodName, IReadOnlyList<JProperty> params_)
+        private IEnumerable<MethodInfo> GetMatchingMethods(TypeInfo classTypeInfo, string methodName, IReadOnlyDictionary<string, object> params_)
         {
             return classTypeInfo.DeclaredMethods.Where(m =>
             {
                 var parametersInfo = m.GetParameters();
                 return m.Name == methodName && 
                        parametersInfo.Length == params_.Count() &&
-                       DoParamsMatch(parametersInfo, params_);
+                       DoParamsMatch(params_, parametersInfo);
             });
         }
 
-        private bool DoParamsMatch(IReadOnlyList<ParameterInfo> methodParams, IReadOnlyList<JProperty> params_)
+        private bool DoParamsMatch(IReadOnlyDictionary<string, object> params_, IReadOnlyList<ParameterInfo> methodParams)
         {
             var index = 0;
-            foreach (var property in params_)
+            foreach (var param in params_)
             {
                 var paramInfo = methodParams[index];
-                if (paramInfo.Name != property.Name)
+                if (paramInfo.Name != param.Key)
                     return false;
                 index++;
             }
@@ -103,9 +98,43 @@ namespace Music.Services
             return true;
         }
 
-        private async Task<object> CallMethod(object classInstance, MethodInfo method, IReadOnlyList<JProperty> params_)
+        private IReadOnlyDictionary<string, object> AdjustParams(IReadOnlyDictionary<string, object> params_, IReadOnlyList<ParameterInfo> methodParams)
         {
-            var paramsTransformed = params_.Select(e => GetPropertyValue(e.Value)).ToArray();
+            var nonMatchingParams = GetNonMatchingParams(params_, methodParams);
+            var newParamsPairs = params_.Select(param =>
+            {
+                var nonMatchingParam = nonMatchingParams.FirstOrDefault(nonMatchingParam => nonMatchingParam.key == param.Key);
+                if (nonMatchingParam == default)
+                    return param;
+                else if (nonMatchingParam.expectedType == typeof(int) && nonMatchingParam.actualType == typeof(long))
+                    return new KeyValuePair<string, object>(param.Key, (int)(long)param.Value);
+                else if (nonMatchingParam.expectedType == typeof(long) && nonMatchingParam.actualType == typeof(int))
+                    return new KeyValuePair<string, object>(param.Key, (long)(int)param.Value);
+                else if (nonMatchingParam.expectedType == typeof(int?) && nonMatchingParam.actualType == typeof(long))
+                    return new KeyValuePair<string, object>(param.Key, (int)(long)param.Value);
+                else if (nonMatchingParam.expectedType == typeof(long?) && nonMatchingParam.actualType == typeof(int))
+                    return new KeyValuePair<string, object>(param.Key, (long)(int)param.Value);
+                else
+                    throw new NotSupportedException();
+            });
+            return new Dictionary<string, object>(newParamsPairs);
+        }
+
+        private IEnumerable<(string key, Type expectedType, Type actualType)> GetNonMatchingParams(IReadOnlyDictionary<string, object> params_, IReadOnlyList<ParameterInfo> methodParams)
+        {
+            var index = 0;
+            foreach (var param in params_)
+            {
+                var paramInfo = methodParams[index];
+                if (!paramInfo.ParameterType.IsInstanceOfType(param.Value))
+                    yield return (param.Key, paramInfo.ParameterType, param.Value.GetType());
+                index++;
+            }
+        }
+
+        private async Task<object> CallMethod(object classInstance, MethodInfo method, IReadOnlyDictionary<string, object> params_)
+        {
+            var paramsTransformed = params_.Select(e => e.Value).ToArray();
             var result = method.Invoke(classInstance, paramsTransformed);
             switch (result)
             {
@@ -120,41 +149,6 @@ namespace Music.Services
                 }
                 default:
                     return result;
-            }
-        }
-
-        private object GetPropertyValue(JToken prop)
-        {
-            switch (prop.Type)
-            {
-                case JTokenType.Boolean:
-                    return (object)prop.Value<bool>();
-                case JTokenType.Float:
-                    return prop.Value<float>();
-                case JTokenType.Integer:
-                    return prop.Value<int>();
-                case JTokenType.String:
-                    return prop.Value<string>();
-                case JTokenType.Array:
-                    var firstElement = prop.Values<JToken>().FirstOrDefault();
-                    if (firstElement == null)
-                        throw new Exception("Empty arrays not supported");
-                    var mapped = prop.Values<JToken>().Select(GetPropertyValue).ToArray();
-                    switch (firstElement.Type)
-                    {
-                        case JTokenType.Boolean:
-                            return (object)mapped.Cast<bool>();
-                        case JTokenType.Float:
-                            return mapped.Cast<float>();
-                        case JTokenType.Integer:
-                            return mapped.Cast<int>();
-                        case JTokenType.String:
-                            return mapped.Cast<string>();
-                        default:
-                            throw new Exception("Parameter type not supported");
-                    }
-                default:
-                    throw new Exception("Parameter type not supported");
             }
         }
     }
