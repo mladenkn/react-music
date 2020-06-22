@@ -12,7 +12,7 @@ namespace Music.Services
         public async Task<object> ExecuteCommand(JObject cmd)
         {
             var type = cmd.GetValue("type")!.Value<string>();
-
+            
             async Task<object> Execute()
             {
                 switch (type)
@@ -22,7 +22,6 @@ namespace Music.Services
                         var videoIds = cmd.GetValue("videoIds")!.Values<string>();
                         return await Resolve<YouTubeVideosService>().AddTracksToVideos(videoIds);
                     }
-
                     case "DeleteTracks":
                     {
                         var trackIds = cmd.GetValue("tracks")!.Values<long>().ToArray();
