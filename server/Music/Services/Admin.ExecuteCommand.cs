@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using AngleSharp.Common;
-using AutoMapper.Configuration.Annotations;
-using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json.Linq;
 
 namespace Music.Services
@@ -19,16 +15,8 @@ namespace Music.Services
 
             async Task<object> Execute()
             {
-                var ytService = Resolve<YouTubeRemoteService>();
-
                 switch (type)
                 {
-                    case "GetYouTubeVideosWithoutTracks":
-                        return await Resolve<YouTubeVideosService>().GetVideosWithoutTracks();
-
-                    case "GetTracksWithoutYouTubeVideos":
-                        return await Resolve<TracksService>().GetTracksWithoutYouTubeVideos();
-
                     case "AddTracksToYouTubeVideos":
                     {
                         var videoIds = cmd.GetValue("videoIds")!.Values<string>();
@@ -40,14 +28,6 @@ namespace Music.Services
                         var trackIds = cmd.GetValue("tracks")!.Values<long>().ToArray();
                         await Resolve<TracksService>().Delete(trackIds);
                         return "Successfully deleted all stated tracks";
-                    }
-                    case "GetVideosOfChannelFromYouTubeApi":
-                    {
-                        var channelId = cmd.GetValue("channelId")!.Value<string>();
-                        var parts = cmd.GetValue("parts")?.Values<string>() ?? new string[0];
-                        var maxResults = cmd.GetValue("maxResults")!.Value<int>();
-                        var videos = await Resolve<YouTubeRemoteService>().GetVideosOfChannel(channelId, parts, maxResults);
-                        return videos;
                     }
                     case "CallMethod":
                     {
