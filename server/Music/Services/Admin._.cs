@@ -11,8 +11,11 @@ namespace Music.Services
 {
     public partial class AdminService : ServiceResolverAware
     {
+        private readonly IServiceProvider _serviceProvider;
+
         public AdminService(IServiceProvider serviceProvider) : base(serviceProvider)
         {
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<IReadOnlyList<AdminCommand>> GetCommands()
