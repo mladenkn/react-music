@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Google.Apis.YouTube.v3.Data;
 using Kernel;
-using Music.Models;
 
 namespace Music.DbModels
 {
