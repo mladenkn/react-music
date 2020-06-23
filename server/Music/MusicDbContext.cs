@@ -6,7 +6,7 @@ namespace Music
 {
     public sealed class MusicDbContext : DbContext
     {
-        public DbSet<YoutubeVideo> YoutubeVideos { get; set; }
+        public DbSet<YoutubeVideo> YouTubeVideos { get; set; }
 
         public DbSet<YouTubeChannel> YouTubeChannels { get; set; }
 

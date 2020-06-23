@@ -7,6 +7,7 @@ using Music.DbModels;
 using Music.Models;
 using Newtonsoft.Json;
 using Utilities;
+using Z.Expressions;
 
 namespace Music.Services
 {
@@ -18,6 +19,28 @@ namespace Music.Services
         {
             _serviceProvider = serviceProvider;
         }
+
+        public async Task<object> ExecuteCsCommand(string code)
+        {
+            var c = Resolve<EvalContext>();
+            var @delegate = c.Compile<Func<MusicDbContext, object>>(code, "Db");
+            var r = @delegate(Db);
+            switch (r)
+            {
+                case null:
+                    return null;
+                case Task taskResult:
+                {
+                    await taskResult;
+                    return r.GetType().IsGenericType ?
+                        r.GetType().GetProperty("Result")!.GetValue(r) :
+                        null;
+                }
+                default:
+                    return r;
+            }
+        }
+
         public async Task<object> ExecuteCommand(IReadOnlyDictionary<string, object> cmd)
         {
             var type = cmd.Get<string>("type");

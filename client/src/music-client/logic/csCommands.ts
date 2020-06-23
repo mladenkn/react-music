@@ -1,6 +1,8 @@
 import { Loadable, Loaded } from "../../utils/types";
 import { CsCommand } from "../shared/admin";
 import { useImmer } from "use-immer";
+import { useAdminApi } from "../api/adminApi";
+import yaml from 'js-yaml';
 
 interface CsCommandsState {
   activeCommandId: number
@@ -21,6 +23,8 @@ export interface CsCommandsLogic {
 }
 
 export function useCsCommands(): Loadable<CsCommandsLogic> {
+
+  const api = useAdminApi()
 
   const [state, updateState] = useImmer<Loadable<CsCommandsState>>({
     type: 'LOADED',
@@ -64,14 +68,27 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
   }
   
   function executeCommand() {
-
+    if(state.type !== 'LOADED')
+      throw new Error()
+    api.executeCsCommand(state.data.activeCommandCode)
+      .then(r => {
+        updateState(draft => {
+          if(draft.type !== 'LOADED')
+            throw new Error()
+          const yamlResponse = yaml.safeDump(r.data)
+          draft.data.activeCommandResponseYaml = {
+            type: 'LOADED',
+            data: yamlResponse
+          }
+        })
+      })
   }
 
   return {
     type: 'LOADED',
     data: {
       activeCommand,
-      activeCommandResponseYaml: {type: 'LOADED', data: ''},
+      activeCommandResponseYaml: state.data.activeCommandResponseYaml,
       commands: [],
       setActiveCommand, 
       updateCommandCode, 

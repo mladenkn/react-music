@@ -35,6 +35,9 @@ namespace Music.Controllers
             return Resolve<AdminService>().ExecuteCommand(dictParams);
         }
 
+        [HttpPost("cs-commands/execute")]
+        public Task<object> ExecuteCommand([FromBody] dynamic args) => Resolve<AdminService>().ExecuteCsCommand((string) args.command);
+
         [HttpPost("variables")]
         public Task Post(string key, object value) => Resolve<AdminService>().SetVariable(key, value);
     }
