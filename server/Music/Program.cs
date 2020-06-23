@@ -21,7 +21,6 @@ namespace Music
             //var dbIniter = sp.GetRequiredService<DatabaseInitService>();
             //await dbIniter.ResetDb();
             //await dbIniter.SaveTracks();
-            //await dbIniter.SaveAdminSectionData();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
