@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Music.DbModels;
+using Music.Services;
 using Newtonsoft.Json;
 using Z.Expressions;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -72,8 +73,7 @@ namespace Music
             services.AddScoped(sp =>
             {
                 var c = new EvalContext();
-                c.RegisterAssembly(typeof(Startup).Assembly);
-                c.RegisterExtensionMethod(typeof(EntityFrameworkQueryableExtensions));
+                sp.GetRequiredService<CSharpCodeExecutor>().Register(c);
                 return c;
             });
 

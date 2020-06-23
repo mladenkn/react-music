@@ -96,8 +96,6 @@ namespace Music.Services
             var result = method.Invoke(classInstance, paramsTransformed);
             switch (result)
             {
-                case null:
-                    return null;
                 case Task taskResult:
                 {
                     await taskResult;
