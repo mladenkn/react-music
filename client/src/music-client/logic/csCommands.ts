@@ -1,5 +1,6 @@
-import { Loadable } from "../../utils/types";
+import { Loadable, Loaded } from "../../utils/types";
 import { CsCommand } from "../shared/admin";
+import { useImmer } from "use-immer";
 
 interface CsCommandsState {
   activeCommandId: number
@@ -8,7 +9,7 @@ interface CsCommandsState {
   commands: CsCommand[]  
 }
 
-interface CsCommandsLogic {
+export interface CsCommandsLogic {
   activeCommand: CsCommand
   activeCommandResponseYaml: Loadable<string>
   commands: CsCommand[]
@@ -19,20 +20,39 @@ interface CsCommandsLogic {
   executeCommand(): void
 }
 
-export function useCsCommands(): CsCommandsLogic {
+export function useCsCommands(): Loadable<CsCommandsLogic> {
+
+  const [state, updateState] = useImmer<Loadable<CsCommandsState>>({
+    type: 'LOADED',
+    data: {
+      activeCommandCode: '',
+      activeCommandId: 1,
+      activeCommandResponseYaml: {
+        type: 'LOADED',
+        data: ''
+      },
+      commands: []
+    }
+  })
+
+  if(state.type !== 'LOADED')
+    throw new Error()
 
   const activeCommand = {
     id: 1,
     name: 'First command',
-    code: ''
+    code: state.data.activeCommandCode
   }
 
   function setActiveCommand(cmdId: number) {
 
   }
   
-  function updateCommandCode(yaml: string) {
-
+  function updateCommandCode(code: string) {
+    updateState(draft => {
+      const draft_ = draft as Loaded<CsCommandsState>
+      draft_.data.activeCommandCode = code
+    })
   }
   
   function updateCommandName(newName: string) {
@@ -48,13 +68,16 @@ export function useCsCommands(): CsCommandsLogic {
   }
 
   return {
-    activeCommand,
-    activeCommandResponseYaml: {type: 'LOADED', data: ''},
-    commands: [],
-    setActiveCommand, 
-    updateCommandCode, 
-    updateCommandName, 
-    addNewCommand, 
-    executeCommand
+    type: 'LOADED',
+    data: {
+      activeCommand,
+      activeCommandResponseYaml: {type: 'LOADED', data: ''},
+      commands: [],
+      setActiveCommand, 
+      updateCommandCode, 
+      updateCommandName, 
+      addNewCommand, 
+      executeCommand
+    }
   }
 }

@@ -9,7 +9,7 @@ import BackupIcon from '@material-ui/icons/Backup';
 import CloseIcon from '@material-ui/icons/Close';
 import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
 import { Autocomplete } from '@material-ui/lab';
-import { AdminCommand } from '../shared/admin';
+import { CsCommand } from '../shared/admin';
 
 const useStyles = makeStyles({
   root: {
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
   command: {    
   },
   commandCodeMirrorRoot: {
-    height: ems(12)
+    // height: ems(12)
   },
   response: {
     marginTop: ems(2.65),
@@ -91,7 +91,7 @@ export const AdminSection = () => {
               options={logic.data.commands}
               getOptionLabel={o => o.name}
               renderInput={params => <TextField {...params} />}
-              onChange={(event: any, command: AdminCommand | null) => command && logic.data.setActiveCommand(command.id)} 
+              onChange={(event: any, command: CsCommand | null) => command && logic.data.setActiveCommand(command.id)} 
             />
             <div className={styles.commandEditorActionBarRight}>
               <IconButtonWithTextFieldPopup 
@@ -115,14 +115,8 @@ export const AdminSection = () => {
           <YamlEditor
             className={styles.command}
             codeMirrorRootClassName={styles.commandCodeMirrorRoot}
-            value={{ type: 'LOADED', data: logic.data.activeCommand.yaml }}
-            onChange={logic.data.updateCommandYaml}
-          />
-          <YamlEditor 
-            className={styles.jsMapper}
-            codeMirrorRootClassName={styles.jsMapperCodeMirrorRoot} 
-            value={{ type: 'LOADED', data: logic.data.jsMapperYaml }}
-            onChange={logic.data.updateJsMapperYaml}
+            value={{ type: 'LOADED', data: logic.data.activeCommand.code }}
+            onChange={logic.data.updateCommandCode}
           />
           <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>
         </div>
