@@ -3,18 +3,18 @@
 namespace Music.Models
 {
 
-    public class AdminCommandForAdminSection
+    public class CsCommandForAdminSection
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public string Yaml { get; set; }
+        public string Code { get; set; }
     }
 
     public class AdminSectionParams
     {
-        public IEnumerable<AdminCommandForAdminSection> Commands { get; set; }
+        public IEnumerable<CsCommandForAdminSection> Commands { get; set; }
 
         public int? CurrentCommandId { get; set; }
     }

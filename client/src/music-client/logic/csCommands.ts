@@ -1,10 +1,12 @@
-import { Loadable, Loaded } from "../../utils/types";
+import { Loadable } from "../../utils/types";
 import { CsCommand } from "../shared/admin";
 import { useImmer } from "use-immer";
 import { useAdminApi } from "../api/adminApi";
 import yaml from 'js-yaml';
+import { useDebouncedCallback } from "use-debounce/lib";
+import { useEffect } from "../../utils/useEffect";
 
-interface CsCommandsState {
+interface State {
   activeCommandId: number
   activeCommandCode: string
   activeCommandResponseYaml: Loadable<string>
@@ -26,7 +28,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
 
   const api = useAdminApi()
 
-  const [state, updateState] = useImmer<Loadable<CsCommandsState>>({
+  const [state, updateState] = useImmer<Loadable<State>>({
     type: 'LOADED',
     data: {
       activeCommandCode: '',
@@ -39,6 +41,24 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     }
   })
 
+  useEffect(() => {
+    api.getInitialParams()
+      .then(response => {
+        const activeCommandId = response.currentCommandId || response.commands[0].id
+        updateState(() => ({
+          type: 'LOADED',
+          data: {
+            activeCommandId,
+            activeCommandCode: response.commands.find(c => c.id === activeCommandId)!.code,
+            activeCommandResponseYaml: { type: 'LOADED', data: '' },
+            commands: response.commands,
+            jsMapperYaml: '',
+            savedToVariableMessageShown: false,
+          }
+        }))
+      })
+  }, [], { runOnFirstRender: true })
+
   if(state.type !== 'LOADED')
     throw new Error()
 
@@ -48,23 +68,58 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     code: state.data.activeCommandCode
   }
 
-  function setActiveCommand(cmdId: number) {
+  function updateCommand(cmd: CsCommand) {
+    api.updateCommand(cmd)
+      .then(() => {
+        updateState(draft => {
+          if(draft.type !== 'LOADED')
+            throw new Error()
+          const cmd = draft.data.commands.find(q => q.id === draft.data.activeCommandId)!
+          cmd.name = cmd.name
+          cmd.code = cmd.code
+        })
+      })
+  }
 
+  const [updateCommandDebounced] = useDebouncedCallback(updateCommand, 1000)
+
+  function setActiveCommand(cmdId: number) {      
+    updateState(draft => {
+      if(draft.type !== 'LOADED')
+        throw new Error()
+      draft.data.activeCommandId = cmdId
+      draft.data.activeCommandCode = draft.data.commands.find(c => c.id === cmdId)!.code
+    })
   }
   
   function updateCommandCode(code: string) {
     updateState(draft => {
-      const draft_ = draft as Loaded<CsCommandsState>
-      draft_.data.activeCommandCode = code
+      if(draft.type !== 'LOADED')
+        throw new Error()
+      draft.data.activeCommandCode = code
     })
+    updateCommandDebounced({ ...activeCommand, code })
   }
   
   function updateCommandName(newName: string) {
-
+    if(state.type !== 'LOADED')
+      throw new Error()
+    updateCommand({ id: activeCommand.id, name: newName, code: state.data.activeCommandCode })
   }
   
   function addNewCommand(name: string) {
-
+    const cmd = { name, code: '' }
+    api.addCommand(cmd)
+      .then((cmdFromApi) => {
+        updateState(draft => {
+          if(draft.type !== 'LOADED')
+            throw new Error()
+          draft.data.activeCommandId = cmdFromApi.id
+          draft.data.activeCommandResponseYaml = { type: 'LOADED', data: '' }
+          draft.data.activeCommandCode = ''
+          draft.data.commands.unshift(cmdFromApi)
+        }) 
+      })    
   }
   
   function executeCommand() {

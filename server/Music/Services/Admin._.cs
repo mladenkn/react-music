@@ -66,24 +66,18 @@ namespace Music.Services
             }
         }
 
-        public async Task<IReadOnlyList<AdminCommand>> GetCommands()
-        {
-            return await Query<AdminCommand>()
-                .ToArrayAsync();
-        }
-
         public async Task<AdminSectionParams> GetAdminSectionParams()
         {
             var userId = Resolve<ICurrentUserContext>().Id;
 
-            var commands = await Query<AdminCommand>()
+            var commands = await Query<CsCommand>()
                 .Where(c => c.UserId == userId)
                 .OrderByDescending(c => c.AddedAt)
-                .Select(c => new AdminCommandForAdminSection
+                .Select(c => new CsCommandForAdminSection
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Yaml = c.Yaml
+                    Code = c.Code
                 })
                 .ToArrayAsync();
 
@@ -114,31 +108,31 @@ namespace Music.Services
             await Db.SaveChangesAsync();
         }
 
-        public async Task<AdminCommandForAdminSection> Add(AdminCommandForAdminSection cmd)
+        public async Task<CsCommandForAdminSection> Add(CsCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
-            var cmdDbEntity = new AdminCommand
+            var cmdDbEntity = new CsCommand
             {
                 UserId = userId,
                 Name = cmd.Name,
-                Yaml = cmd.Yaml,
+                Code = cmd.Code,
                 AddedAt = DateTime.Now
             };
             Db.Add(cmdDbEntity);
             await Db.SaveChangesAsync();
-            return new AdminCommandForAdminSection
+            return new CsCommandForAdminSection
             {
                 Id = cmdDbEntity.Id,
                 Name = cmdDbEntity.Name,
-                Yaml = cmdDbEntity.Yaml
+                Code = cmdDbEntity.Code
             };
         }
 
-        public async Task Update(AdminCommandForAdminSection cmd)
+        public async Task Update(CsCommandForAdminSection cmd)
         {
             var userId = Resolve<ICurrentUserContext>().Id;
             
-            var cmdFromDb = await Query<AdminCommand>()
+            var cmdFromDb = await Query<CsCommand>()
                 .FirstOrDefaultAsync(c => c.Id == cmd.Id);
 
             if (cmdFromDb == null)
@@ -147,7 +141,7 @@ namespace Music.Services
                 throw new ApplicationException("Trying to update other user's command.");
 
             cmdFromDb.Name = cmd.Name;
-            cmdFromDb.Yaml = cmd.Yaml;
+            cmdFromDb.Code = cmd.Code;
 
             Db.Update(cmdFromDb);
             await Db.SaveChangesAsync();

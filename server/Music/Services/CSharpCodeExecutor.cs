@@ -20,7 +20,7 @@ namespace Music.Services
         public async Task<object> Execute(string code)
         {
             var c = Resolve<EvalContext>();
-            var @delegate = c.Compile<Func<MusicDbContext, object>>(code, "Db");
+            var @delegate = c.Compile<Func<MusicDbContext, object>>(code, "db");
             var r = @delegate(Db);
             switch (r)
             {

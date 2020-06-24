@@ -23,10 +23,10 @@ namespace Music.Controllers
         public Task Post(AdminSectionState s) => Resolve<AdminService>().SaveSectionState(s);
 
         [HttpPost("commands")]
-        public Task<AdminCommandForAdminSection> Post(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Add(cmd);
+        public Task<CsCommandForAdminSection> Post(CsCommandForAdminSection cmd) => Resolve<AdminService>().Add(cmd);
 
         [HttpPut("commands")]
-        public Task Put(AdminCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
+        public Task Put(CsCommandForAdminSection cmd) => Resolve<AdminService>().Update(cmd);
 
         [HttpPost("commands/execute")]
         public Task<object> ExecuteCommand([FromBody] JObject args)

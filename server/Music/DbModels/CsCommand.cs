@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Music.DbModels
 {
-    public class AdminCommand : IDatabaseEntity
+    public class CsCommand : IDatabaseEntity
     {
         public int Id { get; set; }
 
@@ -14,12 +14,12 @@ namespace Music.DbModels
 
         public string Name { get; set; }
 
-        public string Yaml { get; set; }
+        public string Code { get; set; }
 
         public DateTime AddedAt { get; set; }
 
         public static void Configure(ModelBuilder modelBuilder) =>
-            modelBuilder.Entity<AdminCommand>(b =>
+            modelBuilder.Entity<CsCommand>(b =>
             {
                 b.Property(m => m.Name).IsRequired();
                 b.HasIndex(m => m.Name).IsUnique();

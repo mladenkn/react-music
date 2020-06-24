@@ -5,7 +5,7 @@ export interface AdminCommand {
 }
 
 export interface AdminSectionParams {
-  commands: AdminCommand[]
+  commands: CsCommand[]
   currentCommandId?: number
   currentCommandResponse: string
 }
