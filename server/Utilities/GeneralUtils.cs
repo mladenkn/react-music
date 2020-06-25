@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -36,6 +37,12 @@ namespace Utilities
         {
             var valueOrDefault = dict.GetValueOrDefault(key);
             return valueOrDefault == default ? default(T) : (T) valueOrDefault;
+        }
+
+        public static async Task<TMappedResult> Then<TResult, TMappedResult>(this Task<TResult> task, Func<TResult, TMappedResult> map)
+        {
+            var r = await task;
+            return map(r);
         }
     }
 }

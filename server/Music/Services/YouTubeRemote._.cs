@@ -6,6 +6,7 @@ using Google.Apis.YouTube.v3.Data;
 using Microsoft.EntityFrameworkCore;
 using Music.DbModels;
 using Music.Models;
+using Utilities;
 
 namespace Music.Services
 {
@@ -59,11 +60,11 @@ namespace Music.Services
             return response.PageInfo.TotalResults ?? 0;
         }
 
-        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int? maxResults)
+        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int? maxResults = null)
         {
             var channel = await Query<YouTubeChannel>().FirstOrDefaultAsync(c => c.Id == channelId);
-            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults);
-            var videos = await GetByIdsIfFound2(allVideosIds.ToArray(), videoParts);
+            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults).Then(r => r.ToArray());
+            var videos = await GetByIdsIfFound2(allVideosIds, videoParts);
             return videos;
         }
 
@@ -76,7 +77,7 @@ namespace Music.Services
             request.PlaylistId = playlistId;
             request.MaxResults = remainingCount;
 
-            var r = await request.ExecuteWithPagingAsync();
+            var r = maxResults == null ? await request.ExecuteAsync().Then(r => r.Items) : await request.ExecuteWithPagingAsync();
             return r.Select(i => i.ContentDetails.VideoId);
         }
     }
