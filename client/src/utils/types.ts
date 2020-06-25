@@ -22,7 +22,7 @@ export interface IdWithName {
 
 export interface Loaded<T> {
   type: 'LOADED',
-  data: T
+  value: T
 }
 
 export type Loadable<T> = Loaded<T> | { type: 'LOADING' } | { type: 'ERROR' }

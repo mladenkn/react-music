@@ -25,7 +25,7 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   function saveResponseToVariable(key: string){
     if(commands.type !== 'LOADED')
       throw new Error()
-    api.setVaraiable(key, commands.data.activeCommandResponse)
+    api.setVaraiable(key, commands.value.activeCommandResponse)
       .then(() => 
         updateState(() => ({ savedToVariableMessageShown: true }))
       )
@@ -38,8 +38,8 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   if(commands.type === 'LOADED'){
     return {
       type: 'LOADED',
-      data: {
-        ...commands.data,
+      value: {
+        ...commands.value,
         backupCreatedMessageShown: false,
         saveResponseToVariable,
         hideSavedToVariableMessage

@@ -84,32 +84,32 @@ export const AdminSection = () => {
     return <div>Loading...</div>
   }
   else if (logic.type === 'LOADED') {
-    const activeCommandResponse = logic.data.activeCommandResponse.type === 'LOADED' ?
-      { type: 'LOADED', data: yaml.safeDump(logic.data.activeCommandResponse.data) } as Loaded<string> :
-      logic.data.activeCommandResponse
+    const activeCommandResponse = logic.value.activeCommandResponse.type === 'LOADED' ?
+      { type: 'LOADED', value: yaml.safeDump(logic.value.activeCommandResponse.value) } as Loaded<string> :
+      logic.value.activeCommandResponse
     return (
       <div className={styles.root}>
         <div className={styles.commandEditorCol}>
           <div className={styles.commandEditorActionBar}>
             <Autocomplete
-              value={logic.data.activeCommand} 
+              value={logic.value.activeCommand} 
               className={styles.commandSelect}
-              options={logic.data.commands}
+              options={logic.value.commands}
               getOptionLabel={o => o.name}
               renderInput={params => <TextField {...params} />}
-              onChange={(event: any, command: CsCommand | null) => command && logic.data.setActiveCommand(command.id)} 
+              onChange={(event: any, command: CsCommand | null) => command && logic.value.setActiveCommand(command.id)} 
             />
             <div className={styles.commandEditorActionBarRight}>
-              {logic.data.activeCommand && <IconButtonWithTextFieldPopup 
-                textFieldInitialValue={logic.data.activeCommand.name}
-                onCommit={logic.data.updateCommandName}
+              {logic.value.activeCommand && <IconButtonWithTextFieldPopup 
+                textFieldInitialValue={logic.value.activeCommand.name}
+                onCommit={logic.value.updateCommandName}
                 popupId={1} 
                 size='small'
               >
                 <EditIcon />
               </IconButtonWithTextFieldPopup>}
               <IconButtonWithTextFieldPopup 
-                onCommit={logic.data.addNewCommand}
+                onCommit={logic.value.addNewCommand}
                 popupId={2} 
                 className={styles.addButton} 
                 size='small'
@@ -121,11 +121,11 @@ export const AdminSection = () => {
           <CodeEditor
             className={styles.command}
             codeMirrorRootClassName={styles.commandCodeMirrorRoot}
-            value={{ type: 'LOADED', data: logic.data.activeCommand?.code || '' }}
-            onChange={logic.data.activeCommand && logic.data.updateCommandCode}
+            value={{ type: 'LOADED', value: logic.value.activeCommand?.code || '' }}
+            onChange={logic.value.activeCommand && logic.value.updateCommandCode}
             mode='clike'
           />
-          {logic.data.activeCommand && <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>}
+          {logic.value.activeCommand && <Button onClick={logic.value.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>}
         </div>
         <div className={styles.responseColumn}>
           <CodeEditor
@@ -137,7 +137,7 @@ export const AdminSection = () => {
           <IconButtonWithTextFieldPopup
             className={styles.backupButton}
             textFieldInitialValue={() => ' - ' + new Date().toLocaleString()}
-            onCommit={logic.data.saveResponseToVariable}
+            onCommit={logic.value.saveResponseToVariable}
             popupId={1}
           >
             <BackupIcon />
@@ -148,12 +148,12 @@ export const AdminSection = () => {
             vertical: 'bottom',
             horizontal: 'right',
           }}
-          open={logic.data.backupCreatedMessageShown}
+          open={logic.value.backupCreatedMessageShown}
           autoHideDuration={6000}
-          onClose={logic.data.hideSavedToVariableMessage}
+          onClose={logic.value.hideSavedToVariableMessage}
           message="Variable set"
           action={
-            <IconButton size="small" aria-label="close" color="secondary" onClick={logic.data.hideSavedToVariableMessage}>
+            <IconButton size="small" aria-label="close" color="secondary" onClick={logic.value.hideSavedToVariableMessage}>
               <CloseIcon fontSize="small" />
             </IconButton>
           }

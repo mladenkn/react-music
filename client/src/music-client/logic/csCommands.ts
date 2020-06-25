@@ -39,10 +39,10 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
         const activeCommandId = response.currentCommandId || response.commands[0]?.id
         updateState(() => ({
           type: 'LOADED',
-          data: {
+          value: {
             activeCommandId,
             activeCommandCode: response.commands.find(c => c.id === activeCommandId)?.code,
-            activeCommandResponse: { type: 'LOADED', data: '' },
+            activeCommandResponse: { type: 'LOADED', value: '' },
             commands: response.commands,
             savedToVariableMessageShown: false,
           }
@@ -51,11 +51,11 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
   }, [], { runOnFirstRender: true })
 
   const activeCommand = 
-    state.type === 'LOADED' && state.data.activeCommandId ?
+    state.type === 'LOADED' && state.value.activeCommandId ?
     {
-      id: state.data.activeCommandId,
-      name: state.data.commands.find(c => c.id === state.data.activeCommandId)!.name,
-      code: state.data.activeCommandCode!
+      id: state.value.activeCommandId,
+      name: state.value.commands.find(c => c.id === state.value.activeCommandId)!.name,
+      code: state.value.activeCommandCode!
     } :
     undefined
 
@@ -65,7 +65,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
         updateState(draft => {
           if(draft.type !== 'LOADED')
             throw new Error()
-          const cmd_ = draft.data.commands.find(q => q.id === draft.data.activeCommandId)!
+          const cmd_ = draft.value.commands.find(q => q.id === draft.value.activeCommandId)!
           cmd_.name = cmd.name
           cmd_.code = cmd.code
         })
@@ -76,8 +76,8 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     updateState(draft => {
       if(draft.type !== 'LOADED')
         throw new Error()
-      draft.data.activeCommandId = cmdId
-      draft.data.activeCommandCode = draft.data.commands.find(c => c.id === cmdId)!.code
+      draft.value.activeCommandId = cmdId
+      draft.value.activeCommandCode = draft.value.commands.find(c => c.id === cmdId)!.code
     })
   }
   
@@ -87,7 +87,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     updateState(draft => {
       if(draft.type !== 'LOADED' || !activeCommand)
         throw new Error()
-      draft.data.activeCommandCode = code
+      draft.value.activeCommandCode = code
     })
     updateCommandDebounced({ ...activeCommand, code })
   }
@@ -105,10 +105,10 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
         updateState(draft => {
           if(draft.type !== 'LOADED')
             throw new Error()
-          draft.data.activeCommandId = cmdFromApi.id
-          draft.data.activeCommandResponse = { type: 'LOADED', data: '' }
-          draft.data.activeCommandCode = ''
-          draft.data.commands.unshift(cmdFromApi)
+          draft.value.activeCommandId = cmdFromApi.id
+          draft.value.activeCommandResponse = { type: 'LOADED', value: '' }
+          draft.value.activeCommandCode = ''
+          draft.value.commands.unshift(cmdFromApi)
         }) 
       })    
   }
@@ -121,9 +121,9 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
         updateState(draft => {
           if(draft.type !== 'LOADED')
             throw new Error()
-          draft.data.activeCommandResponse = {
+          draft.value.activeCommandResponse = {
             type: 'LOADED',
-            data: r.data
+            value: r.data
           }
         })
       })
@@ -136,10 +136,10 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
 
   return {
     type: 'LOADED',
-    data: {
+    value: {
       activeCommand,
-      activeCommandResponse: state.data.activeCommandResponse,
-      commands: state.data.commands,
+      activeCommandResponse: state.value.activeCommandResponse,
+      commands: state.value.commands,
       setActiveCommand, 
       updateCommandCode, 
       updateCommandName, 

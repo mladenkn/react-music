@@ -50,7 +50,7 @@ export const CodeEditor = (props: Props) => {
     props.onChange && props.onChange(value)
   }
 
-  const content = props.value.type === 'LOADED' ? props.value.data : ''
+  const content = props.value.type === 'LOADED' ? props.value.value : ''
  
   return (
     <>
