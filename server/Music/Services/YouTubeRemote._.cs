@@ -63,31 +63,21 @@ namespace Music.Services
         {
             var channel = await Query<YouTubeChannel>().FirstOrDefaultAsync(c => c.Id == channelId);
             var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults);
-            var videos = await Resolve<YouTubeRemoteService>().GetByIdsIfFound2(allVideosIds.ToArray(), videoParts);
+            var videos = await GetByIdsIfFound2(allVideosIds.ToArray(), videoParts);
             return videos;
         }
 
-        private async Task<IReadOnlyList<string>> GetAllVideosIdsFromPlaylist(string playlistId, int? maxResults = null)
+        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId, int? maxResults = null)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
-            var r = new List<string>();
             var remainingCount = maxResults;
 
-            string nextPageToken = null;
-            do
-            {
-                var request = ytService.PlaylistItems.List("contentDetails");
-                request.PageToken = nextPageToken;
-                request.PlaylistId = playlistId;
-                request.MaxResults = remainingCount;
-                var response = await request.ExecuteAsync();
-                r.AddRange(response.Items.Select(i => i.ContentDetails.VideoId));
-                nextPageToken = response.NextPageToken;
-                remainingCount -= response.Items.Count;
-            }
-            while (nextPageToken != null && remainingCount != 0);
+            var request = ytService.PlaylistItems.List("contentDetails");
+            request.PlaylistId = playlistId;
+            request.MaxResults = remainingCount;
 
-            return r;
+            var r = await request.ExecuteWithPagingAsync();
+            return r.Select(i => i.ContentDetails.VideoId);
         }
     }
 }

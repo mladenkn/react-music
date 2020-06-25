@@ -47,8 +47,7 @@ namespace Music.Services
             });
         }
 
-        private async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(
-            IEnumerable<YouTubeChannel> channels)
+        private async Task<IEnumerable<YouTubeChannel>> FilterToNotPersistedChannels(IEnumerable<YouTubeChannel> channels)
         {
             var allChannelsIdsFromDb = await Query<YouTubeChannel>().Select(c => c.Id).ToArrayAsync();
             var filtered = channels.Where(c => !c.Id.IsIn(allChannelsIdsFromDb));
@@ -63,14 +62,6 @@ namespace Music.Services
                 .ToArrayAsync();
             var notFoundIds = ids.Except(foundIds);
             return notFoundIds;
-        }
-
-        public async Task<IEnumerable<YoutubeVideo>> GetVideosWithoutTracks()
-        {
-            var r = await Query<YoutubeVideo>()
-                .Where(v => v.TrackId == null)
-                .ToArrayAsync();
-            return r;
         }
 
         public async Task<YoutubeVideo[]> AddTracksToVideos(IEnumerable<string> ids)

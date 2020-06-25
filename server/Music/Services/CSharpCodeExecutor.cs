@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Z.Expressions;
 
 namespace Music.Services
@@ -14,7 +15,9 @@ namespace Music.Services
         public void Register(EvalContext c)
         {
             c.RegisterAssembly(typeof(Startup).Assembly);
+            c.RegisterAssembly(typeof(Utilities.ReflectionUtils).Assembly);
             c.RegisterExtensionMethod(typeof(EntityFrameworkQueryableExtensions));
+            c.RegisterType(typeof(JsonConvert));
         }
 
         public async Task<object> Execute(string code)
