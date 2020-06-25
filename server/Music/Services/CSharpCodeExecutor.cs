@@ -21,13 +21,13 @@ namespace Music.Services
         {
             var c = Resolve<EvalContext>();
 
-            var variables = Resolve<PersistantVariablesService>();
+            var store = Resolve<PersistantKeyValueStore>();
             object result;
 
             try
             {
-                var @delegate = c.Compile<Func<MusicDbContext, PersistantVariablesService, object>>(code, "db", "variables");
-                result = @delegate(Db, variables);
+                var @delegate = c.Compile<Func<MusicDbContext, PersistantKeyValueStore, object>>(code, "db", "store");
+                result = @delegate(Db, store);
             }
             catch (Exception e)
             {

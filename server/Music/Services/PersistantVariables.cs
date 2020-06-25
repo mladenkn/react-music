@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 namespace Music.Services
 {
-    public class PersistantVariablesService : ServiceResolverAware
+    public class PersistantKeyValueStore : ServiceResolverAware
     {
         private readonly string _folderPath;
 
-        public PersistantVariablesService(IServiceProvider serviceProvider) : base(serviceProvider)
+        public PersistantKeyValueStore(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             var projFolder = Resolve<IWebHostEnvironment>().ContentRootPath;
             _folderPath = Path.Combine(projFolder, "..", "variable-files");

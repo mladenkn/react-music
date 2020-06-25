@@ -150,7 +150,7 @@ namespace Music.Services
 
         public Task SetVariable(string key, object value)
         {
-            var variableService = Resolve<PersistantVariablesService>();
+            var variableService = Resolve<PersistantKeyValueStore>();
             return variableService.Set(key, value);
         }
     }
