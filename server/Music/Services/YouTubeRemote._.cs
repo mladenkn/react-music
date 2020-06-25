@@ -60,11 +60,13 @@ namespace Music.Services
             return response.PageInfo.TotalResults ?? 0;
         }
 
-        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int maxResults)
+        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int maxResults, bool includeKnown = true)
         {
             var channel = await Query<YouTubeChannel>().FirstOrDefaultAsync(c => c.Id == channelId);
-            var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults).Then(r => r.ToArray());
-            var videos = await GetByIdsIfFound2(allVideosIds, videoParts);
+            var videosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults).Then(r => r.ToArray());
+            if (!includeKnown)
+                videosIds = await Resolve<YouTubeVideosService>().FilterToUnknownVideosIds(videosIds).Then(r => r.ToArray());
+            var videos = await GetByIdsIfFound2(videosIds, videoParts);
             return videos;
         }
 
