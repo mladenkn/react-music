@@ -4,6 +4,7 @@ import { useImmer } from "use-immer";
 import { useAdminApi } from "../api/adminApi";
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useEffect } from "../../utils/useEffect";
+import { Draft } from "immer";
 
 interface State {
   activeCommandId?: number
@@ -59,13 +60,20 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     } :
     undefined
 
+  function updateLoadedState(mutate: (draft: Draft<State>) => void){
+    updateState(draft => {
+      if(draft.type !== 'LOADED')
+        throw new Error()
+      else
+        mutate(draft.value)      
+    })
+  }
+
   function updateCommand(cmd: CsCommand) {
     api.updateCommand(cmd)
       .then(() => {
-        updateState(draft => {
-          if(draft.type !== 'LOADED')
-            throw new Error()
-          const cmd_ = draft.value.commands.find(q => q.id === draft.value.activeCommandId)!
+        updateLoadedState(draft => {
+          const cmd_ = draft.commands.find(q => q.id === draft.activeCommandId)!
           cmd_.name = cmd.name
           cmd_.code = cmd.code
         })
@@ -116,14 +124,32 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
   function executeCommand() {
     if(state.type !== 'LOADED' || !activeCommand)
       throw new Error()
+    updateLoadedState(draft => {
+      draft.activeCommandResponse = {
+        type : 'LOADING'
+      }
+    })
     api.executeCsCommand(activeCommand.code)
       .then(r => {
-        updateState(draft => {
-          if(draft.type !== 'LOADED')
-            throw new Error()
-          draft.value.activeCommandResponse = {
+        updateLoadedState(draft => {
+          draft.activeCommandResponse = {
             type: 'LOADED',
             value: r.data
+          }
+        })
+      })
+      .catch(e => {
+        let message: string
+        
+        if(e.response.status >= 400 && e.response.status < 500)
+          message = `Bad command: ${e.response.data}`
+        else if(e.response.status >= 500 && e.response.status < 600)
+          message = `Server error: ${e.response.data}`
+        
+        updateLoadedState(draft => {
+          draft.activeCommandResponse = {
+            type: 'LOADED',
+            value: message
           }
         })
       })

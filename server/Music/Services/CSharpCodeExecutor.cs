@@ -22,12 +22,17 @@ namespace Music.Services
             var c = Resolve<EvalContext>();
 
             var store = Resolve<PersistantKeyValueStore>();
+            var ytRemoteService = Resolve<YouTubeRemoteService>();
+            var tracksService = Resolve<TracksService>();
+            var ytVideosService = Resolve<YouTubeVideosService>();
             object result;
 
             try
             {
-                var @delegate = c.Compile<Func<MusicDbContext, PersistantKeyValueStore, object>>(code, "db", "store");
-                result = @delegate(Db, store);
+                var @delegate = c.Compile<Func<MusicDbContext, PersistantKeyValueStore, YouTubeRemoteService, TracksService, YouTubeVideosService, object>>(
+                    code, "db", "store", "ytRemote", "tracks", "ytVideos"
+                );
+                result = @delegate(Db, store, ytRemoteService, tracksService, ytVideosService);
             }
             catch (Exception e)
             {
