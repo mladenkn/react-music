@@ -60,7 +60,7 @@ namespace Music.Services
             return response.PageInfo.TotalResults ?? 0;
         }
 
-        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int? maxResults = null)
+        public async Task<IReadOnlyList<Video>> GetVideosOfChannel(string channelId, IEnumerable<string> videoParts, int maxResults)
         {
             var channel = await Query<YouTubeChannel>().FirstOrDefaultAsync(c => c.Id == channelId);
             var allVideosIds = await GetAllVideosIdsFromPlaylist(channel.UploadsPlaylistId, maxResults).Then(r => r.ToArray());
@@ -68,16 +68,15 @@ namespace Music.Services
             return videos;
         }
 
-        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId, int? maxResults = null)
+        private async Task<IEnumerable<string>> GetAllVideosIdsFromPlaylist(string playlistId, int maxResults)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
-            var remainingCount = maxResults;
 
             var request = ytService.PlaylistItems.List("contentDetails");
             request.PlaylistId = playlistId;
-            request.MaxResults = remainingCount;
+            request.MaxResults = maxResults;
 
-            var r = maxResults == null ? await request.ExecuteAsync().Then(r => r.Items) : await request.ExecuteWithPagingAsync();
+            var r = await request.ExecuteWithPagingAsync();
             return r.Select(i => i.ContentDetails.VideoId);
         }
     }
