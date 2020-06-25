@@ -27,13 +27,13 @@ namespace Music.Services
             return tasks.Select(t => t.Result);
         }
 
-        public async Task<YouTubeChannelForAdmin> GetChannelDetails(string channelId, bool saveChannels = false)
+        public async Task<YouTubeChannelForAdmin> GetChannelDetails(string channelId, bool saveChannel = false)
         {
             var ytService = Resolve<Google.Apis.YouTube.v3.YouTubeService>();
             var request = ytService.Channels.List("snippet,contentDetails");
             request.Id = channelId;
             var response = await request.ExecuteAsync();
-            if (saveChannels)
+            if (saveChannel)
                 await Resolve<YouTubeChannelService>().EnsureAreSaved(response.Items);
             var channel = response.Items.Single();
             return await MapToYouTubeChannelDetails(channel);
