@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, Button, TextField, Snackbar, IconButton } from '@material-ui/core';
 import { ems } from '../../utils/css';
-import { YamlEditor } from '../../utils/view/YamlEditor';
+import { CodeEditor } from '../../utils/view/YamlEditor';
 import { useAdminSectionLogic } from '../logic/adminSection';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import EditIcon from '@material-ui/icons/Edit';
@@ -94,14 +94,14 @@ export const AdminSection = () => {
               onChange={(event: any, command: CsCommand | null) => command && logic.data.setActiveCommand(command.id)} 
             />
             <div className={styles.commandEditorActionBarRight}>
-              <IconButtonWithTextFieldPopup 
+              {logic.data.activeCommand && <IconButtonWithTextFieldPopup 
                 textFieldInitialValue={logic.data.activeCommand.name}
                 onCommit={logic.data.updateCommandName}
                 popupId={1} 
                 size='small'
               >
                 <EditIcon />
-              </IconButtonWithTextFieldPopup>
+              </IconButtonWithTextFieldPopup>}
               <IconButtonWithTextFieldPopup 
                 onCommit={logic.data.addNewCommand}
                 popupId={2} 
@@ -112,19 +112,21 @@ export const AdminSection = () => {
               </IconButtonWithTextFieldPopup>
             </div>          
           </div>
-          <YamlEditor
+          <CodeEditor
             className={styles.command}
             codeMirrorRootClassName={styles.commandCodeMirrorRoot}
-            value={{ type: 'LOADED', data: logic.data.activeCommand.code }}
-            onChange={logic.data.updateCommandCode}
+            value={{ type: 'LOADED', data: logic.data.activeCommand?.code || '' }}
+            onChange={logic.data.activeCommand && logic.data.updateCommandCode}
+            mode='clike'
           />
-          <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>
+          {logic.data.activeCommand && <Button onClick={logic.data.executeCommand} variant="contained" className={styles.executeButton}>Execute</Button>}
         </div>
         <div className={styles.responseColumn}>
-          <YamlEditor
+          <CodeEditor
             className={styles.response}
             codeMirrorRootClassName={styles.responseCodeMirrorRoot}
             value={logic.data.activeCommandResponseYaml}
+            mode='yaml'
           />
           <IconButtonWithTextFieldPopup
             className={styles.backupButton}

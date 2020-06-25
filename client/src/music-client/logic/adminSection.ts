@@ -46,7 +46,6 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
       }
     }
   }
-  else {
-    throw new Error()
-  }  
+  else 
+    return { type: commands.type }
 }

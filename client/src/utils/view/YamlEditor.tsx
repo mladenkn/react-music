@@ -3,6 +3,7 @@ import { Controlled } from 'react-codemirror2'
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/yaml/yaml';
 import clsx from 'clsx';
 import { makeStyles, CircularProgress } from '@material-ui/core';
 import { percent } from '../css';
@@ -16,6 +17,7 @@ interface Props {
   value: Loadable<string>
   codeMirrorRootClassName?: string
   onChange?: (value: string) => void
+  mode: 'clike' | 'yaml'
 }
 
 const useStyles = makeStyles({
@@ -30,7 +32,7 @@ const useStyles = makeStyles({
   },
 }, {name: 'YamlEditor'})
 
-export const YamlEditor = (props: Props) => {
+export const CodeEditor = (props: Props) => {
   const wrapped = useRef<any>()
   console.log(props)
   const [isReady, setIsReady] = useState(false)
@@ -57,7 +59,7 @@ export const YamlEditor = (props: Props) => {
         className={clsx(props.className, !isReady && styles.rootHidden)}
         value={content}
         options={{
-          mode: 'clike',
+          mode: props.mode,
           theme: 'material',
         }}
         onBeforeChange={(_: unknown, __: unknown, value: string) => handleChange(value)}
