@@ -30,7 +30,7 @@ namespace Music.Services
             try
             {
                 var @delegate = c.Compile<Func<MusicDbContext, PersistantKeyValueStore, YouTubeRemoteService, TracksService, YouTubeVideosService, object>>(
-                    code, "db", "store", "ytRemote", "tracks", "ytVideos"
+                    code, "db", "PersistantKeyValueStore", "YouTubeRemoteService", "TracksService", "YouTubeVideosService"
                 );
                 result = @delegate(Db, store, ytRemoteService, tracksService, ytVideosService);
             }
