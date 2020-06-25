@@ -22,20 +22,29 @@ namespace Music.Services
             var c = Resolve<EvalContext>();
 
             var variables = Resolve<PersistantVariablesService>();
-            var @delegate = c.Compile<Func<MusicDbContext, PersistantVariablesService, object>>(code, "db", "variables");
-            var r = @delegate(Db, variables);
+            object result;
 
-            switch (r)
+            try
+            {
+                var @delegate = c.Compile<Func<MusicDbContext, PersistantVariablesService, object>>(code, "db", "variables");
+                result = @delegate(Db, variables);
+            }
+            catch (Exception e)
+            {
+                throw new ApplicationException(e.Message);
+            }
+
+            switch (result)
             {
                 case Task taskResult:
                 {
                     await taskResult;
-                    return r.GetType().IsGenericType ?
-                        r.GetType().GetProperty("Result")!.GetValue(r) :
+                    return result.GetType().IsGenericType ?
+                        result.GetType().GetProperty("Result")!.GetValue(result) :
                         null;
                 }
                 default:
-                    return r;
+                    return result;
             }
         }
     }
