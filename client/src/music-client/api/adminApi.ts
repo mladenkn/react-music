@@ -9,10 +9,9 @@ export const useAdminApi = () => {
 
   const addCommand = async (cmd: Omit<CsCommand, 'id'>) => (await post<CsCommand>('/admin/commands', cmd)).data
   const updateCommand = (cmd: CsCommand) => put('/admin/commands', cmd)
-  const executeCommand = (command: unknown) => post<string>('admin/commands/execute', command)
-  const executeCsCommand = (command: string) => post<string>('admin/cs-commands/execute', {command})
+  const executeCsCommand = (command: string) => post<unknown>('admin/cs-commands/execute', {command})
 
   const setVaraiable = (key: string, value: unknown) => post('admin/variables', {key, value})
 
-  return { getInitialParams, addCommand, updateCommand, persistCsCommandsSectionState, executeCommand, setVaraiable, executeCsCommand }
+  return { getInitialParams, addCommand, updateCommand, persistCsCommandsSectionState, setVaraiable, executeCsCommand }
 }

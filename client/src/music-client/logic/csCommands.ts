@@ -2,20 +2,19 @@ import { Loadable } from "../../utils/types";
 import { CsCommand } from "../shared/admin";
 import { useImmer } from "use-immer";
 import { useAdminApi } from "../api/adminApi";
-import yaml from 'js-yaml';
 import { useDebouncedCallback } from "use-debounce/lib";
 import { useEffect } from "../../utils/useEffect";
 
 interface State {
   activeCommandId?: number
   activeCommandCode?: string
-  activeCommandResponseYaml: Loadable<string>
+  activeCommandResponse: Loadable<unknown>
   commands: CsCommand[]  
 }
 
 export interface CsCommandsLogic {
   activeCommand?: CsCommand
-  activeCommandResponseYaml: Loadable<string>
+  activeCommandResponse: Loadable<unknown>
   commands: CsCommand[]
   setActiveCommand(cmdId: number): void
   updateCommandCode(code: string): void
@@ -43,7 +42,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
           data: {
             activeCommandId,
             activeCommandCode: response.commands.find(c => c.id === activeCommandId)?.code,
-            activeCommandResponseYaml: { type: 'LOADED', data: '' },
+            activeCommandResponse: { type: 'LOADED', data: '' },
             commands: response.commands,
             savedToVariableMessageShown: false,
           }
@@ -107,7 +106,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
           if(draft.type !== 'LOADED')
             throw new Error()
           draft.data.activeCommandId = cmdFromApi.id
-          draft.data.activeCommandResponseYaml = { type: 'LOADED', data: '' }
+          draft.data.activeCommandResponse = { type: 'LOADED', data: '' }
           draft.data.activeCommandCode = ''
           draft.data.commands.unshift(cmdFromApi)
         }) 
@@ -122,10 +121,9 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
         updateState(draft => {
           if(draft.type !== 'LOADED')
             throw new Error()
-          const yamlResponse = yaml.safeDump(r.data)
-          draft.data.activeCommandResponseYaml = {
+          draft.data.activeCommandResponse = {
             type: 'LOADED',
-            data: yamlResponse
+            data: r.data
           }
         })
       })
@@ -140,7 +138,7 @@ export function useCsCommands(): Loadable<CsCommandsLogic> {
     type: 'LOADED',
     data: {
       activeCommand,
-      activeCommandResponseYaml: state.data.activeCommandResponseYaml,
+      activeCommandResponse: state.data.activeCommandResponse,
       commands: state.data.commands,
       setActiveCommand, 
       updateCommandCode, 

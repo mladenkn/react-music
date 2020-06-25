@@ -10,6 +10,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import { IconButtonWithTextFieldPopup } from '../../utils/view/IconButtonWithTextFieldPopup';
 import { Autocomplete } from '@material-ui/lab';
 import { CsCommand } from '../shared/admin';
+import yaml from 'js-yaml';
+import { produce } from 'immer';
+import { Loaded } from '../../utils/types';
 
 const useStyles = makeStyles({
   root: {
@@ -81,6 +84,9 @@ export const AdminSection = () => {
     return <div>Loading...</div>
   }
   else if (logic.type === 'LOADED') {
+    const activeCommandResponse = logic.data.activeCommandResponse.type === 'LOADED' ?
+      { type: 'LOADED', data: yaml.safeDump(logic.data.activeCommandResponse.data) } as Loaded<string> :
+      logic.data.activeCommandResponse
     return (
       <div className={styles.root}>
         <div className={styles.commandEditorCol}>
@@ -125,7 +131,7 @@ export const AdminSection = () => {
           <CodeEditor
             className={styles.response}
             codeMirrorRootClassName={styles.responseCodeMirrorRoot}
-            value={logic.data.activeCommandResponseYaml}
+            value={activeCommandResponse}
             mode='yaml'
           />
           <IconButtonWithTextFieldPopup

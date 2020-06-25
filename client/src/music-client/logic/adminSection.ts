@@ -13,8 +13,6 @@ interface AdminSectionLogic extends CsCommandsLogic {
   hideSavedToVariableMessage(): void
 }
 
-const initalCmdResponse = ''
-
 export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
 
   const api = useAdminApi()
@@ -25,11 +23,16 @@ export const useAdminSectionLogic = (): Loadable<AdminSectionLogic> => {
   })
   
   function saveResponseToVariable(key: string){
-
+    if(commands.type !== 'LOADED')
+      throw new Error()
+    api.setVaraiable(key, commands.data.activeCommandResponse)
+      .then(() => 
+        updateState(() => ({ savedToVariableMessageShown: true }))
+      )
   }
   
   function hideSavedToVariableMessage(){
-    
+    updateState(() => ({ savedToVariableMessageShown: false }))
   }
 
   if(commands.type === 'LOADED'){
