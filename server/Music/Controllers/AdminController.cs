@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Music.Models;
 using Music.Services;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Utilities;
 
@@ -39,6 +40,6 @@ namespace Music.Controllers
         public Task<object> ExecuteCommand([FromBody] dynamic args) => Resolve<AdminService>().ExecuteCsCommand((string) args.command);
 
         [HttpPost("variables")]
-        public Task Post(string key, object value) => Resolve<AdminService>().SetVariable(key, value);
+        public Task Post([FromBody] dynamic args) => Resolve<AdminService>().SetVariable((string) args.key, args.value);
     }
 }

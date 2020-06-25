@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Music.DbModels;
 using Music.Models;
@@ -150,7 +151,7 @@ namespace Music.Services
         public Task SetVariable(string key, object value)
         {
             var variableService = Resolve<PersistantVariablesService>();
-            return Task.CompletedTask;
+            return variableService.Set(key, value);
         }
     }
 }

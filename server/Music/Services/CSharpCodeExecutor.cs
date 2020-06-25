@@ -20,8 +20,11 @@ namespace Music.Services
         public async Task<object> Execute(string code)
         {
             var c = Resolve<EvalContext>();
-            var @delegate = c.Compile<Func<MusicDbContext, object>>(code, "db");
-            var r = @delegate(Db);
+
+            var variables = Resolve<PersistantVariablesService>();
+            var @delegate = c.Compile<Func<MusicDbContext, PersistantVariablesService, object>>(code, "db", "variables");
+            var r = @delegate(Db, variables);
+
             switch (r)
             {
                 case Task taskResult:

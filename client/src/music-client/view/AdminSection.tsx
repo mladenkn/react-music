@@ -136,7 +136,6 @@ export const AdminSection = () => {
           />
           <IconButtonWithTextFieldPopup
             className={styles.backupButton}
-            textFieldInitialValue={() => ' - ' + new Date().toLocaleString()}
             onCommit={logic.value.saveResponseToVariable}
             popupId={1}
           >
